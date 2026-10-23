@@ -140,6 +140,63 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       await save([{ table: 'cardStates', rows: [{ ...card, suspended, updatedAt: now }] }], now)
     },
 
+    /**
+     * Nhập hàng loạt (R11.2) trong một giao dịch: tạo từ, tạo bộ theo tên nếu cần, gắn từ vào bộ.
+     * `deckName` của từng dòng được so khớp không phân biệt hoa thường với bộ có sẵn.
+     */
+    async importItems(
+      entries: { input: ItemInput; deckName?: string }[],
+      target: { kind: 'perRow' } | { kind: 'deck'; deckId: ID } | { kind: 'newDeck'; name: string } | { kind: 'none' },
+      now = Date.now(),
+    ): Promise<{ items: number; decks: number }> {
+      const existingDecks = (await database.decks.toArray()).filter((d) => d.deletedAt === null)
+      const byName = new Map(existingDecks.map((d) => [d.name.trim().toLowerCase(), d.id]))
+      const newDecks: Deck[] = []
+      const deckFor = (name: string): ID => {
+        const key = name.trim().toLowerCase()
+        const found = byName.get(key)
+        if (found) return found
+        const id = crypto.randomUUID()
+        newDecks.push({ id, name: name.trim().slice(0, 120), active: true, archived: false, createdAt: now, updatedAt: now, deletedAt: null })
+        byName.set(key, id)
+        return id
+      }
+      const fixedDeck = target.kind === 'deck' ? target.deckId : target.kind === 'newDeck' ? deckFor(target.name) : null
+
+      const items: VocabItem[] = []
+      const pairs: [ID, ID][] = []
+      entries.forEach((e, i) => {
+        const v = normalizeInput(e.input)
+        const id = crypto.randomUUID()
+        // createdAt tăng dần để giữ đúng thứ tự trong file khi học.
+        items.push({ ...v, id, termKey: termKey(v.term), archived: false, createdAt: now + i, updatedAt: now, deletedAt: null })
+        const deckId = fixedDeck ?? (target.kind === 'perRow' && e.deckName ? deckFor(e.deckName) : null)
+        if (deckId) pairs.push([deckId, id])
+      })
+
+      const links: DeckItem[] = []
+      const nextPos = new Map<ID, number>()
+      for (const [deckId, itemId] of pairs) {
+        if (!nextPos.has(deckId)) {
+          const existing = await database.deckItems.where('deckId').equals(deckId).toArray()
+          nextPos.set(deckId, existing.reduce((m, d) => Math.max(m, d.position), -1) + 1)
+        }
+        const position = nextPos.get(deckId)!
+        nextPos.set(deckId, position + 1)
+        links.push({ id: crypto.randomUUID(), deckId, itemId, position, createdAt: now, updatedAt: now, deletedAt: null })
+      }
+
+      await save(
+        [
+          { table: 'decks', rows: newDecks },
+          { table: 'vocabItems', rows: items },
+          { table: 'deckItems', rows: links },
+        ],
+        now,
+      )
+      return { items: items.length, decks: newDecks.length }
+    },
+
     // ---- Bộ từ ---------------------------------------------------------------------------
 
     async createDeck(input: DeckInput, now = Date.now()): Promise<ID> {
@@ -300,5 +357,7 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
   return repo
 }
 
-export const repo = createRepo(db)
+/** Bộ lập lịch dùng chung cả app (tham số mặc định; tối ưu theo người học ở R5.13). */
+export const appScheduler = createScheduler()
+export const repo = createRepo(db, appScheduler)
 export type Repo = ReturnType<typeof createRepo>

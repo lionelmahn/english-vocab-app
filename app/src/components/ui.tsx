@@ -1,12 +1,29 @@
 import { AnimatePresence, motion, type HTMLMotionProps } from 'motion/react'
 import { CircleAlert, CircleCheck, type LucideIcon } from 'lucide-react'
-import type { InputHTMLAttributes, ReactNode } from 'react'
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
 import { duration, ease, riseIn, stagger, tapScale } from '../lib/motion'
 
 /** Khung màn hình: tiêu đề + nội dung xuất hiện lần lượt. */
-export function Page({ title, subtitle, action, children }: { title: string; subtitle?: string; action?: ReactNode; children: ReactNode }) {
+export function Page({
+  title,
+  subtitle,
+  action,
+  back,
+  children,
+}: {
+  title: string
+  subtitle?: string
+  action?: ReactNode
+  back?: ReactNode
+  children: ReactNode
+}) {
   return (
     <motion.div variants={stagger} initial="hidden" animate="show" className="px-4 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-6">
+      {back && (
+        <motion.div variants={riseIn} className="-mt-2 mb-1">
+          {back}
+        </motion.div>
+      )}
       <motion.header variants={riseIn} className="mb-5 flex items-end justify-between gap-3">
         <div className="min-w-0">
           <h1 className="text-[26px] leading-tight font-bold tracking-tight">{title}</h1>
@@ -31,12 +48,13 @@ export function SectionTitle({ children, className = 'mb-3' }: { children: React
   return <h2 className={`text-[15px] font-semibold ${className}`}>{children}</h2>
 }
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost'
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 
 const BUTTON_STYLES: Record<ButtonVariant, string> = {
   primary: 'bg-accent text-on-accent',
   secondary: 'bg-surface-2 text-text',
   ghost: 'text-accent',
+  danger: 'bg-danger text-on-danger',
 }
 
 export function Button({
@@ -89,8 +107,9 @@ export function TextField({
   label,
   error,
   trailing,
+  ref,
   ...input
-}: { label: string; error?: string | null; trailing?: ReactNode } & InputHTMLAttributes<HTMLInputElement>) {
+}: { label: string; error?: string | null; trailing?: ReactNode; ref?: Ref<HTMLInputElement> } & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium">{label}</span>
@@ -98,6 +117,7 @@ export function TextField({
         className={`flex h-12 items-center gap-2 rounded-2xl border bg-surface px-4 transition-colors focus-within:border-accent ${error ? 'border-danger' : 'border-line'}`}
       >
         <input
+          ref={ref}
           className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-subtle"
           aria-invalid={error ? true : undefined}
           {...input}

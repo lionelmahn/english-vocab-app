@@ -47,13 +47,17 @@ export function startAuth(onRecovery: () => void): void {
     .catch(() => setState({ status: 'signed_out' }))
 }
 
-function subscribe(listener: () => void): () => void {
+export function subscribeAuth(listener: () => void): () => void {
   listeners.add(listener)
   return () => listeners.delete(listener)
 }
 
+export function getAuth(): AuthState {
+  return state
+}
+
 export function useAuth(): AuthState {
-  return useSyncExternalStore(subscribe, () => state)
+  return useSyncExternalStore(subscribeAuth, () => state)
 }
 
 const NOT_CONFIGURED = 'App chưa được kết nối máy chủ.'

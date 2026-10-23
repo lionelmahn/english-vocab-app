@@ -6,14 +6,17 @@ export function termKey(term: string): string {
   return normalizeAnswer(term)
 }
 
-/** Khóa so sánh của nghĩa: bỏ hoa thường, khoảng trắng thừa và dấu câu ở cuối. */
+/**
+ * Khóa so sánh của nghĩa: bỏ hoa thường, dấu câu và khoảng trắng thừa,
+ * để "kiên cường, mau phục hồi." và "Kiên cường mau phục hồi" được coi là một nghĩa.
+ */
 export function meaningKey(meaning: string): string {
   return meaning
     .normalize('NFC')
     .toLowerCase()
+    .replace(/[.,;:!?()[\]"“”'‘’/\\–—-]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/[.;,!]+$/u, '')
 }
 
 export interface DuplicateCandidate {
@@ -52,6 +55,18 @@ export function findDuplicates<T extends ComparableItem>(candidate: DuplicateCan
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'exact' ? -1 : 1))
 }
 
+/** Bỏ dấu tiếng Việt và hoa thường để tìm kiếm: "Kiên cường" → "kien cuong". */
+export function foldText(s: string): string {
+  return s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 /** Tách nhãn cá nhân: "ielts, Công việc; ielts" → ["ielts", "Công việc"]. */
 export function parseTags(input: string): string[] {
   const seen = new Set<string>()
@@ -65,4 +80,10 @@ export function parseTags(input: string): string[] {
     if (out.length >= 20) break
   }
   return out
+}
+
+/** Câu ví dụ có che từ đang học, để làm gợi ý ngữ cảnh mà không lộ đáp án. */
+export function blankTerm(sentence: string, term: string): string {
+  const escaped = term.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return sentence.replace(new RegExp(`\\b${escaped}\\b`, 'gi'), '_____')
 }

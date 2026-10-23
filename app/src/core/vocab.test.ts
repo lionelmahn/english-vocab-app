@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { State } from 'ts-fsrs'
 import { deckStats, inStudyPlan, itemStatus, membership, type LibCard, type LibDeck, type LibItem } from './library'
 import { parsePos } from './pos'
-import { findDuplicates, meaningKey, parseTags, termKey } from './vocab'
+import { blankTerm, findDuplicates, foldText, meaningKey, parseTags, termKey } from './vocab'
 
 describe('parsePos', () => {
   it('nhận viết tắt, tiếng Anh và tiếng Việt', () => {
@@ -40,8 +40,17 @@ describe('findDuplicates — R2.5', () => {
     expect(m.map((x) => x.item.id)).toEqual(['2'])
   })
 
-  it('meaningKey chuẩn hóa', () => {
+  it('meaningKey chuẩn hóa, bỏ qua dấu câu', () => {
     expect(meaningKey('  Kiên   cường. ')).toBe('kiên cường')
+    expect(meaningKey('kiên cường, mau phục hồi')).toBe(meaningKey('Kiên cường mau phục hồi'))
+    expect(meaningKey('(sự) nỗ lực')).toBe('sự nỗ lực')
+  })
+})
+
+describe('foldText', () => {
+  it('tìm nghĩa không cần gõ dấu', () => {
+    expect(foldText('  Kiên   CƯỜNG ')).toBe('kien cuong')
+    expect(foldText('Đi đường')).toBe('di duong')
   })
 })
 
@@ -109,5 +118,13 @@ describe('library — trạng thái và phạm vi học', () => {
     ])
     const cards = new Map([['a', card('a', now - 5)]])
     expect(deckStats('d', items, m, cards, now)).toEqual({ total: 2, learned: 1, due: 1, newCount: 1 })
+  })
+})
+
+describe('blankTerm', () => {
+  it('che từ đang học trong câu ví dụ, không phân biệt hoa thường', () => {
+    expect(blankTerm('Resilient kids are resilient.', 'resilient')).toBe('_____ kids are _____.')
+    expect(blankTerm('Never give up!', 'give up')).toBe('Never _____!')
+    expect(blankTerm('A (rare) case', '(rare)')).toBe('A (rare) case')
   })
 })

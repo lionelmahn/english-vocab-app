@@ -243,6 +243,9 @@ Nguyên tắc:
 - **Xong khi:** mở được link web trên iPhone/Android, "Thêm vào màn hình chính" được, test `core/` chạy xanh.
 
 ### Giai đoạn 1 — Vòng học lõi: MVP dùng hằng ngày (4–6 tuần, 43 chức năng)
+
+> **Trạng thái 23/10/2026:** đã làm xong và phát hành cả 43 chức năng. Gồm: Sổ tay và Bộ từ; học mới bằng thẻ lật, kiểm tra ngay và "đã biết từ này"; ôn FSRS với trắc nghiệm, gõ từ, nghe viết và thẻ tự đánh giá; luyện lại khi sai; tạm dừng rồi tiếp tục; tổng kết buổi; phát âm Anh–Mỹ/Anh–Anh có đọc chậm; nhập CSV/Excel/Anki; cài đặt học tập; tự sao lưu lên Supabase khi đăng nhập. Có 84 test tự động.
+> **Giới hạn hiện tại:** sao lưu mới chỉ gửi lên một chiều. Dữ liệu tạo trên máy này chưa hiện trên máy khác; đồng bộ hai chiều thuộc giai đoạn 2 (R11.5, R11.7). Trong lúc chờ, nên học trên một thiết bị chính.
 - Tài khoản: R1.2, R1.3 (tài khoản cá nhân tạo sẵn, chưa cần trang đăng ký)
 - Sổ tay: R2.1, R2.2, R2.3, R2.4, R2.5, R2.7, R2.9
 - Bộ từ: R3.1, R3.2, R3.3, R3.4, R3.6

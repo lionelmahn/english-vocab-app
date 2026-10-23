@@ -15,13 +15,25 @@ export const TABS: readonly TabDef[] = [
 ]
 
 /** Màn hình không nằm trên thanh tab nhưng thuộc về một tab. */
-const BELONGS_TO: Record<string, string> = {
-  '/login': '/me',
-  '/reset-password': '/me',
-}
+const BELONGS_TO: [prefix: string, tab: string][] = [
+  ['/words', '/notebook'],
+  ['/decks', '/notebook'],
+  ['/import', '/notebook'],
+  ['/login', '/me'],
+  ['/reset-password', '/me'],
+  ['/learn', '/'],
+  ['/review', '/'],
+  ['/study', '/'],
+]
 
 export function tabIndexOf(pathname: string): number {
-  const path = BELONGS_TO[pathname] ?? pathname
-  const i = TABS.findIndex((t) => (t.path === '/' ? path === '/' : path.startsWith(t.path)))
+  const alias = BELONGS_TO.find(([prefix]) => pathname === prefix || pathname.startsWith(`${prefix}/`))
+  const path = alias ? alias[1] : pathname
+  const i = TABS.findIndex((t) => (t.path === '/' ? path === '/' : path === t.path || path.startsWith(`${t.path}/`)))
   return i === -1 ? 0 : i
+}
+
+/** Màn hình học/ôn: ẩn thanh tab để tập trung. */
+export function isFocusMode(pathname: string): boolean {
+  return /^\/(learn|review|study)(\/|$)/.test(pathname)
 }

@@ -1,24 +1,20 @@
-import { useLiveQuery } from 'dexie-react-hooks'
 import { motion } from 'motion/react'
 import { Card, Page, PhaseBadge, SectionTitle } from '../components/ui'
-import { LEVEL_LABELS, levelDistribution, type MemoryLevel } from '../core/levels'
-import { db } from '../db/db'
+import { itemLevel } from '../core/library'
+import { LEVEL_LABELS, type MemoryLevel } from '../core/levels'
+import { useLibrary } from '../lib/hooks'
 import { duration, ease } from '../lib/motion'
 
 const LEVELS: MemoryLevel[] = [0, 1, 2, 3, 4, 5]
 
+/** Phân bố 5 cấp ghi nhớ (R10.7). Thống kê hoạt động chi tiết ở giai đoạn 2. */
 export function StatsPage() {
-  const dist = useLiveQuery(
-    async () => {
-      const [cards, words] = await Promise.all([db.cardStates.toArray(), db.vocabItems.count()])
-      const d = levelDistribution(cards)
-      // Từ đã lưu nhưng chưa có thẻ ôn được tính là "Chưa học".
-      d[0] += Math.max(0, words - cards.length)
-      return d
-    },
-    [],
-    { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as Record<MemoryLevel, number>,
-  )
+  const lib = useLibrary()
+  const dist: Record<MemoryLevel, number> = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+  for (const item of lib?.items ?? []) {
+    if (item.archived) continue
+    dist[itemLevel(lib!.cards.get(item.id))]++
+  }
   const total = LEVELS.reduce<number>((sum, l) => sum + dist[l], 0)
 
   return (
@@ -50,9 +46,7 @@ export function StatsPage() {
             )
           })}
         </ul>
-        <p className="mt-4 text-xs leading-relaxed text-subtle">
-          Cấp được tính từ độ bền trí nhớ của thuật toán ôn tập, không phải khoảng ôn cố định.
-        </p>
+        <p className="mt-4 text-xs leading-relaxed text-subtle">Cấp được tính từ độ bền trí nhớ của thuật toán ôn tập, không phải khoảng ôn cố định.</p>
       </Card>
 
       <Card>

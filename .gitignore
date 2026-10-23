@@ -1,0 +1,6 @@
+# File tạm của Word/Excel khi đang mở tài liệu
+~$*
+
+# File hệ điều hành
+.DS_Store
+Thumbs.db
