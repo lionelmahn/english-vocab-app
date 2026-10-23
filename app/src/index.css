@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+@import '@fontsource/be-vietnam-pro/400.css';
+@import '@fontsource/be-vietnam-pro/500.css';
+@import '@fontsource/be-vietnam-pro/600.css';
+@import '@fontsource/be-vietnam-pro/700.css';
+
+/* Màu theo vai trò; tự đổi theo chế độ sáng/tối của hệ điều hành. */
+:root {
+  --app-bg: #f5f6f2;
+  --app-surface: #ffffff;
+  --app-surface-2: #edefea;
+  --app-text: #18201c;
+  --app-muted: #5e6a63;
+  --app-subtle: #8a958f;
+  --app-border: #e1e5df;
+  --app-accent: #0f6e56;
+  --app-accent-strong: #085041;
+  --app-accent-soft: #e1f5ee;
+  --app-on-accent: #ffffff;
+  --app-danger: #c8452b;
+  --app-danger-soft: #faece7;
+  --app-warning: #ba7517;
+  --app-warning-soft: #faeeda;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --app-bg: #0e1311;
+    --app-surface: #161c19;
+    --app-surface-2: #1e2622;
+    --app-text: #e7ede9;
+    --app-muted: #a0aca5;
+    --app-subtle: #75817a;
+    --app-border: #29322e;
+    --app-accent: #5dcaa5;
+    --app-accent-strong: #9fe1cb;
+    --app-accent-soft: #123a2f;
+    --app-on-accent: #04342c;
+    --app-danger: #f0997b;
+    --app-danger-soft: #3a1e16;
+    --app-warning: #fac775;
+    --app-warning-soft: #3a2a10;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--app-bg);
+  --color-surface: var(--app-surface);
+  --color-surface-2: var(--app-surface-2);
+  --color-text: var(--app-text);
+  --color-muted: var(--app-muted);
+  --color-subtle: var(--app-subtle);
+  --color-line: var(--app-border);
+  --color-accent: var(--app-accent);
+  --color-accent-strong: var(--app-accent-strong);
+  --color-accent-soft: var(--app-accent-soft);
+  --color-on-accent: var(--app-on-accent);
+  --color-danger: var(--app-danger);
+  --color-danger-soft: var(--app-danger-soft);
+  --color-warning: var(--app-warning);
+  --color-warning-soft: var(--app-warning-soft);
+  --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* Giảm hiệu ứng: theo hệ điều hành hoặc theo nút trong Cá nhân. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+:root[data-reduce-motion='true'] *,
+:root[data-reduce-motion='true'] *::before,
+:root[data-reduce-motion='true'] *::after {
+  animation-duration: 1ms !important;
+  transition-duration: 1ms !important;
+}

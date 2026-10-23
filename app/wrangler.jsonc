@@ -1,0 +1,12 @@
+// Cấu hình phát hành lên Cloudflare (Workers phục vụ file tĩnh — miễn phí).
+// Phát hành: npm run deploy
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "english-vocab",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./dist",
+    // App một trang: đường dẫn như /notebook trả về index.html để React Router xử lý.
+    "not_found_handling": "single-page-application"
+  }
+}
