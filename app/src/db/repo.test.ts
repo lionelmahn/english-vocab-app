@@ -200,6 +200,28 @@ describe('repo — học và ôn', () => {
     expect(learnCandidates(lib, [off]).map((i) => i.id)).toEqual([b])
   })
 
+  it('thứ tự học từ mới: xen kẽ đều các bộ và nhóm từ không thuộc bộ nào', async () => {
+    const term = (t: string) => input(t, t)
+    // Bộ A đã học 2 từ đầu; bộ B thêm sau; vài từ tự lưu không thuộc bộ nào.
+    const A = await repo.createDeck({ name: 'A' }, T0)
+    const B = await repo.createDeck({ name: 'B' }, T0 + 10)
+    const a = await repo.saveFromSource(['a1', 'a2', 'a3', 'a4'].map(term), [A], T0)
+    for (const id of a.created.slice(0, 2)) await database.cardStates.put(await repo.scheduledCard(id, Rating.Good, T0))
+    const n1 = await repo.createItem(term('n1'), [], T0 + 20)
+    const b = await repo.saveFromSource(['b1', 'b2', 'b3'].map(term), [B], T0 + 30)
+    const n2 = await repo.createItem(term('n2'), [], T0 + 40)
+    // Một từ nằm ở cả hai bộ: chỉ lấy một lần.
+    const both = await repo.createItem(term('ab'), [A, B], T0 + 50)
+
+    const lib = await loadLibrary(database)
+    const terms = (ids: { term: string }[]) => ids.map((i) => i.term)
+    expect(terms(learnCandidates(lib))).toEqual(['a3', 'b1', 'n1', 'a4', 'b2', 'n2', 'ab', 'b3'])
+    // Chọn riêng một bộ: đúng thứ tự trong bộ đó.
+    expect(terms(learnCandidates(lib, [B]))).toEqual(['b1', 'b2', 'b3', 'ab'])
+    expect(learnCandidates(lib).map((i) => i.id)).toContain(both)
+    expect([n1, n2, ...b.created].every((id) => learnCandidates(lib).some((i) => i.id === id))).toBe(true)
+  })
+
   it('hàng đợi ôn: chỉ từ đến hạn, ưu tiên từ dễ quên nhất, có giới hạn (R5.2, R5.6)', async () => {
     const ids = await Promise.all(['a', 'b', 'c'].map((t, i) => repo.createItem(input(t, String(i)))))
     // a: ôn lâu rồi (quá hạn nhiều), b: vừa đến hạn, c: chưa đến hạn

@@ -45,16 +45,55 @@ function inScope(lib: Library, itemId: ID, deckIds?: readonly ID[]): boolean {
   return inStudyPlan(itemId, lib.members, lib.deckById)
 }
 
-/** Từ chưa học, theo thứ tự trong bộ rồi theo ngày thêm (R4.1). */
+/**
+ * Từ chưa học theo thứ tự học (R4.1), xen kẽ đều: mỗi bộ trong phạm vi là một hàng (theo thứ tự trong bộ),
+ * từ không thuộc bộ nào là một hàng nữa (thêm trước học trước). Lấy lần lượt từ đầu mỗi hàng, bộ tạo trước đứng trước;
+ * từ nằm trong nhiều bộ chỉ lấy một lần. Nhờ vậy từ tự lưu không phải chờ học hết các bộ, bộ thêm sau không bị học dồn.
+ */
 export function learnCandidates(lib: Library, deckIds?: readonly ID[]): VocabItem[] {
-  const position = new Map<ID, number>()
+  const scoped = !!deckIds && deckIds.length > 0
+  const candidates = lib.items.filter((i) => !i.archived && !liveCard(lib.cards.get(i.id)) && inScope(lib, i.id, deckIds))
+  const isCandidate = new Set(candidates.map((i) => i.id))
+  const decks = lib.decks
+    .filter((d) => (scoped ? deckIds.includes(d.id) : d.active && !d.archived))
+    .sort((a, b) => a.createdAt - b.createdAt || (a.id < b.id ? -1 : 1))
+  const byDeck = new Map<ID, DeckItem[]>(decks.map((d) => [d.id, []]))
+  const inDeckQueue = new Set<ID>()
   for (const di of lib.deckItems) {
-    if (deckIds && deckIds.length > 0 && !deckIds.includes(di.deckId)) continue
-    position.set(di.itemId, Math.min(position.get(di.itemId) ?? Infinity, di.position))
+    const queue = byDeck.get(di.deckId)
+    if (!queue || !isCandidate.has(di.itemId)) continue
+    queue.push(di)
+    inDeckQueue.add(di.itemId)
   }
-  return lib.items
-    .filter((i) => !i.archived && !liveCard(lib.cards.get(i.id)) && inScope(lib, i.id, deckIds))
-    .sort((a, b) => (position.get(a.id) ?? Infinity) - (position.get(b.id) ?? Infinity) || a.createdAt - b.createdAt)
+  const created = (id: ID) => lib.itemById.get(id)?.createdAt ?? 0
+  const queues: ID[][] = decks.map((d) =>
+    byDeck
+      .get(d.id)!
+      .sort((a, b) => a.position - b.position || created(a.itemId) - created(b.itemId))
+      .map((di) => di.itemId),
+  )
+  queues.push(
+    candidates
+      .filter((i) => !inDeckQueue.has(i.id))
+      .sort((a, b) => a.createdAt - b.createdAt)
+      .map((i) => i.id),
+  )
+
+  const out: VocabItem[] = []
+  const taken = new Set<ID>()
+  const next = queues.map(() => 0)
+  for (let progressed = true; progressed; ) {
+    progressed = false
+    queues.forEach((queue, q) => {
+      while (next[q] < queue.length && taken.has(queue[next[q]])) next[q]++
+      if (next[q] >= queue.length) return
+      const id = queue[next[q]++]
+      taken.add(id)
+      out.push(lib.itemById.get(id)!)
+      progressed = true
+    })
+  }
+  return out
 }
 
 function reviewable(lib: Library, card: CardStateRow, deckIds?: readonly ID[]): boolean {

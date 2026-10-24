@@ -134,7 +134,7 @@ export const GUIDE: GuideTopic[] = [
       {
         list: [
           'Một từ có thể nằm trong nhiều bộ mà vẫn dùng chung một tiến độ.',
-          'Từ không thuộc bộ nào vẫn được học và ôn, nhưng khi học từ mới, chúng đến sau tất cả từ trong các bộ đang học.',
+          'Từ không thuộc bộ nào vẫn được học và ôn bình thường; khi học từ mới, chúng được xen kẽ với từ của các bộ.',
           'Nếu tắt “Đưa vào kế hoạch học” ở trang của một bộ, các từ chỉ thuộc bộ đó không còn được đưa vào buổi học và ôn chung từ trang Hôm nay. Từ còn nằm trong bộ khác đang bật thì vẫn học bình thường.',
           'Nút “Học mới” và “Ôn tập” ở trang của một bộ chỉ học và ôn từ trong bộ đó, kể cả khi bộ đang tắt.',
           'Xóa bộ không xóa từ: từ và tiến độ vẫn còn trong sổ tay.',
@@ -177,7 +177,7 @@ export const GUIDE: GuideTopic[] = [
       },
       { h: 'Từ nào được học trước' },
       {
-        p: 'Từ trong bộ đến theo thứ tự trong bộ (bộ 1.000 từ thì từ phổ biến nhất trước). Nếu đang bật nhiều bộ, app xếp theo vị trí của từ trong bộ: các từ đứng thứ nhất của mọi bộ trước, rồi các từ đứng thứ hai… Vị trí tính cả những từ đã học, nên một bộ thêm sau sẽ được học dồn cho tới khi bắt kịp chỗ bạn đang học ở bộ cũ. Từ không thuộc bộ nào đến sau cùng, từ thêm trước học trước. Muốn học riêng một bộ thì chọn bộ đó ở “Phạm vi”.',
+        p: 'Mỗi bộ đang học là một hàng, theo thứ tự trong bộ (bộ 1.000 từ thì từ phổ biến nhất trước). Các từ không thuộc bộ nào là một hàng nữa, từ lưu trước học trước. App lấy lần lượt một từ ở mỗi hàng, bộ tạo trước đứng trước; từ nằm trong nhiều bộ chỉ học một lần. Ví dụ đang học bộ 1.000 từ mà bạn vừa tra và lưu một từ không chọn bộ, thì buổi học tới đã có từ đó; thêm một bộ mới thì mỗi buổi có từ của cả bộ cũ lẫn bộ mới. Muốn học riêng một bộ thì chọn bộ đó ở “Phạm vi”.',
       },
       { h: 'Mỗi từ có hai bước' },
       {
