@@ -28,15 +28,6 @@ export function fillSlots(template: readonly Slot[], typed: string): (string | n
   return template.map((s) => (s.kind === 'fixed' ? s.char : (letters[i++] ?? null)))
 }
 
-/** Chữ cái gợi ý: `count` chữ đầu tiên của đáp án (R6.9). */
-export function hintLetters(template: readonly Slot[], count: number): string {
-  return template
-    .filter((s) => s.kind === 'letter')
-    .slice(0, count)
-    .map((s) => s.char)
-    .join('')
-}
-
 /**
  * Ghép đáp án từ chữ đã gõ, chèn lại khoảng trắng và dấu theo mẫu.
  * Gõ dư chữ thì nối vào cuối để vẫn chấm được (ví dụ biến thể dài hơn).
@@ -58,4 +49,54 @@ export function composeAnswer(template: readonly Slot[], typed: string): string 
 export function activeSlot(template: readonly Slot[], typed: string): number {
   const filled = fillSlots(template, typed)
   return template.findIndex((s, idx) => s.kind === 'letter' && filled[idx] === null)
+}
+
+// ---- Chữ lộ sẵn ở vị trí ngẫu nhiên ------------------------------------------------------------
+
+/**
+ * Số chữ lộ sẵn để làm điểm tựa (không nhiều để vẫn phải nhớ):
+ * ≤3 chữ: 0; 4–6: 1; 7–12: 2; dài hơn: 3.
+ */
+export function scaffoldCount(totalLetters: number): number {
+  if (totalLetters <= 3) return 0
+  return Math.min(3, Math.max(1, Math.round(totalLetters / 5)))
+}
+
+/** Chọn ngẫu nhiên vị trí (chỉ số ô) các chữ lộ sẵn; mỗi lần làm bài một kiểu khác nhau. */
+export function pickReveals(template: readonly Slot[], count: number, rand: () => number = Math.random): number[] {
+  const letters = template.flatMap((s, i) => (s.kind === 'letter' ? [i] : []))
+  const n = Math.min(count, Math.max(0, letters.length - 1))
+  for (let i = letters.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1))
+    ;[letters[i], letters[j]] = [letters[j], letters[i]]
+  }
+  return letters.slice(0, n).sort((a, b) => a - b)
+}
+
+/** Chữ hiện ở từng ô khi có chữ lộ sẵn: chữ gõ điền lần lượt vào các ô chưa lộ. */
+export function fillWithReveals(template: readonly Slot[], revealed: ReadonlySet<number>, typed: string): (string | null)[] {
+  const letters = lettersOnly(typed)
+  let i = 0
+  return template.map((s, idx) => {
+    if (s.kind === 'fixed') return s.char
+    if (revealed.has(idx)) return s.char
+    return letters[i++] ?? null
+  })
+}
+
+export function activeSlotWithReveals(template: readonly Slot[], revealed: ReadonlySet<number>, typed: string): number {
+  const filled = fillWithReveals(template, revealed, typed)
+  return template.findIndex((s, idx) => s.kind === 'letter' && filled[idx] === null)
+}
+
+/**
+ * Ghép đáp án khi có chữ lộ sẵn. Nếu người học gõ đủ cả từ (kể cả các chữ đã lộ) thì lấy đúng chữ đã gõ.
+ */
+export function composeWithReveals(template: readonly Slot[], revealed: ReadonlySet<number>, typed: string): string {
+  if (lettersOnly(typed).length >= letterCount(template)) return composeAnswer(template, typed)
+  return fillWithReveals(template, revealed, typed)
+    .map((c) => c ?? '')
+    .join('')
+    .replace(/\s+/g, ' ')
+    .trim()
 }

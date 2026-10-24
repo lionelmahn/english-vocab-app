@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CircleAlert, CloudOff, CloudUpload, FileUp, LoaderCircle, LogIn, LogOut, ShieldCheck, Smartphone } from 'lucide-react'
+import { CircleAlert, CloudOff, CloudUpload, FileUp, LoaderCircle, LogIn, LogOut, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Segmented, Select } from '../components/kit'
@@ -8,7 +8,7 @@ import { db } from '../db/db'
 import { updateSettings, useSettings } from '../lib/settings'
 import { APP_VERSION } from '../lib/version'
 import { checkCloud, signOut, useAuth, type CloudCheck } from '../services/auth'
-import { hasExactVoice, speechAvailable, useVoicesReady } from '../services/speech'
+import { englishVoices, hasExactVoice, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
 import { syncNow, useSyncStatus } from '../services/sync'
 
 function SettingRow({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
@@ -105,6 +105,62 @@ function CloudStatus() {
   }
 }
 
+/** Nguồn phát âm: bản ghi giọng người thật và giọng máy (chọn, nghe thử, hướng dẫn tải giọng tốt hơn). */
+function VoiceSettings() {
+  const settings = useSettings()
+  useVoicesReady()
+  const [help, setHelp] = useState(false)
+  const accent = settings.accent
+  const list = englishVoices(accent)
+  const current = accent === 'uk' ? settings.voiceUK : settings.voiceUS
+  const chosen = list.find((v) => v.voiceURI === current) ?? pickVoice(accent)
+
+  return (
+    <div className="flex flex-col gap-3">
+      <SettingRow title="Ưu tiên giọng người thật" description="Bản ghi phát âm từng từ từ Wiktionary. Câu ví dụ và từ chưa có bản ghi dùng giọng máy.">
+        <Switch label="Ưu tiên giọng người thật" checked={settings.preferRecordings} onChange={(v) => updateSettings({ preferRecordings: v })} />
+      </SettingRow>
+      {list.length > 0 && (
+        <div className="flex items-end gap-2">
+          <div className="min-w-0 flex-1">
+            <Select
+              label="Giọng máy"
+              value={current ?? ''}
+              onChange={(e) => updateSettings(accent === 'uk' ? { voiceUK: e.target.value || null } : { voiceUS: e.target.value || null })}
+            >
+              <option value="">Tự động ({pickVoice(accent)?.name ?? 'giọng tốt nhất'})</option>
+              {list.map((v) => (
+                <option key={v.voiceURI} value={v.voiceURI}>
+                  {v.name} · {v.lang}
+                </option>
+              ))}
+            </Select>
+          </div>
+          <Button icon={Volume2} className="h-12 shrink-0 px-4" onClick={() => chosen && void previewVoice(chosen, accent)}>
+            Nghe thử
+          </Button>
+        </div>
+      )}
+      <button type="button" onClick={() => setHelp((h) => !h)} className="self-start text-sm font-semibold text-accent">
+        {help ? 'Ẩn hướng dẫn' : 'Giọng máy nghe chưa hay? Tải giọng chất lượng cao'}
+      </button>
+      {help && (
+        <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+          <p>
+            <b className="text-text">iPhone:</b> Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh. Chọn giọng có chữ “Nâng cao” hoặc “Cao cấp” (ví dụ Ava, Zoe, Evan, Serena) và
+            tải về. Sau đó tắt hẳn app rồi mở lại, chọn giọng đó ở ô “Giọng máy”.
+          </p>
+          <p>
+            <b className="text-text">Android:</b> Cài đặt → Hệ thống → Ngôn ngữ → Đầu ra chuyển văn bản thành lời nói → Dịch vụ của Google → Cài đặt → Cài đặt dữ liệu giọng nói → Tiếng Anh (Mỹ/Vương
+            quốc Anh) → tải giọng chất lượng cao.
+          </p>
+        </div>
+      )}
+      <p className="text-[11px] leading-relaxed text-subtle">Bản ghi phát âm: Wiktionary / Wikimedia Commons, giấy phép CC BY-SA, CC BY hoặc phạm vi công cộng.</p>
+    </div>
+  )
+}
+
 export function ProfilePage() {
   const settings = useSettings()
   const auth = useAuth()
@@ -166,6 +222,7 @@ export function ProfilePage() {
             {voiceMissing && <p className="mt-2 text-xs text-warning">Thiết bị chưa có giọng {settings.accent === 'uk' ? 'Anh–Anh' : 'Anh–Mỹ'}; đang dùng giọng tiếng Anh khác.</p>}
             {!speechAvailable() && <p className="mt-2 text-xs text-warning">Trình duyệt này không hỗ trợ đọc. Các bài nghe sẽ được thay bằng bài gõ từ.</p>}
           </div>
+          <VoiceSettings />
           <div>
             <p className="mb-2 text-[15px] font-medium">Mặt trước của thẻ</p>
             <Segmented

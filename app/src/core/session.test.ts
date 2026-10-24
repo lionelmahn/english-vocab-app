@@ -22,13 +22,10 @@ function run(plan: SessionPlan, actions: SessionAction[]) {
   return { plan, effects }
 }
 
-describe('planLearn — giới thiệu theo nhóm rồi kiểm tra', () => {
-  it('nhóm 5 từ: 5 thẻ giới thiệu rồi 5 bài kiểm tra', () => {
-    const ids = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    const plan = planLearn(ids, () => 'mcq_meaning', 0)
-    expect(plan.steps.map((s) => `${s.kind[0]}:${s.itemId}`)).toEqual([
-      'i:a', 'i:b', 'i:c', 'i:d', 'i:e', 'e:a', 'e:b', 'e:c', 'e:d', 'e:e', 'i:f', 'i:g', 'e:f', 'e:g',
-    ])
+describe('planLearn — lật thẻ rồi kiểm tra ngay từ đó', () => {
+  it('xen kẽ: thẻ A, kiểm tra A, thẻ B, kiểm tra B…', () => {
+    const plan = planLearn(['a', 'b', 'c'], () => 'recall_typing', 0)
+    expect(plan.steps.map((s) => `${s.kind[0]}:${s.itemId}`)).toEqual(['i:a', 'e:a', 'i:b', 'e:b', 'i:c', 'e:c'])
   })
 })
 

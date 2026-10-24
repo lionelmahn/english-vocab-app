@@ -21,6 +21,7 @@ import { useLibrary, useNow } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
 import { getSettings, useSettings } from '../lib/settings'
 import { playComplete } from '../lib/sfx'
+import { prefetchWordAudio } from '../services/audio'
 import { speechAvailable } from '../services/speech'
 import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
 import { AudioChoiceStep, DictationStep, FlashcardStep, IntroStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
@@ -195,7 +196,7 @@ function Setup({
                 ))}
               </div>
               <p className="mt-3 text-sm text-muted">
-                Còn {available} từ chưa học. Mỗi nhóm 5 từ: xem thẻ giới thiệu, rồi kiểm tra ngay.
+                Còn {available} từ chưa học. Mỗi từ: xem thẻ giới thiệu, rồi điền từ ngay.
               </p>
             </Card>
           ) : (
@@ -279,6 +280,13 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
 
   const step = view.step
   const item = step ? lib.itemById.get(step.itemId) : undefined
+
+  // Tra trước bản ghi phát âm của các từ trong buổi, để bấm loa là phát ngay.
+  useEffect(() => {
+    const terms = [...new Set(planRef.current.steps.map((s) => s.itemId))].map((id) => lib.itemById.get(id)?.term).filter((t): t is string => !!t)
+    void prefetchWordAudio(terms)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Từ đã bị xóa trong lúc học: bỏ qua bước này.
   useEffect(() => {

@@ -5,7 +5,7 @@ import { Rating, type Card as FsrsCard, type Grade } from 'ts-fsrs'
 import { checkAnswer } from '../core/answers'
 import type { ChoiceSource, TermSource } from '../core/exercises'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
-import { composeAnswer, hintLetters, letterCount, slotTemplate } from '../core/letters'
+import { activeSlotWithReveals, composeWithReveals, letterCount, pickReveals, scaffoldCount, slotTemplate } from '../core/letters'
 import { POS_SHORT } from '../core/pos'
 import { contextSentence } from '../core/vocab'
 import type { CardStateRow, VocabItem } from '../db/types'
@@ -452,11 +452,14 @@ function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: Answe
 
 export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: VocabItem; knownCheck: boolean; onAnswer: AnswerFn; onContinue: () => void }) {
   const [value, setValue] = useState('')
-  const [hints, setHints] = useState(0)
   const template = useMemo(() => slotTemplate(item.term), [item.term])
   const total = letterCount(template)
+  // Vài chữ lộ sẵn ở vị trí ngẫu nhiên, mỗi lần làm bài một kiểu (không tính là gợi ý).
+  const [revealed, setRevealed] = useState<Set<number>>(() => new Set(pickReveals(template, scaffoldCount(total))))
+  const [hintUsed, setHintUsed] = useState(false)
   const { check, sheet, state, shown, submit, done } = useTypedAnswer(item, 'recall_typing', onAnswer, onContinue)
   const typedLetters = [...value].filter((c) => /[\p{L}\p{N}]/u.test(c)).length
+  const remaining = total - revealed.size
   const sentence = contextSentence(item)
 
   function doCheck() {
@@ -464,24 +467,32 @@ export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: Vo
       if (shown) onContinue()
       return
     }
-    if (typedLetters + hints === 0) return
-    const composed = composeAnswer(template, hintLetters(template, hints) + value)
-    check([composed, value], composed, hints > 0)
+    if (typedLetters === 0 && remaining > 0) return
+    const composed = composeWithReveals(template, revealed, value)
+    check([composed, value], composed, hintUsed)
   }
   useEnter(doCheck)
+
+  /** Gợi ý: lộ thêm chữ ở ô đang chờ gõ; dùng gợi ý thì được tính mức Khó (R6.9). */
+  function hint() {
+    const idx = activeSlotWithReveals(template, revealed, value)
+    if (idx < 0) return
+    setRevealed((r) => new Set(r).add(idx))
+    setHintUsed(true)
+  }
 
   return (
     <StepFrame
       title={knownCheck ? 'Bạn đã biết từ này? Điền từ' : 'Điền từ'}
       footer={
         <>
-          <PillButton disabled={typedLetters + hints === 0 || done} onClick={doCheck}>
+          <PillButton disabled={(typedLetters === 0 && remaining > 0) || done} onClick={doCheck}>
             Kiểm tra
           </PillButton>
           {!done && (
             <div className="flex flex-wrap justify-center gap-x-5">
-              {!knownCheck && hints < total - 1 && (
-                <TextLink onClick={() => setHints((h) => h + 1)}>
+              {remaining - typedLetters > 1 && (
+                <TextLink onClick={hint}>
                   <span className="inline-flex items-center gap-1">
                     <Lightbulb aria-hidden className="h-4 w-4" /> Gợi ý
                   </span>
@@ -505,8 +516,8 @@ export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: Vo
           </p>
         )}
       </div>
-      <LetterSlots term={item.term} value={value} onChange={setValue} onEnter={doCheck} hints={hints} state={state} />
-      {hints > 0 && !done && <p className="-mt-2 text-center text-[13px] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
+      <LetterSlots term={item.term} value={value} onChange={setValue} onEnter={doCheck} revealed={revealed} state={state} />
+      {hintUsed && !done && <p className="-mt-2 text-center text-[13px] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
       {sheet}
     </StepFrame>
   )

@@ -1,5 +1,6 @@
 import Dexie, { type EntityTable } from 'dexie'
 import type {
+  AudioCacheEntry,
   CardStateRow,
   Deck,
   DeckItem,
@@ -26,6 +27,7 @@ export class VocabDatabase extends Dexie {
   studySessions!: EntityTable<StudySessionRow, 'id'>
   outbox!: EntityTable<OutboxEntry, 'seq'>
   meta!: EntityTable<MetaEntry, 'key'>
+  audioCache!: EntityTable<AudioCacheEntry, 'key'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -40,6 +42,8 @@ export class VocabDatabase extends Dexie {
       outbox: '++seq, [table+rowId]',
       meta: 'key',
     })
+    // Phiên bản 2: bộ nhớ đệm bản ghi phát âm (giọng người thật) theo từ.
+    this.version(2).stores({ audioCache: 'key' })
   }
 }
 

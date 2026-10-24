@@ -71,8 +71,8 @@ export function addActiveTime(plan: SessionPlan, stepMs: number): SessionPlan {
 export const MAX_RETRIES = 2
 /** Luyện lại sau bao nhiêu bước (để não có chút thời gian quên). */
 export const RETRY_GAP = 3
-/** Học từ mới theo nhóm: giới thiệu vài từ rồi kiểm tra ngay. */
-export const LEARN_CHUNK = 5
+/** Học từ mới: giới thiệu một từ rồi kiểm tra ngay từ đó (theo yêu cầu người học). */
+export const LEARN_CHUNK = 1
 
 function emptyOutcome(): ItemOutcome {
   return { grade: null, wrong: 0, retries: 0, known: false }
@@ -82,7 +82,7 @@ function initOutcomes(itemIds: readonly string[]): Record<string, ItemOutcome> {
   return Object.fromEntries(itemIds.map((id) => [id, emptyOutcome()]))
 }
 
-/** Buổi học mới: giới thiệu từng nhóm 5 từ, rồi kiểm tra nhóm đó (R4.2, R4.4). */
+/** Buổi học mới: lật thẻ giới thiệu, rồi kiểm tra ngay từ vừa học (R4.2, R4.4). */
 export function planLearn(itemIds: readonly string[], checkFor: (itemId: string) => ExerciseKind, startedAt: number): SessionPlan {
   const steps: Step[] = []
   for (let i = 0; i < itemIds.length; i += LEARN_CHUNK) {

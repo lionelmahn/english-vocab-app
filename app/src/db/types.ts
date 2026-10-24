@@ -138,3 +138,18 @@ export interface MetaEntry {
   key: string
   value: unknown
 }
+
+/** Bản ghi phát âm giọng người thật tìm được cho một từ (đường dẫn phát được trên trình duyệt). */
+export interface WordAudio {
+  us?: string
+  uk?: string
+  other?: string
+}
+
+export interface AudioCacheEntry {
+  /** Từ đã chuẩn hóa. */
+  key: string
+  /** null: đã tìm nhưng không có bản ghi. */
+  audio: WordAudio | null
+  fetchedAt: number
+}

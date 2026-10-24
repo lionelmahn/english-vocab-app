@@ -34,9 +34,9 @@ export function chooseExercise(level: MemoryLevel, reps: number, opts: ExerciseO
   return pick
 }
 
-/** Bài kiểm tra ngay sau khi học từ mới (R4.4). */
-export function checkExercise(opts: Pick<ExerciseOptions, 'canMultipleChoice'>): ExerciseKind {
-  return opts.canMultipleChoice ? 'mcq_meaning' : 'recall_typing'
+/** Bài kiểm tra ngay sau khi lật thẻ từ mới (R4.4): điền từ theo ô chữ. */
+export function checkExercise(): ExerciseKind {
+  return 'recall_typing'
 }
 
 /** Dạng bài chọn phương án (cần đủ từ trong sổ tay để làm phương án nhiễu). */

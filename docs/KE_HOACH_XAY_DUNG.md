@@ -190,6 +190,7 @@ DỊCH VỤ NGOÀI: Claude API (AI) · Google/Azure TTS (giọng đọc) · Free
 | Nhu cầu | Nguồn | Ghi chú |
 |---|---|---|
 | Nghĩa tiếng Anh, IPA, âm thanh | Free Dictionary API (dữ liệu Wiktionary) | Miễn phí; giấy phép CC BY-SA, cần ghi nguồn |
+| Phát âm từ và cụm ngắn (đang dùng từ bản 0.4.0) | Bản ghi giọng người thật trên Wiktionary / Wikimedia Commons (gồm Lingua Libre) | Miễn phí; tra một lần rồi lưu trên máy; chỉ nhận file tiếng Anh; giấy phép CC BY-SA/CC BY/PD, có ghi nguồn trong Cá nhân |
 | Đọc tức thời | Giọng đọc có sẵn trên máy (Web Speech API) | 0đ; chất lượng tùy thiết bị; không lưu thành file được |
 | Âm thanh lưu lại (R7.8) | Google Cloud TTS hoặc Azure TTS | Có hạn mức miễn phí hằng tháng, đủ cho cá nhân; tạo một lần rồi lưu vào Storage |
 | Bộ từ khởi đầu (R1.7) | NGSL (~2.800 từ thông dụng), TSL (từ vựng TOEIC), NAWL (học thuật) | Giấy phép CC BY-SA. Nghĩa tiếng Việt có thể sinh một lần bằng AI rồi rà soát |
@@ -245,6 +246,12 @@ Nguyên tắc:
 ### Giai đoạn 1 — Vòng học lõi: MVP dùng hằng ngày (4–6 tuần, 43 chức năng)
 
 > **Trạng thái 23/10/2026:** đã làm xong và phát hành cả 43 chức năng. Gồm: Sổ tay và Bộ từ; học mới bằng thẻ lật, kiểm tra ngay và "đã biết từ này"; ôn FSRS với trắc nghiệm, gõ từ, nghe viết và thẻ tự đánh giá; luyện lại khi sai; tạm dừng rồi tiếp tục; tổng kết buổi; phát âm Anh–Mỹ/Anh–Anh có đọc chậm; nhập CSV/Excel/Anki; cài đặt học tập; tự sao lưu lên Supabase khi đăng nhập. Có 84 test tự động.
+> **Cập nhật 24/10/2026 (bản 0.3.0):** làm lại trải nghiệm học/ôn theo mẫu bạn gửi. Gồm: thẻ từ mới hiện câu ngữ cảnh trước; chọn phương án rồi bấm "Kiểm tra"; "Chọn nghĩa của từ được gạch chân"; "Điền từ" theo ô chữ có gợi ý; bảng kết quả trượt lên (xanh/đỏ); nhân vật riêng của app; thanh tiến độ có nhân vật chạy theo; trang Hôm nay dạng biểu đồ 5 cấp; màn "Đang cập nhật lịch ôn". Làm sớm từ giai đoạn 4: R6.10 (nghe chọn nghĩa), R6.11 (chọn âm thanh đúng / điền chỗ trống bằng âm thanh) và một phần R6.9 (gợi ý chữ cái).
+
+> **Cập nhật 24/10/2026 (bản 0.4.0):**
+> - **Âm thanh:** từ và cụm ngắn ưu tiên bản ghi giọng người thật (Wiktionary/Wikimedia Commons, MP3 để iPhone phát được), tra trước khi vào buổi học và lưu trên máy. Câu ví dụ và từ chưa có bản ghi dùng giọng máy, app tự chọn giọng tốt nhất (Nâng cao/Cao cấp/Siri/Google…), người học chọn được giọng và xem hướng dẫn tải giọng chất lượng cao trong Cá nhân.
+> - **Học từ mới:** xem thẻ xong là "Điền từ" ngay cho từ đó (trước đây xem hết 5 thẻ mới kiểm tra).
+> - **Điền từ:** lộ sẵn vài chữ (1 chữ với từ 4–6 chữ cái, 2 với 7–12, tối đa 3; từ ≤3 chữ không lộ) ở **vị trí ngẫu nhiên, mỗi lần làm bài một kiểu** để không nhớ theo vị trí. Chữ lộ sẵn không tính là gợi ý; bấm "Gợi ý" lộ thêm chữ ở ô đang gõ và tính mức Khó (R6.9).
 > **Giới hạn hiện tại:** sao lưu mới chỉ gửi lên một chiều. Dữ liệu tạo trên máy này chưa hiện trên máy khác; đồng bộ hai chiều thuộc giai đoạn 2 (R11.5, R11.7). Trong lúc chờ, nên học trên một thiết bị chính.
 - Tài khoản: R1.2, R1.3 (tài khoản cá nhân tạo sẵn, chưa cần trang đăng ký)
 - Sổ tay: R2.1, R2.2, R2.3, R2.4, R2.5, R2.7, R2.9

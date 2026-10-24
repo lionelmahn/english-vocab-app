@@ -1,45 +1,40 @@
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useRef } from 'react'
-import { activeSlot, fillSlots, hintLetters, letterCount, slotTemplate, type Slot } from '../core/letters'
+import { activeSlotWithReveals, fillWithReveals, letterCount, slotTemplate, type Slot } from '../core/letters'
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
 
 /**
- * Ô chữ "Điền từ": mỗi chữ cái một gạch dưới, ô đang gõ được tô vàng.
- * Một ô nhập ẩn phủ lên trên để bàn phím điện thoại hoạt động bình thường.
+ * Ô chữ "Điền từ": mỗi chữ cái một gạch dưới, ô đang gõ được tô vàng, vài chữ lộ sẵn (màu xám)
+ * ở vị trí ngẫu nhiên. Một ô nhập ẩn phủ lên trên để bàn phím điện thoại hoạt động bình thường.
  */
 export function LetterSlots({
   term,
   value,
   onChange,
   onEnter,
-  hints = 0,
+  revealed,
   state = 'typing',
 }: {
   term: string
   value: string
   onChange: (v: string) => void
   onEnter: () => void
-  hints?: number
+  revealed: ReadonlySet<number>
   state?: SlotsState
 }) {
   const template = useMemo(() => slotTemplate(term), [term])
-  const prefix = hintLetters(template, hints)
-  const filled = fillSlots(template, prefix + value)
-  const active = state === 'typing' ? activeSlot(template, prefix + value) : -1
+  const filled = fillWithReveals(template, revealed, value)
+  const active = state === 'typing' ? activeSlotWithReveals(template, revealed, value) : -1
   const total = letterCount(template)
   const small = total > 14
   const localRef = useRef<HTMLInputElement | null>(null)
+
   // Tự bật bàn phím khi bài hiện ra.
   useEffect(() => {
     const t = setTimeout(() => localRef.current?.focus(), 400)
     return () => clearTimeout(t)
   }, [])
-  // Thứ tự chữ cái của từng ô (để tô xám các chữ được gợi ý).
-  const ordinal = useMemo(() => {
-    let n = 0
-    return template.map((s) => (s.kind === 'letter' ? n++ : -1))
-  }, [template])
 
   // Tách theo từ để xuống dòng không cắt đôi một từ.
   const words: { slot: Slot; index: number }[][] = [[]]
@@ -72,7 +67,7 @@ export function LetterSlots({
                     initial={filled[index] ? { y: -6, opacity: 0 } : false}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.12 }}
-                    className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-bold ${ordinal[index] < prefix.length ? 'text-subtle' : 'text-text'}`}
+                    className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-bold ${revealed.has(index) ? 'text-subtle' : 'text-text'}`}
                   >
                     {filled[index] ?? ''}
                   </motion.span>
@@ -88,8 +83,8 @@ export function LetterSlots({
         value={value}
         readOnly={state !== 'typing'}
         onChange={(e) => {
-          const letters = [...e.target.value].filter((c) => /[\p{L}\p{N}\s'’-]/u.test(c)).join('')
-          if ([...letters].filter((c) => /[\p{L}\p{N}]/u.test(c)).length + prefix.length <= total + 3) onChange(letters)
+          const next = [...e.target.value].filter((c) => /[\p{L}\p{N}\s'’-]/u.test(c)).join('')
+          if ([...next].filter((c) => /[\p{L}\p{N}]/u.test(c)).length <= total + 3) onChange(next)
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {

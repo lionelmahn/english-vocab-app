@@ -24,6 +24,11 @@ export interface AppSettings {
   reviewLimit: number
   /** Ôn bằng bài luyện (tự chấm) hay thẻ tự đánh giá. */
   reviewStyle: ReviewStyle
+  /** Ưu tiên bản ghi giọng người thật (Wiktionary) cho từ và cụm ngắn. */
+  preferRecordings: boolean
+  /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
+  voiceUS: string | null
+  voiceUK: string | null
 }
 
 const STORAGE_KEY = 'ui-settings'
@@ -37,6 +42,9 @@ export const DEFAULT_SETTINGS: AppSettings = {
   dailyNewWords: 10,
   reviewLimit: 50,
   reviewStyle: 'exercises',
+  preferRecordings: true,
+  voiceUS: null,
+  voiceUK: null,
 }
 
 function load(): AppSettings {

@@ -16,8 +16,7 @@ export function buildLearnPlan(lib: Library, opts: { deckIds?: ID[]; count: numb
     .slice(0, opts.count)
     .map((i) => i.id)
   if (ids.length === 0) return null
-  const mcq = canMultipleChoice(lib)
-  return planLearn(ids, () => checkExercise({ canMultipleChoice: mcq }), opts.now)
+  return planLearn(ids, () => checkExercise(), opts.now)
 }
 
 export function buildReviewPlan(
