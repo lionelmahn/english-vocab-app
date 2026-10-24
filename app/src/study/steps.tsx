@@ -151,14 +151,17 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
   useAutoPlay(item.term)
   useEnter(() => (flipped ? onNext(1) : setFlipped(true)))
 
-  const contextFront = sentence ? (
-    <p className="text-[24px] leading-relaxed font-medium">
-      <Sentence text={sentence} term={item.term} mode="underline" />
-    </p>
-  ) : (
+  // Mặt trước: từ cần học in đậm ở trên, câu ví dụ (gạch chân từ) ngay bên dưới.
+  const contextFront = (
     <>
-      <p className="text-[36px] leading-tight font-extrabold break-words">{item.term}</p>
-      {POS_SHORT[item.partOfSpeech] && <p className="text-[16px] text-muted">({POS_SHORT[item.partOfSpeech]})</p>}
+      <p className="text-[34px] leading-tight font-extrabold break-words">{item.term}</p>
+      {sentence ? (
+        <p className="mt-4 text-[20px] leading-relaxed">
+          <Sentence text={sentence} term={item.term} mode="underline" />
+        </p>
+      ) : (
+        POS_SHORT[item.partOfSpeech] && <p className="text-[16px] text-muted">({POS_SHORT[item.partOfSpeech]})</p>
+      )}
     </>
   )
   return (
