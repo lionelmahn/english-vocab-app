@@ -153,3 +153,13 @@ export interface AudioCacheEntry {
   audio: WordAudio | null
   fetchedAt: number
 }
+
+/** Âm thanh "Giọng iPhone" do app Phím tắt tạo (chỉ lưu trên máy này, không đồng bộ). */
+export interface VoiceClip {
+  /** Văn bản đã chuẩn hóa (clipKey). */
+  key: string
+  text: string
+  data: ArrayBuffer
+  mime: string
+  createdAt: number
+}

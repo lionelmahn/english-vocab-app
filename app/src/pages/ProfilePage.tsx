@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { CircleAlert, CloudOff, CloudUpload, FileUp, LoaderCircle, LogIn, LogOut, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
+import { AudioLines, ChevronRight, CircleAlert, CloudOff, CloudUpload, FileUp, LoaderCircle, LogIn, LogOut, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Segmented, Select } from '../components/kit'
@@ -9,7 +9,8 @@ import { updateSettings, useSettings } from '../lib/settings'
 import { APP_VERSION } from '../lib/version'
 import { checkCloud, signOut, useAuth, type CloudCheck } from '../services/auth'
 import { voiceLabel } from '../core/voices'
-import { englishVoices, hasExactVoice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
+import { englishVoices, hasExactVoice, isAppleDevice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
+import { useClipKeys } from '../services/voiceClips'
 import { syncNow, useSyncStatus } from '../services/sync'
 
 function SettingRow({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
@@ -117,12 +118,33 @@ function VoiceSettings() {
   const pinned = list.find((v) => v.voiceURI === current)
   const auto = pickVoice(accent, true)
   const apple = isAppleMobile()
+  const appleDevice = isAppleDevice()
+  const clipKeys = useClipKeys()
+  const navigate = useNavigate()
 
   return (
     <div className="flex flex-col gap-3">
       <SettingRow title="Ưu tiên giọng người thật" description="Bản ghi phát âm từng từ từ Wiktionary. Câu ví dụ và từ chưa có bản ghi dùng giọng máy.">
         <Switch label="Ưu tiên giọng người thật" checked={settings.preferRecordings} onChange={(v) => updateSettings({ preferRecordings: v })} />
       </SettingRow>
+      {appleDevice && (
+        <button
+          type="button"
+          onClick={() => navigate('/voice')}
+          className="flex items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent-soft p-3 text-left transition-transform active:scale-[0.98]"
+        >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-on-accent">
+            <AudioLines aria-hidden className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[15px] font-bold text-accent-strong">Giọng iPhone (Nâng cao/Cao cấp)</span>
+            <span className="block text-[13px] leading-snug text-muted">
+              {clipKeys.size > 0 ? `Đã có ${clipKeys.size} âm thanh. ` : ''}Dùng giọng bạn tải trong Cài đặt, qua app Phím tắt.
+            </span>
+          </span>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-accent" />
+        </button>
+      )}
       {(list.length > 0 || apple) && (
         <div className="flex items-end gap-2">
           <div className="min-w-0 flex-1">
@@ -169,7 +191,7 @@ function VoiceSettings() {
             </p>
           )}
           <p>
-            Để <b className="text-text">Tự động</b>, app nhờ iPhone đọc bằng giọng bạn chọn trong{' '}
+            Cách chắc chắn nhất là <b className="text-text">Giọng iPhone</b> ở trên. Ngoài ra, để <b className="text-text">Tự động</b>, app nhờ iPhone đọc bằng giọng bạn chọn trong{' '}
             <b className="text-text">Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh</b>, kể cả giọng tải thêm “Nâng cao”, “Cao cấp” (các giọng này không hiện trong danh sách
             trên vì Apple ẩn chúng với ứng dụng web).
           </p>

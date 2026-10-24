@@ -11,6 +11,7 @@ import type {
   StudySessionRow,
   SyncedTableName,
   VocabItem,
+  VoiceClip,
 } from './types'
 
 /**
@@ -28,6 +29,7 @@ export class VocabDatabase extends Dexie {
   outbox!: EntityTable<OutboxEntry, 'seq'>
   meta!: EntityTable<MetaEntry, 'key'>
   audioCache!: EntityTable<AudioCacheEntry, 'key'>
+  voiceClips!: EntityTable<VoiceClip, 'key'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -44,6 +46,7 @@ export class VocabDatabase extends Dexie {
     })
     // Phiên bản 2: bộ nhớ đệm bản ghi phát âm (giọng người thật) theo từ.
     this.version(2).stores({ audioCache: 'key' })
+    this.version(3).stores({ voiceClips: 'key' })
   }
 }
 

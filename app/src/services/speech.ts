@@ -3,6 +3,7 @@ import { bestVoice, langOf, rankVoices, type Accent } from '../core/voices'
 import { chooseUrl, isShortTerm } from '../core/wordAudio'
 import { getSettings, SPEECH_RATE } from '../lib/settings'
 import { cachedWordUrl, resolveWordAudio } from './audio'
+import { clipUrl } from './voiceClips'
 
 /**
  * Phát âm (R4.3, R7.1, R7.6):
@@ -95,6 +96,12 @@ export function isAppleMobile(): boolean {
   return /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
 }
 
+/** Máy Apple có app Phím tắt (iPhone, iPad, Mac). */
+export function isAppleDevice(): boolean {
+  if (typeof navigator === 'undefined') return false
+  return isAppleMobile() || /Macintosh/.test(navigator.userAgent)
+}
+
 /** Các giọng tiếng Anh trên máy (đã bỏ giọng vui nhộn, gộp giọng trùng), giọng tốt nhất trước. */
 export function englishVoices(accent: Accent): SpeechSynthesisVoice[] {
   return rankVoices(voices, accent)
@@ -158,10 +165,14 @@ export interface SpeakOptions {
   slow?: boolean
 }
 
-/** Đọc một từ/cụm/câu: ưu tiên bản ghi giọng người thật cho từ và cụm ngắn. */
+/** Đọc một từ/cụm/câu: giọng iPhone đã tạo → bản ghi giọng người thật → giọng máy. */
 export async function speak(text: string, { accent, slow = false }: SpeakOptions): Promise<void> {
   const t = text.trim()
   if (!t) return
+  // 1. Giọng iPhone (Nâng cao/Cao cấp) đã tạo bằng Phím tắt.
+  const clip = await clipUrl(t)
+  if (clip && (await playUrl(clip, t, slow))) return
+  // 2. Bản ghi giọng người thật (Wiktionary) cho từ và cụm ngắn.
   if (getSettings().preferRecordings && isShortTerm(t)) {
     let url = cachedWordUrl(t, accent)
     if (url === undefined) {

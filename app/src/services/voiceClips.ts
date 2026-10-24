@@ -1,0 +1,196 @@
+import { useSyncExternalStore } from 'react'
+import { clipKey, parsePasted, pasteFingerprint, type PasteResult } from '../core/voiceClips'
+import { db } from '../db/db'
+import { getSettings } from '../lib/settings'
+
+/**
+ * Kho âm thanh "Giọng iPhone" (tạo bằng app Phím tắt) trên máy này.
+ * Danh sách khóa nạp một lần vào bộ nhớ; file chỉ đọc ra khi cần phát.
+ */
+
+let keys: Set<string> | null = null
+let loading: Promise<Set<string>> | null = null
+let version = 0
+const urls = new Map<string, string>()
+const listeners = new Set<() => void>()
+
+const EMPTY: ReadonlySet<string> = new Set()
+/** Bản chụp danh sách khóa cho giao diện: mỗi lần đổi là một Set mới để React nhận ra. */
+let snapshot: ReadonlySet<string> = EMPTY
+
+function emit() {
+  version++
+  snapshot = keys ? new Set(keys) : EMPTY
+  listeners.forEach((l) => l())
+}
+
+function loadKeys(): Promise<Set<string>> {
+  if (keys) return Promise.resolve(keys)
+  loading ??= db.voiceClips
+    .toCollection()
+    .primaryKeys()
+    .then((k) => {
+      keys = new Set(k as string[])
+      emit()
+      return keys
+    })
+    .catch(() => (keys = new Set()))
+  return loading
+}
+
+if (typeof indexedDB !== 'undefined') void loadKeys()
+
+/** Đường dẫn phát âm thanh giọng iPhone của văn bản này; null nếu chưa có hoặc đang tắt. */
+export async function clipUrl(text: string): Promise<string | null> {
+  if (!getSettings().useVoiceClips) return null
+  const key = clipKey(text)
+  if (!(await loadKeys()).has(key)) return null
+  const cached = urls.get(key)
+  if (cached) return cached
+  const row = await db.voiceClips.get(key)
+  if (!row) return null
+  const url = URL.createObjectURL(new Blob([row.data], { type: row.mime }))
+  urls.set(key, url)
+  return url
+}
+
+export async function clipCount(): Promise<number> {
+  return (await loadKeys()).size
+}
+
+export async function clearClips(): Promise<void> {
+  await db.voiceClips.clear()
+  urls.forEach((u) => URL.revokeObjectURL(u))
+  urls.clear()
+  keys = new Set()
+  emit()
+}
+
+// ---- Lượt đang chờ dán ------------------------------------------------------------------------
+
+const PENDING_KEY = 'voice-clips-pending'
+const LAST_PASTE_KEY = 'voice-clips-last-paste'
+
+export interface PendingBatch {
+  texts: string[]
+  at: number
+}
+
+/** Lượt đã gửi sang Phím tắt, chờ dán kết quả (lưu lại vì iPhone có thể tải lại app khi chuyển qua lại). */
+export function getPending(): PendingBatch | null {
+  try {
+    const raw = localStorage.getItem(PENDING_KEY)
+    return raw ? (JSON.parse(raw) as PendingBatch) : null
+  } catch {
+    return null
+  }
+}
+
+export function setPending(texts: string[]): void {
+  try {
+    localStorage.setItem(PENDING_KEY, JSON.stringify({ texts, at: Date.now() } satisfies PendingBatch))
+  } catch {
+    // Không lưu được thì vẫn dán được trong lúc app còn mở.
+  }
+  memoryPending = { texts, at: Date.now() }
+  emit()
+}
+
+let memoryPending: PendingBatch | null = null
+
+function currentPending(): PendingBatch | null {
+  return getPending() ?? memoryPending
+}
+
+function clearPending() {
+  memoryPending = null
+  try {
+    localStorage.removeItem(PENDING_KEY)
+  } catch {
+    // bỏ qua
+  }
+  emit()
+}
+
+export type SaveResult = { ok: true; saved: number } | { ok: false; message: string }
+
+function explain(r: Exclude<PasteResult, { ok: true }>, expected: number): string {
+  if (r.reason === 'empty') return 'Bộ nhớ tạm đang trống. Phím tắt đã chạy xong chưa?'
+  if (r.reason === 'count')
+    return `Nhận được ${r.got} âm thanh nhưng đã gửi ${expected} mục. Kiểm tra bước “Kết hợp văn bản” dùng dấu “|”, rồi bấm “Tạo” lại.`
+  return 'Bộ nhớ tạm không chứa âm thanh từ phím tắt. Chạy phím tắt xong rồi hãy dán.'
+}
+
+/** Lưu nội dung dán vào cho lượt đang chờ. */
+export async function saveFromPaste(raw: string): Promise<SaveResult> {
+  const pending = currentPending()
+  if (!pending) return { ok: false, message: 'Chưa có lượt nào đang chờ. Bấm “Tạo” trước.' }
+  let last: string | null = null
+  try {
+    last = localStorage.getItem(LAST_PASTE_KEY)
+  } catch {
+    last = null
+  }
+  const fp = pasteFingerprint(raw)
+  if (last && last === fp) return { ok: false, message: 'Đây vẫn là âm thanh của lần trước. Chạy phím tắt cho lượt mới rồi dán lại.' }
+
+  const r = parsePasted(raw, pending.texts.length)
+  if (!r.ok) return { ok: false, message: explain(r, pending.texts.length) }
+
+  const now = Date.now()
+  const rows = pending.texts.map((text, i) => {
+    const { bytes, mime } = r.clips[i]
+    const data = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer
+    return { key: clipKey(text), text, data, mime, createdAt: now }
+  })
+  await db.voiceClips.bulkPut(rows)
+  for (const row of rows) {
+    const old = urls.get(row.key)
+    if (old) URL.revokeObjectURL(old)
+    urls.delete(row.key)
+  }
+  const set = await loadKeys()
+  rows.forEach((row) => set.add(row.key))
+  emit()
+  try {
+    localStorage.setItem(LAST_PASTE_KEY, fp)
+  } catch {
+    // bỏ qua
+  }
+  clearPending()
+  // Xin trình duyệt giữ dữ liệu lâu dài để không bị xóa khi máy thiếu dung lượng.
+  void navigator.storage?.persist?.().catch(() => undefined)
+  return { ok: true, saved: rows.length }
+}
+
+/** Đọc bảng tạm (iPhone sẽ hiện nút "Dán" để người học xác nhận) rồi lưu. */
+export async function pasteFromClipboard(): Promise<SaveResult> {
+  let raw: string
+  try {
+    raw = await navigator.clipboard.readText()
+  } catch {
+    return { ok: false, message: 'Không đọc được bộ nhớ tạm. Bấm “Dán” khi iPhone hỏi, hoặc dùng ô “Dán thủ công” bên dưới.' }
+  }
+  return saveFromPaste(raw)
+}
+
+export function cancelPending(): void {
+  clearPending()
+}
+
+// ---- Theo dõi trong giao diện ------------------------------------------------------------------
+
+function subscribe(l: () => void) {
+  listeners.add(l)
+  return () => listeners.delete(l)
+}
+
+/** Các khóa đã có giọng iPhone (đổi mỗi khi lưu/xóa). */
+export function useClipKeys(): ReadonlySet<string> {
+  return useSyncExternalStore(subscribe, () => snapshot)
+}
+
+export function usePending(): PendingBatch | null {
+  useSyncExternalStore(subscribe, () => version)
+  return currentPending()
+}

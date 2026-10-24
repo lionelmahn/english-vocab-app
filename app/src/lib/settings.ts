@@ -31,6 +31,10 @@ export interface AppSettings {
   voiceUK: string | null
   /** Tốc độ giọng máy (bản ghi giọng người thật giữ tốc độ gốc). */
   speechSpeed: SpeechSpeed
+  /** Phát âm thanh "Giọng iPhone" đã tạo bằng Phím tắt (ưu tiên trên hết). */
+  useVoiceClips: boolean
+  /** Tên phím tắt tạo giọng iPhone. */
+  shortcutName: string
 }
 
 export type SpeechSpeed = 'slower' | 'slow' | 'normal' | 'fast'
@@ -52,6 +56,8 @@ export const DEFAULT_SETTINGS: AppSettings = {
   voiceUS: null,
   voiceUK: null,
   speechSpeed: 'normal',
+  useVoiceClips: true,
+  shortcutName: 'VocabVoice',
 }
 
 function load(): AppSettings {

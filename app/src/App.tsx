@@ -12,6 +12,7 @@ import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
 import { NotebookPage } from './pages/NotebookPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { VoiceClipsPage } from './pages/VoiceClipsPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { StatsPage } from './pages/StatsPage'
 import { StudyPage } from './pages/StudyPage'
@@ -88,6 +89,7 @@ export default function App() {
                 <Route path="/lookup" element={<LookupPage />} />
                 <Route path="/stats" element={<StatsPage />} />
                 <Route path="/me" element={<ProfilePage />} />
+                <Route path="/voice" element={<VoiceClipsPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="*" element={<TodayPage />} />
