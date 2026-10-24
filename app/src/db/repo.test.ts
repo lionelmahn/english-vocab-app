@@ -94,6 +94,26 @@ describe('repo — mục học và bộ từ', () => {
   })
 })
 
+describe('repo — gộp từ trùng (R2.5, R11.4)', () => {
+  it('giữ mục có tiến độ, bổ sung thông tin còn thiếu, chuyển bộ từ, xóa mục thừa', async () => {
+    const a = await repo.createDeck({ name: 'A' })
+    const b = await repo.createDeck({ name: 'B' })
+    const learned = await repo.createItem(input('run', 'chạy', { partOfSpeech: 'verb', tags: ['Thể thao'] }), [a], T0 + 5)
+    const extra = await repo.createItem(input('Run', 'Chạy.', { partOfSpeech: 'verb', note: 'ghi chú', favorite: true, tags: ['thể thao', 'IELTS'] }), [b], T0)
+    await repo.createItem(input('run', 'điều hành', { partOfSpeech: 'verb' }), [], T0)
+    await database.cardStates.put(await repo.scheduledCard(learned, Rating.Good, T0))
+
+    expect(await repo.mergeDuplicates(T0 + 100)).toEqual({ groups: 1, removed: 1 })
+    const lib = await loadLibrary(database)
+    expect(lib.items).toHaveLength(2)
+    expect(lib.itemById.has(extra)).toBe(false)
+    expect(lib.itemById.get(learned)).toMatchObject({ note: 'ghi chú', favorite: true, tags: ['Thể thao', 'IELTS'] })
+    expect([...lib.members.get(learned)!].sort()).toEqual([a, b].sort())
+    expect(lib.cards.get(learned)!.reps).toBe(1)
+    expect(await repo.mergeDuplicates()).toEqual({ groups: 0, removed: 0 })
+  })
+})
+
 describe('repo — học và ôn', () => {
   it('ghi lượt trả lời, lập lịch ôn và lưu tiến trình buổi', async () => {
     const id = await repo.createItem(input('resilient', 'kiên cường'))

@@ -4,7 +4,7 @@ import type { ReviewStyle } from '../core/exercises'
 /**
  * Cài đặt giao diện và trải nghiệm học (R14.1 một phần, R14.2) của từng thiết bị.
  * Lưu trong localStorage; nếu trình duyệt chặn lưu trữ thì dùng giá trị mặc định.
- * Sẽ đồng bộ theo hồ sơ người học ở giai đoạn 2.
+ * Mang sang thiết bị khác bằng bản sao lưu (R11.3, R11.4); đồng bộ theo hồ sơ người học làm ở R1.4, R1.5.
  */
 
 export interface AppSettings {
@@ -93,4 +93,22 @@ function subscribe(listener: () => void): () => void {
 
 export function useSettings(): AppSettings {
   return useSyncExternalStore(subscribe, () => current)
+}
+
+/** Giọng máy và phím tắt là của riêng từng thiết bị, không mang theo bản sao lưu. */
+const DEVICE_ONLY: readonly string[] = ['voiceUS', 'voiceUK', 'useVoiceClips', 'shortcutName']
+
+/** Cài đặt học mang sang thiết bị khác được (ghi vào bản sao lưu). */
+export function portableSettings(): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(current).filter(([k]) => !DEVICE_ONLY.includes(k)))
+}
+
+/** Áp dụng cài đặt từ bản sao lưu, bỏ qua mục lạ hoặc sai kiểu. Trả về số mục đã áp dụng. */
+export function applyPortableSettings(raw: Record<string, unknown>): number {
+  const defaults = DEFAULT_SETTINGS as unknown as Record<string, unknown>
+  const patch = Object.fromEntries(
+    Object.entries(raw).filter(([k, v]) => k in defaults && !DEVICE_ONLY.includes(k) && typeof v === typeof defaults[k]),
+  ) as Partial<AppSettings>
+  updateSettings(patch)
+  return Object.keys(patch).length
 }

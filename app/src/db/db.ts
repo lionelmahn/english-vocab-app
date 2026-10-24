@@ -9,6 +9,7 @@ import type {
   Profile,
   ReviewLogRow,
   StudySessionRow,
+  SyncBaseEntry,
   SyncedTableName,
   VocabItem,
   VoiceClip,
@@ -30,6 +31,7 @@ export class VocabDatabase extends Dexie {
   meta!: EntityTable<MetaEntry, 'key'>
   audioCache!: EntityTable<AudioCacheEntry, 'key'>
   voiceClips!: EntityTable<VoiceClip, 'key'>
+  syncBase!: EntityTable<SyncBaseEntry, 'key'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -47,6 +49,8 @@ export class VocabDatabase extends Dexie {
     // Phiên bản 2: bộ nhớ đệm bản ghi phát âm (giọng người thật) theo từ.
     this.version(2).stores({ audioCache: 'key' })
     this.version(3).stores({ voiceClips: 'key' })
+    // Phiên bản 4: bản đã đồng bộ của từng dòng, làm gốc khi gộp thay đổi từ nhiều thiết bị (R11.7).
+    this.version(4).stores({ syncBase: 'key' })
   }
 }
 

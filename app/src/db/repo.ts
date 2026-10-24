@@ -2,7 +2,8 @@ import type { FSRS, Grade } from 'ts-fsrs'
 import type { ExerciseKind } from '../core/grading'
 import { applyReview, createScheduler, newCard } from '../core/scheduler'
 import type { AnswerEffect, SessionPlan, Step } from '../core/session'
-import { findDuplicates, termKey, type DuplicateCandidate, type DuplicateMatch } from '../core/vocab'
+import { sameContent } from '../core/merge'
+import { duplicateGroups, findDuplicates, termKey, type DuplicateCandidate, type DuplicateMatch } from '../core/vocab'
 import { getDeviceId } from '../lib/device'
 import { cardToRow, rowToCard } from './cards'
 import { commit, db, notifyChange, type Change, type VocabDatabase } from './db'
@@ -52,6 +53,13 @@ function normalizeInput(input: ItemInput): ItemInput {
     examples: input.examples.map((e) => ({ en: e.en.trim(), vi: clean(e.vi) })).filter((e) => e.en),
     acceptedAnswers: input.acceptedAnswers.map((a) => a.trim()).filter(Boolean),
   }
+}
+
+/** Gộp nhãn, bỏ nhãn trùng khác hoa thường (giữ cách viết gặp trước). */
+function unionTags(tags: string[]): string[] {
+  const out = new Map<string, string>()
+  for (const t of tags) if (!out.has(t.toLowerCase())) out.set(t.toLowerCase(), t)
+  return [...out.values()]
 }
 
 export function createRepo(database: VocabDatabase, scheduler: FSRS = createScheduler()) {
@@ -138,6 +146,65 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       const card = await database.cardStates.get(id)
       if (!card || card.deletedAt !== null) return
       await save([{ table: 'cardStates', rows: [{ ...card, suspended, updatedAt: now }] }], now)
+    },
+
+    /**
+     * Gộp từ trùng nội dung (R2.5, R11.4). Mỗi nhóm giữ mục có tiến độ cao nhất (rồi mục tạo sớm nhất),
+     * bổ sung nhãn, ví dụ, ghi chú… còn thiếu từ các mục kia; các mục kia bị xóa (mềm) và bộ từ của chúng
+     * chuyển sang mục giữ lại. Lịch sử trả lời được giữ nguyên.
+     */
+    async mergeDuplicates(now = Date.now()): Promise<{ groups: number; removed: number }> {
+      const groups = duplicateGroups(await database.vocabItems.toArray())
+      if (groups.length === 0) return { groups: 0, removed: 0 }
+      const cards = new Map((await database.cardStates.toArray()).filter((c) => c.deletedAt === null).map((c) => [c.id, c]))
+      const links = (await database.deckItems.toArray()).filter((d) => d.deletedAt === null)
+      const reps = (i: VocabItem) => cards.get(i.id)?.reps ?? -1
+      const items: VocabItem[] = []
+      const cardRows: CardStateRow[] = []
+      const linkRows: DeckItem[] = []
+      let removed = 0
+      for (const group of groups) {
+        const [keep, ...rest] = [...group].sort((a, b) => reps(b) - reps(a) || a.createdAt - b.createdAt || (a.id < b.id ? -1 : 1))
+        const fill = <K extends 'meaningEn' | 'ipaUk' | 'ipaUs' | 'note' | 'mnemonic' | 'source'>(k: K) => keep[k] ?? rest.find((r) => r[k])?.[k]
+        const merged: VocabItem = {
+          ...keep,
+          meaningEn: fill('meaningEn'),
+          ipaUk: fill('ipaUk'),
+          ipaUs: fill('ipaUs'),
+          note: fill('note'),
+          mnemonic: fill('mnemonic'),
+          source: fill('source'),
+          examples: keep.examples.length > 0 ? keep.examples : (rest.find((r) => r.examples.length > 0)?.examples ?? []),
+          acceptedAnswers: [...new Set([keep, ...rest].flatMap((i) => i.acceptedAnswers))],
+          tags: unionTags([keep, ...rest].flatMap((i) => i.tags)),
+          favorite: group.some((i) => i.favorite),
+          difficult: group.some((i) => i.difficult),
+          updatedAt: now,
+        }
+        if (!sameContent(merged, keep)) items.push(merged)
+        const keepDecks = new Set(links.filter((l) => l.itemId === keep.id).map((l) => l.deckId))
+        for (const r of rest) {
+          removed++
+          items.push({ ...r, deletedAt: now, updatedAt: now })
+          const card = cards.get(r.id)
+          if (card) cardRows.push({ ...card, deletedAt: now, updatedAt: now })
+          for (const l of links.filter((x) => x.itemId === r.id)) {
+            linkRows.push({ ...l, deletedAt: now, updatedAt: now })
+            if (keepDecks.has(l.deckId)) continue
+            keepDecks.add(l.deckId)
+            linkRows.push({ id: crypto.randomUUID(), deckId: l.deckId, itemId: keep.id, position: l.position, createdAt: now, updatedAt: now, deletedAt: null })
+          }
+        }
+      }
+      await save(
+        [
+          { table: 'vocabItems', rows: items },
+          { table: 'deckItems', rows: linkRows },
+          { table: 'cardStates', rows: cardRows },
+        ],
+        now,
+      )
+      return { groups: groups.length, removed }
     },
 
     /**

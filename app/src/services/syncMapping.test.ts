@@ -1,37 +1,18 @@
-import { PGlite } from '@electric-sql/pglite'
-import { readFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import type { PGlite } from '@electric-sql/pglite'
 import { beforeAll, describe, expect, it } from 'vitest'
 import type { CardStateRow, Deck, DeckItem, ReviewLogRow, VocabItem } from '../db/types'
-import { cardStateToRemote, deckItemToRemote, deckToRemote, reviewLogToRemote, vocabItemToRemote } from './syncMapping'
+import { cardStateToRemote, deckItemToRemote, deckToRemote, fromRemote, reviewLogToRemote, toMs, vocabItemToRemote } from './syncMapping'
+import { addUser, startTestServer, upsertAs } from './testServer'
 
 /**
  * Kiểm tra dữ liệu app gửi lên khớp schema thật trên máy chủ (cột, kiểu, ràng buộc, RLS),
  * bằng cách chạy file migration trên Postgres trong bộ nhớ và chèn như PostgREST.
  */
 
-const MIGRATION = fileURLToPath(new URL('../../../supabase/migrations/20261023000000_init.sql', import.meta.url))
 const USER = '00000000-0000-0000-0000-0000000000aa'
 let pg: PGlite
 
-async function asUser<T>(fn: () => Promise<T>): Promise<T> {
-  await pg.exec(`set role authenticated; select set_config('request.jwt.claim.sub', '${USER}', false);`)
-  try {
-    return await fn()
-  } finally {
-    await pg.exec('reset role;')
-  }
-}
-
-/** Giống PostgREST upsert: chèn từ JSON, xung đột id thì cập nhật (hoặc bỏ qua). */
-async function upsert(table: string, rows: Record<string, unknown>[], ignoreDuplicates = false) {
-  const cols = Object.keys(rows[0])
-  const list = cols.map((c) => `"${c}"`).join(', ')
-  const onConflict = ignoreDuplicates ? 'do nothing' : `do update set ${cols.filter((c) => c !== 'id').map((c) => `"${c}" = excluded."${c}"`).join(', ')}`
-  return asUser(() =>
-    pg.query(`insert into public.${table} (${list}) select ${list} from json_populate_recordset(null::public.${table}, $1) on conflict (id) ${onConflict}`, [JSON.stringify(rows)]),
-  )
-}
+const upsert = (table: string, rows: Record<string, unknown>[], ignoreDuplicates = false) => upsertAs(pg, USER, table, rows, ignoreDuplicates)
 
 const T = Date.parse('2026-10-24T08:00:00Z')
 const item: VocabItem = {
@@ -87,19 +68,8 @@ const log: ReviewLogRow = {
 }
 
 beforeAll(async () => {
-  pg = new PGlite()
-  await pg.exec(`
-    create schema auth;
-    create table auth.users (id uuid primary key);
-    create role authenticated;
-    create role anon;
-    create function auth.uid() returns uuid language sql stable as
-      $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
-    grant usage on schema auth to authenticated;
-    grant execute on function auth.uid() to authenticated;
-  `)
-  await pg.exec(readFileSync(MIGRATION, 'utf8'))
-  await pg.exec(`insert into auth.users values ('${USER}');`)
+  pg = await startTestServer()
+  await addUser(pg, USER)
 }, 60_000)
 
 describe('dữ liệu gửi lên khớp schema máy chủ', () => {
@@ -137,5 +107,34 @@ describe('dữ liệu gửi lên khớp schema máy chủ', () => {
     await upsert('deck_items', [deckItemToRemote({ ...link, deletedAt: T + 5000, updatedAt: T + 5000 })])
     const r = (await pg.query<{ deleted_at: Date | null }>(`select deleted_at from public.deck_items where id = '${link.id}'`)).rows[0]
     expect(r.deleted_at).not.toBeNull()
+  })
+})
+
+describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', () => {
+  const read = async (table: string, id: string) =>
+    (await pg.query<{ row: Record<string, unknown> }>(`select to_jsonb(t) as row from public.${table} t where id = $1`, [id])).rows[0].row
+
+  it('từ, bộ, liên kết, lịch ôn và lượt trả lời giữ nguyên sau một vòng lên rồi về', async () => {
+    const edited = { ...item, meaningVi: 'kiên cường', note: 'ghi chú', updatedAt: T + 9000 }
+    await upsert('vocab_items', [vocabItemToRemote(edited)])
+    await upsert('decks', [deckToRemote({ ...deck, description: 'Từ học thuật', dailyGoal: 15 })])
+    await upsert('deck_items', [deckItemToRemote(link)])
+    await upsert('card_states', [cardStateToRemote(card)])
+    expect(fromRemote('vocabItems', await read('vocab_items', item.id))).toEqual({
+      ...edited,
+      meaningEn: undefined,
+      ipaUk: undefined,
+      mnemonic: undefined,
+      source: undefined,
+    })
+    expect(fromRemote('decks', await read('decks', deck.id))).toEqual({ ...deck, description: 'Từ học thuật', topic: undefined, dailyGoal: 15 })
+    expect(fromRemote('deckItems', await read('deck_items', link.id))).toEqual(link)
+    expect(fromRemote('cardStates', await read('card_states', card.id))).toEqual(card)
+    expect(fromRemote('reviewLogs', await read('review_logs', log.id))).toEqual(log)
+  })
+
+  it('đọc được mốc thời gian có micro giây của máy chủ', () => {
+    expect(toMs('2026-10-24T08:00:00.123456+00:00')).toBe(Date.parse('2026-10-24T08:00:00.123Z'))
+    expect(toMs('2026-10-24T15:00:00+07:00')).toBe(Date.parse('2026-10-24T08:00:00Z'))
   })
 })

@@ -1,22 +1,25 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { useSyncExternalStore } from 'react'
-import { db, onLocalChange, type VocabDatabase } from '../db/db'
+import { db, onLocalChange } from '../db/db'
+import { appScheduler } from '../db/repo'
 import { getAuth, subscribeAuth } from './auth'
 import { getSupabase } from './supabase'
-import { PUSH_ORDER, REMOTE_TABLE, toRemote } from './syncMapping'
+import { bindAccount, forgetCursors, syncOnce, type SyncRemote, type SyncResult } from './syncEngine'
 
 /**
- * Sao lưu dữ liệu học lên Supabase (R11.1): gửi các thay đổi trong hàng đợi khi đã đăng nhập.
- * Kéo dữ liệu từ máy chủ về và xử lý xung đột nhiều thiết bị là giai đoạn 2 (R11.5, R11.7).
+ * Đồng bộ dữ liệu học với Supabase khi đã đăng nhập (R11.1, R11.5, R11.7).
+ * Tự chạy khi mở app, khi có thay đổi, khi quay lại app, khi có mạng lại và định kỳ.
  */
 
 export interface SyncStatus {
   state: 'off' | 'idle' | 'syncing' | 'error' | 'offline'
   lastSyncedAt: number | null
   error: string | null
+  /** Kết quả lần đồng bộ thành công gần nhất. */
+  last: SyncResult | null
 }
 
-let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null }
+let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null, last: null }
 const listeners = new Set<() => void>()
 function setStatus(patch: Partial<SyncStatus>) {
   status = { ...status, ...patch }
@@ -33,40 +36,33 @@ export function useSyncStatus(): SyncStatus {
   )
 }
 
-const BATCH = 400
-
-/** Gửi một lượt hàng đợi. Trả về số dòng đã gửi. Lỗi thì giữ nguyên hàng đợi để thử lại. */
-export async function pushOutbox(database: VocabDatabase, client: SupabaseClient, batch = BATCH): Promise<number> {
-  const entries = await database.outbox.orderBy('seq').limit(batch).toArray()
-  if (entries.length === 0) return 0
-  const maxSeq = entries[entries.length - 1].seq!
-  const byTable = new Map<string, Set<string>>()
-  for (const e of entries) {
-    let set = byTable.get(e.table)
-    if (!set) byTable.set(e.table, (set = new Set()))
-    set.add(e.rowId)
+/** Kênh đồng bộ qua PostgREST của Supabase. */
+export function supabaseRemote(client: SupabaseClient): SyncRemote {
+  return {
+    async upsert(table, rows, { ignoreDuplicates }) {
+      const { error } = await client.from(table).upsert(rows, { onConflict: 'id', ignoreDuplicates })
+      if (error) throw new Error(`${table}: ${error.message}`)
+    },
+    async pullPage(table, after, limit) {
+      // Phân trang theo (server_updated_at, id) để không sót dòng ghi cùng một thời điểm.
+      const ts = `"${after.ts}"`
+      const { data, error } = await client
+        .from(table)
+        .select('*')
+        .or(`server_updated_at.gt.${ts},and(server_updated_at.eq.${ts},id.gt.${after.id})`)
+        .order('server_updated_at', { ascending: true })
+        .order('id', { ascending: true })
+        .limit(limit)
+      if (error) throw new Error(`${table}: ${error.message}`)
+      return data as Record<string, unknown>[]
+    },
   }
-  let pushed = 0
-  for (const table of PUSH_ORDER) {
-    const ids = byTable.get(table)
-    if (!ids || ids.size === 0) continue
-    const rows = (await database.table(table).bulkGet([...ids])).filter(Boolean)
-    if (rows.length === 0) continue
-    const data = rows.map((r) => toRemote(table, r))
-    const query = client.from(REMOTE_TABLE[table])
-    const { error } =
-      table === 'reviewLogs'
-        ? await query.upsert(data, { onConflict: 'id', ignoreDuplicates: true }) // chỉ thêm, gửi lại không nhân đôi
-        : await query.upsert(data, { onConflict: 'id' })
-    if (error) throw new Error(`${REMOTE_TABLE[table]}: ${error.message}`)
-    pushed += data.length
-  }
-  await database.outbox.where('seq').belowOrEqual(maxSeq).delete()
-  return pushed
 }
 
 let running = false
 let again = false
+/** Lần đồng bộ tới kéo lại toàn bộ (đặt khi đang có lượt đồng bộ chạy dở). */
+let refetch = false
 let timer: ReturnType<typeof setTimeout> | undefined
 
 export async function syncNow(): Promise<void> {
@@ -88,13 +84,14 @@ export async function syncNow(): Promise<void> {
   running = true
   setStatus({ state: 'syncing', error: null })
   try {
-    const sb = await client
-    // Gửi nhiều lượt cho tới khi hết hàng đợi.
-    for (let i = 0; i < 50; i++) {
-      const n = await pushOutbox(db, sb)
-      if (n === 0 && (await db.outbox.count()) === 0) break
+    const remote = supabaseRemote(await client)
+    await bindAccount(db, auth.userId)
+    if (refetch) {
+      refetch = false
+      await forgetCursors(db)
     }
-    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null })
+    const last = await syncOnce(db, remote, { scheduler: appScheduler, now: Date.now })
+    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last })
   } catch (e) {
     setStatus({ state: navigator.onLine === false ? 'offline' : 'error', error: (e as Error).message })
   } finally {
@@ -104,6 +101,12 @@ export async function syncNow(): Promise<void> {
       schedule(1000)
     }
   }
+}
+
+/** Tải lại toàn bộ dữ liệu từ máy chủ và gộp với dữ liệu trên thiết bị (không xóa gì). */
+export async function resyncAll(): Promise<void> {
+  refetch = true
+  await syncNow()
 }
 
 function schedule(delay = 2500) {

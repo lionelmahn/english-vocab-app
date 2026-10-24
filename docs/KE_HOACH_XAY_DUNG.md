@@ -261,7 +261,7 @@ Nguyên tắc:
 > - **Bản 0.5.8:** Điền từ: đã đủ ô mà gõ thêm thì không nhận chữ thừa; ô chữ cuối rung và gạch dưới nháy đỏ (Android rung máy nhẹ) thay cho dòng cảnh báo. Xóa luôn được nhận.
 > - **Học từ mới:** xem thẻ xong là "Điền từ" ngay cho từ đó (trước đây xem hết 5 thẻ mới kiểm tra).
 > - **Điền từ:** lộ sẵn vài chữ (1 chữ với từ 4–6 chữ cái, 2 với 7–12, tối đa 3; từ ≤3 chữ không lộ) ở **vị trí ngẫu nhiên, mỗi lần làm bài một kiểu** để không nhớ theo vị trí. Chữ lộ sẵn không tính là gợi ý; bấm "Gợi ý" lộ thêm chữ ở ô đang gõ và tính mức Khó (R6.9).
-> **Giới hạn hiện tại:** sao lưu mới chỉ gửi lên một chiều. Dữ liệu tạo trên máy này chưa hiện trên máy khác; đồng bộ hai chiều thuộc giai đoạn 2 (R11.5, R11.7). Trong lúc chờ, nên học trên một thiết bị chính.
+> **Giới hạn đến bản 0.5.8:** sao lưu chỉ gửi lên một chiều, dữ liệu tạo trên máy này chưa hiện trên máy khác. Đã giải quyết ở bản 0.6.0 (giai đoạn 2: đồng bộ hai chiều).
 - Tài khoản: R1.2, R1.3 (tài khoản cá nhân tạo sẵn, chưa cần trang đăng ký)
 - Sổ tay: R2.1, R2.2, R2.3, R2.4, R2.5, R2.7, R2.9
 - Bộ từ: R3.1, R3.2, R3.3, R3.4, R3.6
@@ -274,6 +274,14 @@ Nguyên tắc:
 - **Xong khi:** bạn nhập được danh sách từ đang có, học mới bằng flashcard, ôn theo lịch FSRS với 3 dạng bài, dữ liệu tự sao lưu lên đám mây. Đây là lúc có thể bỏ phần mềm trả phí.
 
 ### Giai đoạn 2 — Hoàn thiện toàn bộ P1 (4–5 tuần, 21 chức năng)
+
+> **Trạng thái 24/10/2026 (bản 0.6.0):** bắt đầu giai đoạn 2 bằng dữ liệu nhiều thiết bị. Xong R11.4, R11.5, R11.7 và phần "bản sao lưu có tiến độ" của R11.3 (P1: 46/64).
+> - **Đồng bộ hai chiều (R11.5):** mỗi lượt đồng bộ kéo thay đổi trên máy chủ về và gộp trước, rồi mới gửi thay đổi của thiết bị lên. Tự chạy khi mở app, sau mỗi thay đổi, khi quay lại app, khi có mạng lại và mỗi 2 phút; có nút "Đồng bộ ngay". Kéo theo trang (server_updated_at, id) và kéo chồng lấn 60 giây để không sót dòng ghi xong muộn. Không cần chạy thêm SQL trên Supabase.
+> - **Xử lý xung đột (R11.7):** gộp ba chiều theo từng trường, so với bản đã đồng bộ lần trước (bảng `syncBase` trên thiết bị). Sửa khác trường trên hai máy thì giữ cả hai; cùng sửa một trường thì bản sửa sau thắng (hai máy chọn giống nhau). Lượt trả lời chỉ thêm, gửi trước lịch ôn. Lịch ôn bị đổi ở cả hai máy, hoặc thiếu lượt trả lời, được tính lại từ toàn bộ lượt trả lời.
+> - **Sao lưu ra file và khôi phục (R11.4, một phần R11.3):** Cá nhân → Sao lưu và khôi phục. File .json gồm từ, bộ, lịch ôn, lịch sử học và cài đặt học (trừ giọng máy, phím tắt). iPhone lưu qua bảng chia sẻ ("Lưu vào Tệp"). Khi khôi phục, app kiểm tra file (bỏ qua dòng hỏng), cho xem trước, chọn **Gộp** hoặc **Thay thế**, xử lý từ trùng. Cách nào cũng không mất lượt học. Có thêm nút "Tải lại toàn bộ từ máy chủ".
+> - **Gộp từ trùng:** từ cùng mặt chữ, loại từ và nghĩa (thường do nhập cùng một danh sách trên hai máy trước khi có đồng bộ) được gộp: giữ mục có tiến độ cao nhất, bổ sung thông tin còn thiếu, chuyển bộ từ, giữ lịch sử. Sổ tay hiện dòng nhắc khi có từ trùng.
+> - **Kiểm thử:** 162 test, gồm mô phỏng hai thiết bị đồng bộ qua Postgres chạy đúng file migration Supabase (ôn cùng một từ khi mất mạng, sửa cùng lúc, xóa khi máy kia đang sửa, ghi đè gần cùng lúc, hơn 1.000 dòng, lỗi mạng giữa chừng). Cú pháp truy vấn kéo đã thử với Supabase thật.
+> - **Chưa làm:** phần "xuất nội dung" (CSV/Excel) của R11.3. Giọng iPhone (`voiceClips`) vẫn chỉ nằm trên từng máy. Cài đặt chưa tự đồng bộ, chỉ mang theo được bằng file sao lưu (sẽ đồng bộ theo hồ sơ ở R1.4, R1.5).
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

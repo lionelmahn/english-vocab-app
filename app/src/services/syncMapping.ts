@@ -1,6 +1,6 @@
-import type { CardStateRow, Deck, DeckItem, ReviewLogRow, SyncedTableName, VocabItem } from '../db/types'
+import type { CardStateRow, Deck, DeckItem, Example, ReviewLogRow, SyncedTableName, VocabItem } from '../db/types'
 
-/** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO). */
+/** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO) và ngược lại. */
 
 const iso = (ms: number | null | undefined): string | null => (ms == null ? null : new Date(ms).toISOString())
 const orNull = <T>(v: T | undefined): T | null => (v === undefined ? null : v)
@@ -14,8 +14,11 @@ export const REMOTE_TABLE: Record<Exclude<SyncedTableName, 'profiles'>, string> 
   reviewLogs: 'review_logs',
 }
 
-/** Thứ tự gửi để không vi phạm khóa ngoại (từ và bộ trước, liên kết và lịch ôn sau). */
-export const PUSH_ORDER = ['vocabItems', 'decks', 'deckItems', 'cardStates', 'reviewLogs'] as const
+/**
+ * Thứ tự gửi và kéo: từ và bộ trước, liên kết sau (khóa ngoại).
+ * Lượt trả lời đi trước lịch ôn, để máy chủ không bao giờ có lịch ôn mà thiếu lượt trả lời tạo ra nó.
+ */
+export const PUSH_ORDER = ['vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates'] as const
 export type PushTable = (typeof PUSH_ORDER)[number]
 
 export function vocabItemToRemote(r: VocabItem) {
@@ -119,5 +122,131 @@ export function toRemote(table: PushTable, row: unknown): Record<string, unknown
       return cardStateToRemote(row as CardStateRow)
     case 'reviewLogs':
       return reviewLogToRemote(row as ReviewLogRow)
+  }
+}
+
+// ---- Máy chủ → thiết bị ------------------------------------------------------------------
+
+type RemoteRow = Record<string, unknown>
+
+/** Mốc thời gian của máy chủ (ISO, có thể tới micro giây) sang mili-giây. */
+export function toMs(s: string): number {
+  return Date.parse(s.replace(/(\.\d{3})\d+/, '$1'))
+}
+const ms = (v: unknown): number => toMs(v as string)
+const msOrNull = (v: unknown): number | null => (v == null ? null : toMs(v as string))
+const text = (v: unknown): string | undefined => (v == null ? undefined : (v as string))
+
+export function vocabItemFromRemote(r: RemoteRow): VocabItem {
+  return {
+    id: r.id as string,
+    term: r.term as string,
+    termKey: r.term_key as string,
+    partOfSpeech: r.part_of_speech as VocabItem['partOfSpeech'],
+    meaningVi: r.meaning_vi as string,
+    meaningEn: text(r.meaning_en),
+    ipaUk: text(r.ipa_uk),
+    ipaUs: text(r.ipa_us),
+    examples: ((r.examples as Example[] | null) ?? []).map((e) => ({ en: e.en, vi: text(e.vi) })),
+    acceptedAnswers: (r.accepted_answers as string[] | null) ?? [],
+    note: text(r.note),
+    mnemonic: text(r.mnemonic),
+    source: text(r.source),
+    tags: (r.tags as string[] | null) ?? [],
+    favorite: r.favorite as boolean,
+    difficult: r.difficult as boolean,
+    archived: r.archived as boolean,
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
+}
+
+export function deckFromRemote(r: RemoteRow): Deck {
+  return {
+    id: r.id as string,
+    name: r.name as string,
+    description: text(r.description),
+    topic: text(r.topic),
+    dailyGoal: r.daily_goal == null ? undefined : (r.daily_goal as number),
+    active: r.active as boolean,
+    archived: r.archived as boolean,
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
+}
+
+export function deckItemFromRemote(r: RemoteRow): DeckItem {
+  return {
+    id: r.id as string,
+    deckId: r.deck_id as string,
+    itemId: r.item_id as string,
+    position: r.position as number,
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
+}
+
+export function cardStateFromRemote(r: RemoteRow): CardStateRow {
+  return {
+    id: r.id as string,
+    itemId: r.id as string,
+    due: ms(r.due),
+    stability: r.stability as number,
+    difficulty: r.difficulty as number,
+    scheduledDays: r.scheduled_days as number,
+    learningSteps: r.learning_steps as number,
+    reps: r.reps as number,
+    lapses: r.lapses as number,
+    state: r.state as CardStateRow['state'],
+    lastReview: msOrNull(r.last_review),
+    suspended: r.suspended as boolean,
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
+}
+
+export function reviewLogFromRemote(r: RemoteRow): ReviewLogRow {
+  return {
+    id: r.id as string,
+    itemId: r.item_id as string,
+    sessionId: r.session_id as string,
+    reviewedAt: ms(r.reviewed_at),
+    mode: r.mode as ReviewLogRow['mode'],
+    exercise: r.exercise as ReviewLogRow['exercise'],
+    grade: (r.grade ?? null) as ReviewLogRow['grade'],
+    correct: (r.correct ?? null) as boolean | null,
+    hintLevel: r.hint_level as number,
+    responseMs: (r.response_ms ?? null) as number | null,
+    affectsSchedule: r.affects_schedule as boolean,
+    deviceId: r.device_id as string,
+    createdAt: ms(r.created_at),
+  }
+}
+
+export interface PushRows {
+  vocabItems: VocabItem
+  decks: Deck
+  deckItems: DeckItem
+  cardStates: CardStateRow
+  reviewLogs: ReviewLogRow
+}
+
+export function fromRemote<K extends PushTable>(table: K, row: RemoteRow): PushRows[K]
+export function fromRemote(table: PushTable, row: RemoteRow): PushRows[PushTable] {
+  switch (table) {
+    case 'vocabItems':
+      return vocabItemFromRemote(row)
+    case 'decks':
+      return deckFromRemote(row)
+    case 'deckItems':
+      return deckItemFromRemote(row)
+    case 'cardStates':
+      return cardStateFromRemote(row)
+    case 'reviewLogs':
+      return reviewLogFromRemote(row)
   }
 }

@@ -134,6 +134,12 @@ export interface OutboxEntry {
   at: number
 }
 
+/** Bản của một dòng như trên máy chủ ở lần đồng bộ gần nhất (`key` = `bảng:id`). */
+export interface SyncBaseEntry {
+  key: string
+  row: unknown
+}
+
 export interface MetaEntry {
   key: string
   value: unknown

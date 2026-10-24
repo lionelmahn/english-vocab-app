@@ -55,6 +55,22 @@ export function findDuplicates<T extends ComparableItem>(candidate: DuplicateCan
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'exact' ? -1 : 1))
 }
 
+/**
+ * Các nhóm mục học trùng nội dung (cùng từ, loại từ, nghĩa) đang cùng tồn tại — thường do cùng nhập
+ * một danh sách trên hai thiết bị trước khi đồng bộ (R2.5, R11.4).
+ */
+export function duplicateGroups<T extends ComparableItem>(items: readonly T[]): T[][] {
+  const groups = new Map<string, T[]>()
+  for (const it of items) {
+    if (it.deletedAt !== null) continue
+    const key = JSON.stringify([it.termKey, it.partOfSpeech, meaningKey(it.meaningVi)])
+    const group = groups.get(key)
+    if (group) group.push(it)
+    else groups.set(key, [it])
+  }
+  return [...groups.values()].filter((g) => g.length > 1)
+}
+
 /** Bỏ dấu tiếng Việt và hoa thường để tìm kiếm: "Kiên cường" → "kien cuong". */
 export function foldText(s: string): string {
   return s

@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { AudioLines, ChevronRight, CircleAlert, CloudOff, CloudUpload, FileUp, LoaderCircle, LogIn, LogOut, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
+import { AudioLines, ChevronRight, CircleAlert, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Segmented, Select } from '../components/kit'
@@ -11,7 +11,7 @@ import { checkCloud, signOut, useAuth, type CloudCheck } from '../services/auth'
 import { voiceLabel } from '../core/voices'
 import { englishVoices, hasExactVoice, isAppleDevice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
 import { useClipKeys } from '../services/voiceClips'
-import { syncNow, useSyncStatus } from '../services/sync'
+import { syncNow, useSyncStatus, type SyncStatus } from '../services/sync'
 
 function SettingRow({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
   return (
@@ -43,7 +43,18 @@ function StatusLine({ icon, tone, children }: { icon: ReactNode; tone: 'ok' | 'm
 
 const timeFmt = new Intl.DateTimeFormat('vi-VN', { hour: '2-digit', minute: '2-digit' })
 
-/** Kết nối máy chủ (kiểm tra thật sau khi đăng nhập) và trạng thái sao lưu (R11.1). */
+function syncText(sync: SyncStatus, pending: number): string {
+  if (sync.state === 'syncing') return 'Đang đồng bộ…'
+  if (sync.state === 'error') return `Đồng bộ lỗi: ${sync.error}`
+  if (sync.state === 'offline') return 'Đang mất mạng, sẽ đồng bộ khi có mạng lại.'
+  if (pending > 0) return `${pending} thay đổi chờ gửi.`
+  if (!sync.lastSyncedAt) return 'Đang chờ đồng bộ.'
+  const last = sync.last
+  const details = [last?.received && `nhận ${last.received} thay đổi`, last?.merged && `gộp ${last.merged} chỗ sửa trên nhiều máy`].filter(Boolean)
+  return `Đã đồng bộ lúc ${timeFmt.format(sync.lastSyncedAt)}${details.length ? ` (${details.join(', ')})` : ''}.`
+}
+
+/** Kết nối máy chủ (kiểm tra thật sau khi đăng nhập) và trạng thái đồng bộ (R11.1, R11.5). */
 function CloudStatus() {
   const auth = useAuth()
   const sync = useSyncStatus()
@@ -73,7 +84,7 @@ function CloudStatus() {
     case 'signed_out':
       return (
         <StatusLine icon={<CloudOff aria-hidden className={icon} />} tone="muted">
-          Chưa đăng nhập. Dữ liệu đang lưu trên thiết bị này{pending > 0 && ` (${pending} thay đổi chờ sao lưu)`}; đăng nhập để sao lưu lên máy chủ.
+          Chưa đăng nhập. Dữ liệu đang lưu trên thiết bị này{pending > 0 && ` (${pending} thay đổi chờ gửi)`}; đăng nhập để đồng bộ giữa các thiết bị.
         </StatusLine>
       )
     case 'signed_in': {
@@ -82,25 +93,14 @@ function CloudStatus() {
       return (
         <div className="flex flex-col gap-3">
           <StatusLine icon={<ShieldCheck aria-hidden className={icon} />} tone="ok">
-            Đã kết nối máy chủ an toàn.{' '}
-            {sync.state === 'syncing'
-              ? 'Đang sao lưu…'
-              : sync.state === 'error'
-                ? `Sao lưu lỗi: ${sync.error}`
-                : sync.state === 'offline'
-                  ? 'Đang mất mạng, sẽ sao lưu khi có mạng.'
-                  : pending > 0
-                    ? `${pending} thay đổi chờ sao lưu.`
-                    : sync.lastSyncedAt
-                      ? `Đã sao lưu lúc ${timeFmt.format(sync.lastSyncedAt)}.`
-                      : 'Dữ liệu đã được sao lưu.'}
+            Đã kết nối máy chủ an toàn. {syncText(sync, pending)}
           </StatusLine>
-          {(pending > 0 || sync.state === 'error') && (
-            <Button icon={CloudUpload} className="w-full disabled:opacity-60" disabled={sync.state === 'syncing'} onClick={() => void syncNow()}>
-              Sao lưu ngay
-            </Button>
-          )}
-          <p className="text-xs leading-relaxed text-subtle">Đồng bộ hai chiều giữa nhiều thiết bị sẽ có ở giai đoạn 2.</p>
+          <Button icon={RefreshCw} className="w-full disabled:opacity-60" disabled={sync.state === 'syncing'} onClick={() => void syncNow()}>
+            {sync.state === 'syncing' ? 'Đang đồng bộ…' : 'Đồng bộ ngay'}
+          </Button>
+          <p className="text-xs leading-relaxed text-subtle">
+            Tự đồng bộ giữa các thiết bị đăng nhập cùng tài khoản. Sửa cùng lúc trên hai máy thì giữ cả hai thay đổi; cùng sửa một chỗ thì giữ bản sửa sau. Lượt học không bao giờ bị mất hay tính hai lần.
+          </p>
         </div>
       )
     }
@@ -361,15 +361,20 @@ export function ProfilePage() {
       </Card>
 
       <Card>
-        <SectionTitle>Máy chủ và sao lưu</SectionTitle>
+        <SectionTitle>Máy chủ và đồng bộ</SectionTitle>
         <CloudStatus />
       </Card>
 
       <Card>
         <SectionTitle>Dữ liệu</SectionTitle>
-        <Button icon={FileUp} className="w-full" onClick={() => navigate('/import')}>
-          Nhập từ file Excel/CSV
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button icon={DatabaseBackup} className="w-full" onClick={() => navigate('/backup')}>
+            Sao lưu và khôi phục
+          </Button>
+          <Button icon={FileUp} className="w-full" onClick={() => navigate('/import')}>
+            Nhập từ file Excel/CSV
+          </Button>
+        </div>
       </Card>
 
       <Card>

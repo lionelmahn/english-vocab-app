@@ -6,6 +6,7 @@ import { Toaster } from './components/kit'
 import { pageTransition, pageVariants } from './lib/motion'
 import { useSettings } from './lib/settings'
 import { isFocusMode, tabIndexOf } from './lib/tabs'
+import { BackupPage } from './pages/BackupPage'
 import { DeckAddWordsPage, DeckDetailPage, DeckFormPage } from './pages/DeckPages'
 import { ImportPage } from './pages/ImportPage'
 import { LoginPage } from './pages/LoginPage'
@@ -91,6 +92,7 @@ export default function App() {
                 <Route path="/decks/:id/edit" element={<DeckFormPage />} />
                 <Route path="/decks/:id/add" element={<DeckAddWordsPage />} />
                 <Route path="/import" element={<ImportPage />} />
+                <Route path="/backup" element={<BackupPage />} />
                 <Route path="/learn" element={<StudyPage mode="learn" />} />
                 <Route path="/review" element={<StudyPage mode="review" />} />
                 <Route path="/study" element={<StudyPage mode="resume" />} />

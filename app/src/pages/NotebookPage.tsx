@@ -1,4 +1,4 @@
-import { BookOpen, FileUp, Flame, FolderPlus, Plus, Search, SlidersHorizontal, Star } from 'lucide-react'
+import { BookOpen, ChevronRight, Copy, FileUp, Flame, FolderPlus, Plus, Search, SlidersHorizontal, Star } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
@@ -7,7 +7,7 @@ import { Button, Card, EmptyState, Page, Switch } from '../components/ui'
 import { deckStats, itemLevel, itemStatus, type ItemStatus } from '../core/library'
 import { LEVEL_LABELS, type MemoryLevel } from '../core/levels'
 import { POS_LABEL, POS_ORDER, POS_SHORT, type PartOfSpeech } from '../core/pos'
-import { foldText } from '../core/vocab'
+import { duplicateGroups, foldText } from '../core/vocab'
 import { repo } from '../db/repo'
 import type { Library } from '../db/library'
 import { useLibrary, useNow } from '../lib/hooks'
@@ -109,6 +109,7 @@ function WordsView({ lib }: { lib: Library }) {
   }, [lib, now, q, status, fav, hard, deck, pos, tag, level])
 
   const advancedCount = [deck, pos, tag, level].filter(Boolean).length
+  const duplicates = useMemo(() => duplicateGroups(lib.items).length, [lib.items])
 
   if (lib.items.length === 0) {
     return (
@@ -125,6 +126,19 @@ function WordsView({ lib }: { lib: Library }) {
 
   return (
     <>
+      {duplicates > 0 && (
+        <motion.button
+          type="button"
+          variants={riseIn}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => navigate('/backup')}
+          className="flex items-center gap-3 rounded-2xl bg-warning-soft px-4 py-3 text-left text-sm font-medium text-warning"
+        >
+          <Copy aria-hidden className="h-5 w-5 shrink-0" />
+          <span className="flex-1">{duplicates} từ bị trùng (cùng từ, cùng nghĩa). Chạm để gộp.</span>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0" />
+        </motion.button>
+      )}
       <motion.div variants={riseIn} className="flex gap-2">
         <label className="flex h-12 flex-1 items-center gap-2.5 rounded-2xl border border-line bg-surface px-4 focus-within:border-accent">
           <Search aria-hidden className="h-5 w-5 shrink-0 text-subtle" />

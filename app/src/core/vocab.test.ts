@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { State } from 'ts-fsrs'
 import { deckStats, inStudyPlan, itemStatus, membership, type LibCard, type LibDeck, type LibItem } from './library'
-import { parsePos } from './pos'
-import { blankTerm, contextSentence, findDuplicates, findTermSpan, foldText, meaningKey, parseTags, termKey } from './vocab'
+import { parsePos, type PartOfSpeech } from './pos'
+import { blankTerm, contextSentence, duplicateGroups, findDuplicates, findTermSpan, foldText, meaningKey, parseTags, termKey } from './vocab'
 
 describe('parsePos', () => {
   it('nhận viết tắt, tiếng Anh và tiếng Việt', () => {
@@ -135,5 +135,29 @@ describe('blankTerm', () => {
     expect(blankTerm('Resilient kids are resilient.', 'resilient')).toBe('_____ kids are _____.')
     expect(blankTerm('Never give up!', 'give up')).toBe('Never _____!')
     expect(blankTerm('A (rare) case', '(rare)')).toBe('A (rare) case')
+  })
+})
+
+describe('duplicateGroups — từ trùng nội dung cùng tồn tại', () => {
+  const it_ = (id: string, term: string, meaningVi: string, extra: Partial<{ partOfSpeech: PartOfSpeech; deletedAt: number | null }> = {}) => ({
+    id,
+    term,
+    termKey: termKey(term),
+    partOfSpeech: 'verb' as PartOfSpeech,
+    meaningVi,
+    deletedAt: null,
+    ...extra,
+  })
+
+  it('gom theo từ, loại từ và nghĩa; bỏ qua mục đã xóa và nghĩa khác', () => {
+    const groups = duplicateGroups([
+      it_('a', 'Run', 'chạy'),
+      it_('b', 'run', 'Chạy.'),
+      it_('c', 'run', 'điều hành'),
+      it_('d', 'run', 'chạy', { partOfSpeech: 'noun' }),
+      it_('e', 'run', 'chạy', { deletedAt: 5 }),
+      it_('f', 'walk', 'đi bộ'),
+    ])
+    expect(groups.map((g) => g.map((i) => i.id))).toEqual([['a', 'b']])
   })
 })
