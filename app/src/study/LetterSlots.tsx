@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { activeSlot, fillSlots, letterCount, lettersOnly, slotTemplate, type Slot } from '../core/letters'
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
@@ -44,6 +44,23 @@ export function LetterSlots({
   const small = total > 14
   const localRef = useRef<HTMLInputElement | null>(null)
 
+  // Đã điền đủ ô mà gõ thêm: không nhận chữ thừa, ô chữ cuối rung lên và gạch dưới nháy đỏ.
+  const lastLetter = useMemo(() => template.reduce((last, s, i) => (s.kind === 'letter' ? i : last), -1), [template])
+  const lastRef = useRef<HTMLSpanElement | null>(null)
+  const [overflow, setOverflow] = useState(false)
+  const overflowTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  useEffect(() => () => clearTimeout(overflowTimer.current), [])
+  function nudgeFull() {
+    lastRef.current?.animate(
+      [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(3px)' }, { transform: 'translateX(0)' }],
+      { duration: 320, easing: 'ease-out' },
+    )
+    navigator.vibrate?.(30)
+    setOverflow(true)
+    clearTimeout(overflowTimer.current)
+    overflowTimer.current = setTimeout(() => setOverflow(false), 400)
+  }
+
   // Tự bật bàn phím khi bài hiện ra.
   useEffect(() => {
     const t = setTimeout(() => localRef.current?.focus(), 400)
@@ -75,7 +92,11 @@ export function LetterSlots({
                   {slot.char}
                 </span>
               ) : (
-                <span key={index} className={`relative flex ${small ? 'h-8 w-[18px]' : 'h-9 w-[22px]'} items-end justify-center`}>
+                <span
+                  key={index}
+                  ref={index === lastLetter ? lastRef : undefined}
+                  className={`relative flex ${small ? 'h-8 w-[18px]' : 'h-9 w-[22px]'} items-end justify-center`}
+                >
                   {filled[index] ? (
                     <motion.span
                       key={`typed-${filled[index]}`}
@@ -97,7 +118,11 @@ export function LetterSlots({
                       {slot.char}
                     </motion.span>
                   ) : null}
-                  <span className={`absolute -bottom-1 left-0 h-[3px] w-full rounded-full ${index === active ? 'animate-pulse bg-sun' : 'bg-line'}`} />
+                  <span
+                    className={`absolute -bottom-1 left-0 h-[3px] w-full rounded-full transition-colors ${
+                      overflow && index === lastLetter ? 'bg-danger' : index === active ? 'animate-pulse bg-sun' : 'bg-line'
+                    }`}
+                  />
                 </span>
               ),
             )}
@@ -119,7 +144,10 @@ export function LetterSlots({
           // luôn nhận thao tác xóa, và để giới hạn rộng vì Telex có thể tách "ả" thành "ar" khi xóa.
           const next = [...e.target.value].filter((c) => /[\p{L}\p{M}\p{N}\s'’-]/u.test(c)).join('')
           const count = lettersOnly(next).length
-          if (count <= total + 12 || count < lettersOnly(value).length) onChange(next)
+          const inputType = (e.nativeEvent as InputEvent).inputType ?? ''
+          // Xóa luôn được nhận (kể cả khi bộ gõ tách dấu làm số chữ tạm tăng); thêm chữ khi đã đủ ô thì rung.
+          if (inputType.startsWith('delete') || count <= total || count < lettersOnly(value).length) onChange(next)
+          else nudgeFull()
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
