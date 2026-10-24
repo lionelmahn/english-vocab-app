@@ -1,5 +1,7 @@
 import Dexie, { type EntityTable } from 'dexie'
 import type {
+  AudioAsset,
+  AudioBlob,
   AudioCacheEntry,
   CardStateRow,
   Deck,
@@ -34,6 +36,8 @@ export class VocabDatabase extends Dexie {
   voiceClips!: EntityTable<VoiceClip, 'key'>
   syncBase!: EntityTable<SyncBaseEntry, 'key'>
   dictionary!: EntityTable<DictionaryCacheEntry, 'key'>
+  audioAssets!: EntityTable<AudioAsset, 'id'>
+  audioBlobs!: EntityTable<AudioBlob, 'id'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -55,6 +59,10 @@ export class VocabDatabase extends Dexie {
     this.version(4).stores({ syncBase: 'key' })
     // Phiên bản 5: kết quả tra từ điển (R15).
     this.version(5).stores({ dictionary: 'key' })
+    // Phiên bản 6: âm thanh của người học (R7.8, R13.8) và file trên máy.
+    this.version(6).stores({ audioAssets: 'id, key, updatedAt', audioBlobs: 'id' })
+    // Phiên bản 7: chỉ mục thời điểm tạo Giọng iPhone, để so với bản trên máy chủ mà không đọc file.
+    this.version(7).stores({ voiceClips: 'key, createdAt' })
   }
 }
 
@@ -67,6 +75,7 @@ interface TableRows {
   deckItems: DeckItem
   cardStates: CardStateRow
   reviewLogs: ReviewLogRow
+  audioAssets: AudioAsset
 }
 
 /** Một nhóm dòng cùng bảng cần ghi; kiểu dòng khớp với bảng. */

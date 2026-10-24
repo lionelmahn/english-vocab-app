@@ -1,0 +1,1001 @@
+rank|term|part_of_speech|meaning_vi|example|example_vi
+1|the|other|(mạo từ xác định) chỉ người, vật đã biết|The sun is very bright today.|Hôm nay mặt trời rất chói.
+2|be|verb|thì, là, ở|I want to be a teacher.|Tôi muốn làm giáo viên.
+3|and|conjunction|và|I like tea and coffee.|Tôi thích trà và cà phê.
+4|of|preposition|của|She is a friend of mine.|Cô ấy là một người bạn của tôi.
+5|to|preposition|đến, tới|We walked to the station.|Chúng tôi đi bộ đến nhà ga.
+6|a|other|(mạo từ) một|She has a cat.|Cô ấy có một con mèo.
+7|in|preposition|trong, ở trong|The keys are in my bag.|Chìa khóa ở trong túi của tôi.
+8|have|verb|có|I have two brothers.|Tôi có hai anh trai.
+9|it|pronoun|nó|I lost my pen. Have you seen it?|Tôi làm mất cây bút. Bạn có thấy nó không?
+10|you|pronoun|bạn, anh, chị|Can you help me?|Bạn giúp tôi được không?
+11|he|pronoun|anh ấy, ông ấy|He works in a bank.|Anh ấy làm việc ở ngân hàng.
+12|for|preposition|cho, dành cho|This gift is for you.|Món quà này dành cho bạn.
+13|they|pronoun|họ, chúng|They live near the sea.|Họ sống gần biển.
+14|not|adverb|không|I am not hungry.|Tôi không đói.
+15|that|other|(từ chỉ định) đó, kia; rằng|Look at that house.|Nhìn ngôi nhà kia kìa.
+16|we|pronoun|chúng tôi, chúng ta|We are going to the beach.|Chúng tôi sắp đi biển.
+17|on|preposition|trên|The book is on the table.|Quyển sách ở trên bàn.
+18|with|preposition|với, cùng với|I went to the cinema with my sister.|Tôi đi xem phim với em gái.
+19|this|other|(từ chỉ định) này, cái này|This bag is very heavy.|Cái túi này rất nặng.
+20|I|pronoun|tôi, mình|I live in Hanoi.|Tôi sống ở Hà Nội.
+21|do|verb|làm|I always do my homework after dinner.|Tôi luôn làm bài tập sau bữa tối.
+22|as|preposition|như, với tư cách là|She works as a nurse.|Cô ấy làm y tá.
+23|at|preposition|ở, tại, lúc|I will see you at the station.|Hẹn gặp bạn ở nhà ga.
+24|she|pronoun|cô ấy, bà ấy|She speaks three languages.|Cô ấy nói được ba thứ tiếng.
+25|but|conjunction|nhưng|The room is small but clean.|Căn phòng nhỏ nhưng sạch sẽ.
+26|from|preposition|từ|I am from Vietnam.|Tôi đến từ Việt Nam.
+27|by|preposition|bằng (phương tiện), bởi, cạnh|We went to Da Nang by train.|Chúng tôi đi Đà Nẵng bằng tàu hỏa.
+28|will|verb|sẽ|It will rain tomorrow.|Ngày mai trời sẽ mưa.
+29|or|conjunction|hoặc, hay|Do you want tea or coffee?|Bạn muốn trà hay cà phê?
+30|say|verb|nói|What did you say?|Bạn vừa nói gì vậy?
+31|go|verb|đi|I go to school by bike.|Tôi đi học bằng xe đạp.
+32|so|adverb|rất, quá; vì vậy|I am so tired today.|Hôm nay tôi mệt quá.
+33|all|other|tất cả|All the students passed the exam.|Tất cả học sinh đều đỗ kỳ thi.
+34|if|conjunction|nếu|If it rains, we will stay home.|Nếu trời mưa, chúng ta sẽ ở nhà.
+35|one|other|một (số đếm)|I have one sister.|Tôi có một chị gái.
+36|would|verb|sẽ (trong câu điều kiện); muốn (lịch sự)|I would like a cup of tea.|Tôi muốn một tách trà.
+37|about|preposition|về, khoảng|This book is about history.|Cuốn sách này nói về lịch sử.
+38|can|verb|có thể, biết (làm gì)|I can swim.|Tôi biết bơi.
+39|which|pronoun|cái nào, nào|Which of these bags is yours?|Cái túi nào trong số này là của bạn?
+40|there|adverb|ở đó; có (there is/are)|There is a park near my house.|Có một công viên gần nhà tôi.
+41|know|verb|biết|I know the answer.|Tôi biết câu trả lời.
+42|more|adverb|hơn, nhiều hơn|Please speak more slowly.|Làm ơn nói chậm hơn.
+43|get|verb|nhận được, lấy; trở nên|Did you get my message?|Bạn đã nhận được tin nhắn của tôi chưa?
+44|who|pronoun|ai|Who is that man?|Người đàn ông kia là ai?
+45|like|verb|thích|I like reading books.|Tôi thích đọc sách.
+46|when|adverb|khi nào, khi|When does the train leave?|Khi nào tàu chạy?
+47|think|verb|nghĩ|I think you are right.|Tôi nghĩ bạn đúng.
+48|make|verb|làm, tạo ra|My mother can make delicious cakes.|Mẹ tôi biết làm bánh rất ngon.
+49|time|noun|thời gian; lần|I don't have much time.|Tôi không có nhiều thời gian.
+50|see|verb|nhìn thấy, gặp|I can see the mountains from here.|Từ đây tôi có thể nhìn thấy núi.
+51|what|pronoun|cái gì, gì|What is your name?|Bạn tên là gì?
+52|up|adverb|lên, ở trên|Please stand up.|Mời bạn đứng lên.
+53|some|other|một vài, một ít|I need some help.|Tôi cần một chút giúp đỡ.
+54|other|adjective|khác|Do you have any other questions?|Bạn còn câu hỏi nào khác không?
+55|out|adverb|ra ngoài|Let's go out tonight.|Tối nay chúng ta ra ngoài chơi nhé.
+56|good|adjective|tốt, giỏi, hay|This is a good idea.|Đây là một ý kiến hay.
+57|people|noun|người, mọi người|Many people live in this city.|Nhiều người sống ở thành phố này.
+58|year|noun|năm|I started learning English last year.|Tôi bắt đầu học tiếng Anh từ năm ngoái.
+59|take|verb|lấy, cầm, mang đi; mất (thời gian)|Take an umbrella with you.|Mang theo ô nhé.
+60|no|other|không (có)|There is no milk in the fridge.|Trong tủ lạnh không còn sữa.
+61|well|adverb|tốt, giỏi|She sings very well.|Cô ấy hát rất hay.
+62|because|conjunction|bởi vì|I stayed home because I was sick.|Tôi ở nhà vì bị ốm.
+63|very|adverb|rất|It is very hot today.|Hôm nay trời rất nóng.
+64|just|adverb|vừa mới; chỉ|I just finished my lunch.|Tôi vừa ăn trưa xong.
+65|come|verb|đến, tới|Come here, please.|Lại đây nào.
+66|could|verb|có thể (quá khứ của can; cách hỏi lịch sự)|Could you open the window?|Bạn có thể mở cửa sổ được không?
+67|work|verb|làm việc|I work from nine to five.|Tôi làm việc từ chín giờ đến năm giờ.
+68|use|verb|sử dụng, dùng|Can I use your phone?|Tôi dùng điện thoại của bạn được không?
+69|than|conjunction|hơn (dùng khi so sánh)|My brother is taller than me.|Anh trai tôi cao hơn tôi.
+70|now|adverb|bây giờ|I am busy now.|Bây giờ tôi đang bận.
+71|then|adverb|sau đó, lúc đó|We had dinner and then watched a film.|Chúng tôi ăn tối rồi sau đó xem phim.
+72|also|adverb|cũng|She also speaks French.|Cô ấy cũng nói được tiếng Pháp.
+73|into|preposition|vào trong|He jumped into the pool.|Anh ấy nhảy xuống hồ bơi.
+74|only|adverb|chỉ|I only have ten dollars.|Tôi chỉ có mười đô la.
+75|look|verb|nhìn; trông có vẻ|Look at the sky!|Nhìn bầu trời kìa!
+76|want|verb|muốn|I want a new phone.|Tôi muốn một chiếc điện thoại mới.
+77|give|verb|đưa, cho, tặng|Please give me the book.|Làm ơn đưa tôi quyển sách.
+78|first|adjective|đầu tiên, thứ nhất|This is my first trip abroad.|Đây là chuyến đi nước ngoài đầu tiên của tôi.
+79|new|adjective|mới|I bought a new laptop.|Tôi đã mua một chiếc laptop mới.
+80|way|noun|cách; con đường|This is the best way to learn English.|Đây là cách tốt nhất để học tiếng Anh.
+81|find|verb|tìm thấy, thấy|I can't find my keys.|Tôi không tìm thấy chìa khóa.
+82|over|preposition|trên, qua; hơn|The plane flew over the city.|Máy bay bay qua thành phố.
+83|any|other|bất kỳ; nào (trong câu hỏi, câu phủ định)|Do you have any questions?|Bạn có câu hỏi nào không?
+84|after|preposition|sau, sau khi|Let's meet after lunch.|Gặp nhau sau bữa trưa nhé.
+85|day|noun|ngày|Have a nice day!|Chúc bạn một ngày tốt lành!
+86|where|adverb|ở đâu|Where do you live?|Bạn sống ở đâu?
+87|thing|noun|thứ, điều, việc|The first thing I do every morning is drink water.|Việc đầu tiên tôi làm mỗi sáng là uống nước.
+88|most|adverb|nhất; hầu hết|This is the most beautiful beach in Vietnam.|Đây là bãi biển đẹp nhất Việt Nam.
+89|should|verb|nên|You should drink more water.|Bạn nên uống nhiều nước hơn.
+90|need|verb|cần|I need a new pair of shoes.|Tôi cần một đôi giày mới.
+91|much|adverb|nhiều|Thank you very much.|Cảm ơn bạn rất nhiều.
+92|right|adjective|đúng; bên phải|You are right.|Bạn nói đúng.
+93|how|adverb|như thế nào, bằng cách nào|How do you spell your name?|Tên bạn đánh vần thế nào?
+94|back|adverb|trở lại, về|I will be back in five minutes.|Năm phút nữa tôi sẽ quay lại.
+95|mean|verb|có nghĩa là; ý muốn nói|What does this word mean?|Từ này có nghĩa là gì?
+96|even|adverb|thậm chí, ngay cả|Even children can understand it.|Ngay cả trẻ em cũng hiểu được.
+97|may|verb|có thể, có lẽ|It may rain this afternoon.|Chiều nay có thể trời sẽ mưa.
+98|here|adverb|ở đây|Please sit here.|Mời bạn ngồi đây.
+99|many|other|nhiều (dùng với danh từ đếm được)|How many people came to the party?|Có bao nhiêu người đến bữa tiệc?
+100|such|other|như vậy, như thế|I have never seen such a big fish.|Tôi chưa bao giờ thấy con cá to như vậy.
+101|last|adjective|cuối cùng; trước (tuần trước, năm trước)|I missed the last bus.|Tôi lỡ chuyến xe buýt cuối cùng.
+102|child|noun|đứa trẻ, con|She is an only child.|Cô ấy là con một.
+103|tell|verb|kể, bảo, nói cho biết|Please tell me the truth.|Làm ơn nói cho tôi biết sự thật.
+104|really|adverb|thật sự, rất|I really like this song.|Tôi thật sự thích bài hát này.
+105|call|verb|gọi điện; gọi (tên)|I will call you tonight.|Tối nay tôi sẽ gọi điện cho bạn.
+106|before|preposition|trước, trước khi|Wash your hands before dinner.|Rửa tay trước bữa tối nhé.
+107|company|noun|công ty|He works for a big company.|Anh ấy làm việc cho một công ty lớn.
+108|through|preposition|qua, xuyên qua|We drove through the forest.|Chúng tôi lái xe xuyên qua khu rừng.
+109|down|adverb|xuống|Please sit down.|Mời bạn ngồi xuống.
+110|show|verb|cho xem, chỉ|Can you show me your photos?|Bạn cho tôi xem ảnh của bạn được không?
+111|life|noun|cuộc sống, cuộc đời|Life in the city is busy.|Cuộc sống ở thành phố rất bận rộn.
+112|man|noun|người đàn ông|A man is waiting outside.|Có một người đàn ông đang đợi bên ngoài.
+113|change|verb|thay đổi|I want to change my job.|Tôi muốn đổi việc.
+114|place|noun|nơi, chỗ|This is a nice place to live.|Đây là một nơi đáng sống.
+115|long|adjective|dài, lâu|She has long hair.|Cô ấy có mái tóc dài.
+116|between|preposition|giữa|The bank is between the school and the park.|Ngân hàng nằm giữa trường học và công viên.
+117|feel|verb|cảm thấy|I feel happy today.|Hôm nay tôi thấy vui.
+118|too|adverb|quá; cũng|This coffee is too hot.|Cà phê này nóng quá.
+119|still|adverb|vẫn, vẫn còn|She is still at work.|Cô ấy vẫn đang ở chỗ làm.
+120|problem|noun|vấn đề|We have a problem with the car.|Xe của chúng tôi có vấn đề.
+121|write|verb|viết|Please write your name here.|Vui lòng viết tên của bạn vào đây.
+122|same|adjective|giống nhau, cùng|We are in the same class.|Chúng tôi học cùng lớp.
+123|lot|noun|nhiều (a lot of)|I have a lot of work today.|Hôm nay tôi có rất nhiều việc.
+124|great|adjective|tuyệt vời; lớn|We had a great time at the party.|Chúng tôi đã rất vui ở bữa tiệc.
+125|try|verb|thử, cố gắng|Try this cake.|Bạn thử miếng bánh này đi.
+126|leave|verb|rời đi; để lại|I leave home at seven.|Tôi rời nhà lúc bảy giờ.
+127|number|noun|số, con số|What is your phone number?|Số điện thoại của bạn là gì?
+128|both|other|cả hai|Both of my parents are teachers.|Cả bố và mẹ tôi đều là giáo viên.
+129|own|adjective|riêng, của chính mình|I want my own room.|Tôi muốn có phòng riêng.
+130|part|noun|phần, bộ phận|This is the best part of the film.|Đây là phần hay nhất của bộ phim.
+131|point|noun|điểm; ý chính|That is a good point.|Đó là một ý hay.
+132|little|adjective|nhỏ, bé; ít|They live in a little house.|Họ sống trong một ngôi nhà nhỏ.
+133|help|verb|giúp đỡ|Can you help me with this box?|Bạn giúp tôi với cái hộp này được không?
+134|ask|verb|hỏi; nhờ, yêu cầu|Can I ask you a question?|Tôi hỏi bạn một câu được không?
+135|meet|verb|gặp, gặp gỡ|Nice to meet you.|Rất vui được gặp bạn.
+136|start|verb|bắt đầu|The class will start at eight.|Lớp học sẽ bắt đầu lúc tám giờ.
+137|talk|verb|nói chuyện|We need to talk.|Chúng ta cần nói chuyện.
+138|something|pronoun|cái gì đó, điều gì đó|I want to eat something sweet.|Tôi muốn ăn món gì đó ngọt.
+139|put|verb|đặt, để|Put your bag on the chair.|Đặt túi của bạn lên ghế.
+140|another|other|một … khác, thêm một|Can I have another cup of tea?|Cho tôi thêm một tách trà nữa được không?
+141|become|verb|trở thành|She wants to become a doctor.|Cô ấy muốn trở thành bác sĩ.
+142|interest|noun|sự quan tâm, sở thích|I have a strong interest in music.|Tôi rất quan tâm đến âm nhạc.
+143|country|noun|đất nước, quốc gia; nông thôn|Vietnam is a beautiful country.|Việt Nam là một đất nước xinh đẹp.
+144|old|adjective|già; cũ|My grandfather is very old.|Ông tôi đã rất già.
+145|each|other|mỗi|Each student has a book.|Mỗi học sinh có một quyển sách.
+146|school|noun|trường học|My school is near my house.|Trường của tôi ở gần nhà.
+147|late|adjective|muộn, trễ|Sorry, I am late.|Xin lỗi, tôi đến muộn.
+148|high|adjective|cao|The wall is very high.|Bức tường rất cao.
+149|different|adjective|khác, khác nhau|My sister and I are very different.|Tôi và chị gái rất khác nhau.
+150|off|adverb|tắt; rời khỏi|Please turn off the light.|Làm ơn tắt đèn.
+151|next|adjective|tiếp theo, kế tiếp|See you next week.|Hẹn gặp bạn tuần sau.
+152|end|noun|phần cuối, sự kết thúc|I will finish the report by the end of the day.|Tôi sẽ làm xong báo cáo trước cuối ngày.
+153|live|verb|sống|I live with my parents.|Tôi sống cùng bố mẹ.
+154|why|adverb|tại sao|Why are you late?|Tại sao bạn đến muộn?
+155|while|conjunction|trong khi|I listen to music while I work.|Tôi nghe nhạc trong khi làm việc.
+156|world|noun|thế giới|She wants to travel around the world.|Cô ấy muốn đi du lịch vòng quanh thế giới.
+157|week|noun|tuần|I go swimming twice a week.|Tôi đi bơi hai lần một tuần.
+158|play|verb|chơi|The children play in the park.|Bọn trẻ chơi trong công viên.
+159|might|verb|có thể, có lẽ (ít chắc chắn hơn may)|It might snow tonight.|Tối nay có thể có tuyết.
+160|must|verb|phải|You must wear a seat belt.|Bạn phải thắt dây an toàn.
+161|home|noun|nhà, quê nhà|I stayed at home all day.|Tôi ở nhà cả ngày.
+162|never|adverb|không bao giờ|I never drink coffee at night.|Tôi không bao giờ uống cà phê vào buổi tối.
+163|include|verb|bao gồm|The price does not include breakfast.|Giá này không bao gồm bữa sáng.
+164|course|noun|khóa học; món ăn (trong bữa)|I am taking an English course.|Tôi đang học một khóa tiếng Anh.
+165|house|noun|ngôi nhà|They bought a new house.|Họ đã mua một ngôi nhà mới.
+166|report|noun|bản báo cáo|I have to write a report for my boss.|Tôi phải viết một bản báo cáo cho sếp.
+167|group|noun|nhóm|We worked in a group of four.|Chúng tôi làm việc theo nhóm bốn người.
+168|case|noun|trường hợp; vụ việc|In that case, we will wait.|Trong trường hợp đó, chúng ta sẽ đợi.
+169|woman|noun|người phụ nữ|The woman in the red dress is my aunt.|Người phụ nữ mặc váy đỏ là dì tôi.
+170|around|preposition|xung quanh; khoảng|We walked around the lake.|Chúng tôi đi dạo quanh hồ.
+171|book|noun|quyển sách|I am reading a good book.|Tôi đang đọc một cuốn sách hay.
+172|family|noun|gia đình|I have a big family.|Tôi có một đại gia đình.
+173|seem|verb|có vẻ, dường như|You seem tired.|Trông bạn có vẻ mệt.
+174|let|verb|để, cho phép|Let me help you.|Để tôi giúp bạn.
+175|again|adverb|lại, lần nữa|Please say it again.|Làm ơn nói lại lần nữa.
+176|kind|noun|loại, kiểu|What kind of music do you like?|Bạn thích loại nhạc nào?
+177|keep|verb|giữ, giữ lại|Keep the change.|Bạn cứ giữ tiền thừa.
+178|hear|verb|nghe thấy|I can't hear you.|Tôi không nghe thấy bạn nói.
+179|system|noun|hệ thống|The school has a new computer system.|Trường có một hệ thống máy tính mới.
+180|every|other|mỗi, mọi|I go jogging every morning.|Sáng nào tôi cũng chạy bộ.
+181|question|noun|câu hỏi|May I ask a question?|Tôi có thể hỏi một câu được không?
+182|during|preposition|trong suốt|Please turn off your phone during the meeting.|Vui lòng tắt điện thoại trong suốt cuộc họp.
+183|always|adverb|luôn luôn|She is always on time.|Cô ấy luôn đúng giờ.
+184|big|adjective|to, lớn|They live in a big city.|Họ sống ở một thành phố lớn.
+185|set|verb|đặt, sắp đặt; thiết lập|I set my alarm for six o'clock.|Tôi đặt báo thức lúc sáu giờ.
+186|small|adjective|nhỏ|I live in a small town.|Tôi sống ở một thị trấn nhỏ.
+187|study|verb|học, nghiên cứu|I study English every day.|Tôi học tiếng Anh mỗi ngày.
+188|follow|verb|đi theo, làm theo|Please follow me.|Mời bạn đi theo tôi.
+189|begin|verb|bắt đầu|Let's begin the lesson.|Chúng ta bắt đầu bài học nhé.
+190|important|adjective|quan trọng|Sleep is important for your health.|Giấc ngủ quan trọng đối với sức khỏe.
+191|since|preposition|từ khi, kể từ|I have lived here since 2020.|Tôi đã sống ở đây từ năm 2020.
+192|run|verb|chạy|I run in the park every morning.|Sáng nào tôi cũng chạy trong công viên.
+193|under|preposition|dưới, bên dưới|The cat is under the table.|Con mèo ở dưới gầm bàn.
+194|turn|verb|rẽ; xoay; bật, tắt|Turn left at the next corner.|Rẽ trái ở góc đường tiếp theo.
+195|few|other|ít, một vài|I have a few friends in London.|Tôi có vài người bạn ở London.
+196|bring|verb|mang theo, đem đến|Please bring your passport.|Vui lòng mang theo hộ chiếu.
+197|early|adverb|sớm|I get up early every day.|Ngày nào tôi cũng dậy sớm.
+198|hand|noun|bàn tay|Raise your hand if you know the answer.|Hãy giơ tay nếu bạn biết câu trả lời.
+199|state|noun|bang; trạng thái; nhà nước|California is a large state.|California là một bang rộng lớn.
+200|move|verb|di chuyển; chuyển (nhà)|We will move to a new apartment next month.|Tháng sau chúng tôi sẽ chuyển đến căn hộ mới.
+201|money|noun|tiền|I don't have enough money to buy it.|Tôi không có đủ tiền để mua nó.
+202|fact|noun|sự thật, thực tế|In fact, I have never been to Japan.|Thật ra, tôi chưa bao giờ đến Nhật Bản.
+203|however|adverb|tuy nhiên|The hotel was expensive. However, it was very clean.|Khách sạn đắt. Tuy nhiên, nó rất sạch sẽ.
+204|area|noun|khu vực, vùng|There are many restaurants in this area.|Khu vực này có rất nhiều nhà hàng.
+205|provide|verb|cung cấp|The hotel will provide towels.|Khách sạn sẽ cung cấp khăn tắm.
+206|name|noun|tên|My name is Lan.|Tên tôi là Lan.
+207|read|verb|đọc|I read the news every morning.|Sáng nào tôi cũng đọc tin tức.
+208|friend|noun|bạn, bạn bè|She is my best friend.|Cô ấy là bạn thân nhất của tôi.
+209|month|noun|tháng|I will visit my parents next month.|Tháng sau tôi sẽ về thăm bố mẹ.
+210|large|adjective|lớn, rộng|They live in a large apartment.|Họ sống trong một căn hộ rộng.
+211|business|noun|việc kinh doanh, doanh nghiệp|My uncle runs a small business.|Chú tôi điều hành một doanh nghiệp nhỏ.
+212|without|preposition|không có|I can't live without music.|Tôi không thể sống thiếu âm nhạc.
+213|information|noun|thông tin|I need more information about the course.|Tôi cần thêm thông tin về khóa học.
+214|open|verb|mở|Please open your books.|Mời các em mở sách ra.
+215|order|verb|gọi món, đặt hàng; ra lệnh|Are you ready to order?|Quý khách đã sẵn sàng gọi món chưa?
+216|government|noun|chính phủ|The government plans to build a new airport.|Chính phủ dự định xây một sân bay mới.
+217|word|noun|từ, chữ|I don't know this word.|Tôi không biết từ này.
+218|issue|noun|vấn đề|Climate change is a serious issue.|Biến đổi khí hậu là một vấn đề nghiêm trọng.
+219|market|noun|chợ; thị trường|My mother goes to the market every morning.|Sáng nào mẹ tôi cũng đi chợ.
+220|pay|verb|trả tiền|Can I pay by card?|Tôi trả bằng thẻ được không?
+221|build|verb|xây dựng|They plan to build a bridge here.|Họ dự định xây một cây cầu ở đây.
+222|hold|verb|cầm, nắm; tổ chức|Can you hold my bag for a minute?|Bạn cầm giúp tôi cái túi một lát được không?
+223|service|noun|dịch vụ; sự phục vụ|The service at this restaurant is excellent.|Phục vụ ở nhà hàng này rất tuyệt.
+224|against|preposition|chống lại; dựa vào|Many people are against the new law.|Nhiều người phản đối luật mới.
+225|believe|verb|tin, tin tưởng|I believe you.|Tôi tin bạn.
+226|second|adjective|thứ hai|This is my second visit to Hue.|Đây là lần thứ hai tôi đến Huế.
+227|though|conjunction|mặc dù|Though it was raining, we went out.|Mặc dù trời mưa, chúng tôi vẫn ra ngoài.
+228|yes|interjection|vâng, có, đúng|Yes, I would love to come.|Vâng, tôi rất muốn đến.
+229|love|verb|yêu, rất thích|I love my family.|Tôi yêu gia đình của mình.
+230|increase|verb|tăng, làm tăng|Prices increase every year.|Giá cả tăng lên mỗi năm.
+231|job|noun|công việc, việc làm|She found a new job.|Cô ấy đã tìm được việc mới.
+232|plan|noun|kế hoạch|What is your plan for the weekend?|Kế hoạch cuối tuần của bạn là gì?
+233|result|noun|kết quả|The test result was good.|Kết quả bài kiểm tra rất tốt.
+234|away|adverb|xa, đi khỏi|Go away!|Đi chỗ khác đi!
+235|example|noun|ví dụ|Can you give me an example?|Bạn cho tôi một ví dụ được không?
+236|happen|verb|xảy ra|What will happen next?|Chuyện gì sẽ xảy ra tiếp theo?
+237|offer|verb|đề nghị, mời; cung cấp|They offer free coffee to guests.|Họ mời khách cà phê miễn phí.
+238|young|adjective|trẻ|My father looks young for his age.|Bố tôi trông trẻ so với tuổi.
+239|close|verb|đóng|Please close the door.|Làm ơn đóng cửa lại.
+240|program|noun|chương trình|This TV program is very popular.|Chương trình truyền hình này rất được yêu thích.
+241|lead|verb|dẫn dắt, lãnh đạo; dẫn đến|She will lead the team.|Cô ấy sẽ dẫn dắt cả nhóm.
+242|buy|verb|mua|I want to buy a new bike.|Tôi muốn mua một chiếc xe đạp mới.
+243|understand|verb|hiểu|I don't understand this question.|Tôi không hiểu câu hỏi này.
+244|thank|verb|cảm ơn|I want to thank you for your help.|Tôi muốn cảm ơn bạn đã giúp đỡ.
+245|far|adverb|xa|My office is not far from here.|Văn phòng của tôi không xa đây.
+246|today|adverb|hôm nay|What are you doing today?|Hôm nay bạn làm gì?
+247|hour|noun|giờ, tiếng đồng hồ|The flight takes one hour.|Chuyến bay mất một tiếng.
+248|student|noun|học sinh, sinh viên|He is a student at Hanoi University.|Anh ấy là sinh viên Đại học Hà Nội.
+249|face|noun|khuôn mặt|She has a round face.|Cô ấy có khuôn mặt tròn.
+250|hope|verb|hy vọng|I hope you feel better soon.|Tôi hy vọng bạn sớm khỏe lại.
+251|idea|noun|ý tưởng, ý kiến|That is a great idea!|Đó là một ý tưởng tuyệt vời!
+252|cost|verb|có giá, tốn|How much does this shirt cost?|Cái áo này giá bao nhiêu?
+253|less|adverb|ít hơn|You should worry less.|Bạn nên bớt lo lắng đi.
+254|room|noun|phòng; chỗ trống|My room is on the second floor.|Phòng của tôi ở tầng hai.
+255|until|preposition|cho đến khi|The shop is open until ten.|Cửa hàng mở cửa đến mười giờ.
+256|reason|noun|lý do|What is the reason for the delay?|Lý do của sự chậm trễ là gì?
+257|form|noun|mẫu đơn; hình thức|Please fill in this form.|Vui lòng điền vào mẫu đơn này.
+258|spend|verb|tiêu (tiền); dành (thời gian)|I spend too much money on clothes.|Tôi tiêu quá nhiều tiền vào quần áo.
+259|head|noun|cái đầu; người đứng đầu|He hit his head on the door.|Anh ấy bị đập đầu vào cửa.
+260|car|noun|xe ô tô|My father drives a red car.|Bố tôi lái một chiếc ô tô màu đỏ.
+261|learn|verb|học, học hỏi|I want to learn how to cook.|Tôi muốn học nấu ăn.
+262|level|noun|mức độ, trình độ|What is your English level?|Trình độ tiếng Anh của bạn thế nào?
+263|person|noun|người|She is a very kind person.|Cô ấy là một người rất tốt bụng.
+264|experience|noun|kinh nghiệm; trải nghiệm|She has ten years of experience in teaching.|Cô ấy có mười năm kinh nghiệm giảng dạy.
+265|once|adverb|một lần; đã từng|I go to the gym once a week.|Tôi đi tập gym một lần mỗi tuần.
+266|member|noun|thành viên|He is a member of the football club.|Anh ấy là thành viên của câu lạc bộ bóng đá.
+267|enough|other|đủ|Do we have enough chairs?|Chúng ta có đủ ghế không?
+268|bad|adjective|xấu, tồi, dở|The weather is bad today.|Hôm nay thời tiết xấu.
+269|city|noun|thành phố|Ho Chi Minh City is very busy.|Thành phố Hồ Chí Minh rất nhộn nhịp.
+270|night|noun|đêm, buổi tối|I couldn't sleep last night.|Đêm qua tôi không ngủ được.
+271|able|adjective|có thể, có khả năng|Will you be able to come tomorrow?|Ngày mai bạn có đến được không?
+272|support|verb|ủng hộ, hỗ trợ|My parents always support me.|Bố mẹ luôn ủng hộ tôi.
+273|whether|conjunction|liệu … có … hay không|I don't know whether he will come.|Tôi không biết liệu anh ấy có đến hay không.
+274|line|noun|hàng, dòng; đường kẻ|Please wait in line.|Vui lòng xếp hàng chờ.
+275|present|noun|món quà|I bought a present for my mother.|Tôi đã mua một món quà cho mẹ.
+276|side|noun|bên, phía, mặt|Please write on one side of the paper.|Vui lòng chỉ viết trên một mặt giấy.
+277|quite|adverb|khá|The test was quite easy.|Bài kiểm tra khá dễ.
+278|although|conjunction|mặc dù|Although he is rich, he is not happy.|Mặc dù giàu có, anh ấy không hạnh phúc.
+279|sure|adjective|chắc chắn|Are you sure?|Bạn có chắc không?
+280|term|noun|thuật ngữ; học kỳ|What does this term mean?|Thuật ngữ này có nghĩa là gì?
+281|least|adverb|ít nhất|You should sleep at least seven hours.|Bạn nên ngủ ít nhất bảy tiếng.
+282|age|noun|tuổi|She started school at the age of six.|Cô ấy bắt đầu đi học từ năm sáu tuổi.
+283|low|adjective|thấp|The prices here are very low.|Giá ở đây rất thấp.
+284|speak|verb|nói (một ngôn ngữ)|Do you speak English?|Bạn có nói tiếng Anh không?
+285|within|preposition|trong vòng|Please reply within three days.|Vui lòng trả lời trong vòng ba ngày.
+286|process|noun|quá trình, quy trình|Learning a language is a long process.|Học một ngôn ngữ là một quá trình lâu dài.
+287|public|adjective|công cộng|Smoking is not allowed in public places.|Không được hút thuốc ở nơi công cộng.
+288|often|adverb|thường, hay|I often cook dinner at home.|Tôi thường nấu bữa tối ở nhà.
+289|train|noun|tàu hỏa|The train leaves at nine.|Tàu khởi hành lúc chín giờ.
+290|possible|adjective|có thể (xảy ra, làm được)|Is it possible to change my ticket?|Tôi có thể đổi vé được không?
+291|actually|adverb|thực ra, thật ra|Actually, I don't like coffee.|Thật ra tôi không thích cà phê.
+292|rather|adverb|khá; thà, hơn là|It is rather cold today.|Hôm nay trời khá lạnh.
+293|view|noun|quang cảnh; quan điểm|The room has a beautiful view of the sea.|Căn phòng có tầm nhìn ra biển rất đẹp.
+294|together|adverb|cùng nhau|Let's work together.|Chúng ta hãy cùng nhau làm việc.
+295|consider|verb|cân nhắc, xem xét|Please consider my offer.|Xin hãy cân nhắc lời đề nghị của tôi.
+296|price|noun|giá cả|The price of this phone is too high.|Giá chiếc điện thoại này quá cao.
+297|parent|noun|cha hoặc mẹ (phụ huynh)|Every parent wants the best for their child.|Cha mẹ nào cũng muốn điều tốt nhất cho con.
+298|hard|adjective|khó; cứng; chăm chỉ|This exercise is too hard for me.|Bài tập này quá khó với tôi.
+299|party|noun|bữa tiệc; đảng phái|We are having a birthday party on Sunday.|Chủ nhật chúng tôi tổ chức tiệc sinh nhật.
+300|local|adjective|địa phương|We bought fruit at the local market.|Chúng tôi mua hoa quả ở chợ địa phương.
+301|control|verb|kiểm soát, điều khiển|You need to control your anger.|Bạn cần kiểm soát cơn giận của mình.
+302|already|adverb|đã … rồi|I have already eaten.|Tôi đã ăn rồi.
+303|concern|noun|mối lo ngại, sự quan tâm|Safety is our main concern.|An toàn là mối quan tâm hàng đầu của chúng tôi.
+304|product|noun|sản phẩm|This product is made in Vietnam.|Sản phẩm này được sản xuất tại Việt Nam.
+305|lose|verb|mất, đánh mất; thua|Don't lose your ticket.|Đừng làm mất vé nhé.
+306|story|noun|câu chuyện|My grandmother told me a funny story.|Bà kể cho tôi nghe một câu chuyện vui.
+307|almost|adverb|gần như, hầu như|I am almost ready.|Tôi gần xong rồi.
+308|continue|verb|tiếp tục|Please continue reading.|Mời bạn tiếp tục đọc.
+309|stand|verb|đứng|Please stand in line.|Vui lòng đứng xếp hàng.
+310|whole|adjective|toàn bộ, cả|I ate the whole pizza.|Tôi đã ăn hết cả chiếc pizza.
+311|yet|adverb|chưa (câu phủ định, câu hỏi)|Have you finished your homework yet?|Bạn làm xong bài tập chưa?
+312|rate|noun|tỷ lệ, mức|The unemployment rate is falling.|Tỷ lệ thất nghiệp đang giảm.
+313|care|verb|quan tâm; chăm sóc|I really care about my friends.|Tôi thật sự quan tâm đến bạn bè.
+314|expect|verb|mong đợi, dự đoán|I expect to finish by Friday.|Tôi dự kiến sẽ xong trước thứ Sáu.
+315|effect|noun|tác động, ảnh hưởng|The medicine had a good effect.|Thuốc có tác dụng tốt.
+316|sort|noun|loại, kiểu (cách nói thân mật)|What sort of food do you like?|Bạn thích loại đồ ăn nào?
+317|ever|adverb|đã từng; bao giờ|Have you ever been to Sa Pa?|Bạn đã bao giờ đến Sa Pa chưa?
+318|anything|pronoun|bất cứ thứ gì; gì (câu hỏi, phủ định)|Do you need anything?|Bạn có cần gì không?
+319|cause|verb|gây ra|Smoking can cause cancer.|Hút thuốc có thể gây ung thư.
+320|fall|verb|ngã, rơi; giảm|Be careful, don't fall!|Cẩn thận, đừng để ngã!
+321|deal|noun|thỏa thuận, giao dịch|We made a deal.|Chúng ta đã thỏa thuận xong.
+322|water|noun|nước|Can I have a glass of water?|Cho tôi một cốc nước được không?
+323|send|verb|gửi|I will send you an email.|Tôi sẽ gửi email cho bạn.
+324|allow|verb|cho phép|My parents allow me to stay out late.|Bố mẹ cho phép tôi đi chơi về muộn.
+325|soon|adverb|sớm, chẳng bao lâu nữa|See you soon!|Hẹn sớm gặp lại!
+326|watch|verb|xem, theo dõi|We watch TV after dinner.|Chúng tôi xem ti vi sau bữa tối.
+327|base|noun|nền tảng, cơ sở; căn cứ|The company has its base in Hanoi.|Công ty có trụ sở chính ở Hà Nội.
+328|probably|adverb|có lẽ, hầu như chắc chắn|He will probably be late.|Có lẽ anh ấy sẽ đến muộn.
+329|suggest|verb|đề xuất, gợi ý|I suggest we take a taxi.|Tôi đề nghị chúng ta đi taxi.
+330|past|noun|quá khứ|Don't worry about the past.|Đừng lo lắng về quá khứ.
+331|power|noun|quyền lực; năng lượng, điện|There was a power cut last night.|Tối qua bị cúp điện.
+332|test|noun|bài kiểm tra|I have a math test tomorrow.|Ngày mai tôi có bài kiểm tra toán.
+333|visit|verb|thăm, đến thăm|We visit our grandparents every Sunday.|Chủ nhật nào chúng tôi cũng thăm ông bà.
+334|center|noun|trung tâm|The hotel is in the center of the city.|Khách sạn nằm ở trung tâm thành phố.
+335|grow|verb|lớn lên; trồng; tăng|Children grow very quickly.|Trẻ con lớn rất nhanh.
+336|nothing|pronoun|không có gì|There is nothing in the box.|Trong hộp không có gì cả.
+337|return|verb|trở về; trả lại|Please return the book by Friday.|Vui lòng trả sách trước thứ Sáu.
+338|mother|noun|mẹ|My mother is a nurse.|Mẹ tôi là y tá.
+339|walk|verb|đi bộ|I walk to work every day.|Ngày nào tôi cũng đi bộ đi làm.
+340|matter|verb|quan trọng, có ý nghĩa|It doesn't matter.|Không sao đâu.
+341|mind|noun|tâm trí, đầu óc|I can't get the song out of my mind.|Tôi không thể quên được bài hát đó.
+342|value|noun|giá trị|This ring has great value to me.|Chiếc nhẫn này có giá trị lớn với tôi.
+343|office|noun|văn phòng|Our office is on the fifth floor.|Văn phòng của chúng tôi ở tầng năm.
+344|record|verb|ghi lại, thu âm|Can I record this lesson?|Tôi ghi âm bài học này được không?
+345|stay|verb|ở lại, lưu trú|We will stay at a hotel near the beach.|Chúng tôi sẽ ở một khách sạn gần biển.
+346|force|verb|ép buộc|Nobody can force you to do it.|Không ai có thể ép bạn làm điều đó.
+347|stop|verb|dừng lại; ngừng|Please stop talking.|Làm ơn đừng nói chuyện nữa.
+348|several|other|một vài, vài|I have been to Da Lat several times.|Tôi đã đến Đà Lạt vài lần.
+349|light|noun|ánh sáng; đèn|Turn on the light, please.|Làm ơn bật đèn lên.
+350|develop|verb|phát triển|The city plans to develop its public transport.|Thành phố dự định phát triển giao thông công cộng.
+351|remember|verb|nhớ|I can't remember his name.|Tôi không nhớ tên anh ấy.
+352|bit|noun|một chút, một ít|Can you wait a bit?|Bạn đợi một chút được không?
+353|share|verb|chia sẻ, dùng chung|I share a room with my brother.|Tôi ở chung phòng với anh trai.
+354|real|adjective|thật, thực sự|Is this a real diamond?|Đây có phải kim cương thật không?
+355|answer|noun|câu trả lời|I don't know the answer.|Tôi không biết câu trả lời.
+356|sit|verb|ngồi|Can I sit here?|Tôi ngồi đây được không?
+357|figure|noun|con số; hình dáng|The sales figure for May was high.|Doanh số tháng Năm khá cao.
+358|letter|noun|lá thư; chữ cái|I wrote a letter to my grandmother.|Tôi đã viết một lá thư cho bà.
+359|decide|verb|quyết định|I can't decide what to wear.|Tôi không quyết định được nên mặc gì.
+360|language|noun|ngôn ngữ|English is an international language.|Tiếng Anh là một ngôn ngữ quốc tế.
+361|subject|noun|môn học; chủ đề|My favorite subject is history.|Môn học yêu thích của tôi là lịch sử.
+362|class|noun|lớp học; tiết học|There are thirty students in my class.|Lớp tôi có ba mươi học sinh.
+363|development|noun|sự phát triển|Education is important for the development of a country.|Giáo dục quan trọng đối với sự phát triển của một đất nước.
+364|town|noun|thị trấn|I grew up in a small town.|Tôi lớn lên ở một thị trấn nhỏ.
+365|half|noun|một nửa|I ate half of the cake.|Tôi đã ăn một nửa chiếc bánh.
+366|minute|noun|phút|Wait a minute, please.|Vui lòng đợi một phút.
+367|food|noun|thức ăn, đồ ăn|I love Vietnamese food.|Tôi rất thích đồ ăn Việt Nam.
+368|break|noun|giờ nghỉ, sự tạm nghỉ|Let's take a short break.|Chúng ta nghỉ giải lao một chút nhé.
+369|clear|adjective|rõ ràng; trong|Is that clear?|Như vậy đã rõ chưa?
+370|future|noun|tương lai|What are your plans for the future?|Bạn có kế hoạch gì cho tương lai?
+371|either|other|một trong hai; cũng không (cuối câu phủ định)|You can choose either color.|Bạn có thể chọn một trong hai màu.
+372|ago|adverb|cách đây, trước đây|I moved here two years ago.|Tôi chuyển đến đây cách đây hai năm.
+373|per|preposition|mỗi, một (mỗi giờ, mỗi người)|The tickets cost ten dollars per person.|Vé giá mười đô la một người.
+374|remain|verb|vẫn còn; ở lại|Please remain seated.|Xin quý khách vui lòng ngồi yên tại chỗ.
+375|top|noun|đỉnh, phần trên cùng|We climbed to the top of the hill.|Chúng tôi leo lên đỉnh đồi.
+376|among|preposition|giữa, trong số (nhiều người, vật)|She is popular among her classmates.|Cô ấy được các bạn cùng lớp yêu mến.
+377|win|verb|thắng, chiến thắng|Our team will win the game.|Đội chúng ta sẽ thắng trận đấu.
+378|color|noun|màu sắc|What color is your new car?|Chiếc xe mới của bạn màu gì?
+379|involve|verb|liên quan, bao gồm; cho tham gia|The job will involve a lot of travel.|Công việc này sẽ phải đi lại nhiều.
+380|reach|verb|đến, đạt tới; với tới|We will reach Hue before noon.|Chúng ta sẽ đến Huế trước buổi trưa.
+381|social|adjective|thuộc về xã hội|Social media is very popular among young people.|Mạng xã hội rất phổ biến trong giới trẻ.
+382|period|noun|giai đoạn, khoảng thời gian|It was a difficult period in my life.|Đó là một giai đoạn khó khăn trong cuộc đời tôi.
+383|across|preposition|băng qua, ở phía bên kia|The bank is across the street.|Ngân hàng ở bên kia đường.
+384|note|noun|ghi chú, mẩu giấy nhắn|I left a note on your desk.|Tôi để lại một mẩu giấy nhắn trên bàn của bạn.
+385|history|noun|lịch sử|I am interested in the history of Hanoi.|Tôi quan tâm đến lịch sử Hà Nội.
+386|create|verb|tạo ra, sáng tạo|The artist wants to create something new.|Người nghệ sĩ muốn tạo ra điều gì đó mới mẻ.
+387|drive|verb|lái xe|Can you drive a car?|Bạn có biết lái ô tô không?
+388|along|preposition|dọc theo|We walked along the beach.|Chúng tôi đi dạo dọc bờ biển.
+389|type|noun|loại, kiểu, dạng|What type of phone do you have?|Bạn dùng loại điện thoại nào?
+390|sound|noun|âm thanh, tiếng|I heard a strange sound outside.|Tôi nghe thấy một tiếng động lạ bên ngoài.
+391|eye|noun|mắt|Close one eye and look through the hole.|Nhắm một mắt lại và nhìn qua cái lỗ.
+392|music|noun|âm nhạc|I listen to music every day.|Ngày nào tôi cũng nghe nhạc.
+393|game|noun|trò chơi; trận đấu|Let's play a game.|Chúng ta chơi một trò chơi nhé.
+394|political|adjective|thuộc về chính trị|They talked about political issues.|Họ nói về các vấn đề chính trị.
+395|free|adjective|miễn phí; rảnh rỗi; tự do|Are you free this evening?|Tối nay bạn có rảnh không?
+396|receive|verb|nhận được|Did you receive my letter?|Bạn đã nhận được thư của tôi chưa?
+397|moment|noun|chốc lát, khoảnh khắc|Please wait a moment.|Vui lòng đợi một chút.
+398|sale|noun|việc bán; đợt giảm giá|This house is for sale.|Ngôi nhà này đang được rao bán.
+399|policy|noun|chính sách|The company has a new travel policy.|Công ty có chính sách công tác mới.
+400|further|adverb|xa hơn; thêm nữa|I can't walk any further.|Tôi không thể đi xa hơn được nữa.
+401|body|noun|cơ thể|Exercise is good for your body.|Tập thể dục tốt cho cơ thể.
+402|require|verb|yêu cầu, đòi hỏi|This job will require a lot of patience.|Công việc này sẽ đòi hỏi nhiều kiên nhẫn.
+403|wait|verb|chờ, đợi|Please wait here.|Vui lòng đợi ở đây.
+404|general|adjective|chung, tổng quát|I have a general idea of the plan.|Tôi nắm được ý chung của kế hoạch.
+405|appear|verb|xuất hiện; có vẻ|Stars appear in the sky at night.|Các vì sao xuất hiện trên bầu trời vào ban đêm.
+406|toward|preposition|về phía, hướng về|She walked toward the door.|Cô ấy đi về phía cửa.
+407|team|noun|đội, nhóm|Our team won the match.|Đội của chúng tôi đã thắng trận đấu.
+408|easy|adjective|dễ|This question is easy.|Câu hỏi này dễ.
+409|individual|noun|cá nhân|Every individual has the right to vote.|Mỗi cá nhân đều có quyền bầu cử.
+410|full|adjective|đầy; no|The bus is full.|Xe buýt đã chật kín người.
+411|black|adjective|màu đen|She is wearing a black dress.|Cô ấy đang mặc một chiếc váy đen.
+412|sense|noun|giác quan; cảm giác; ý nghĩa|He has a good sense of humor.|Anh ấy rất có khiếu hài hước.
+413|perhaps|adverb|có lẽ|Perhaps it will rain tomorrow.|Có lẽ ngày mai trời sẽ mưa.
+414|add|verb|thêm vào; cộng|Add some salt to the soup.|Thêm chút muối vào canh.
+415|rule|noun|quy tắc, luật lệ|The rule is simple: no phones in class.|Quy tắc rất đơn giản: không dùng điện thoại trong lớp.
+416|pass|verb|vượt qua (kỳ thi); đi qua; chuyền|I hope I will pass the exam.|Tôi hy vọng sẽ đỗ kỳ thi.
+417|produce|verb|sản xuất, tạo ra|This factory can produce a thousand cars a month.|Nhà máy này có thể sản xuất một nghìn chiếc ô tô mỗi tháng.
+418|sell|verb|bán|They sell fresh fruit at the market.|Họ bán hoa quả tươi ở chợ.
+419|short|adjective|ngắn; thấp|My sister has short hair.|Em gái tôi để tóc ngắn.
+420|agree|verb|đồng ý|I agree with you.|Tôi đồng ý với bạn.
+421|law|noun|luật, pháp luật|Everyone must obey the law.|Mọi người đều phải tuân thủ pháp luật.
+422|everything|pronoun|mọi thứ, tất cả|Everything is ready.|Mọi thứ đã sẵn sàng.
+423|research|noun|nghiên cứu|She is doing research on climate change.|Cô ấy đang nghiên cứu về biến đổi khí hậu.
+424|cover|verb|che, phủ; bao gồm|Cover your mouth when you cough.|Hãy che miệng khi ho.
+425|paper|noun|giấy; bài báo|I need a piece of paper.|Tôi cần một tờ giấy.
+426|position|noun|vị trí; chức vụ|She applied for a position at the bank.|Cô ấy ứng tuyển một vị trí ở ngân hàng.
+427|near|preposition|gần|I live near the river.|Tôi sống gần sông.
+428|human|adjective|thuộc về con người|Every human life is important.|Mỗi sinh mạng con người đều quan trọng.
+429|computer|noun|máy tính|I use my computer for work.|Tôi dùng máy tính để làm việc.
+430|situation|noun|tình huống, tình hình|The situation is getting better.|Tình hình đang tốt dần lên.
+431|staff|noun|nhân viên (nói chung)|The hotel staff were very friendly.|Nhân viên khách sạn rất thân thiện.
+432|activity|noun|hoạt động|Swimming is my favorite activity.|Bơi lội là hoạt động tôi yêu thích.
+433|film|noun|bộ phim|Let's watch a film tonight.|Tối nay chúng ta xem phim nhé.
+434|morning|noun|buổi sáng|I drink coffee every morning.|Sáng nào tôi cũng uống cà phê.
+435|war|noun|chiến tranh|Nobody wants war.|Không ai muốn chiến tranh.
+436|account|noun|tài khoản|I want to open a bank account.|Tôi muốn mở một tài khoản ngân hàng.
+437|shop|noun|cửa hàng|There is a small shop on the corner.|Có một cửa hàng nhỏ ở góc phố.
+438|major|adjective|chính, lớn, quan trọng|Traffic is a major problem in big cities.|Giao thông là vấn đề lớn ở các thành phố lớn.
+439|someone|pronoun|ai đó, người nào đó|Someone is knocking at the door.|Có ai đó đang gõ cửa.
+440|above|preposition|ở trên, phía trên|There is a picture above the bed.|Có một bức tranh phía trên giường.
+441|design|noun|thiết kế|I like the design of this house.|Tôi thích thiết kế của ngôi nhà này.
+442|event|noun|sự kiện|The event will start at seven.|Sự kiện sẽ bắt đầu lúc bảy giờ.
+443|special|adjective|đặc biệt|Today is a special day.|Hôm nay là một ngày đặc biệt.
+444|sometimes|adverb|thỉnh thoảng|I sometimes go to work by bus.|Thỉnh thoảng tôi đi làm bằng xe buýt.
+445|condition|noun|điều kiện; tình trạng|The car is in good condition.|Chiếc xe còn trong tình trạng tốt.
+446|carry|verb|mang, xách, vác|Can you carry this bag for me?|Bạn xách giúp tôi cái túi này được không?
+447|choose|verb|chọn, lựa chọn|You can choose any seat.|Bạn có thể chọn bất kỳ chỗ ngồi nào.
+448|father|noun|bố, cha|My father is an engineer.|Bố tôi là kỹ sư.
+449|decision|noun|quyết định|It was a difficult decision.|Đó là một quyết định khó khăn.
+450|table|noun|cái bàn; bảng|The keys are on the table.|Chìa khóa ở trên bàn.
+451|certain|adjective|chắc chắn; nhất định|I am certain that he will come.|Tôi chắc chắn anh ấy sẽ đến.
+452|forward|adverb|về phía trước|Please move forward.|Vui lòng tiến lên phía trước.
+453|main|adjective|chính, chủ yếu|This is the main road to the city.|Đây là đường chính vào thành phố.
+454|die|verb|chết|Plants die without water.|Cây sẽ chết nếu không có nước.
+455|bear|verb|chịu đựng|I can't bear this noise.|Tôi không chịu nổi tiếng ồn này.
+456|cut|verb|cắt|Please cut the cake.|Làm ơn cắt bánh.
+457|describe|verb|miêu tả, mô tả|Can you describe the man?|Bạn có thể miêu tả người đàn ông đó không?
+458|himself|pronoun|chính anh ấy, tự mình (anh ấy)|He cooked dinner himself.|Anh ấy tự nấu bữa tối.
+459|available|adjective|có sẵn; rảnh|Is this room available tonight?|Tối nay phòng này còn trống không?
+460|especially|adverb|đặc biệt là|I love fruit, especially mangoes.|Tôi thích hoa quả, đặc biệt là xoài.
+461|strong|adjective|mạnh, khỏe; đậm (cà phê)|He is very strong.|Anh ấy rất khỏe.
+462|rise|verb|tăng lên; mọc (mặt trời)|The sun will rise at six tomorrow.|Ngày mai mặt trời sẽ mọc lúc sáu giờ.
+463|girl|noun|cô gái, bé gái|The girl in the blue shirt is my sister.|Cô gái mặc áo xanh là em gái tôi.
+464|maybe|adverb|có lẽ, có thể (thường đứng đầu câu)|Maybe I will go to the party.|Có lẽ tôi sẽ đi dự tiệc.
+465|community|noun|cộng đồng|Our community is very friendly.|Cộng đồng của chúng tôi rất thân thiện.
+466|else|adverb|khác, nữa|Do you want anything else?|Bạn có muốn gì nữa không?
+467|particular|adjective|cụ thể, riêng biệt; đặc biệt|Is there a particular reason?|Có lý do cụ thể nào không?
+468|role|noun|vai trò, vai diễn|Parents play an important role in education.|Cha mẹ đóng vai trò quan trọng trong việc giáo dục.
+469|join|verb|tham gia, gia nhập|Would you like to join us for lunch?|Bạn có muốn ăn trưa cùng chúng tôi không?
+470|difficult|adjective|khó, khó khăn|This exam is very difficult.|Kỳ thi này rất khó.
+471|please|adverb|làm ơn, xin vui lòng|Please close the window.|Làm ơn đóng cửa sổ lại.
+472|detail|noun|chi tiết|Please tell me every detail.|Hãy kể cho tôi mọi chi tiết.
+473|difference|noun|sự khác biệt|What is the difference between these two words?|Hai từ này khác nhau thế nào?
+474|action|noun|hành động|We need to take action now.|Chúng ta cần hành động ngay bây giờ.
+475|health|noun|sức khỏe|Smoking is bad for your health.|Hút thuốc có hại cho sức khỏe.
+476|eat|verb|ăn|What do you want to eat?|Bạn muốn ăn gì?
+477|step|noun|bước; bậc thang|Take one step forward.|Bước lên phía trước một bước.
+478|true|adjective|đúng, có thật|Is this story true?|Câu chuyện này có thật không?
+479|phone|noun|điện thoại|My phone is out of battery.|Điện thoại của tôi hết pin rồi.
+480|themselves|pronoun|chính họ, tự họ|The children cleaned the room themselves.|Bọn trẻ tự dọn phòng.
+481|draw|verb|vẽ|Can you draw a cat?|Bạn vẽ được con mèo không?
+482|white|adjective|màu trắng|She has a white cat.|Cô ấy có một con mèo trắng.
+483|date|noun|ngày tháng; cuộc hẹn hò|What is the date today?|Hôm nay là ngày bao nhiêu?
+484|practice|verb|luyện tập, thực hành|You need to practice speaking every day.|Bạn cần luyện nói mỗi ngày.
+485|model|noun|mô hình; kiểu mẫu; người mẫu|This is the latest model of the phone.|Đây là mẫu điện thoại mới nhất.
+486|raise|verb|nâng lên, giơ lên; nuôi nấng|Raise your hand if you have a question.|Hãy giơ tay nếu bạn có câu hỏi.
+487|customer|noun|khách hàng|The customer is always right.|Khách hàng luôn luôn đúng.
+488|front|noun|phía trước, mặt trước|Let's meet in front of the cinema.|Gặp nhau trước cửa rạp chiếu phim nhé.
+489|explain|verb|giải thích|Can you explain this word?|Bạn giải thích từ này được không?
+490|door|noun|cửa|Knock on the door before you come in.|Hãy gõ cửa trước khi vào.
+491|outside|adverb|bên ngoài|The children are playing outside.|Bọn trẻ đang chơi bên ngoài.
+492|behind|preposition|phía sau|The garden is behind the house.|Khu vườn ở phía sau ngôi nhà.
+493|economic|adjective|thuộc về kinh tế|The country is facing economic problems.|Đất nước đang gặp khó khăn về kinh tế.
+494|site|noun|địa điểm, công trường; trang web|They are building a hotel on this site.|Họ đang xây khách sạn trên khu đất này.
+495|approach|noun|cách tiếp cận, phương pháp|We need a new approach to this problem.|Chúng ta cần một cách tiếp cận mới cho vấn đề này.
+496|teacher|noun|giáo viên|My teacher is very patient.|Cô giáo của tôi rất kiên nhẫn.
+497|land|noun|đất, đất liền|They bought some land near the river.|Họ đã mua một mảnh đất gần sông.
+498|charge|noun|phí, tiền phải trả|There is no charge for children.|Trẻ em được miễn phí.
+499|finally|adverb|cuối cùng, sau cùng|We finally arrived at the hotel.|Cuối cùng chúng tôi cũng đến khách sạn.
+500|sign|noun|biển báo; dấu hiệu|There is a stop sign at the corner.|Có một biển báo dừng ở góc đường.
+501|claim|verb|cho rằng, khẳng định; đòi (quyền lợi)|They claim that the product is safe.|Họ khẳng định rằng sản phẩm an toàn.
+502|relationship|noun|mối quan hệ|They have a good relationship.|Họ có mối quan hệ tốt.
+503|travel|verb|đi du lịch, đi lại|I love to travel by train.|Tôi thích đi du lịch bằng tàu hỏa.
+504|enjoy|verb|thích, tận hưởng|I hope you enjoy the meal.|Mong bạn ăn ngon miệng.
+505|death|noun|cái chết|His death was a shock to everyone.|Cái chết của ông ấy khiến mọi người bàng hoàng.
+506|nice|adjective|đẹp, dễ chịu, tốt bụng|What a nice day!|Hôm nay đẹp trời quá!
+507|amount|noun|số lượng, lượng|He spent a large amount of money.|Anh ấy đã tiêu một khoản tiền lớn.
+508|improve|verb|cải thiện, tiến bộ|I want to improve my English.|Tôi muốn cải thiện tiếng Anh.
+509|picture|noun|bức tranh, bức ảnh|Can you take a picture of us?|Bạn chụp giúp chúng tôi một tấm ảnh được không?
+510|boy|noun|cậu bé, con trai|The boy is playing with his dog.|Cậu bé đang chơi với con chó của mình.
+511|regard|verb|coi như, xem như|I regard him as my brother.|Tôi coi anh ấy như anh trai mình.
+512|organization|noun|tổ chức|She works for a charity organization.|Cô ấy làm việc cho một tổ chức từ thiện.
+513|happy|adjective|vui vẻ, hạnh phúc|I am happy to see you.|Tôi rất vui được gặp bạn.
+514|couple|noun|cặp đôi; một vài|They are a lovely couple.|Họ là một cặp đôi đáng yêu.
+515|act|verb|hành động; diễn xuất|We must act quickly.|Chúng ta phải hành động nhanh.
+516|range|noun|phạm vi, loại (đa dạng)|The shop sells a wide range of shoes.|Cửa hàng bán nhiều loại giày.
+517|quality|noun|chất lượng|The quality of this coffee is excellent.|Chất lượng cà phê này rất tuyệt.
+518|project|noun|dự án|We are working on a new project.|Chúng tôi đang làm một dự án mới.
+519|round|adjective|tròn|We sat at a round table.|Chúng tôi ngồi ở một chiếc bàn tròn.
+520|opportunity|noun|cơ hội|This is a great opportunity for you.|Đây là cơ hội tuyệt vời cho bạn.
+521|road|noun|con đường|Be careful when you cross the road.|Cẩn thận khi qua đường nhé.
+522|according to|phrase|theo (như)|According to the weather forecast, it will rain tomorrow.|Theo dự báo thời tiết, ngày mai trời sẽ mưa.
+523|list|noun|danh sách|I made a shopping list.|Tôi đã viết danh sách đồ cần mua.
+524|wish|verb|ước, mong muốn|I wish you a happy birthday.|Chúc bạn sinh nhật vui vẻ.
+525|therefore|adverb|vì vậy, do đó|It was raining; therefore, we stayed home.|Trời mưa, vì vậy chúng tôi ở nhà.
+526|wear|verb|mặc, đội, đeo|I usually wear a uniform at work.|Tôi thường mặc đồng phục khi làm việc.
+527|fund|noun|quỹ, tiền vốn|The school has a fund to help poor students.|Trường có một quỹ để giúp đỡ học sinh nghèo.
+528|rest|noun|sự nghỉ ngơi; phần còn lại|You need some rest.|Bạn cần nghỉ ngơi một chút.
+529|kid|noun|đứa trẻ (cách nói thân mật)|The kid is eating ice cream.|Đứa bé đang ăn kem.
+530|industry|noun|ngành công nghiệp, ngành|The tourism industry is growing fast.|Ngành du lịch đang phát triển nhanh.
+531|education|noun|giáo dục|Education is the key to success.|Giáo dục là chìa khóa của thành công.
+532|measure|verb|đo|Can you measure the size of the room?|Bạn đo kích thước căn phòng được không?
+533|kill|verb|giết|Smoking can kill you.|Hút thuốc có thể giết chết bạn.
+534|serve|verb|phục vụ|The restaurant will serve dinner from six.|Nhà hàng phục vụ bữa tối từ sáu giờ.
+535|likely|adjective|có khả năng, có thể xảy ra|It is likely to rain later.|Lát nữa nhiều khả năng sẽ mưa.
+536|certainly|adverb|chắc chắn, dĩ nhiên|I will certainly help you.|Tôi chắc chắn sẽ giúp bạn.
+537|national|adjective|thuộc về quốc gia|Today is a national holiday.|Hôm nay là ngày lễ quốc gia.
+538|itself|pronoun|chính nó, tự nó|The door opened by itself.|Cánh cửa tự mở ra.
+539|teach|verb|dạy|She will teach us English.|Cô ấy sẽ dạy chúng tôi tiếng Anh.
+540|field|noun|cánh đồng; lĩnh vực|Cows are eating grass in the field.|Đàn bò đang ăn cỏ trên cánh đồng.
+541|security|noun|an ninh, sự an toàn|There is tight security at the airport.|An ninh ở sân bay rất chặt chẽ.
+542|air|noun|không khí|The air in the mountains is fresh.|Không khí trên núi rất trong lành.
+543|benefit|noun|lợi ích|What is the main benefit of this plan?|Lợi ích chính của kế hoạch này là gì?
+544|trade|noun|thương mại, buôn bán|Trade between Vietnam and Japan is growing.|Thương mại giữa Việt Nam và Nhật Bản đang tăng trưởng.
+545|risk|noun|rủi ro, nguy cơ|There is a risk of fire.|Có nguy cơ xảy ra hỏa hoạn.
+546|news|noun|tin tức|I have good news for you.|Tôi có tin vui cho bạn.
+547|standard|noun|tiêu chuẩn|The hotel has a high standard of service.|Khách sạn có tiêu chuẩn phục vụ cao.
+548|vote|verb|bỏ phiếu, bầu|Who did you vote for?|Bạn đã bỏ phiếu cho ai?
+549|percent|noun|phần trăm|Prices went up by ten percent.|Giá đã tăng mười phần trăm.
+550|focus|verb|tập trung|I can't focus on my work.|Tôi không thể tập trung vào công việc.
+551|stage|noun|giai đoạn; sân khấu|The project is in its final stage.|Dự án đang ở giai đoạn cuối.
+552|space|noun|không gian, chỗ trống|There is enough space for two cars.|Có đủ chỗ cho hai chiếc ô tô.
+553|instead|adverb|thay vào đó|I don't like tea. I will have coffee instead.|Tôi không thích trà. Tôi sẽ uống cà phê thay vào đó.
+554|realize|verb|nhận ra|I didn't realize it was so late.|Tôi không nhận ra đã muộn như vậy.
+555|usually|adverb|thường thường|I usually go to bed at eleven.|Tôi thường đi ngủ lúc mười một giờ.
+556|data|noun|dữ liệu|We need more data to decide.|Chúng ta cần thêm dữ liệu để quyết định.
+557|single|adjective|đơn, một; độc thân|Is she married or single?|Cô ấy đã kết hôn hay còn độc thân?
+558|address|noun|địa chỉ|What is your address?|Địa chỉ của bạn là gì?
+559|performance|noun|màn trình diễn; hiệu suất|Her performance on stage was amazing.|Màn trình diễn trên sân khấu của cô ấy thật tuyệt vời.
+560|chance|noun|cơ hội; khả năng|Give me one more chance.|Cho tôi thêm một cơ hội.
+561|accept|verb|chấp nhận|I accept your apology.|Tôi chấp nhận lời xin lỗi của bạn.
+562|society|noun|xã hội|We live in a modern society.|Chúng ta sống trong một xã hội hiện đại.
+563|technology|noun|công nghệ|Technology changes very fast.|Công nghệ thay đổi rất nhanh.
+564|mention|verb|đề cập, nhắc đến|She didn't mention her new job.|Cô ấy không hề nhắc đến công việc mới.
+565|choice|noun|sự lựa chọn|You made the right choice.|Bạn đã chọn đúng.
+566|save|verb|tiết kiệm; cứu; lưu|I want to save money for a trip.|Tôi muốn tiết kiệm tiền cho một chuyến đi.
+567|common|adjective|phổ biến, thông thường; chung|Nguyen is a common name in Vietnam.|Nguyễn là một họ phổ biến ở Việt Nam.
+568|culture|noun|văn hóa|I want to learn about Japanese culture.|Tôi muốn tìm hiểu về văn hóa Nhật Bản.
+569|total|noun|tổng số|The total is fifty dollars.|Tổng cộng là năm mươi đô la.
+570|demand|noun|nhu cầu; yêu cầu|There is a high demand for nurses.|Nhu cầu về y tá đang rất cao.
+571|material|noun|vật liệu; tài liệu|This bag is made of a strong material.|Cái túi này được làm từ chất liệu bền.
+572|limit|noun|giới hạn|There is a speed limit on this road.|Con đường này có giới hạn tốc độ.
+573|listen|verb|nghe, lắng nghe|Please listen to me.|Làm ơn nghe tôi nói.
+574|due|adjective|đến hạn (phải nộp, phải trả)|The report is due tomorrow.|Báo cáo phải nộp vào ngày mai.
+575|wrong|adjective|sai, nhầm|Sorry, I called the wrong number.|Xin lỗi, tôi gọi nhầm số.
+576|foot|noun|bàn chân|I hurt my foot.|Tôi bị đau chân.
+577|effort|noun|sự nỗ lực, công sức|Learning a language takes effort.|Học ngoại ngữ cần nỗ lực.
+578|attention|noun|sự chú ý|Please pay attention.|Vui lòng chú ý.
+579|upon|preposition|trên, vào (trang trọng)|Once upon a time, there was a king.|Ngày xửa ngày xưa, có một vị vua.
+580|check|verb|kiểm tra|Please check your answers.|Hãy kiểm tra lại câu trả lời.
+581|complete|verb|hoàn thành|I need to complete this form.|Tôi cần điền đầy đủ mẫu đơn này.
+582|lie|verb|nói dối; nằm|Don't lie to me.|Đừng nói dối tôi.
+583|pick|verb|chọn; hái; đón (pick up)|Pick a card.|Chọn một lá bài đi.
+584|reduce|verb|giảm, làm giảm|We need to reduce our costs.|Chúng ta cần giảm chi phí.
+585|personal|adjective|cá nhân, riêng tư|This is a personal question.|Đây là một câu hỏi riêng tư.
+586|ground|noun|mặt đất|The ball fell to the ground.|Quả bóng rơi xuống đất.
+587|animal|noun|động vật, con vật|The cat is my favorite animal.|Mèo là con vật tôi thích nhất.
+588|arrive|verb|đến nơi|What time will we arrive?|Mấy giờ chúng ta sẽ đến nơi?
+589|patient|noun|bệnh nhân|The doctor is with a patient.|Bác sĩ đang khám cho một bệnh nhân.
+590|current|adjective|hiện tại, hiện hành|What is your current address?|Địa chỉ hiện tại của bạn là gì?
+591|century|noun|thế kỷ|This temple was built in the 11th century.|Ngôi chùa này được xây vào thế kỷ 11.
+592|evidence|noun|bằng chứng|The police found new evidence.|Cảnh sát đã tìm thấy bằng chứng mới.
+593|exist|verb|tồn tại|Do you think ghosts exist?|Bạn có nghĩ ma có thật không?
+594|similar|adjective|tương tự, giống|Your bag is similar to mine.|Túi của bạn giống túi của tôi.
+595|fight|verb|đánh nhau; chiến đấu|Stop it! Don't fight.|Dừng lại! Đừng đánh nhau.
+596|leader|noun|người lãnh đạo, trưởng nhóm|She is a good team leader.|Cô ấy là một trưởng nhóm giỏi.
+597|fine|adjective|khỏe; ổn, tốt|I am fine, thank you.|Tôi khỏe, cảm ơn bạn.
+598|street|noun|đường phố|My house is on this street.|Nhà tôi ở trên con phố này.
+599|former|adjective|trước đây, cũ|He is my former boss.|Ông ấy là sếp cũ của tôi.
+600|contact|verb|liên lạc|Please contact me by email.|Vui lòng liên lạc với tôi qua email.
+601|particularly|adverb|nhất là, đặc biệt (trang trọng hơn especially)|I like fruit, particularly apples.|Tôi thích hoa quả, đặc biệt là táo.
+602|wife|noun|vợ|His wife is a teacher.|Vợ anh ấy là giáo viên.
+603|sport|noun|môn thể thao|Football is a popular sport.|Bóng đá là môn thể thao phổ biến.
+604|prepare|verb|chuẩn bị|I need to prepare for the exam.|Tôi cần chuẩn bị cho kỳ thi.
+605|discuss|verb|thảo luận|Let's discuss this tomorrow.|Ngày mai chúng ta thảo luận việc này nhé.
+606|response|noun|câu trả lời, sự phản hồi|I am still waiting for a response.|Tôi vẫn đang chờ phản hồi.
+607|voice|noun|giọng nói|She has a beautiful voice.|Cô ấy có giọng nói rất hay.
+608|piece|noun|mẩu, miếng, mảnh|Can I have a piece of cake?|Cho tôi một miếng bánh được không?
+609|finish|verb|hoàn thành, kết thúc|I will finish my work at six.|Tôi sẽ xong việc lúc sáu giờ.
+610|suppose|verb|cho rằng, giả sử|I suppose you are right.|Tôi cho là bạn đúng.
+611|apply|verb|nộp đơn; áp dụng|I want to apply for this job.|Tôi muốn ứng tuyển công việc này.
+612|president|noun|tổng thống; chủ tịch|The president will visit Vietnam next week.|Tổng thống sẽ thăm Việt Nam vào tuần tới.
+613|fire|noun|lửa; đám cháy|There was a fire in the kitchen.|Đã có một đám cháy trong bếp.
+614|compare|verb|so sánh|Don't compare yourself with others.|Đừng so sánh bản thân với người khác.
+615|court|noun|tòa án; sân (thể thao)|The case will go to court.|Vụ việc sẽ được đưa ra tòa.
+616|police|noun|cảnh sát|Call the police!|Gọi cảnh sát đi!
+617|store|noun|cửa hàng|I bought this shirt at a store downtown.|Tôi mua cái áo này ở một cửa hàng trong trung tâm.
+618|poor|adjective|nghèo; kém|They were very poor when they were young.|Hồi trẻ họ rất nghèo.
+619|knowledge|noun|kiến thức, sự hiểu biết|She has a lot of knowledge about history.|Cô ấy có nhiều kiến thức về lịch sử.
+620|laugh|verb|cười (thành tiếng)|His jokes always make me laugh.|Những câu đùa của anh ấy luôn làm tôi bật cười.
+621|arm|noun|cánh tay|I broke my arm last year.|Năm ngoái tôi bị gãy tay.
+622|heart|noun|trái tim|My heart is beating fast.|Tim tôi đang đập nhanh.
+623|source|noun|nguồn|Fish is a good source of protein.|Cá là nguồn đạm tốt.
+624|employee|noun|nhân viên, người lao động|Every employee must wear a name badge.|Mọi nhân viên đều phải đeo thẻ tên.
+625|manage|verb|quản lý; xoay xở được|She will manage the new store.|Cô ấy sẽ quản lý cửa hàng mới.
+626|simply|adverb|đơn giản là, chỉ là|I simply don't have time.|Đơn giản là tôi không có thời gian.
+627|bank|noun|ngân hàng|I need to go to the bank.|Tôi cần ra ngân hàng.
+628|firm|noun|công ty, hãng|He works for a law firm.|Anh ấy làm việc cho một công ty luật.
+629|cell|noun|tế bào; phòng giam|Each cell in your body needs oxygen.|Mỗi tế bào trong cơ thể đều cần ô-xy.
+630|article|noun|bài báo|I read an interesting article about health.|Tôi đọc một bài báo thú vị về sức khỏe.
+631|fast|adjective|nhanh|This is a fast train.|Đây là tàu nhanh.
+632|attack|verb|tấn công|The dog may attack strangers.|Con chó có thể tấn công người lạ.
+633|foreign|adjective|thuộc về nước ngoài|Can you speak a foreign language?|Bạn có nói được ngoại ngữ không?
+634|surprise|noun|sự ngạc nhiên; điều bất ngờ|We have a surprise for you.|Chúng tôi có một điều bất ngờ dành cho bạn.
+635|feature|noun|đặc điểm, tính năng|This phone has a new feature.|Chiếc điện thoại này có một tính năng mới.
+636|factor|noun|yếu tố, nhân tố|Price is an important factor.|Giá cả là một yếu tố quan trọng.
+637|pretty|adverb|khá, kha khá|The film was pretty good.|Bộ phim khá hay.
+638|recently|adverb|gần đây|I recently moved to Hanoi.|Gần đây tôi chuyển đến Hà Nội.
+639|affect|verb|ảnh hưởng đến|Stress can affect your health.|Căng thẳng có thể ảnh hưởng đến sức khỏe.
+640|drop|verb|làm rơi; giảm|Don't drop the glass!|Đừng làm rơi cái cốc!
+641|recent|adjective|gần đây, mới đây|This is a recent photo of my family.|Đây là bức ảnh gần đây của gia đình tôi.
+642|relate|verb|liên quan; liên hệ|This question does not relate to today's lesson.|Câu hỏi này không liên quan đến bài học hôm nay.
+643|official|adjective|chính thức|English is an official language in Singapore.|Tiếng Anh là ngôn ngữ chính thức ở Singapore.
+644|financial|adjective|thuộc về tài chính|The company has financial problems.|Công ty đang gặp khó khăn về tài chính.
+645|miss|verb|nhớ (ai đó); lỡ, bỏ lỡ|I miss my family.|Tôi nhớ gia đình.
+646|art|noun|nghệ thuật|She studies art at university.|Cô ấy học nghệ thuật ở đại học.
+647|campaign|noun|chiến dịch|They started a campaign to clean the beach.|Họ bắt đầu một chiến dịch làm sạch bãi biển.
+648|private|adjective|riêng tư, cá nhân; tư nhân|This is a private room.|Đây là phòng riêng.
+649|pause|verb|tạm dừng|Can you pause the video?|Bạn tạm dừng video được không?
+650|everyone|pronoun|mọi người|Everyone is here.|Mọi người đều có mặt.
+651|forget|verb|quên|Don't forget your umbrella.|Đừng quên ô nhé.
+652|page|noun|trang (sách)|Please open your book to page ten.|Mời các em mở sách trang mười.
+653|worry|verb|lo lắng|Don't worry about me.|Đừng lo cho tôi.
+654|summer|noun|mùa hè|We go to the beach every summer.|Mùa hè nào chúng tôi cũng đi biển.
+655|drink|verb|uống|I drink a lot of water.|Tôi uống rất nhiều nước.
+656|opinion|noun|ý kiến, quan điểm|What is your opinion?|Ý kiến của bạn thế nào?
+657|park|noun|công viên|Let's go for a walk in the park.|Chúng ta đi dạo trong công viên nhé.
+658|represent|verb|đại diện; tượng trưng|She will represent our school.|Cô ấy sẽ đại diện cho trường chúng tôi.
+659|key|noun|chìa khóa; bí quyết|I lost the key to my room.|Tôi làm mất chìa khóa phòng.
+660|inside|adverb|bên trong|It's cold. Let's go inside.|Lạnh quá. Chúng ta vào trong đi.
+661|manager|noun|người quản lý|I want to speak to the manager.|Tôi muốn nói chuyện với quản lý.
+662|international|adjective|quốc tế|This is an international school.|Đây là một trường quốc tế.
+663|contain|verb|chứa, bao gồm|These snacks contain a lot of salt.|Những món ăn vặt này chứa rất nhiều muối.
+664|notice|verb|để ý, nhận thấy|Did you notice anything strange?|Bạn có để ý thấy điều gì lạ không?
+665|wonder|verb|tự hỏi, thắc mắc|I wonder where she is.|Tôi tự hỏi không biết cô ấy đang ở đâu.
+666|nature|noun|thiên nhiên; bản chất|I love being close to nature.|Tôi thích được gần gũi với thiên nhiên.
+667|structure|noun|cấu trúc|The structure of the building is strong.|Kết cấu của tòa nhà rất vững chắc.
+668|section|noun|phần, mục; khu vực|Read the first section of the book.|Đọc phần đầu tiên của cuốn sách.
+669|myself|pronoun|chính tôi, tự tôi|I made this cake myself.|Tôi tự làm chiếc bánh này.
+670|exactly|adverb|chính xác|That is exactly what I mean.|Đó chính xác là điều tôi muốn nói.
+671|plant|noun|cây, thực vật; nhà máy|Water the plant every day.|Tưới cây mỗi ngày nhé.
+672|paint|verb|sơn; vẽ (bằng màu)|We will paint the wall white.|Chúng tôi sẽ sơn tường màu trắng.
+673|worker|noun|công nhân, người làm việc|He is a hard worker.|Anh ấy là người làm việc chăm chỉ.
+674|press|verb|ấn, nhấn|Press the red button.|Nhấn nút màu đỏ.
+675|whatever|pronoun|bất cứ thứ gì|You can eat whatever you like.|Bạn có thể ăn bất cứ thứ gì bạn thích.
+676|necessary|adjective|cần thiết|Is it necessary to book a table?|Có cần đặt bàn trước không?
+677|region|noun|vùng, khu vực|This region is famous for coffee.|Vùng này nổi tiếng về cà phê.
+678|growth|noun|sự tăng trưởng, sự phát triển|The country has strong economic growth.|Đất nước có tốc độ tăng trưởng kinh tế cao.
+679|evening|noun|buổi tối|What are you doing this evening?|Tối nay bạn làm gì?
+680|influence|noun|sự ảnh hưởng|Parents have a big influence on their children.|Cha mẹ có ảnh hưởng lớn đến con cái.
+681|respect|verb|tôn trọng, kính trọng|We should respect older people.|Chúng ta nên kính trọng người lớn tuổi.
+682|various|adjective|khác nhau, đa dạng|The shop sells various kinds of tea.|Cửa hàng bán nhiều loại trà khác nhau.
+683|catch|verb|bắt, chụp; kịp (xe)|I need to catch the bus.|Tôi phải đi cho kịp xe buýt.
+684|thus|adverb|vì vậy, do đó (trang trọng)|He was ill and thus could not come.|Anh ấy bị ốm, do đó không thể đến.
+685|skill|noun|kỹ năng|Cooking is a useful skill.|Nấu ăn là một kỹ năng hữu ích.
+686|attempt|noun|sự cố gắng, lần thử|She passed the test on her first attempt.|Cô ấy đỗ ngay từ lần thi đầu tiên.
+687|son|noun|con trai|Their son is ten years old.|Con trai họ mười tuổi.
+688|simple|adjective|đơn giản|The question is very simple.|Câu hỏi rất đơn giản.
+689|medium|adjective|vừa, trung bình (cỡ)|I would like a medium coffee.|Cho tôi một cốc cà phê cỡ vừa.
+690|average|adjective|trung bình|The average age of the students is twenty.|Tuổi trung bình của sinh viên là hai mươi.
+691|stock|noun|hàng tồn kho; cổ phiếu|This item is out of stock.|Mặt hàng này đã hết hàng.
+692|management|noun|sự quản lý; ban quản lý|The hotel is under new management.|Khách sạn đã đổi ban quản lý mới.
+693|character|noun|nhân vật; tính cách|Who is the main character in the book?|Nhân vật chính trong cuốn sách là ai?
+694|bed|noun|cái giường|I go to bed at eleven.|Tôi đi ngủ lúc mười một giờ.
+695|hit|verb|đánh, đập; va vào|The car hit a tree.|Chiếc xe đâm vào một cái cây.
+696|establish|verb|thành lập, thiết lập|They want to establish a new company.|Họ muốn thành lập một công ty mới.
+697|indeed|adverb|thật vậy, quả thực|It was indeed a good idea.|Đó quả thực là một ý hay.
+698|final|adjective|cuối cùng|This is your final chance.|Đây là cơ hội cuối cùng của bạn.
+699|economy|noun|nền kinh tế|The economy is growing.|Nền kinh tế đang tăng trưởng.
+700|fit|verb|vừa (kích cỡ); phù hợp|These shoes don't fit me.|Đôi giày này không vừa với tôi.
+701|guy|noun|anh chàng, gã (cách nói thân mật)|He is a nice guy.|Anh ấy là một chàng trai tốt.
+702|function|noun|chức năng|What is the function of this button?|Nút này có chức năng gì?
+703|yesterday|adverb|hôm qua|I saw her yesterday.|Hôm qua tôi đã gặp cô ấy.
+704|image|noun|hình ảnh|The image on the screen is not clear.|Hình ảnh trên màn hình không rõ.
+705|size|noun|kích cỡ|What size do you wear?|Bạn mặc cỡ nào?
+706|behavior|noun|hành vi, cách cư xử|His behavior was very rude.|Cách cư xử của anh ta rất thô lỗ.
+707|addition|noun|sự thêm vào; phép cộng|In addition, the hotel has a pool.|Ngoài ra, khách sạn còn có hồ bơi.
+708|determine|verb|xác định; quyết định|The test will determine your level.|Bài kiểm tra sẽ xác định trình độ của bạn.
+709|station|noun|nhà ga, trạm|Where is the bus station?|Bến xe buýt ở đâu?
+710|population|noun|dân số|The population of Vietnam is about 100 million.|Dân số Việt Nam khoảng 100 triệu người.
+711|fail|verb|thất bại; trượt (kỳ thi)|Don't worry if you fail the first time.|Đừng lo nếu lần đầu bạn thất bại.
+712|environment|noun|môi trường|We must protect the environment.|Chúng ta phải bảo vệ môi trường.
+713|production|noun|sự sản xuất|Rice production increased this year.|Sản lượng lúa năm nay tăng.
+714|contract|noun|hợp đồng|Please sign the contract here.|Vui lòng ký hợp đồng ở đây.
+715|player|noun|người chơi, cầu thủ|He is the best player on the team.|Anh ấy là cầu thủ giỏi nhất đội.
+716|comment|noun|lời bình luận, nhận xét|Thank you for your comment.|Cảm ơn bạn đã nhận xét.
+717|enter|verb|đi vào; nhập (dữ liệu)|Please enter your password.|Vui lòng nhập mật khẩu.
+718|occur|verb|xảy ra|Accidents often occur at this corner.|Tai nạn thường xảy ra ở góc đường này.
+719|alone|adverb|một mình|She lives alone.|Cô ấy sống một mình.
+720|significant|adjective|đáng kể, quan trọng|There is a significant difference between the two.|Có sự khác biệt đáng kể giữa hai thứ.
+721|drug|noun|thuốc; ma túy|This drug can cause headaches.|Loại thuốc này có thể gây đau đầu.
+722|wall|noun|bức tường|There is a clock on the wall.|Có một chiếc đồng hồ trên tường.
+723|series|noun|loạt, chuỗi; phim nhiều tập|I am watching a new TV series.|Tôi đang xem một bộ phim truyền hình mới.
+724|direct|adjective|trực tiếp; thẳng|Is there a direct flight to Paris?|Có chuyến bay thẳng đến Paris không?
+725|success|noun|sự thành công|Hard work is the key to success.|Chăm chỉ là chìa khóa của thành công.
+726|tomorrow|adverb|ngày mai|See you tomorrow.|Hẹn gặp bạn ngày mai.
+727|director|noun|giám đốc; đạo diễn|She is the director of the company.|Bà ấy là giám đốc công ty.
+728|clearly|adverb|rõ ràng|Please speak clearly.|Vui lòng nói rõ ràng.
+729|lack|noun|sự thiếu|The plants died from lack of water.|Cây chết vì thiếu nước.
+730|review|verb|xem lại, ôn lại|Review your notes before the test.|Hãy ôn lại ghi chép trước khi kiểm tra.
+731|depend|verb|phụ thuộc, tùy thuộc|It will depend on the weather.|Điều đó sẽ tùy vào thời tiết.
+732|race|noun|cuộc đua|He won the race.|Anh ấy đã thắng cuộc đua.
+733|recognize|verb|nhận ra|I didn't recognize you with short hair.|Bạn để tóc ngắn tôi không nhận ra.
+734|window|noun|cửa sổ|Please open the window.|Làm ơn mở cửa sổ.
+735|purpose|noun|mục đích|What is the purpose of your visit?|Mục đích chuyến thăm của bạn là gì?
+736|department|noun|phòng, ban; khoa|She works in the sales department.|Cô ấy làm ở phòng kinh doanh.
+737|gain|verb|đạt được; tăng (cân)|You can gain experience from this job.|Bạn có thể tích lũy kinh nghiệm từ công việc này.
+738|tree|noun|cái cây|There is a big tree in our garden.|Vườn nhà tôi có một cây to.
+739|college|noun|trường cao đẳng, đại học|My brother is in college now.|Anh trai tôi đang học đại học.
+740|argue|verb|tranh cãi|My parents never argue.|Bố mẹ tôi không bao giờ cãi nhau.
+741|board|noun|tấm bảng; ban (giám đốc)|The teacher wrote the answer on the board.|Cô giáo viết câu trả lời lên bảng.
+742|holiday|noun|kỳ nghỉ, ngày lễ|We are going on holiday next week.|Tuần sau chúng tôi đi nghỉ.
+743|mark|noun|điểm số; dấu vết|She got a high mark in English.|Cô ấy được điểm cao môn tiếng Anh.
+744|church|noun|nhà thờ|There is an old church in the village.|Trong làng có một nhà thờ cổ.
+745|machine|noun|máy móc|The washing machine is broken.|Máy giặt bị hỏng rồi.
+746|achieve|verb|đạt được|You can achieve your goal.|Bạn có thể đạt được mục tiêu.
+747|item|noun|món đồ, mục|This item is on sale.|Món hàng này đang giảm giá.
+748|prove|verb|chứng minh|Can you prove it?|Bạn chứng minh được không?
+749|cent|noun|xu (một phần trăm đô la)|The bus ride didn't cost me a cent.|Đi xe buýt tôi không mất một xu nào.
+750|season|noun|mùa|Summer is my favorite season.|Mùa hè là mùa tôi thích nhất.
+751|floor|noun|sàn nhà; tầng|My office is on the third floor.|Văn phòng tôi ở tầng ba.
+752|stuff|noun|đồ đạc, thứ (nói chung)|Put your stuff in the box.|Để đồ của bạn vào cái hộp.
+753|wide|adjective|rộng|The river is very wide here.|Con sông ở đoạn này rất rộng.
+754|anyone|pronoun|bất kỳ ai; có ai (câu hỏi)|Is anyone home?|Có ai ở nhà không?
+755|method|noun|phương pháp|This is a good method for learning words.|Đây là một phương pháp học từ hay.
+756|analysis|noun|sự phân tích|We need a careful analysis of the data.|Chúng ta cần phân tích dữ liệu thật cẩn thận.
+757|election|noun|cuộc bầu cử|The election will take place in May.|Cuộc bầu cử sẽ diễn ra vào tháng Năm.
+758|military|adjective|thuộc về quân đội|He did military service for two years.|Anh ấy đã đi nghĩa vụ quân sự hai năm.
+759|hotel|noun|khách sạn|We stayed at a hotel near the beach.|Chúng tôi ở một khách sạn gần biển.
+760|club|noun|câu lạc bộ|I joined a book club.|Tôi đã tham gia một câu lạc bộ đọc sách.
+761|below|preposition|bên dưới, thấp hơn|The temperature is below zero.|Nhiệt độ đang dưới không độ.
+762|movie|noun|bộ phim|Let's go to see a movie.|Chúng ta đi xem phim nhé.
+763|doctor|noun|bác sĩ|You should see a doctor.|Bạn nên đi khám bác sĩ.
+764|discussion|noun|cuộc thảo luận|We had a long discussion about the plan.|Chúng tôi đã thảo luận lâu về kế hoạch.
+765|sorry|adjective|xin lỗi; tiếc|I am sorry for being late.|Tôi xin lỗi vì đến muộn.
+766|challenge|noun|thử thách|Learning Chinese is a big challenge.|Học tiếng Trung là một thử thách lớn.
+767|nation|noun|quốc gia, dân tộc|The whole nation celebrated the victory.|Cả nước ăn mừng chiến thắng.
+768|nearly|adverb|gần như, suýt|I nearly missed the train.|Tôi suýt lỡ chuyến tàu.
+769|statement|noun|lời tuyên bố; bản sao kê|The police made a statement this morning.|Sáng nay cảnh sát đã ra thông báo.
+770|link|noun|đường liên kết; mối liên hệ|Click on this link.|Nhấn vào đường liên kết này.
+771|despite|preposition|mặc dù, bất chấp|We went out despite the rain.|Chúng tôi vẫn ra ngoài bất chấp trời mưa.
+772|introduce|verb|giới thiệu|Let me introduce my friend Nam.|Để tôi giới thiệu bạn tôi, Nam.
+773|advantage|noun|lợi thế, ưu điểm|Speaking English is a big advantage.|Nói được tiếng Anh là một lợi thế lớn.
+774|ready|adjective|sẵn sàng|Dinner is ready.|Bữa tối đã sẵn sàng.
+775|marry|verb|kết hôn, cưới|Will you marry me?|Em sẽ lấy anh chứ?
+776|strike|noun|cuộc đình công; cú đánh|The workers went on strike.|Công nhân đã đình công.
+777|mile|noun|dặm (khoảng 1,6 km)|The beach is one mile from here.|Bãi biển cách đây một dặm.
+778|seek|verb|tìm kiếm|You should seek advice from a lawyer.|Bạn nên tìm lời khuyên từ luật sư.
+779|ability|noun|khả năng, năng lực|She has the ability to learn fast.|Cô ấy có khả năng học nhanh.
+780|unit|noun|đơn vị; bài học (trong sách)|Today we will start Unit 5.|Hôm nay chúng ta học Bài 5.
+781|card|noun|tấm thẻ; tấm thiệp|I forgot my bank card at home.|Tôi để quên thẻ ngân hàng ở nhà.
+782|hospital|noun|bệnh viện|She works at a hospital.|Cô ấy làm việc ở bệnh viện.
+783|quickly|adverb|nhanh chóng|Please come quickly.|Làm ơn đến nhanh lên.
+784|interview|noun|cuộc phỏng vấn|I have a job interview tomorrow.|Ngày mai tôi có buổi phỏng vấn xin việc.
+785|agreement|noun|sự đồng ý; bản thỏa thuận|The two companies signed an agreement.|Hai công ty đã ký một bản thỏa thuận.
+786|release|verb|thả ra; phát hành|The band will release a new album next month.|Ban nhạc sẽ phát hành album mới vào tháng sau.
+787|tax|noun|thuế|Do I have to pay tax on this?|Tôi có phải đóng thuế khoản này không?
+788|solution|noun|giải pháp; lời giải|We need to find a solution.|Chúng ta cần tìm ra giải pháp.
+789|capital|noun|thủ đô; vốn|Hanoi is the capital of Vietnam.|Hà Nội là thủ đô của Việt Nam.
+790|popular|adjective|phổ biến, được ưa chuộng|This song is very popular.|Bài hát này rất được ưa chuộng.
+791|specific|adjective|cụ thể|Can you be more specific?|Bạn nói cụ thể hơn được không?
+792|beautiful|adjective|đẹp|What a beautiful view!|Phong cảnh đẹp quá!
+793|fear|noun|nỗi sợ|She has a fear of dogs.|Cô ấy sợ chó.
+794|aim|noun|mục tiêu, mục đích|My aim is to speak English well.|Mục tiêu của tôi là nói tiếng Anh giỏi.
+795|television|noun|ti vi, truyền hình|We watched the match on television.|Chúng tôi xem trận đấu trên ti vi.
+796|serious|adjective|nghiêm trọng; nghiêm túc|This is a serious problem.|Đây là một vấn đề nghiêm trọng.
+797|target|noun|mục tiêu, chỉ tiêu|Our sales target is very high this year.|Chỉ tiêu doanh số năm nay rất cao.
+798|degree|noun|bằng cấp; độ|She has a degree in economics.|Cô ấy có bằng kinh tế.
+799|pull|verb|kéo|Pull the door to open it.|Kéo cửa để mở.
+800|red|adjective|màu đỏ|She bought a red dress.|Cô ấy mua một chiếc váy đỏ.
+801|husband|noun|chồng|Her husband is a doctor.|Chồng cô ấy là bác sĩ.
+802|access|noun|quyền truy cập; lối vào|Do you have access to the internet?|Bạn có kết nối internet không?
+803|movement|noun|sự chuyển động; phong trào|I saw a movement in the bushes.|Tôi thấy có cái gì động đậy trong bụi cây.
+804|treat|verb|đối xử; điều trị; khao|Please treat everyone with respect.|Hãy đối xử tôn trọng với mọi người.
+805|identify|verb|nhận ra, xác định|Can you identify the man in the photo?|Bạn có nhận ra người đàn ông trong ảnh không?
+806|loss|noun|sự mất mát; sự thua lỗ|The company made a loss this year.|Năm nay công ty bị thua lỗ.
+807|shall|verb|sẽ; nhé (đề nghị)|Shall we go now?|Chúng ta đi bây giờ nhé?
+808|modern|adjective|hiện đại|They live in a modern apartment.|Họ sống trong một căn hộ hiện đại.
+809|pressure|noun|áp lực|I work well under pressure.|Tôi làm việc tốt dưới áp lực.
+810|bus|noun|xe buýt|I take the bus to work.|Tôi đi làm bằng xe buýt.
+811|treatment|noun|sự điều trị; sự đối xử|He needs medical treatment.|Anh ấy cần được điều trị y tế.
+812|conference|noun|hội nghị|She is speaking at a conference in Singapore.|Cô ấy phát biểu tại một hội nghị ở Singapore.
+813|yourself|pronoun|chính bạn, tự bạn|Take care of yourself.|Hãy giữ gìn sức khỏe nhé.
+814|supply|noun|nguồn cung cấp; đồ dùng|We need a supply of clean water.|Chúng ta cần nguồn nước sạch.
+815|village|noun|ngôi làng|My grandparents live in a small village.|Ông bà tôi sống ở một ngôi làng nhỏ.
+816|worth|adjective|đáng giá; đáng (làm gì)|This book is worth reading.|Cuốn sách này đáng đọc.
+817|natural|adjective|tự nhiên|This juice is 100% natural.|Nước ép này hoàn toàn tự nhiên.
+818|express|verb|bày tỏ, diễn đạt|It is hard to express my feelings in English.|Thật khó để bày tỏ cảm xúc bằng tiếng Anh.
+819|indicate|verb|chỉ ra, cho thấy|The results indicate a problem.|Kết quả cho thấy có vấn đề.
+820|attend|verb|tham dự; theo học|Will you attend the meeting?|Bạn có dự cuộc họp không?
+821|brother|noun|anh trai, em trai|My brother is two years older than me.|Anh trai tôi lớn hơn tôi hai tuổi.
+822|investment|noun|sự đầu tư; khoản đầu tư|Buying a house is a big investment.|Mua nhà là một khoản đầu tư lớn.
+823|score|noun|điểm số; tỷ số|What was the final score?|Tỷ số chung cuộc là bao nhiêu?
+824|organize|verb|tổ chức; sắp xếp|We will organize a party for her.|Chúng tôi sẽ tổ chức một bữa tiệc cho cô ấy.
+825|trip|noun|chuyến đi|How was your trip to Da Lat?|Chuyến đi Đà Lạt của bạn thế nào?
+826|beyond|preposition|vượt quá, ở bên kia|The village is beyond the mountains.|Ngôi làng ở bên kia dãy núi.
+827|sleep|verb|ngủ|I usually sleep eight hours a night.|Tôi thường ngủ tám tiếng mỗi đêm.
+828|fish|noun|con cá; món cá|We had fish for dinner.|Bữa tối chúng tôi ăn cá.
+829|promise|verb|hứa|I promise I will call you.|Tôi hứa sẽ gọi cho bạn.
+830|potential|noun|tiềm năng|She has great potential as a singer.|Cô ấy có nhiều tiềm năng làm ca sĩ.
+831|energy|noun|năng lượng; sức lực|I have no energy today.|Hôm nay tôi chẳng còn chút sức lực nào.
+832|trouble|noun|rắc rối, phiền toái|I have trouble sleeping.|Tôi bị khó ngủ.
+833|relation|noun|mối quan hệ, sự liên quan|This question has no relation to the topic.|Câu hỏi này không liên quan đến chủ đề.
+834|touch|verb|chạm, sờ|Please don't touch the paintings.|Vui lòng không chạm vào các bức tranh.
+835|file|noun|tập tin; hồ sơ|Please save the file before you close it.|Vui lòng lưu tập tin trước khi đóng.
+836|middle|noun|giữa, chính giữa|There is a table in the middle of the room.|Có một cái bàn ở giữa phòng.
+837|bar|noun|quán bar; thanh (sô-cô-la…)|Let's meet at the bar after work.|Tan làm gặp nhau ở quán bar nhé.
+838|suffer|verb|chịu đựng; bị (bệnh)|Many people suffer from back pain.|Nhiều người bị đau lưng.
+839|strategy|noun|chiến lược|We need a new marketing strategy.|Chúng ta cần một chiến lược tiếp thị mới.
+840|deep|adjective|sâu|The lake is very deep.|Hồ rất sâu.
+841|except|preposition|ngoại trừ|Everyone came except Nam.|Mọi người đều đến trừ Nam.
+842|clean|adjective|sạch sẽ|Keep your room clean.|Hãy giữ phòng của bạn sạch sẽ.
+843|tend|verb|có xu hướng, thường hay|I tend to eat too much at night.|Tôi hay ăn quá nhiều vào buổi tối.
+844|advance|noun|sự tiến bộ; trước (in advance)|Please pay in advance.|Vui lòng trả tiền trước.
+845|fill|verb|làm đầy, đổ đầy; điền|Fill the bottle with water.|Đổ đầy nước vào chai.
+846|star|noun|ngôi sao|Look at that bright star.|Nhìn ngôi sao sáng kia kìa.
+847|network|noun|mạng lưới; mạng (máy tính)|The office network is down.|Mạng của văn phòng đang bị sập.
+848|generally|adverb|nói chung, thường thì|I generally go to bed early.|Tôi thường đi ngủ sớm.
+849|operation|noun|ca phẫu thuật; hoạt động|My father had an operation on his knee.|Bố tôi đã phẫu thuật đầu gối.
+850|match|noun|trận đấu|Did you watch the football match last night?|Tối qua bạn có xem trận bóng đá không?
+851|avoid|verb|tránh|Try to avoid sugar.|Cố gắng tránh ăn đường.
+852|seat|noun|chỗ ngồi|Is this seat free?|Chỗ này còn trống không?
+853|throw|verb|ném, quăng|Don't throw rubbish on the street.|Đừng vứt rác ra đường.
+854|task|noun|nhiệm vụ, công việc|This task is very difficult.|Nhiệm vụ này rất khó.
+855|normal|adjective|bình thường|Everything is back to normal.|Mọi thứ đã trở lại bình thường.
+856|goal|noun|mục tiêu; bàn thắng|My goal is to learn ten new words a day.|Mục tiêu của tôi là học mười từ mới mỗi ngày.
+857|associate|verb|liên tưởng, gắn liền|I always associate this song with summer.|Tôi luôn liên tưởng bài hát này với mùa hè.
+858|blue|adjective|màu xanh dương|The sky is blue today.|Hôm nay bầu trời xanh.
+859|positive|adjective|tích cực; dương tính|Try to stay positive.|Hãy cố gắng giữ thái độ tích cực.
+860|option|noun|sự lựa chọn|We have no other option.|Chúng ta không có lựa chọn nào khác.
+861|box|noun|cái hộp|What is in the box?|Trong hộp có gì?
+862|huge|adjective|khổng lồ, rất lớn|They live in a huge house.|Họ sống trong một ngôi nhà rất lớn.
+863|message|noun|tin nhắn, lời nhắn|I sent you a message.|Tôi đã gửi tin nhắn cho bạn.
+864|instance|noun|ví dụ, trường hợp|For instance, you can learn ten words a day.|Ví dụ, bạn có thể học mười từ mỗi ngày.
+865|style|noun|phong cách, kiểu|I like your style.|Tôi thích phong cách của bạn.
+866|refer|verb|nhắc đến; tham khảo|Please refer to page five.|Vui lòng xem trang năm.
+867|cold|adjective|lạnh|It is very cold today.|Hôm nay trời rất lạnh.
+868|push|verb|đẩy|Push the door to open it.|Đẩy cửa để mở.
+869|quarter|noun|một phần tư; quý; mười lăm phút|It is a quarter past ten.|Bây giờ là mười giờ mười lăm.
+870|assume|verb|cho rằng, giả định|I assume you are hungry.|Tôi đoán là bạn đang đói.
+871|baby|noun|em bé|The baby is sleeping.|Em bé đang ngủ.
+872|successful|adjective|thành công|She is a successful businesswoman.|Cô ấy là một nữ doanh nhân thành đạt.
+873|sing|verb|hát|Can you sing this song?|Bạn hát được bài này không?
+874|doubt|noun|sự nghi ngờ|There is no doubt that he is talented.|Không còn nghi ngờ gì nữa, anh ấy rất tài năng.
+875|competition|noun|cuộc thi; sự cạnh tranh|She won first prize in the competition.|Cô ấy đạt giải nhất cuộc thi.
+876|theory|noun|lý thuyết, học thuyết|In theory, the plan should work.|Về lý thuyết, kế hoạch này sẽ thành công.
+877|propose|verb|đề xuất; cầu hôn|I propose a short break.|Tôi đề nghị nghỉ giải lao một chút.
+878|reference|noun|sự tham khảo; thư giới thiệu|Keep this book for reference.|Hãy giữ cuốn sách này để tham khảo.
+879|argument|noun|cuộc tranh cãi; lý lẽ|They had an argument about money.|Họ cãi nhau về chuyện tiền bạc.
+880|adult|noun|người lớn|Tickets are ten dollars for an adult.|Vé người lớn giá mười đô la.
+881|fly|verb|bay; đi máy bay|We will fly to Bangkok tomorrow.|Ngày mai chúng tôi sẽ bay sang Bangkok.
+882|document|noun|tài liệu, giấy tờ|Please sign this document.|Vui lòng ký vào tài liệu này.
+883|pattern|noun|mẫu, khuôn mẫu; họa tiết|I like the pattern on your shirt.|Tôi thích họa tiết trên áo của bạn.
+884|application|noun|đơn xin; ứng dụng|I sent my application last week.|Tôi đã gửi đơn ứng tuyển tuần trước.
+885|hot|adjective|nóng; cay|Be careful, the soup is hot.|Cẩn thận, canh nóng đấy.
+886|obviously|adverb|rõ ràng là|Obviously, he is not happy.|Rõ ràng là anh ấy không vui.
+887|unclear|adjective|không rõ ràng|The instructions are unclear.|Hướng dẫn không rõ ràng.
+888|bill|noun|hóa đơn|Can I have the bill, please?|Cho tôi xin hóa đơn.
+889|search|verb|tìm kiếm|I will search for the information online.|Tôi sẽ tìm thông tin trên mạng.
+890|separate|adjective|riêng, tách biệt|We sleep in separate rooms.|Chúng tôi ngủ ở phòng riêng.
+891|central|adjective|ở trung tâm; chủ yếu|The hotel is in central Hanoi.|Khách sạn nằm ở trung tâm Hà Nội.
+892|career|noun|sự nghiệp, nghề nghiệp|She wants a career in medicine.|Cô ấy muốn theo nghề y.
+893|anyway|adverb|dù sao đi nữa|It was raining, but we went anyway.|Trời mưa nhưng chúng tôi vẫn đi.
+894|speech|noun|bài phát biểu; lời nói|He gave a speech at the wedding.|Anh ấy phát biểu tại đám cưới.
+895|dog|noun|con chó|I walk my dog every evening.|Tối nào tôi cũng dắt chó đi dạo.
+896|officer|noun|sĩ quan; cán bộ, nhân viên|A police officer helped us.|Một anh cảnh sát đã giúp chúng tôi.
+897|throughout|preposition|suốt, khắp|It rained throughout the night.|Trời mưa suốt đêm.
+898|oil|noun|dầu|Fry the fish in hot oil.|Chiên cá trong dầu nóng.
+899|dress|noun|chiếc váy, đầm|She looks beautiful in that dress.|Cô ấy mặc chiếc váy đó trông rất đẹp.
+900|profit|noun|lợi nhuận|The shop made a good profit this year.|Năm nay cửa hàng thu được lợi nhuận tốt.
+901|guess|verb|đoán|Can you guess my age?|Bạn đoán được tuổi của tôi không?
+902|fun|noun|niềm vui, sự vui vẻ|Have fun at the party!|Chúc bạn vui vẻ ở bữa tiệc!
+903|protect|verb|bảo vệ|Sunglasses protect your eyes.|Kính râm bảo vệ mắt của bạn.
+904|resource|noun|tài nguyên, nguồn lực|Water is a precious resource.|Nước là một nguồn tài nguyên quý giá.
+905|science|noun|khoa học|I am interested in science.|Tôi quan tâm đến khoa học.
+906|disease|noun|bệnh, căn bệnh|This disease is very rare.|Căn bệnh này rất hiếm gặp.
+907|balance|noun|sự cân bằng; số dư|It is important to keep a good work-life balance.|Giữ cân bằng giữa công việc và cuộc sống là điều quan trọng.
+908|damage|noun|sự hư hại, thiệt hại|The storm caused a lot of damage.|Cơn bão gây ra nhiều thiệt hại.
+909|basis|noun|nền tảng, cơ sở|I go jogging on a daily basis.|Tôi chạy bộ hằng ngày.
+910|author|noun|tác giả|Who is the author of this book?|Ai là tác giả của cuốn sách này?
+911|basic|adjective|cơ bản|I can speak basic Japanese.|Tôi nói được tiếng Nhật cơ bản.
+912|encourage|verb|khuyến khích, động viên|My parents encourage me to read.|Bố mẹ khuyến khích tôi đọc sách.
+913|hair|noun|tóc|She has long black hair.|Cô ấy có mái tóc đen dài.
+914|male|adjective|nam, giống đực|Is the doctor male or female?|Bác sĩ là nam hay nữ?
+915|operate|verb|vận hành; phẫu thuật|Can you operate this machine?|Bạn có biết vận hành máy này không?
+916|reflect|verb|phản chiếu; phản ánh|The calm waters reflect the mountains like a mirror.|Mặt nước phẳng lặng phản chiếu núi non như một tấm gương.
+917|exercise|noun|bài tập; sự tập thể dục|Exercise is good for your health.|Tập thể dục tốt cho sức khỏe.
+918|useful|adjective|hữu ích|This app is very useful.|Ứng dụng này rất hữu ích.
+919|restaurant|noun|nhà hàng|Let's have dinner at a restaurant.|Chúng ta đi ăn tối ở nhà hàng nhé.
+920|income|noun|thu nhập|What is your monthly income?|Thu nhập hằng tháng của bạn là bao nhiêu?
+921|property|noun|tài sản; bất động sản|This property belongs to the city.|Tài sản này thuộc về thành phố.
+922|previous|adjective|trước đó|My previous job was in a bank.|Công việc trước đây của tôi là ở ngân hàng.
+923|dark|adjective|tối; sẫm màu|It gets dark early in winter.|Mùa đông trời tối sớm.
+924|imagine|verb|tưởng tượng|Imagine you are on a beach.|Hãy tưởng tượng bạn đang ở trên bãi biển.
+925|okay|interjection|được, ổn, đồng ý|Okay, let's go.|Được rồi, đi thôi.
+926|earn|verb|kiếm (tiền)|How much do you earn a month?|Bạn kiếm được bao nhiêu một tháng?
+927|daughter|noun|con gái|Their daughter is a nurse.|Con gái họ là y tá.
+928|post|verb|đăng (bài); gửi (thư)|I will post the photos online.|Tôi sẽ đăng ảnh lên mạng.
+929|newspaper|noun|tờ báo|My father reads the newspaper every morning.|Sáng nào bố tôi cũng đọc báo.
+930|define|verb|định nghĩa, xác định|How do you define success?|Bạn định nghĩa thành công như thế nào?
+931|conclusion|noun|kết luận; phần kết|What is your conclusion?|Kết luận của bạn là gì?
+932|clock|noun|đồng hồ (treo tường, để bàn)|The clock on the wall is slow.|Đồng hồ trên tường chạy chậm.
+933|everybody|pronoun|mọi người|Hello, everybody!|Xin chào mọi người!
+934|weekend|noun|cuối tuần|What did you do at the weekend?|Cuối tuần bạn đã làm gì?
+935|perform|verb|biểu diễn; thực hiện|The band will perform tonight.|Ban nhạc sẽ biểu diễn tối nay.
+936|professional|adjective|chuyên nghiệp|He is a professional photographer.|Anh ấy là một nhiếp ảnh gia chuyên nghiệp.
+937|mine|pronoun|của tôi|This pen is mine.|Cây bút này là của tôi.
+938|debate|noun|cuộc tranh luận|There was a long debate about the new law.|Đã có một cuộc tranh luận dài về luật mới.
+939|memory|noun|trí nhớ; kỷ niệm|I have a good memory for names.|Tôi nhớ tên người rất giỏi.
+940|green|adjective|màu xanh lá|Her eyes are green.|Mắt cô ấy màu xanh lá.
+941|song|noun|bài hát|This is my favorite song.|Đây là bài hát tôi thích nhất.
+942|object|noun|đồ vật, vật thể|There is a strange object in the sky.|Có một vật thể lạ trên bầu trời.
+943|maintain|verb|duy trì; bảo trì|It is hard to maintain a healthy diet.|Thật khó duy trì chế độ ăn lành mạnh.
+944|credit|noun|tín dụng; sự ghi nhận|Can I pay by credit card?|Tôi trả bằng thẻ tín dụng được không?
+945|ring|noun|chiếc nhẫn|He gave her a gold ring.|Anh ấy tặng cô ấy một chiếc nhẫn vàng.
+946|discover|verb|khám phá, phát hiện|We want to discover new places.|Chúng tôi muốn khám phá những nơi mới.
+947|dead|adjective|chết; hết (pin)|My phone is dead.|Điện thoại của tôi hết pin rồi.
+948|afternoon|noun|buổi chiều|I have a meeting this afternoon.|Chiều nay tôi có cuộc họp.
+949|prefer|verb|thích hơn|I prefer tea to coffee.|Tôi thích trà hơn cà phê.
+950|extend|verb|kéo dài, gia hạn|I want to extend my visa.|Tôi muốn gia hạn thị thực.
+951|possibility|noun|khả năng (có thể xảy ra)|There is a possibility of rain tonight.|Tối nay có khả năng mưa.
+952|direction|noun|phương hướng; sự chỉ dẫn|Are we going in the right direction?|Chúng ta có đang đi đúng hướng không?
+953|facility|noun|cơ sở vật chất, tiện nghi|The new sports facility opens next week.|Khu thể thao mới sẽ mở cửa vào tuần tới.
+954|variety|noun|sự đa dạng|The market sells a variety of fruit.|Chợ bán nhiều loại hoa quả.
+955|daily|adjective|hằng ngày|Reading is part of my daily routine.|Đọc sách là một phần trong thói quen hằng ngày của tôi.
+956|clothes|noun|quần áo|I need to wash my clothes.|Tôi cần giặt quần áo.
+957|screen|noun|màn hình|The screen on my phone is broken.|Màn hình điện thoại của tôi bị vỡ.
+958|track|noun|đường mòn; đường đua; bài hát|We followed a track through the forest.|Chúng tôi đi theo một con đường mòn xuyên rừng.
+959|dance|verb|nhảy, múa|Do you like to dance?|Bạn có thích nhảy không?
+960|completely|adverb|hoàn toàn|I completely forgot about it.|Tôi quên hẳn chuyện đó.
+961|female|adjective|nữ, giống cái|Most of the nurses here are female.|Phần lớn y tá ở đây là nữ.
+962|responsibility|noun|trách nhiệm|It is your responsibility to lock the door.|Khóa cửa là trách nhiệm của bạn.
+963|original|adjective|nguyên bản, gốc; độc đáo|Is this the original painting?|Đây có phải bức tranh gốc không?
+964|sister|noun|chị gái, em gái|My sister lives in Da Nang.|Chị gái tôi sống ở Đà Nẵng.
+965|rock|noun|đá, tảng đá; nhạc rock|We sat on a big rock by the sea.|Chúng tôi ngồi trên một tảng đá lớn bên bờ biển.
+966|dream|noun|giấc mơ; ước mơ|My dream is to travel around the world.|Ước mơ của tôi là du lịch vòng quanh thế giới.
+967|nor|conjunction|cũng không (neither … nor)|I like neither tea nor coffee.|Tôi không thích trà cũng không thích cà phê.
+968|university|noun|trường đại học|She studies at a university in Hanoi.|Cô ấy học ở một trường đại học tại Hà Nội.
+969|easily|adverb|dễ dàng|You can easily find the hotel.|Bạn có thể dễ dàng tìm thấy khách sạn.
+970|agency|noun|đại lý, cơ quan|We booked the tour through a travel agency.|Chúng tôi đặt tour qua một công ty du lịch.
+971|dollar|noun|đô la|This shirt costs one dollar.|Cái áo này giá một đô la.
+972|garden|noun|khu vườn|My grandmother grows vegetables in her garden.|Bà tôi trồng rau trong vườn.
+973|fix|verb|sửa chữa|Can you fix my bike?|Bạn sửa giúp tôi xe đạp được không?
+974|ahead|adverb|phía trước; trước|Go straight ahead.|Đi thẳng về phía trước.
+975|cross|verb|băng qua, đi qua|We need to cross the river by boat.|Chúng ta phải qua sông bằng thuyền.
+976|yeah|interjection|ừ, vâng (thân mật)|Yeah, I know.|Ừ, tôi biết.
+977|candidate|noun|ứng viên|She is the best candidate for the job.|Cô ấy là ứng viên phù hợp nhất cho công việc này.
+978|weight|noun|cân nặng, trọng lượng|I want to lose weight.|Tôi muốn giảm cân.
+979|legal|adjective|hợp pháp; thuộc về pháp luật|Is it legal to park here?|Đỗ xe ở đây có hợp pháp không?
+980|proposal|noun|lời đề nghị, đề xuất; lời cầu hôn|The manager accepted my proposal.|Quản lý đã chấp nhận đề xuất của tôi.
+981|version|noun|phiên bản|Please download the latest version of the app.|Vui lòng tải phiên bản mới nhất của ứng dụng.
+982|conversation|noun|cuộc trò chuyện|We had a long conversation.|Chúng tôi đã có một cuộc trò chuyện dài.
+983|somebody|pronoun|ai đó|Somebody left the door open.|Ai đó đã để cửa mở.
+984|pound|noun|bảng Anh; pao (đơn vị khối lượng)|The ticket costs one pound.|Vé giá một bảng Anh.
+985|magazine|noun|tạp chí|She reads a fashion magazine.|Cô ấy đọc một tạp chí thời trang.
+986|shape|noun|hình dạng|What shape is the table?|Cái bàn có hình gì?
+987|sea|noun|biển|I love swimming in the sea.|Tôi thích bơi ở biển.
+988|immediately|adverb|ngay lập tức|Please call me immediately.|Hãy gọi cho tôi ngay lập tức.
+989|welcome|interjection|chào mừng|Welcome to Vietnam!|Chào mừng bạn đến Việt Nam!
+990|smile|verb|mỉm cười|Smile for the camera!|Cười lên nào, chụp ảnh đây!
+991|communication|noun|sự giao tiếp, truyền thông|Good communication is important in a team.|Giao tiếp tốt rất quan trọng trong một nhóm.
+992|agent|noun|đại lý, người đại diện; điệp viên|Our travel agent booked the hotel.|Nhân viên đại lý du lịch đã đặt khách sạn cho chúng tôi.
+993|traditional|adjective|truyền thống|Ao dai is a traditional Vietnamese dress.|Áo dài là trang phục truyền thống của Việt Nam.
+994|replace|verb|thay thế|We need to replace the old printer.|Chúng ta cần thay máy in cũ.
+995|judge|noun|thẩm phán; giám khảo|The judge will decide the case.|Thẩm phán sẽ phán quyết vụ án.
+996|herself|pronoun|chính cô ấy, tự cô ấy|She made the dress herself.|Cô ấy tự may chiếc váy.
+997|suddenly|adverb|bỗng nhiên, đột ngột|Suddenly, the lights went out.|Bỗng nhiên đèn tắt phụt.
+998|generation|noun|thế hệ|The younger generation loves social media.|Thế hệ trẻ rất thích mạng xã hội.
+999|estimate|verb|ước tính|Can you estimate the cost?|Bạn ước tính được chi phí không?
+1000|favorite|adjective|yêu thích nhất|What is your favorite food?|Món ăn yêu thích nhất của bạn là gì?

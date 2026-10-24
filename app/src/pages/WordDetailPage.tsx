@@ -17,6 +17,7 @@ import { EXERCISE_LABEL, GRADE_LABEL } from '../lib/labels'
 import { useSettings } from '../lib/settings'
 import { speak } from '../services/speech'
 import { VoiceClipPrompt } from '../components/VoiceClip'
+import { WordAudioCard } from '../components/WordAudio'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -120,6 +121,8 @@ export function WordDetailPage() {
           )}
         </Card>
       )}
+
+      <WordAudioCard item={item} />
 
       <Card>
         <SectionTitle>Tiến độ</SectionTitle>

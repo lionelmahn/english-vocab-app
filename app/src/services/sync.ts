@@ -4,6 +4,8 @@ import { db, onLocalChange } from '../db/db'
 import { appScheduler } from '../db/repo'
 import { getAuth, subscribeAuth } from './auth'
 import { getSupabase } from './supabase'
+import { getSettings } from '../lib/settings'
+import { syncAudio } from './audioStore'
 import { bindAccount, forgetCursors, syncOnce, type SyncRemote, type SyncResult } from './syncEngine'
 
 /**
@@ -17,9 +19,15 @@ export interface SyncStatus {
   error: string | null
   /** Kết quả lần đồng bộ thành công gần nhất. */
   last: SyncResult | null
+  /**
+   * Kho âm thanh (ghi âm, Giọng iPhone): `not_ready` = máy chủ chưa chạy file SQL âm thanh,
+   * `error` = lỗi khi tải file (dữ liệu học vẫn đồng bộ bình thường).
+   */
+  audio: 'unknown' | 'ready' | 'not_ready' | 'error'
+  audioError: string | null
 }
 
-let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null, last: null }
+let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null, last: null, audio: 'unknown', audioError: null }
 const listeners = new Set<() => void>()
 function setStatus(patch: Partial<SyncStatus>) {
   status = { ...status, ...patch }
@@ -90,8 +98,25 @@ export async function syncNow(): Promise<void> {
       refetch = false
       await forgetCursors(db)
     }
-    const last = await syncOnce(db, remote, { scheduler: appScheduler, now: Date.now, userId: auth.userId })
-    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last })
+    const ctx = { scheduler: appScheduler, now: Date.now, userId: auth.userId }
+    let last = await syncOnce(db, remote, ctx)
+    let audio: SyncStatus['audio'] = 'ready'
+    let audioError: string | null = null
+    if (last.skipped.includes('audioAssets')) audio = 'not_ready'
+    else {
+      try {
+        // File âm thanh đi sau dữ liệu; có dòng mới (đường dẫn file) thì gửi luôn trong lượt này.
+        if (await syncAudio(await client, auth.userId, getSettings().accent)) {
+          const more = await syncOnce(db, remote, ctx)
+          last = { ...more, received: last.received + more.received, sent: last.sent + more.sent, merged: last.merged + more.merged, replayed: last.replayed + more.replayed }
+        }
+      } catch (e) {
+        const message = (e as Error).message
+        audio = /bucket not found/i.test(message) ? 'not_ready' : 'error'
+        audioError = message
+      }
+    }
+    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last, audio, audioError })
   } catch (e) {
     setStatus({ state: navigator.onLine === false ? 'offline' : 'error', error: (e as Error).message })
   } finally {

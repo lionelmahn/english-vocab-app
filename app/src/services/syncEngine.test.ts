@@ -5,8 +5,8 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import type { SelfRating } from '../core/grading'
 import { createScheduler, replayReviews } from '../core/scheduler'
 import { applyAction, planReview } from '../core/session'
-import { VocabDatabase } from '../db/db'
-import { PROFILE_ID } from '../db/types'
+import { commit, VocabDatabase } from '../db/db'
+import { PROFILE_ID, type AudioAsset } from '../db/types'
 import { loadLibrary } from '../db/library'
 import { createRepo, type ItemInput } from '../db/repo'
 import { bindAccount, pullStart, pushOutbox, syncOnce } from './syncEngine'
@@ -203,7 +203,7 @@ describe('đồng bộ hai thiết bị qua máy chủ', () => {
     await settle(phone, laptop)
     const before = await snapshot(phone.db)
 
-    for (const d of [phone, laptop, phone]) expect(await d.sync()).toEqual({ received: 0, sent: 0, merged: 0, replayed: 0 })
+    for (const d of [phone, laptop, phone]) expect(await d.sync()).toEqual({ received: 0, sent: 0, merged: 0, replayed: 0, skipped: [] })
     expect(await snapshot(phone.db)).toEqual(before)
     expect(await serverCount('review_logs')).toBe(1)
     expect(await serverCount('vocab_items')).toBe(1)
@@ -303,6 +303,52 @@ describe('hồ sơ, mục tiêu và cài đặt học đồng bộ giữa các m
     await settle(laptop, phone)
     for (const d of [phone, laptop]) expect(await profileOf(d)).toMatchObject({ displayName: 'Mạnh', dailyMinutes: 45, studyWeekdays: [1, 3, 5], accent: 'uk' })
   })
+})
+
+describe('âm thanh của người học (R7.8, R13.8)', () => {
+  const asset = (key: string, extra: Partial<AudioAsset> = {}): AudioAsset => ({
+    id: crypto.randomUUID(),
+    key,
+    partOfSpeech: 'verb',
+    accent: 'us',
+    source: 'upload',
+    status: 'active',
+    mime: 'audio/mp4',
+    storagePath: `${user}/x.m4a`,
+    createdAt: T0,
+    updatedAt: T0,
+    deletedAt: null,
+    ...extra,
+  })
+
+  it('bản ghi đã chọn và bản báo sai sang được máy khác', async () => {
+    const phone = device()
+    const mine = asset('run')
+    const flagged = asset('run', { source: 'dictionary', status: 'flagged', remoteUrl: 'https://upload.wikimedia.org/x.mp3', storagePath: undefined, mime: undefined })
+    await phone.db.transaction('rw', [phone.db.audioAssets, phone.db.outbox], () => commit(phone.db, [{ table: 'audioAssets', rows: [mine, flagged] }], T0))
+    expect((await phone.sync()).skipped).toEqual([])
+    const laptop = device()
+    await laptop.sync()
+    expect(await laptop.db.audioAssets.get(mine.id)).toEqual(mine)
+    expect(await laptop.db.audioAssets.get(flagged.id)).toEqual(flagged)
+  })
+
+  it('máy chủ chưa chạy SQL âm thanh: từ vựng vẫn đồng bộ, âm thanh chờ lần sau', async () => {
+    const old = await startTestServer({ audio: false })
+    const oldUser = await addUser(old)
+    const db = new VocabDatabase(`device-${crypto.randomUUID()}`)
+    opened.push(db)
+    const repo = createRepo(db, scheduler)
+    const remote = testRemote(old, oldUser)
+    await repo.createItem(input('run', 'chạy'), [], T0)
+    await db.transaction('rw', [db.audioAssets, db.outbox], () => commit(db, [{ table: 'audioAssets', rows: [asset('run')] }], T0))
+    const res = await syncOnce(db, remote, { scheduler, now: () => clock, userId: oldUser })
+    expect(res.skipped).toEqual(['audioAssets'])
+    expect((await db.outbox.toArray()).map((o) => o.table)).toEqual(['audioAssets'])
+    const words = await asUser(old, oldUser, async () => (await old.query<{ n: number }>('select count(*)::int as n from public.vocab_items')).rows[0].n)
+    expect(words).toBe(1)
+    await old.close()
+  }, 60_000)
 })
 
 describe('pullStart — không sót dòng ghi xong muộn', () => {

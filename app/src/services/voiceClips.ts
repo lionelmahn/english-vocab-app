@@ -67,6 +67,18 @@ export async function clearClips(): Promise<void> {
   emit()
 }
 
+/** Giọng iPhone vừa đổi do đồng bộ từ máy khác: nạp lại danh sách khóa. */
+export async function clipsChanged(changed: readonly string[]): Promise<void> {
+  for (const key of changed) {
+    const old = urls.get(key)
+    if (old) URL.revokeObjectURL(old)
+    urls.delete(key)
+  }
+  keys = null
+  loading = null
+  await loadKeys()
+}
+
 // ---- Lượt đang chờ dán ------------------------------------------------------------------------
 
 const PENDING_KEY = 'voice-clips-pending'

@@ -121,7 +121,39 @@ export interface StudySessionRow {
   updatedAt: number
 }
 
-export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs'
+export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs' | 'audioAssets'
+
+/**
+ * Âm thanh của người học (R7.8, R13.8), đồng bộ giữa các máy; file nằm ở kho "audio" trên Supabase.
+ * - upload / recording: bản tải lên hoặc tự ghi âm cho một từ, dùng trước mọi nguồn khác.
+ * - dictionary: một bản Wiktionary được chọn dùng (active) hoặc bị báo đọc sai (flagged).
+ * - tts: Giọng iPhone tạo bằng Phím tắt (dữ liệu nằm ở bảng voiceClips theo `key`).
+ */
+export interface AudioAsset extends Synced {
+  /** Từ đã chuẩn hóa (termKey) với âm thanh của từ; clipKey với Giọng iPhone. */
+  key: string
+  partOfSpeech: PartOfSpeech
+  accent: Accent
+  source: 'upload' | 'recording' | 'dictionary' | 'tts'
+  status: 'active' | 'flagged'
+  /** Văn bản gốc (Giọng iPhone). */
+  text?: string
+  mime?: string
+  /** Đường dẫn trong kho "audio" (<user_id>/<id>.<đuôi>); chưa có = chưa tải lên. */
+  storagePath?: string
+  /** Bản Wiktionary được chọn hoặc bị báo sai. */
+  remoteUrl?: string
+  license?: string
+  attribution?: string
+}
+
+/** File âm thanh tải lên/ghi âm trên máy này (hoặc đã tải về từ kho). */
+export interface AudioBlob {
+  /** Mã AudioAsset. */
+  id: ID
+  data: ArrayBuffer
+  mime: string
+}
 
 /** Hàng đợi thay đổi chờ gửi lên máy chủ. */
 export interface OutboxEntry {

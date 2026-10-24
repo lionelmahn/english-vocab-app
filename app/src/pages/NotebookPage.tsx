@@ -1,4 +1,4 @@
-import { BookOpen, ChevronRight, Copy, FileUp, Flame, FolderPlus, Plus, Search, SlidersHorizontal, Star } from 'lucide-react'
+import { BookOpen, BookOpenCheck, ChevronRight, Copy, FileUp, Flame, FolderPlus, Plus, Search, SlidersHorizontal, Star } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
@@ -290,6 +290,9 @@ function DecksView({ lib }: { lib: Library }) {
         <Button variant="primary" icon={Plus} onClick={() => navigate('/decks/new')}>
           Tạo bộ từ
         </Button>
+        <Button icon={BookOpenCheck} onClick={() => navigate('/decks/starter')}>
+          Thêm bộ có sẵn (1.000 từ thông dụng)
+        </Button>
       </EmptyState>
     )
   }
@@ -321,6 +324,9 @@ function DecksView({ lib }: { lib: Library }) {
           </Card>
         )
       })}
+      <Button icon={BookOpenCheck} className="w-full" onClick={() => navigate('/decks/starter')}>
+        Thêm bộ có sẵn
+      </Button>
       <p className="px-2 text-center text-xs leading-relaxed text-subtle">
         {looseCount > 0 && `${looseCount} từ chưa thuộc bộ nào (vẫn được học và ôn). `}
         {archivedCount > 0 && (

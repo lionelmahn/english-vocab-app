@@ -119,6 +119,18 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       return { created: created.map((c) => c.id), existing }
     },
 
+    /**
+     * Thêm một bộ từ khởi đầu (R1.7) vào sổ tay: dùng lại bộ cùng tên nếu đã có, từ đã có thì chỉ đưa vào bộ.
+     * Thêm lại lần nữa không tạo bản trùng.
+     */
+    async addStarterDeck(name: string, inputs: ItemInput[], now = Date.now()): Promise<{ deckId: ID; created: number; existing: number }> {
+      const decks = (await database.decks.toArray()).filter((d) => d.deletedAt === null)
+      const found = decks.find((d) => d.name.trim().toLowerCase() === name.trim().toLowerCase())
+      const deckId = found?.id ?? (await repo.createDeck({ name }, now))
+      const res = await repo.saveFromSource(inputs, [deckId], now)
+      return { deckId, created: res.created.length, existing: res.existing.length }
+    },
+
     /** Sửa mục học; `resetProgress` = học lại từ đầu (R2.3). */
     async updateItem(id: ID, input: ItemInput, opts: { resetProgress?: boolean; deckIds?: ID[] } = {}, now = Date.now()): Promise<void> {
       const current = await database.vocabItems.get(id)

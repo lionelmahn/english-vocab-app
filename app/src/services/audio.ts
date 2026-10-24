@@ -1,4 +1,4 @@
-import { chooseUrl, pickAudioFiles, type AccentTag } from '../core/wordAudio'
+import { matchingAudioFiles, pickAudioFiles, type AccentTag, type AudioFileMatch } from '../core/wordAudio'
 import { termKey } from '../core/vocab'
 import { db } from '../db/db'
 import type { WordAudio } from '../db/types'
@@ -41,38 +41,66 @@ interface CommonsFile {
   videoinfo?: { url?: string; derivatives?: { type?: string; src?: string }[] }[]
 }
 
-/** Tra Wiktionary → danh sách file âm thanh → đường dẫn MP3 phát được (iPhone không phát .ogg). */
-async function lookup(term: string): Promise<WordAudio | null> {
+/** Các file trên trang Wiktionary của từ. */
+async function pageFiles(term: string): Promise<string[]> {
   const pageTitle = term.trim().toLowerCase()
   const imgs = (await getJson(`${WIKTIONARY}?action=query&titles=${encodeURIComponent(pageTitle)}&prop=images&imlimit=100&format=json&formatversion=2&origin=*`, 6000)) as {
     query?: { pages?: { images?: { title: string }[] }[] }
   }
-  const titles = imgs.query?.pages?.[0]?.images?.map((i) => i.title) ?? []
-  const files = pickAudioFiles(term, titles)
-  const entries = Object.entries(files) as [AccentTag, string][]
-  if (entries.length === 0) return null
+  return imgs.query?.pages?.[0]?.images?.map((i) => i.title) ?? []
+}
 
+/** Đường dẫn phát được của từng file trên Commons: bản MP3 nếu có (iPhone không phát .ogg). */
+async function playableUrls(files: readonly string[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>()
+  if (files.length === 0) return out
   const info = (await getJson(
-    `${COMMONS}?action=query&titles=${encodeURIComponent(entries.map(([, f]) => `File:${f}`).join('|'))}&prop=videoinfo&viprop=url|derivatives&format=json&formatversion=2&origin=*`,
+    `${COMMONS}?action=query&titles=${encodeURIComponent(files.map((f) => `File:${f}`).join('|'))}&prop=videoinfo&viprop=url|derivatives&format=json&formatversion=2&origin=*`,
     6000,
   )) as { query?: { pages?: CommonsFile[]; normalized?: { from: string; to: string }[] } }
   const pages = info.query?.pages ?? []
   const normalized = new Map((info.query?.normalized ?? []).map((n) => [n.from, n.to]))
   const oggOk = canPlay('audio/ogg; codecs="vorbis"')
-
-  const out: WordAudio = {}
-  for (const [accent, file] of entries) {
+  for (const file of files) {
     const title = normalized.get(`File:${file}`) ?? `File:${file}`
-    const page = pages.find((p) => p.title === title)
-    const vi = page?.videoinfo?.[0]
+    const vi = pages.find((p) => p.title === title)?.videoinfo?.[0]
     if (!vi) continue
     const mp3 = vi.derivatives?.find((d) => d.type?.startsWith('audio/mpeg'))?.src
     const original = vi.url?.split('?')[0]
     const originalOk = original && (/\.(mp3|wav)$/i.test(original) || (oggOk && /\.(ogg|oga)$/i.test(original)))
     const url = mp3 ?? (originalOk ? original : undefined)
+    if (url) out.set(file, url)
+  }
+  return out
+}
+
+/** Tra Wiktionary → mỗi giọng một file → đường dẫn phát được. */
+async function lookup(term: string): Promise<WordAudio | null> {
+  const entries = Object.entries(pickAudioFiles(term, await pageFiles(term))) as [AccentTag, string][]
+  const urls = await playableUrls(entries.map(([, f]) => f))
+  const out: WordAudio = {}
+  for (const [accent, file] of entries) {
+    const url = urls.get(file)
     if (url) out[accent] = url
   }
   return Object.keys(out).length > 0 ? out : null
+}
+
+export interface WiktionaryRecording {
+  file: string
+  accent: AccentTag
+  url: string
+  pos?: AudioFileMatch['pos']
+}
+
+/** Mọi bản ghi tiếng Anh của từ trên Wiktionary, để người học nghe và chọn bản khác (R7.8). */
+export async function listWordRecordings(term: string): Promise<WiktionaryRecording[]> {
+  const files = matchingAudioFiles(term, await pageFiles(term)).slice(0, 20)
+  const urls = await playableUrls(files.map((f) => f.name))
+  return files.flatMap((f) => {
+    const url = urls.get(f.name)
+    return url ? [{ file: f.name, accent: f.accent, url, pos: f.pos }] : []
+  })
 }
 
 /** Bản ghi của một từ (từ bộ nhớ, rồi từ máy, rồi tra mạng). Lỗi mạng thì trả null và thử lại lần sau. */
@@ -104,10 +132,10 @@ export async function resolveWordAudio(term: string): Promise<WordAudio | null> 
   return p
 }
 
-/** Đường dẫn đã có sẵn trong bộ nhớ (không chờ mạng). */
-export function cachedWordUrl(term: string, accent: 'us' | 'uk'): string | null | undefined {
+/** Bản ghi đã có sẵn trong bộ nhớ (không chờ mạng); `undefined` = chưa tra. */
+export function cachedWordAudio(term: string): WordAudio | null | undefined {
   const key = termKey(term)
-  return memory.has(key) ? chooseUrl(memory.get(key), accent) : undefined
+  return memory.has(key) ? memory.get(key) : undefined
 }
 
 /** Tra trước bản ghi cho các từ sắp học, để bấm loa là phát ngay. */

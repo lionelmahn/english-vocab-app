@@ -9,7 +9,8 @@ import { updateSettings, useSettings } from '../lib/settings'
 import { showToast } from '../lib/toast'
 import { APP_VERSION } from '../lib/version'
 import { isAppleDevice, speak } from '../services/speech'
-import { cancelPending, clearClips, copyRequest, getPending, pasteFromClipboard, runShortcut, saveFromPaste, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
+import { clearAllClips } from '../services/audioStore'
+import { cancelPending, copyRequest, getPending, pasteFromClipboard, runShortcut, saveFromPaste, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
 
 type Message = { tone: 'error' | 'success'; text: string } | null
 
@@ -289,8 +290,8 @@ export function VoiceClipsPage() {
               icon={Trash2}
               className="h-10 shrink-0 px-3 text-sm"
               onClick={async () => {
-                if (!window.confirm(`Xóa ${have.size} âm thanh giọng iPhone trên máy này?`)) return
-                await clearClips()
+                if (!window.confirm(`Xóa ${have.size} âm thanh giọng iPhone trên máy này và các máy đăng nhập cùng tài khoản?`)) return
+                await clearAllClips()
                 showToast('Đã xóa giọng iPhone')
               }}
             >

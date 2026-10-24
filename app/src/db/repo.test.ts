@@ -117,6 +117,24 @@ describe('repo — lưu từ từ nguồn có sẵn (R2.8)', () => {
   })
 })
 
+describe('repo — bộ từ khởi đầu (R1.7)', () => {
+  it('tạo bộ, giữ thứ tự, từ đã có chỉ đưa vào bộ; thêm lại không nhân đôi', async () => {
+    const had = await repo.createItem(input('the', '(mạo từ xác định) chỉ người, vật đã biết', { partOfSpeech: 'other' }), [], T0)
+    const words = [input('the', '(mạo từ xác định) chỉ người, vật đã biết', { partOfSpeech: 'other' }), input('be', 'thì, là, ở', { partOfSpeech: 'verb' }), input('and', 'và', { partOfSpeech: 'conjunction' })]
+    const first = await repo.addStarterDeck('1.000 từ thông dụng nhất', words, T0 + 10)
+    expect(first).toMatchObject({ created: 2, existing: 1 })
+    const again = await repo.addStarterDeck('1.000 từ thông dụng nhất', words, T0 + 20)
+    expect(again).toMatchObject({ deckId: first.deckId, created: 0, existing: 3 })
+    const lib = await loadLibrary(database)
+    expect(lib.decks).toHaveLength(1)
+    expect(lib.items).toHaveLength(3)
+    expect(lib.deckItems.filter((d) => d.deckId === first.deckId)).toHaveLength(3)
+    expect(lib.itemById.get(had)).toBeDefined()
+    const ordered = lib.items.filter((i) => i.id !== had).sort((a, b) => a.createdAt - b.createdAt).map((i) => i.term)
+    expect(ordered).toEqual(['be', 'and'])
+  })
+})
+
 describe('repo — gộp từ trùng (R2.5, R11.4)', () => {
   it('giữ mục có tiến độ, bổ sung thông tin còn thiếu, chuyển bộ từ, xóa mục thừa', async () => {
     const a = await repo.createDeck({ name: 'A' })

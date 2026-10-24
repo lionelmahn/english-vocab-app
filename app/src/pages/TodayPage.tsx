@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { FileUp, Flame, GraduationCap, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
+import { BookOpenCheck, FileUp, Flame, GraduationCap, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
@@ -129,6 +129,9 @@ export function TodayPage() {
         <EmptyState icon={Sparkles} title="Bắt đầu với từ đầu tiên" body="Thêm từ vào sổ tay hoặc nhập danh sách bạn đang có. Lịch ôn sẽ tự sắp xếp thời điểm ôn cho từng từ.">
           <Button variant="primary" icon={Plus} onClick={() => navigate('/words/new')}>
             Thêm từ
+          </Button>
+          <Button icon={BookOpenCheck} onClick={() => navigate('/decks/starter')}>
+            Chọn bộ 1.000 từ thông dụng
           </Button>
           <Button icon={FileUp} onClick={() => navigate('/import')}>
             Nhập từ file Excel/CSV

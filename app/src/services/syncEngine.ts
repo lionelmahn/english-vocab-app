@@ -3,7 +3,7 @@ import { mergeRows, sameValue } from '../core/merge'
 import { healCards, replayCard } from '../db/cards'
 import type { VocabDatabase } from '../db/db'
 import type { CardStateRow, ID } from '../db/types'
-import { fromRemote, PUSH_ORDER, REMOTE_TABLE, remoteIdColumn, toMs, toRemote, type PushRows, type PushTable } from './syncMapping'
+import { fromRemote, OPTIONAL_TABLES, PUSH_ORDER, REMOTE_TABLE, remoteIdColumn, toMs, toRemote, type PushRows, type PushTable } from './syncMapping'
 
 /**
  * Đồng bộ hai chiều nhiều thiết bị (R11.5) và xử lý xung đột (R11.7), theo kế hoạch mục 3.5.
@@ -43,6 +43,8 @@ export interface SyncResult {
   merged: number
   /** Số lịch ôn được tính lại từ lượt trả lời. */
   replayed: number
+  /** Bảng tạm bỏ qua vì máy chủ chưa sẵn sàng (chưa chạy SQL bổ sung). */
+  skipped: PushTable[]
 }
 
 const MIN_ID = '00000000-0000-0000-0000-000000000000'
@@ -166,10 +168,17 @@ async function pullTable(database: VocabDatabase, remote: SyncRemote, table: Pus
 }
 
 export async function pullAll(database: VocabDatabase, remote: SyncRemote, ctx: SyncContext): Promise<Omit<SyncResult, 'sent'>> {
-  const result = { received: 0, merged: 0, replayed: 0 }
+  const result = { received: 0, merged: 0, replayed: 0, skipped: [] as PushTable[] }
   const touched: ID[] = []
   for (const table of PUSH_ORDER) {
-    const res = await pullTable(database, remote, table, ctx)
+    let res: Applied
+    try {
+      res = await pullTable(database, remote, table, ctx)
+    } catch (e) {
+      if (!OPTIONAL_TABLES.has(table)) throw e
+      result.skipped.push(table)
+      continue
+    }
     result.received += res.received
     result.merged += res.merged
     result.replayed += res.replayed
@@ -179,11 +188,24 @@ export async function pullAll(database: VocabDatabase, remote: SyncRemote, ctx: 
   return result
 }
 
-/** Gửi một lượt hàng đợi. Trả về số mục hàng đợi đã xử lý. Lỗi thì giữ nguyên hàng đợi để thử lại. */
-export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, userId: string, batch = PUSH_BATCH): Promise<{ processed: number; sent: number }> {
-  const entries = await database.outbox.orderBy('seq').limit(batch).toArray()
-  if (entries.length === 0) return { processed: 0, sent: 0 }
-  const maxSeq = entries[entries.length - 1].seq!
+/**
+ * Gửi một lượt hàng đợi (bỏ qua các bảng trong `skip`). Trả về số mục đã xử lý và bảng tùy chọn bị lỗi.
+ * Lỗi ở bảng bắt buộc thì ném lỗi, giữ nguyên hàng đợi để thử lại; lỗi ở bảng tùy chọn chỉ giữ lại mục của bảng đó.
+ */
+export async function pushOutbox(
+  database: VocabDatabase,
+  remote: SyncRemote,
+  userId: string,
+  skip: ReadonlySet<string> = new Set(),
+  batch = PUSH_BATCH,
+): Promise<{ processed: number; sent: number; failed: PushTable[] }> {
+  const entries = await database.outbox
+    .orderBy('seq')
+    .filter((e) => !skip.has(e.table))
+    .limit(batch)
+    .toArray()
+  if (entries.length === 0) return { processed: 0, sent: 0, failed: [] }
+  const failed: PushTable[] = []
   const byTable = new Map<string, Set<string>>()
   for (const e of entries) {
     let set = byTable.get(e.table)
@@ -197,8 +219,14 @@ export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, us
     const rows = (await database.table(table).bulkGet([...ids])).filter(Boolean)
     if (rows.length === 0) continue
     const data = rows.map((r) => toRemote(table, r, userId))
-    // Lượt trả lời chỉ thêm: gửi lại không nhân đôi, không sửa bản đã có.
-    await remote.upsert(REMOTE_TABLE[table], data, { ignoreDuplicates: table === 'reviewLogs', onConflict: remoteIdColumn(table) })
+    try {
+      // Lượt trả lời chỉ thêm: gửi lại không nhân đôi, không sửa bản đã có.
+      await remote.upsert(REMOTE_TABLE[table], data, { ignoreDuplicates: table === 'reviewLogs', onConflict: remoteIdColumn(table) })
+    } catch (e) {
+      if (!OPTIONAL_TABLES.has(table)) throw e
+      failed.push(table)
+      continue
+    }
     if (table !== 'reviewLogs') {
       // Ghi lại bản máy chủ đang giữ, làm gốc cho lần gộp sau.
       const saved = data.map((d) => fromRemote(table, d))
@@ -206,20 +234,22 @@ export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, us
     }
     sent += data.length
   }
-  await database.outbox.where('seq').belowOrEqual(maxSeq).delete()
-  return { processed: entries.length, sent }
+  await database.outbox.bulkDelete(entries.filter((e) => !failed.includes(e.table as PushTable)).map((e) => e.seq!))
+  return { processed: entries.length, sent, failed }
 }
 
 /** Một lượt đồng bộ đầy đủ: kéo về và gộp trước, rồi gửi hết hàng đợi. */
 export async function syncOnce(database: VocabDatabase, remote: SyncRemote, ctx: SyncContext): Promise<SyncResult> {
   const pulled = await pullAll(database, remote, ctx)
+  const skip = new Set<string>(pulled.skipped)
   let sent = 0
   for (;;) {
-    const res = await pushOutbox(database, remote, ctx.userId)
+    const res = await pushOutbox(database, remote, ctx.userId, skip)
     sent += res.sent
+    for (const t of res.failed) skip.add(t)
     if (res.processed === 0) break
   }
-  return { ...pulled, sent }
+  return { ...pulled, sent, skipped: [...skip] as PushTable[] }
 }
 
 /**

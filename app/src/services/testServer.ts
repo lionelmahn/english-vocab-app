@@ -9,9 +9,12 @@ import type { SyncRemote } from './syncEngine'
  * Chỉ dùng trong test.
  */
 
-const MIGRATION = fileURLToPath(new URL('../../../supabase/migrations/20261023000000_init.sql', import.meta.url))
+const migration = (name: string) => fileURLToPath(new URL(`../../../supabase/migrations/${name}`, import.meta.url))
+const INIT = migration('20261023000000_init.sql')
+const AUDIO = migration('20261025000000_audio_storage.sql')
 
-export async function startTestServer(): Promise<PGlite> {
+/** `audio: false` = máy chủ chưa chạy file SQL âm thanh (để thử đồng bộ vẫn chạy). */
+export async function startTestServer({ audio = true }: { audio?: boolean } = {}): Promise<PGlite> {
   const pg = new PGlite()
   await pg.exec(`
     create schema auth;
@@ -23,7 +26,19 @@ export async function startTestServer(): Promise<PGlite> {
     grant usage on schema auth to authenticated;
     grant execute on function auth.uid() to authenticated;
   `)
-  await pg.exec(readFileSync(MIGRATION, 'utf8'))
+  await pg.exec(readFileSync(INIT, 'utf8'))
+  if (audio) {
+    // Kho file của Supabase (schema storage) rút gọn, đủ để chạy file SQL âm thanh.
+    await pg.exec(`
+      create schema storage;
+      create table storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint, allowed_mime_types text[]);
+      create table storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text, name text);
+      alter table storage.objects enable row level security;
+      create function storage.foldername(name text) returns text[] language sql immutable as
+        $$ select (string_to_array(name, '/'))[1:array_length(string_to_array(name, '/'), 1) - 1] $$;
+    `)
+    await pg.exec(readFileSync(AUDIO, 'utf8'))
+  }
   return pg
 }
 

@@ -22,6 +22,7 @@ const BELONGS_TO: [prefix: string, tab: string][] = [
   ['/backup', '/me'],
   ['/login', '/me'],
   ['/reset-password', '/me'],
+  ['/welcome', '/'],
   ['/learn', '/'],
   ['/review', '/'],
   ['/study', '/'],
@@ -34,7 +35,7 @@ export function tabIndexOf(pathname: string): number {
   return i === -1 ? 0 : i
 }
 
-/** Màn hình học/ôn: ẩn thanh tab để tập trung. */
+/** Màn hình học/ôn và thiết lập lần đầu: ẩn thanh tab để tập trung. */
 export function isFocusMode(pathname: string): boolean {
-  return /^\/(learn|review|study)(\/|$)/.test(pathname)
+  return /^\/(learn|review|study|welcome)(\/|$)/.test(pathname)
 }

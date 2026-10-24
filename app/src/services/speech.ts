@@ -1,14 +1,17 @@
 import { useSyncExternalStore } from 'react'
 import { bestVoice, langOf, rankVoices, type Accent } from '../core/voices'
-import { chooseUrl, isShortTerm } from '../core/wordAudio'
+import { chooseUrl, isShortTerm, withoutFlagged } from '../core/wordAudio'
 import { getSettings, SPEECH_RATE } from '../lib/settings'
-import { cachedWordUrl, resolveWordAudio } from './audio'
+import { cachedWordAudio, resolveWordAudio } from './audio'
+import { learnerAudio } from './audioStore'
 import { clipUrl } from './voiceClips'
 
 /**
- * Phát âm (R4.3, R7.1, R7.6):
- * 1. Từ và cụm ngắn: ưu tiên bản ghi giọng người thật (Wiktionary/Wikimedia Commons).
- * 2. Không có bản ghi, hoặc câu ví dụ: giọng đọc của thiết bị, chọn giọng chất lượng cao nhất có sẵn.
+ * Phát âm (R4.3, R7.1, R7.6, R7.8):
+ * 1. Từ và cụm ngắn: bản người học tự ghi âm, tải lên hoặc chọn.
+ * 2. Giọng iPhone đã tạo bằng Phím tắt.
+ * 3. Từ và cụm ngắn: bản ghi giọng người thật (Wiktionary/Wikimedia Commons), trừ bản bị báo đọc sai.
+ * 4. Còn lại, hoặc câu ví dụ: giọng đọc của thiết bị, chọn giọng chất lượng cao nhất có sẵn.
  */
 
 export type { Accent }
@@ -165,24 +168,33 @@ export interface SpeakOptions {
   slow?: boolean
 }
 
-/** Đọc một từ/cụm/câu: giọng iPhone đã tạo → bản ghi giọng người thật → giọng máy. */
+/** Đọc một từ/cụm/câu: bản của người học → giọng iPhone đã tạo → bản ghi giọng người thật → giọng máy. */
 export async function speak(text: string, { accent, slow = false }: SpeakOptions): Promise<void> {
   const t = text.trim()
   if (!t) return
-  // 1. Giọng iPhone (Nâng cao/Cao cấp) đã tạo bằng Phím tắt.
+  const short = isShortTerm(t)
+  // 1. Bản người học tự ghi âm, tải lên hoặc chọn cho từ này.
+  const own = await learnerAudio(t, accent).catch(() => null)
+  if (own?.url && (await playUrl(own.url, t, slow))) return
+  // 2. Giọng iPhone (Nâng cao/Cao cấp) đã tạo bằng Phím tắt.
   const clip = await clipUrl(t)
   if (clip && (await playUrl(clip, t, slow))) return
-  // 2. Bản ghi giọng người thật (Wiktionary) cho từ và cụm ngắn.
-  if (getSettings().preferRecordings && isShortTerm(t)) {
-    let url = cachedWordUrl(t, accent)
-    if (url === undefined) {
+  // 3. Bản ghi giọng người thật (Wiktionary) cho từ và cụm ngắn.
+  if (getSettings().preferRecordings && short) {
+    let audio = cachedWordAudio(t)
+    if (audio === undefined) {
       // Chưa tra: chờ tối đa 1,5 giây, quá thì dùng giọng máy (lần sau sẽ có sẵn).
-      const audio = await Promise.race([resolveWordAudio(t), new Promise<null>((r) => setTimeout(() => r(null), 1500))])
-      url = chooseUrl(audio, accent)
+      audio = await Promise.race([resolveWordAudio(t), new Promise<null>((r) => setTimeout(() => r(null), 1500))])
     }
+    const url = chooseUrl(withoutFlagged(audio, own?.flagged ?? new Set()), accent)
     if (url && (await playUrl(url, t, slow))) return
   }
   await speakWithVoice(t, accent, slow, pickVoice(accent))
+}
+
+/** Phát một file cụ thể (nghe thử bản ghi âm, bản tải lên, bản Wiktionary). */
+export function playAudio(url: string, label: string): Promise<boolean> {
+  return playUrl(url, label, false)
 }
 
 /** Nghe thử một giọng của thiết bị (trong Cài đặt); `null` = giọng máy tự chọn. */

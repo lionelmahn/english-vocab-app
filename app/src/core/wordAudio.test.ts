@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { accentOf, chooseUrl, isShortTerm, pickAudioFiles } from './wordAudio'
+import { accentOf, chooseUrl, isShortTerm, matchingAudioFiles, pickAudioFiles } from './wordAudio'
 
 describe('bản ghi phát âm giọng người thật', () => {
   it('phân loại giọng theo tên file', () => {
@@ -35,6 +35,16 @@ describe('bản ghi phát âm giọng người thật', () => {
     expect(pickAudioFiles('abundant', files)).toEqual({})
     expect(pickAudioFiles('abundant', [...files, 'File:En-au-abundant.ogg'])).toEqual({ other: 'En-au-abundant.ogg' })
     expect(pickAudioFiles('give up', ['File:LL-Q1860 (eng)-Vealhurl-give_up.wav'])).toEqual({ other: 'LL-Q1860 (eng)-Vealhurl-give_up.wav' })
+  })
+
+  it('file theo loại từ chỉ có trong danh sách để chọn, không tự phát', () => {
+    const files = ['File:Fr-record.ogg', 'File:LL-Q150 (fra)-X-record.wav', 'File:en-us-record-noun.ogg', 'File:en-us-record-verb.ogg', 'File:En-us-record player.ogg']
+    expect(matchingAudioFiles('record', files)).toEqual([
+      { name: 'en-us-record-noun.ogg', accent: 'us', pos: 'noun' },
+      { name: 'en-us-record-verb.ogg', accent: 'us', pos: 'verb' },
+    ])
+    expect(pickAudioFiles('record', files)).toEqual({})
+    expect(matchingAudioFiles('present', ['File:En-uk-present (adj).ogg']).map((f) => f.pos)).toEqual(['adjective'])
   })
 
   it('chọn đường dẫn theo giọng ưu tiên, thiếu thì lấy giọng khác', () => {

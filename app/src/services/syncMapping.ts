@@ -1,5 +1,5 @@
 import { PROFILE_EXTRA_KEYS, profileDefaults, sanitizeProfile } from '../core/profile'
-import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Example, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
+import { PROFILE_ID, type AudioAsset, type CardStateRow, type Deck, type DeckItem, type Example, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
 
 /** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO) và ngược lại. */
 
@@ -14,13 +14,20 @@ export const REMOTE_TABLE: Record<SyncedTableName, string> = {
   deckItems: 'deck_items',
   cardStates: 'card_states',
   reviewLogs: 'review_logs',
+  audioAssets: 'audio_assets',
 }
 
 /**
  * Thứ tự gửi và kéo: từ và bộ trước, liên kết sau (khóa ngoại).
  * Lượt trả lời đi trước lịch ôn, để máy chủ không bao giờ có lịch ôn mà thiếu lượt trả lời tạo ra nó.
  */
-export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates'] as const
+export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates', 'audioAssets'] as const
+
+/**
+ * Bảng cần chạy thêm SQL trên Supabase (âm thanh, 20261025000000_audio_storage.sql). Chưa chạy thì bảng này
+ * tạm bỏ qua khi đồng bộ, các bảng khác vẫn đồng bộ bình thường.
+ */
+export const OPTIONAL_TABLES: ReadonlySet<PushTable> = new Set(['audioAssets'])
 export type PushTable = (typeof PUSH_ORDER)[number]
 
 /** Cột khóa trên máy chủ: hồ sơ có một dòng cho mỗi tài khoản, khóa là user_id. */
@@ -137,11 +144,34 @@ export function reviewLogToRemote(r: ReviewLogRow) {
   }
 }
 
-/** `userId` chỉ cần cho hồ sơ (khóa user_id trên máy chủ). */
+export function audioAssetToRemote(r: AudioAsset, userId: string) {
+  return {
+    id: r.id,
+    owner_id: userId,
+    term_key: r.key,
+    part_of_speech: r.partOfSpeech,
+    accent: r.accent,
+    source: r.source,
+    status: r.status,
+    text: orNull(r.text),
+    mime: orNull(r.mime),
+    storage_path: orNull(r.storagePath),
+    remote_url: orNull(r.remoteUrl),
+    license: orNull(r.license),
+    attribution: orNull(r.attribution),
+    created_at: iso(r.createdAt),
+    updated_at: iso(r.updatedAt),
+    deleted_at: iso(r.deletedAt),
+  }
+}
+
+/** `userId` cần cho hồ sơ và âm thanh (cột user_id / owner_id trên máy chủ). */
 export function toRemote(table: PushTable, row: unknown, userId = ''): Record<string, unknown> {
   switch (table) {
     case 'profiles':
       return profileToRemote(row as Profile, userId)
+    case 'audioAssets':
+      return audioAssetToRemote(row as AudioAsset, userId)
     case 'vocabItems':
       return vocabItemToRemote(row as VocabItem)
     case 'decks':
@@ -277,8 +307,29 @@ export function profileFromRemote(r: RemoteRow): Profile {
   return { id: PROFILE_ID, ...data, createdAt: ms(r.created_at), updatedAt: ms(r.updated_at), deletedAt: msOrNull(r.deleted_at) }
 }
 
+export function audioAssetFromRemote(r: RemoteRow): AudioAsset {
+  return {
+    id: r.id as string,
+    key: r.term_key as string,
+    partOfSpeech: (r.part_of_speech as AudioAsset['partOfSpeech']) ?? 'other',
+    accent: r.accent === 'uk' ? 'uk' : 'us',
+    source: r.source as AudioAsset['source'],
+    status: r.status === 'flagged' ? 'flagged' : 'active',
+    text: text(r.text),
+    mime: text(r.mime),
+    storagePath: text(r.storage_path),
+    remoteUrl: text(r.remote_url),
+    license: text(r.license),
+    attribution: text(r.attribution),
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
+}
+
 export interface PushRows {
   profiles: Profile
+  audioAssets: AudioAsset
   vocabItems: VocabItem
   decks: Deck
   deckItems: DeckItem
@@ -291,6 +342,8 @@ export function fromRemote(table: PushTable, row: RemoteRow): PushRows[PushTable
   switch (table) {
     case 'profiles':
       return profileFromRemote(row)
+    case 'audioAssets':
+      return audioAssetFromRemote(row)
     case 'vocabItems':
       return vocabItemFromRemote(row)
     case 'decks':

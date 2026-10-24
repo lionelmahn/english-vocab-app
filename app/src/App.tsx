@@ -7,6 +7,7 @@ import { pageTransition, pageVariants } from './lib/motion'
 import { useSettings } from './lib/settings'
 import { isFocusMode, tabIndexOf } from './lib/tabs'
 import { BackupPage } from './pages/BackupPage'
+import { StarterDecksPage, WelcomePage } from './pages/StarterPages'
 import { DeckAddWordsPage, DeckDetailPage, DeckFormPage } from './pages/DeckPages'
 import { ImportPage } from './pages/ImportPage'
 import { LoginPage } from './pages/LoginPage'
@@ -24,8 +25,27 @@ import { WordDetailPage } from './pages/WordDetailPage'
 import { WordFormPage } from './pages/WordFormPage'
 import { openedFromRecoveryLink, startAuth } from './services/auth'
 import { startProfile } from './services/profile'
-import { startSync } from './services/sync'
+import { startSync, useSyncStatus } from './services/sync'
+import { useAuth } from './services/auth'
+import { welcomeDone } from './lib/welcome'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from './db/db'
 import { usePending } from './services/voiceClips'
+
+/**
+ * Máy mới (sổ tay trống, chưa qua bước thiết lập) thì mở màn hình chào (R1.7).
+ * Đã đăng nhập thì đợi đồng bộ xong lần đầu, để máy cũ đăng nhập lại không bị hỏi thiết lập từ đầu.
+ */
+function useWelcomeRedirect(pathname: string, navigate: (to: string, opts: { replace: boolean }) => void) {
+  const words = useLiveQuery(() => db.vocabItems.count(), [], -1)
+  const auth = useAuth()
+  const sync = useSyncStatus()
+  useEffect(() => {
+    if (words !== 0 || welcomeDone() || /^\/(welcome|login|reset-password)(\/|$)/.test(pathname)) return
+    if (auth.status === 'loading' || (auth.status === 'signed_in' && !sync.lastSyncedAt)) return
+    navigate('/welcome', { replace: true })
+  }, [words, auth.status, sync.lastSyncedAt, pathname, navigate])
+}
 
 function depthOf(pathname: string): number {
   return pathname.split('/').filter(Boolean).length
@@ -55,6 +75,8 @@ export default function App() {
     const direction = index !== nav.index ? (index > nav.index ? 1 : -1) : depth !== nav.depth ? (depth > nav.depth ? 1 : -1) : 0
     setNav({ path: location.pathname, index, depth, direction })
   }
+
+  useWelcomeRedirect(location.pathname, navigate)
 
   useEffect(() => {
     document.documentElement.dataset.reduceMotion = String(reduceMotion)
@@ -91,6 +113,7 @@ export default function App() {
                 <Route path="/words/:id" element={<WordDetailPage />} />
                 <Route path="/words/:id/edit" element={<WordFormPage />} />
                 <Route path="/decks/new" element={<DeckFormPage />} />
+                <Route path="/decks/starter" element={<StarterDecksPage />} />
                 <Route path="/decks/:id" element={<DeckDetailPage />} />
                 <Route path="/decks/:id/edit" element={<DeckFormPage />} />
                 <Route path="/decks/:id/add" element={<DeckAddWordsPage />} />
@@ -106,6 +129,7 @@ export default function App() {
                 <Route path="/me/goals" element={<GoalsPage />} />
                 <Route path="/voice" element={<VoiceClipsPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/welcome" element={<WelcomePage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="*" element={<TodayPage />} />
               </Routes>
