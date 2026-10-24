@@ -21,8 +21,13 @@ export function cleanClipText(text: string): string {
   return text.normalize('NFC').replace(/\s+/g, ' ').trim()
 }
 
+/** Danh sách gửi sang phím tắt (mỗi mục một dòng); app cũng chép nó vào bộ nhớ tạm. */
+export function requestText(texts: readonly string[]): string {
+  return texts.map(cleanClipText).join('\n')
+}
+
 export function shortcutRunUrl(name: string, texts: readonly string[]): string {
-  const input = texts.map(cleanClipText).join('\n')
+  const input = requestText(texts)
   return `shortcuts://run-shortcut?name=${encodeURIComponent(name.trim())}&input=text&text=${encodeURIComponent(input)}`
 }
 
@@ -84,7 +89,7 @@ export interface DecodedClip {
 
 export type PasteResult =
   | { ok: true; clips: DecodedClip[] }
-  | { ok: false; reason: 'empty' | 'not_audio' | 'count'; got?: number }
+  | { ok: false; reason: 'empty' | 'not_audio' | 'count' | 'unchanged'; got?: number }
   /** Phím tắt mã hóa chữ thay vì âm thanh (bước "Mã hóa" lấy nhầm "Lặp lại mục"). */
   | { ok: false; reason: 'text'; sample: string }
 
@@ -103,9 +108,11 @@ function asText(bytes: Uint8Array): string | null {
  * Đọc nội dung dán vào: các file Base64 nối bằng "|" (hoặc mỗi file một dòng nếu Base64 không ngắt dòng).
  * Số file phải đúng bằng số mục đã gửi, nếu không sẽ gán nhầm âm thanh cho từ.
  */
-export function parsePasted(raw: string, expected: number): PasteResult {
+export function parsePasted(raw: string, expected: number, sent?: string): PasteResult {
   const text = raw.trim()
   if (!text) return { ok: false, reason: 'empty' }
+  // Bộ nhớ tạm vẫn là danh sách app vừa chép: phím tắt chưa chạy xong hoặc chưa chép kết quả.
+  if (sent !== undefined && text === sent.trim()) return { ok: false, reason: 'unchanged' }
   let parts: string[]
   if (text.includes('|')) parts = text.split('|')
   else if (expected === 1) parts = [text]

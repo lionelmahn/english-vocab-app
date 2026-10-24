@@ -8,7 +8,7 @@ import { useLibrary } from '../lib/hooks'
 import { updateSettings, useSettings } from '../lib/settings'
 import { showToast } from '../lib/toast'
 import { isAppleDevice, speak } from '../services/speech'
-import { cancelPending, clearClips, getPending, pasteFromClipboard, saveFromPaste, setPending, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
+import { cancelPending, clearClips, copyRequest, getPending, pasteFromClipboard, saveFromPaste, setPending, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
 
 type Message = { tone: 'error' | 'success'; text: string } | null
 
@@ -96,10 +96,12 @@ export function VoiceClipsPage() {
     }
   }
 
-  function run() {
+  async function run() {
     setPending(batch)
     setMessage(null)
     setReturned(false)
+    // Chép sẵn danh sách vào bộ nhớ tạm: phím tắt đọc từ "Bảng nhớ tạm" (chắc chắn hơn nhận qua đường dẫn).
+    await copyRequest(batch)
     window.location.href = shortcutRunUrl(name, batch)
   }
 
@@ -184,6 +186,15 @@ export function VoiceClipsPage() {
                   {busy ? 'Đang lưu…' : 'Dán âm thanh'}
                 </Button>
                 <div className="flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold">
+                  <a
+                    href={shortcutRunUrl(name, pending.texts)}
+                    className="text-accent"
+                    onClick={() => {
+                      void copyRequest(pending.texts)
+                    }}
+                  >
+                    Mở lại Phím tắt
+                  </a>
                   <button type="button" className="text-accent" onClick={() => setShowManual((v) => !v)}>
                     {showManual ? 'Ẩn ô dán thủ công' : 'Dán thủ công'}
                   </button>
@@ -235,8 +246,8 @@ export function VoiceClipsPage() {
                   <b className="text-text">{name}</b> (đúng chữ hoa, chữ thường).
                 </Step>
                 <Step n={2}>
-                  Thêm tác vụ <Action vi="Tách văn bản" en="Split Text" />. Bấm ô <b className="text-text">Văn bản</b> của nó → chọn <b className="text-text">Đầu vào phím tắt</b>{' '}
-                  <span className="text-subtle">(Shortcut Input)</span>. Phần “bằng” để <b className="text-text">Dòng mới</b>.
+                  Thêm tác vụ <Action vi="Tách văn bản" en="Split Text" />. Bấm ô <b className="text-text">Văn bản</b> của nó → chọn <b className="text-text">Bảng nhớ tạm</b>{' '}
+                  <span className="text-subtle">(Clipboard)</span>: app chép sẵn danh sách từ vào đó trước khi mở phím tắt. Phần “bằng” để <b className="text-text">Dòng mới</b>.
                 </Step>
                 <Step n={3}>
                   Thêm tác vụ <Action vi="Lặp lại với từng mục" en="Repeat with Each" />. Nó tự nhận “Chia văn bản”.
@@ -260,8 +271,8 @@ export function VoiceClipsPage() {
                 </Step>
               </ol>
               <p className="mt-3 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
-                Thứ tự đúng: Tách (Đầu vào phím tắt) → Lặp lại với từng mục → <i>Tạo âm thanh đọc từ (Lặp lại mục) → Mã hóa (âm thanh vừa tạo)</i> → Kết thúc lặp lại → Kết hợp (Lặp lại kết quả, dấu |) → Sao chép vào bảng nhớ tạm. Lần
-                đầu chạy, iPhone có thể hỏi quyền: chọn <b>Cho phép</b>.
+                Thứ tự đúng: Tách (Bảng nhớ tạm) → Lặp lại với từng mục → <i>Tạo âm thanh đọc từ (Lặp lại mục) → Mã hóa (âm thanh vừa tạo)</i> → Kết thúc lặp lại → Kết hợp (Lặp lại kết quả, dấu |) → Sao chép vào bảng nhớ tạm. Lần
+                đầu chạy, iPhone có thể hỏi quyền dán/truy cập bảng nhớ tạm: chọn <b>Luôn cho phép</b>.
               </p>
               <div className="mt-3">
                 <TextField label="Tên phím tắt" value={settings.shortcutName} onChange={(e) => updateSettings({ shortcutName: e.target.value })} autoCapitalize="none" autoCorrect="off" />

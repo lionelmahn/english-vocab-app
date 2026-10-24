@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { clipKey, parsePasted, pasteFingerprint, type PasteResult } from '../core/voiceClips'
+import { clipKey, parsePasted, pasteFingerprint, requestText, type PasteResult } from '../core/voiceClips'
 import { db } from '../db/db'
 import { getSettings } from '../lib/settings'
 
@@ -114,17 +114,25 @@ function clearPending() {
 
 export type SaveResult = { ok: true; saved: number } | { ok: false; message: string }
 
-function explain(r: Exclude<PasteResult, { ok: true }>, expected: number): string {
-  if (r.reason === 'empty') return 'Bộ nhớ tạm đang trống. Phím tắt đã chạy xong chưa?'
+const FIX_INPUT =
+  'Trong phím tắt, ở bước “Tách”, bấm ô “Đầu vào phím tắt” → chọn “Bảng nhớ tạm” (app đã chép sẵn danh sách vào đó), rồi bấm “Tạo” lại.'
+
+function explain(r: Exclude<PasteResult, { ok: true }>, expected: number, clipboardTypes: string[] = []): string {
+  if (r.reason === 'empty') {
+    if (clipboardTypes.length > 0) return `Bộ nhớ tạm có dữ liệu (${clipboardTypes.join(', ')}) nhưng không đọc được dạng chữ. Thử “Dán thủ công”.`
+    return `Bộ nhớ tạm đang trống: phím tắt đã chạy nhưng không tạo được âm thanh nào, thường do không nhận được danh sách từ. ${FIX_INPUT}`
+  }
+  if (r.reason === 'unchanged')
+    return `Bộ nhớ tạm vẫn là danh sách từ app vừa chép: phím tắt chưa chạy xong, hoặc chưa có bước “Sao chép vào bảng nhớ tạm”. Mở app Phím tắt xem phím tắt đã chạy xong chưa.`
   if (r.reason === 'text')
     return `Phím tắt đang mã hóa chữ (“${r.sample}”) thay vì âm thanh. Trong phím tắt, bấm ô sau chữ “Mã hóa” → Chọn biến → chạm vào khối “Tạo âm thanh đọc từ”, rồi bấm “Tạo” lại.`
   if (r.reason === 'count')
-    return `Nhận được ${r.got} âm thanh nhưng đã gửi ${expected} mục. Kiểm tra bước “Kết hợp văn bản” dùng dấu “|”, rồi bấm “Tạo” lại.`
+    return `Nhận được ${r.got} âm thanh nhưng đã gửi ${expected} mục. Kiểm tra bước “Kết hợp” dùng dấu “|”, rồi bấm “Tạo” lại.`
   return 'Bộ nhớ tạm không chứa âm thanh từ phím tắt. Chạy phím tắt xong rồi hãy dán.'
 }
 
 /** Lưu nội dung dán vào cho lượt đang chờ. */
-export async function saveFromPaste(raw: string): Promise<SaveResult> {
+export async function saveFromPaste(raw: string, clipboardTypes: string[] = []): Promise<SaveResult> {
   const pending = currentPending()
   if (!pending) return { ok: false, message: 'Chưa có lượt nào đang chờ. Bấm “Tạo” trước.' }
   let last: string | null = null
@@ -136,8 +144,8 @@ export async function saveFromPaste(raw: string): Promise<SaveResult> {
   const fp = pasteFingerprint(raw)
   if (last && last === fp) return { ok: false, message: 'Đây vẫn là âm thanh của lần trước. Chạy phím tắt cho lượt mới rồi dán lại.' }
 
-  const r = parsePasted(raw, pending.texts.length)
-  if (!r.ok) return { ok: false, message: explain(r, pending.texts.length) }
+  const r = parsePasted(raw, pending.texts.length, requestText(pending.texts))
+  if (!r.ok) return { ok: false, message: explain(r, pending.texts.length, clipboardTypes) }
 
   const now = Date.now()
   const rows = pending.texts.map((text, i) => {
@@ -167,13 +175,43 @@ export async function saveFromPaste(raw: string): Promise<SaveResult> {
 
 /** Đọc bảng tạm (iPhone sẽ hiện nút "Dán" để người học xác nhận) rồi lưu. */
 export async function pasteFromClipboard(): Promise<SaveResult> {
-  let raw: string
+  let raw = ''
+  let types: string[] = []
   try {
     raw = await navigator.clipboard.readText()
   } catch {
-    return { ok: false, message: 'Không đọc được bộ nhớ tạm. Bấm “Dán” khi iPhone hỏi, hoặc dùng ô “Dán thủ công” bên dưới.' }
+    return { ok: false, message: 'Không đọc được bộ nhớ tạm. Bấm “Dán” khi iPhone hỏi, hoặc dùng “Dán thủ công” bên dưới.' }
   }
-  return saveFromPaste(raw)
+  // Đọc dạng chữ ra rỗng: thử đọc từng loại dữ liệu trong bộ nhớ tạm.
+  if (!raw.trim() && navigator.clipboard.read) {
+    try {
+      const items = await navigator.clipboard.read()
+      types = [...new Set(items.flatMap((i) => [...i.types]))]
+      for (const item of items) {
+        const type = item.types.find((t) => t.startsWith('text/'))
+        if (!type) continue
+        raw = await (await item.getType(type)).text()
+        if (type === 'text/html') raw = new DOMParser().parseFromString(raw, 'text/html').body.textContent ?? ''
+        if (raw.trim()) break
+      }
+    } catch {
+      // bỏ qua, báo theo nội dung đã đọc được
+    }
+  }
+  return saveFromPaste(raw, types)
+}
+
+/**
+ * Chép danh sách cần đọc vào bộ nhớ tạm (phím tắt đọc ở đây nếu không nhận được qua đường dẫn).
+ * Trả về false nếu trình duyệt không cho chép.
+ */
+export async function copyRequest(texts: readonly string[]): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(requestText(texts))
+    return true
+  } catch {
+    return false
+  }
 }
 
 export function cancelPending(): void {
