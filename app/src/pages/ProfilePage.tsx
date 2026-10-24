@@ -8,7 +8,8 @@ import { db } from '../db/db'
 import { updateSettings, useSettings } from '../lib/settings'
 import { APP_VERSION } from '../lib/version'
 import { checkCloud, signOut, useAuth, type CloudCheck } from '../services/auth'
-import { englishVoices, hasExactVoice, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
+import { voiceLabel } from '../core/voices'
+import { englishVoices, hasExactVoice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
 import { syncNow, useSyncStatus } from '../services/sync'
 
 function SettingRow({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
@@ -113,7 +114,10 @@ function VoiceSettings() {
   const accent = settings.accent
   const list = englishVoices(accent)
   const current = accent === 'uk' ? settings.voiceUK : settings.voiceUS
-  const chosen = list.find((v) => v.voiceURI === current) ?? pickVoice(accent)
+  const selected = list.some((v) => v.voiceURI === current) ? current! : ''
+  const chosen = pickVoice(accent)
+  const auto = pickVoice(accent, true)
+  const apple = isAppleMobile()
 
   return (
     <div className="flex flex-col gap-3">
@@ -125,13 +129,13 @@ function VoiceSettings() {
           <div className="min-w-0 flex-1">
             <Select
               label="Giọng máy"
-              value={current ?? ''}
+              value={selected}
               onChange={(e) => updateSettings(accent === 'uk' ? { voiceUK: e.target.value || null } : { voiceUS: e.target.value || null })}
             >
-              <option value="">Tự động ({pickVoice(accent)?.name ?? 'giọng tốt nhất'})</option>
+              <option value="">Tự động ({auto ? voiceLabel(auto).split(' · ')[0] : 'giọng tốt nhất'})</option>
               {list.map((v) => (
                 <option key={v.voiceURI} value={v.voiceURI}>
-                  {v.name} · {v.lang}
+                  {voiceLabel(v)}
                 </option>
               ))}
             </Select>
@@ -141,20 +145,32 @@ function VoiceSettings() {
           </Button>
         </div>
       )}
-      <button type="button" onClick={() => setHelp((h) => !h)} className="self-start text-sm font-semibold text-accent">
-        {help ? 'Ẩn hướng dẫn' : 'Giọng máy nghe chưa hay? Tải giọng chất lượng cao'}
-      </button>
-      {help && (
-        <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
-          <p>
-            <b className="text-text">iPhone:</b> Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh. Chọn giọng có chữ “Nâng cao” hoặc “Cao cấp” (ví dụ Ava, Zoe, Evan, Serena) và
-            tải về. Sau đó tắt hẳn app rồi mở lại, chọn giọng đó ở ô “Giọng máy”.
-          </p>
-          <p>
-            <b className="text-text">Android:</b> Cài đặt → Hệ thống → Ngôn ngữ → Đầu ra chuyển văn bản thành lời nói → Dịch vụ của Google → Cài đặt → Cài đặt dữ liệu giọng nói → Tiếng Anh (Mỹ/Vương
-            quốc Anh) → tải giọng chất lượng cao.
-          </p>
-        </div>
+      {apple && (
+        <p className="rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+          Trên iPhone/iPad, Apple chỉ cho ứng dụng web dùng <b className="text-text">giọng có sẵn của máy</b>. Các giọng tải thêm “Nâng cao”, “Cao cấp” hay giọng Siri trong Cài đặt sẽ không
+          hiện ở đây, kể cả khi đã tải về. Vì vậy app ưu tiên bản ghi giọng người thật cho từng từ.
+        </p>
+      )}
+      {!apple && (
+        <>
+          <button type="button" onClick={() => setHelp((h) => !h)} className="self-start text-sm font-semibold text-accent">
+            {help ? 'Ẩn hướng dẫn' : 'Giọng máy nghe chưa hay? Tải giọng chất lượng cao'}
+          </button>
+          {help && (
+            <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+              <p>
+                <b className="text-text">Android:</b> Cài đặt → Hệ thống → Ngôn ngữ → Đầu ra chuyển văn bản thành lời nói → Dịch vụ của Google → Cài đặt → Cài đặt dữ liệu giọng nói → Tiếng Anh (Mỹ/Vương
+                quốc Anh) → tải giọng chất lượng cao. Sau đó tắt hẳn trình duyệt rồi mở lại app.
+              </p>
+              <p>
+                <b className="text-text">Máy tính:</b> Chrome có sẵn giọng “Google US English / UK English”; Edge có giọng “Online (Natural)” rất tự nhiên.
+              </p>
+              <p>
+                <b className="text-text">iPhone/iPad:</b> Apple không cho ứng dụng web dùng giọng tải thêm, chỉ dùng được giọng có sẵn của máy.
+              </p>
+            </div>
+          )}
+        </>
       )}
       <p className="text-[11px] leading-relaxed text-subtle">Bản ghi phát âm: Wiktionary / Wikimedia Commons, giấy phép CC BY-SA, CC BY hoặc phạm vi công cộng.</p>
     </div>

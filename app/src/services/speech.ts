@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { bestVoice, langOf, rankVoices, type Accent } from '../core/voices'
 import { chooseUrl, isShortTerm } from '../core/wordAudio'
 import { getSettings } from '../lib/settings'
 import { cachedWordUrl, resolveWordAudio } from './audio'
@@ -9,7 +10,7 @@ import { cachedWordUrl, resolveWordAudio } from './audio'
  * 2. Không có bản ghi, hoặc câu ví dụ: giọng đọc của thiết bị, chọn giọng chất lượng cao nhất có sẵn.
  */
 
-export type Accent = 'us' | 'uk'
+export type { Accent }
 
 const synth: SpeechSynthesis | null = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null
 let voices: SpeechSynthesisVoice[] = []
@@ -88,44 +89,21 @@ export function speechAvailable(): boolean {
   return synth !== null || player !== null
 }
 
-function langOf(v: SpeechSynthesisVoice): string {
-  return v.lang.replace('_', '-').toLowerCase()
+/** iPhone/iPad (iPad đời mới báo mình là Mac nhưng có màn cảm ứng). */
+export function isAppleMobile(): boolean {
+  if (typeof navigator === 'undefined') return false
+  return /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1)
 }
 
-/** Chấm điểm giọng: đúng giọng Mỹ/Anh, giọng chất lượng cao (Nâng cao/Cao cấp/Siri/Neural/Google) được ưu tiên. */
-function voiceScore(v: SpeechSynthesisVoice, accent: Accent, preferredUri: string | null): number {
-  const want = accent === 'uk' ? 'en-gb' : 'en-us'
-  let s = 0
-  if (preferredUri && v.voiceURI === preferredUri) s += 1000
-  if (langOf(v) === want) s += 100
-  else if (langOf(v).startsWith('en')) s += 10
-  else return -1
-  if (/premium|cao cấp|enhanced|nâng cao|neural|natural|siri/i.test(v.name)) s += 60
-  if (/google/i.test(v.name)) s += 40
-  if (/samantha|ava|zoe|evan|nathan|allison|susan|tom|daniel|serena|kate|oliver|arthur|martha|aria|jenny|guy|libby|sonia|ryan/i.test(v.name)) s += 15
-  if (/compact|eloquence|novelty|bad news|bells|boing|bubbles|cellos|whisper|zarvox|trinoids|albert|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|reed|sandy|flo|eddy/i.test(v.name)) s -= 50
-  return s
-}
-
-/** Các giọng tiếng Anh trên máy, giọng tốt nhất trước (để người học tự chọn). */
+/** Các giọng tiếng Anh trên máy (đã bỏ giọng vui nhộn, gộp giọng trùng), giọng tốt nhất trước. */
 export function englishVoices(accent: Accent): SpeechSynthesisVoice[] {
-  return voices
-    .filter((v) => voiceScore(v, accent, null) >= 0)
-    .sort((a, b) => voiceScore(b, accent, null) - voiceScore(a, accent, null))
+  return rankVoices(voices, accent)
 }
 
-export function pickVoice(accent: Accent, list: readonly SpeechSynthesisVoice[] = voices): SpeechSynthesisVoice | undefined {
-  const preferred = accent === 'uk' ? getSettings().voiceUK : getSettings().voiceUS
-  let best: SpeechSynthesisVoice | undefined
-  let bestScore = -1
-  for (const v of list) {
-    const s = voiceScore(v, accent, preferred)
-    if (s > bestScore) {
-      best = v
-      bestScore = s
-    }
-  }
-  return best
+/** Giọng sẽ dùng để đọc. `auto` = bỏ qua giọng người học đã chọn (để hiện "Tự động (…)"). */
+export function pickVoice(accent: Accent, auto = false): SpeechSynthesisVoice | undefined {
+  const preferred = auto ? null : accent === 'uk' ? getSettings().voiceUK : getSettings().voiceUS
+  return bestVoice(voices, accent, preferred)
 }
 
 /** Có giọng đúng chuẩn Anh–Anh/Anh–Mỹ hay phải dùng giọng tiếng Anh khác. */
