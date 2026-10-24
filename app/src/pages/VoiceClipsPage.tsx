@@ -7,6 +7,7 @@ import { CLIP_BATCH, clipKey, clipTargets, DEFAULT_SHORTCUT_NAME, shortcutRunUrl
 import { useLibrary } from '../lib/hooks'
 import { updateSettings, useSettings } from '../lib/settings'
 import { showToast } from '../lib/toast'
+import { APP_VERSION } from '../lib/version'
 import { isAppleDevice, speak } from '../services/speech'
 import { cancelPending, clearClips, copyRequest, getPending, pasteFromClipboard, saveFromPaste, setPending, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
 
@@ -300,6 +301,7 @@ export function VoiceClipsPage() {
           </div>
         </Card>
       )}
+      <p className="text-center text-[12px] text-subtle">Phiên bản app {APP_VERSION}</p>
     </Page>
   )
 }

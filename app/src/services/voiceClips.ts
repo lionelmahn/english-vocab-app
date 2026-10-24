@@ -2,6 +2,7 @@ import { useSyncExternalStore } from 'react'
 import { clipKey, parsePasted, pasteFingerprint, requestText, type PasteResult } from '../core/voiceClips'
 import { db } from '../db/db'
 import { getSettings } from '../lib/settings'
+import { APP_VERSION } from '../lib/version'
 
 /**
  * Kho âm thanh "Giọng iPhone" (tạo bằng app Phím tắt) trên máy này.
@@ -126,6 +127,8 @@ function explain(r: Exclude<PasteResult, { ok: true }>, expected: number, clipbo
     return `Bộ nhớ tạm vẫn là danh sách từ app vừa chép: phím tắt chưa chạy xong, hoặc chưa có bước “Sao chép vào bảng nhớ tạm”. Mở app Phím tắt xem phím tắt đã chạy xong chưa.`
   if (r.reason === 'text')
     return `Phím tắt đang mã hóa chữ (“${r.sample}”) thay vì âm thanh. Trong phím tắt, bấm ô sau chữ “Mã hóa” → Chọn biến → chạm vào khối “Tạo âm thanh đọc từ”, rồi bấm “Tạo” lại.`
+  if (r.reason === 'count' && r.got === 1 && expected > 1)
+    return `Phím tắt chỉ tạo 1 âm thanh trong khi app gửi ${expected} mục, tức là phím tắt chưa nhận được danh sách từ. Kiểm tra app đã lên bản ${APP_VERSION} trở lên (ghi ở cuối trang này), và bước “Tách” trong phím tắt lấy “Bảng nhớ tạm”. Rồi bấm “Tạo” lại.`
   if (r.reason === 'count')
     return `Nhận được ${r.got} âm thanh nhưng đã gửi ${expected} mục. Kiểm tra bước “Kết hợp” dùng dấu “|”, rồi bấm “Tạo” lại.`
   return 'Bộ nhớ tạm không chứa âm thanh từ phím tắt. Chạy phím tắt xong rồi hãy dán.'

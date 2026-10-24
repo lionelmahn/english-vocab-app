@@ -50,6 +50,14 @@ describe('giọng iPhone qua Phím tắt', () => {
     expect(parsePasted(`${fakeM4a('1')}\n${fakeM4a('2')}\n${fakeM4a('3')}`, 3).ok).toBe(true)
   })
 
+  it('một file Base64 ngắt mỗi 76 ký tự, không có "|": đếm là 1 file', () => {
+    const big = btoa(String.fromCharCode(0, 0, 0, 32, ...[...'ftypM4A '].map((c) => c.charCodeAt(0)), ...new Array(400).fill(7)))
+    const wrapped = big.replace(/(.{76})/g, '$1\r\n')
+    expect(wrapped.split('\n').length).toBeGreaterThan(5)
+    expect(parsePasted(wrapped, 2)).toEqual({ ok: false, reason: 'count', got: 1 })
+    expect(parsePasted(wrapped, 1).ok).toBe(true)
+  })
+
   it('số file không khớp số mục đã gửi thì từ chối', () => {
     expect(parsePasted(`${fakeM4a('1')}|${fakeM4a('2')}`, 3)).toEqual({ ok: false, reason: 'count', got: 2 })
   })

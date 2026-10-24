@@ -114,10 +114,16 @@ export function parsePasted(raw: string, expected: number, sent?: string): Paste
   // Bộ nhớ tạm vẫn là danh sách app vừa chép: phím tắt chưa chạy xong hoặc chưa chép kết quả.
   if (sent !== undefined && text === sent.trim()) return { ok: false, reason: 'unchanged' }
   let parts: string[]
-  if (text.includes('|')) parts = text.split('|')
-  else if (expected === 1) parts = [text]
-  else parts = text.split(/\r?\n/)
-  parts = parts.map((p) => p.replace(/\s+/g, '')).filter(Boolean)
+  if (text.includes('|')) parts = text.split('|').map((p) => p.replace(/\s+/g, '')).filter(Boolean)
+  else {
+    // Không có "|": hoặc mỗi file một dòng (Base64 không ngắt dòng), hoặc chỉ có một file bị ngắt mỗi 76 ký tự.
+    const lines = text
+      .split(/\r?\n/)
+      .map((l) => l.replace(/\s+/g, ''))
+      .filter(Boolean)
+    const eachLineIsClip = lines.length > 1 && lines.every((l) => isAudioB64(l))
+    parts = eachLineIsClip ? lines : [text.replace(/\s+/g, '')]
+  }
 
   const clips: DecodedClip[] = []
   for (const p of parts) {
@@ -134,6 +140,11 @@ export function parsePasted(raw: string, expected: number, sent?: string): Paste
   }
   if (clips.length !== expected) return { ok: false, reason: 'count', got: clips.length }
   return { ok: true, clips }
+}
+
+function isAudioB64(part: string): boolean {
+  const bytes = decodeBase64(part)
+  return !!bytes && sniffAudio(bytes) !== null
 }
 
 /** Dấu vết ngắn của nội dung đã dán, để không dán lại kết quả cũ cho một lượt mới. */
