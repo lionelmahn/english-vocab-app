@@ -9,6 +9,7 @@ import { isFocusMode, tabIndexOf } from './lib/tabs'
 import { BackupPage } from './pages/BackupPage'
 import { StarterDecksPage, WelcomePage } from './pages/StarterPages'
 import { DeckAddWordsPage, DeckDetailPage, DeckFormPage } from './pages/DeckPages'
+import { HelpPage, HelpTopicPage } from './pages/HelpPage'
 import { ImportPage } from './pages/ImportPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -128,6 +129,8 @@ export default function App() {
                 <Route path="/me/profile" element={<ProfileEditPage />} />
                 <Route path="/me/goals" element={<GoalsPage />} />
                 <Route path="/voice" element={<VoiceClipsPage />} />
+                <Route path="/help" element={<HelpPage />} />
+                <Route path="/help/:topic" element={<HelpTopicPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/welcome" element={<WelcomePage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />

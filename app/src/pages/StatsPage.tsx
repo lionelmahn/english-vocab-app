@@ -3,6 +3,7 @@ import { Check, Table2 } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 import { Segmented } from '../components/kit'
+import { HelpButton, HelpTitle } from '../components/Guide'
 import { Card, Page, SectionTitle } from '../components/ui'
 import { studyDay } from '../core/day'
 import { itemLevel, itemStatus } from '../core/library'
@@ -62,7 +63,7 @@ export function StatsPage() {
   const total = live.length
 
   return (
-    <Page title="Thống kê" subtitle={`${num.format(total)} từ trong sổ tay`}>
+    <Page title="Thống kê" subtitle={`${num.format(total)} từ trong sổ tay`} action={<HelpButton topic="stats" label="Giải thích các con số thống kê" />}>
       {/* R10.1 — tổng quan */}
       <div className="grid grid-cols-2 gap-3">
         <StatTile label="Trong sổ tay" value={total} />
@@ -81,7 +82,7 @@ export function StatsPage() {
 
       {/* R10.7 — cấp ghi nhớ */}
       <Card>
-        <SectionTitle>Cấp ghi nhớ</SectionTitle>
+        <HelpTitle topic="levels">Cấp ghi nhớ</HelpTitle>
         <ul className="flex flex-col gap-3">
           {LEVELS.map((level, i) => {
             const pct = total ? dist[level] / total : 0
@@ -160,10 +161,11 @@ const DAY_STATE: Record<DayGoalState, { label: string; cls: string }> = {
 function GoalsCard({ activity, today, goals }: { activity: Map<string, DayActivity>; today: string; goals: { dailyNewWords: number; dailyMinutes: number; studyWeekdays: number[] } }) {
   const day = activity.get(today)
   const week = weekGoal(activity, today, goals)
-  const minutes = Math.round((day?.timeMs ?? 0) / 60_000)
+  // Làm tròn xuống: chỉ hiện dấu tích khi học đủ phút thật, khớp với ô hôm nay trong "Tuần này".
+  const minutes = Math.floor((day?.timeMs ?? 0) / 60_000)
   return (
     <Card>
-      <SectionTitle>Mục tiêu hôm nay</SectionTitle>
+      <HelpTitle topic="goals">Mục tiêu hôm nay</HelpTitle>
       <div className="flex flex-col gap-3">
         <Meter label="Từ mới" value={day?.newWords ?? 0} goal={goals.dailyNewWords} unit="từ" />
         <Meter label="Thời gian học" value={minutes} goal={goals.dailyMinutes} unit="phút" />

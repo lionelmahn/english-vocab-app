@@ -156,7 +156,8 @@ export function applyAction(plan: SessionPlan, action: SessionAction): { plan: S
       const next: ItemOutcome = { ...outcome }
 
       if (step.kind === 'known_check') {
-        if (correct) {
+        // Phải tự điền đúng, không gợi ý, không nhờ "Tính là đúng" (mức Khó), mới tính là đã biết và hẹn ôn xa.
+        if (correct && grade !== Rating.Hard) {
           // Đã biết thật: lên lịch như "Dễ" và bỏ các bước còn lại của từ này.
           next.known = true
           next.grade = Rating.Easy
@@ -204,18 +205,22 @@ export interface SessionSummary {
 }
 
 export function summarize(plan: SessionPlan, endedAt: number): SessionSummary {
-  const entries = Object.entries(plan.outcomes)
+  // Chỉ đếm từ đã làm tới (đã trả lời ít nhất một bước, không tính thẻ giới thiệu): kết thúc sớm thì từ chưa làm không tính.
+  const reached = new Set(plan.steps.slice(0, plan.cursor).filter((s) => s.kind !== 'intro').map((s) => s.itemId))
   let correct = 0
   let wrong = 0
   let known = 0
   const needWork: string[] = []
-  for (const [id, o] of entries) {
+  for (const [id, o] of Object.entries(plan.outcomes)) {
+    if (!reached.has(id)) continue
     if (o.known) known++
-    if (o.grade === null) continue
-    if (o.grade === Rating.Again) wrong++
+    // Buổi luyện lại không tính lịch nên không có điểm: từ có trả lời sai trong buổi là Quên, còn lại là Nhớ.
+    const grade = o.grade ?? (plan.mode === 'retry' ? (o.wrong > 0 ? Rating.Again : Rating.Good) : null)
+    if (grade === null) continue
+    if (grade === Rating.Again) wrong++
     else correct++
-    if (o.grade === Rating.Again || o.grade === Rating.Hard || o.wrong > 0) needWork.push(id)
+    if (grade === Rating.Again || grade === Rating.Hard || o.wrong > 0) needWork.push(id)
   }
   const durationMs = plan.activeMs ?? Math.max(0, endedAt - plan.startedAt)
-  return { items: entries.length, correct, wrong, known, needWork, durationMs }
+  return { items: reached.size, correct, wrong, known, needWork, durationMs }
 }

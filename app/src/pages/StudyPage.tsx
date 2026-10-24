@@ -7,6 +7,7 @@ import { AnimatedNumber } from '../components/AnimatedNumber'
 import { Confetti } from '../components/Confetti'
 import { BackButton, Badge, Chip, Sheet } from '../components/kit'
 import { formatDueIn } from '../lib/format'
+import { HelpButton } from '../components/Guide'
 import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
 import { buildMeaningChoices, buildTermChoices, seededRandom, type ChoiceSource, type TermSource } from '../core/exercises'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
@@ -132,7 +133,7 @@ function Setup({
   }
 
   return (
-    <Page title={mode === 'learn' ? 'Học từ mới' : 'Ôn tập'} back={<BackButton fallback="/" />}>
+    <Page title={mode === 'learn' ? 'Học từ mới' : 'Ôn tập'} back={<BackButton fallback="/" />} action={<HelpButton topic={mode === 'learn' ? 'learn' : 'review'} />}>
       {resumable && resumeProgress && (
         <Card className="border-accent bg-accent-soft">
           <p className="text-[15px] font-semibold text-accent-strong">Bạn có một buổi {resumable.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>

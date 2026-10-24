@@ -14,6 +14,7 @@ import { useAuth } from '../services/auth'
 import { playAudio, speak, useSpeaking } from '../services/speech'
 import { useSyncStatus } from '../services/sync'
 import { useClipKeys } from '../services/voiceClips'
+import { HelpButton } from './Guide'
 import { Badge, Segmented, Sheet } from './kit'
 import { Button, Card, SectionTitle } from './ui'
 
@@ -95,7 +96,10 @@ export function WordAudioCard({ item }: { item: WordRef }) {
   return (
     <Card>
       <div className="mb-3 flex items-center justify-between gap-3">
-        <SectionTitle className="">Phát âm</SectionTitle>
+        <span className="flex items-center gap-0.5">
+          <SectionTitle className="">Phát âm</SectionTitle>
+          <HelpButton topic="audio" />
+        </span>
         <div className="w-36">
           <Segmented
             layoutId="word-audio-accent"

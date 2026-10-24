@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { Badge, BackButton, IconButton, IpaPill, LevelDots, Sheet, SpeakButtons } from '../components/kit'
 import { formatDate, formatDueIn } from '../lib/format'
 import { showToast } from '../lib/toast'
+import { HelpTitle } from '../components/Guide'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
 import { itemLevel, itemStatus, liveCard, STATUS_LABEL } from '../core/library'
 import { LEVEL_LABELS } from '../core/levels'
@@ -125,7 +126,7 @@ export function WordDetailPage() {
       <WordAudioCard item={item} />
 
       <Card>
-        <SectionTitle>Tiến độ</SectionTitle>
+        <HelpTitle topic="levels">Tiến độ</HelpTitle>
         {card ? (
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">

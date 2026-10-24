@@ -79,6 +79,16 @@ describe('applyAction', () => {
     expect(r2.plan.outcomes.a.known).toBe(true)
   })
 
+  it('học mới: "đã biết" nhưng phải dùng gợi ý hoặc "Tính là đúng" → chưa tính là đã biết', () => {
+    for (const extra of [{ hintUsed: true }, { nearMatchAccepted: true }]) {
+      const plan = planLearn(['a'], () => 'mcq_meaning', 0)
+      const r = run(plan, [{ type: 'intro_known' }, { type: 'answer', result: { kind: 'answer', exercise: 'recall_typing', correct: true, ...extra } }])
+      expect(r.effects[1]).toMatchObject({ log: true, grade: null, schedule: false })
+      expect(r.plan.outcomes.a.known).toBe(false)
+      expect(currentStep(r.plan)).toEqual({ itemId: 'a', kind: 'exercise', exercise: 'mcq_meaning' })
+    }
+  })
+
   it('học mới: "đã biết" nhưng kiểm tra sai → không tính quên, học tiếp bình thường', () => {
     const plan = planLearn(['a'], () => 'mcq_meaning', 0)
     const r = run(plan, [{ type: 'intro_known' }, wrong('recall_typing')])
@@ -97,6 +107,21 @@ describe('applyAction', () => {
     const s = summarize(plan, 61_000)
     expect(s).toMatchObject({ items: 3, correct: 2, wrong: 1, durationMs: 60_000 })
     expect(s.needWork.sort()).toEqual(['b', 'c'])
+  })
+
+  it('summarize — kết thúc sớm chỉ đếm từ đã làm tới', () => {
+    let plan = planLearn(['a', 'b', 'c'], () => 'recall_typing', 0)
+    // Làm xong từ a, xem thẻ giới thiệu của b rồi kết thúc.
+    ;({ plan } = run(plan, [{ type: 'intro_next' }, right('recall_typing'), { type: 'intro_next' }]))
+    expect(summarize(plan, 1000)).toMatchObject({ items: 1, correct: 1, wrong: 0 })
+  })
+
+  it('summarize — buổi luyện lại tính Nhớ/Quên theo việc có trả lời sai', () => {
+    let plan = planReview(['a', 'b'], () => 'mcq_meaning', 0, 'retry')
+    ;({ plan } = run(plan, [right(), wrong()]))
+    const s = summarize(plan, 1000)
+    expect(s).toMatchObject({ items: 2, correct: 1, wrong: 1 })
+    expect(s.needWork).toEqual(['b'])
   })
 })
 

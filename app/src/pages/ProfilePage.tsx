@@ -1,11 +1,12 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { AudioLines, CalendarDays, ChevronRight, CircleAlert, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, CalendarDays, ChevronRight, CircleAlert, CircleHelp, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
 import { Segmented, Select } from '../components/kit'
 import { SELF_LEVELS, timeZoneOffset, weekdaysLabel } from '../core/profile'
 import { useProfile } from '../services/profile'
+import { HelpTitle } from '../components/Guide'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { db } from '../db/db'
 import { updateSettings, useSettings } from '../lib/settings'
@@ -397,7 +398,7 @@ export function ProfilePage() {
       </Card>
 
       <Card>
-        <SectionTitle>Máy chủ và đồng bộ</SectionTitle>
+        <HelpTitle topic="sync">Máy chủ và đồng bộ</HelpTitle>
         <CloudStatus />
       </Card>
 
@@ -411,6 +412,19 @@ export function ProfilePage() {
             Nhập từ file Excel/CSV
           </Button>
         </div>
+      </Card>
+
+      <Card>
+        <button type="button" onClick={() => navigate('/help')} className="flex w-full items-center gap-3 text-left">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+            <CircleHelp aria-hidden className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[15px] font-semibold">Hướng dẫn sử dụng</span>
+            <span className="block text-[13px] leading-snug text-muted">Thêm từ, học, ôn và ý nghĩa các con số</span>
+          </span>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+        </button>
       </Card>
 
       <Card>

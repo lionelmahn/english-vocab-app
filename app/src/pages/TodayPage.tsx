@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { AnimatedNumber } from '../components/AnimatedNumber'
 import { Buddy } from '../components/Buddy'
+import { HelpButton } from '../components/Guide'
 import { Button, Card, EmptyState, Page } from '../components/ui'
 import { currentStreak, studyDay } from '../core/day'
 import { itemLevel } from '../core/library'
@@ -119,9 +120,12 @@ export function TodayPage() {
       title={greeting(mountedAt.getHours())}
       subtitle={date.charAt(0).toUpperCase() + date.slice(1) + (restDay ? ' · ngày nghỉ theo lịch học' : '')}
       action={
-        <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 shadow-[0_3px_0_0_var(--app-line-shadow)]" aria-label={`Chuỗi ${activity.streak} ngày`}>
-          <Flame aria-hidden className={`h-6 w-6 ${activity.streak > 0 ? 'text-[#e0714a]' : 'text-subtle'}`} fill={activity.streak > 0 ? '#f6c344' : 'none'} />
-          <AnimatedNumber value={activity.streak} className="text-[20px] font-extrabold tabular-nums" />
+        <span className="flex items-center gap-1">
+          <HelpButton topic="today" label="Giải thích các con số trên trang này" />
+          <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 shadow-[0_3px_0_0_var(--app-line-shadow)]" aria-label={`Chuỗi ${activity.streak} ngày`}>
+            <Flame aria-hidden className={`h-6 w-6 ${activity.streak > 0 ? 'text-[#e0714a]' : 'text-subtle'}`} fill={activity.streak > 0 ? '#f6c344' : 'none'} />
+            <AnimatedNumber value={activity.streak} className="text-[20px] font-extrabold tabular-nums" />
+          </span>
         </span>
       }
     >
