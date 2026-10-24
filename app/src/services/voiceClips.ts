@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { clipKey, parsePasted, pasteFingerprint, requestText, type PasteResult } from '../core/voiceClips'
+import { clipKey, DEFAULT_SHORTCUT_NAME, parsePasted, pasteFingerprint, requestText, shortcutRunUrl, type PasteResult } from '../core/voiceClips'
 import { db } from '../db/db'
 import { getSettings } from '../lib/settings'
 import { APP_VERSION } from '../lib/version'
@@ -215,6 +215,15 @@ export async function copyRequest(texts: readonly string[]): Promise<boolean> {
   } catch {
     return false
   }
+}
+
+/** Mở phím tắt tạo giọng iPhone cho các mục này (chép sẵn danh sách vào bộ nhớ tạm trước). */
+export async function runShortcut(texts: string[]): Promise<void> {
+  if (texts.length === 0) return
+  setPending(texts)
+  await copyRequest(texts)
+  const name = getSettings().shortcutName.trim() || DEFAULT_SHORTCUT_NAME
+  window.location.href = shortcutRunUrl(name, texts)
 }
 
 export function cancelPending(): void {

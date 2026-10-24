@@ -16,6 +16,7 @@ import { useLibrary, useNow } from '../lib/hooks'
 import { EXERCISE_LABEL, GRADE_LABEL } from '../lib/labels'
 import { useSettings } from '../lib/settings'
 import { speak } from '../services/speech'
+import { VoiceClipPrompt } from '../components/VoiceClip'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -69,6 +70,8 @@ export function WordDetailPage() {
           </div>
         )}
       </Card>
+
+      <VoiceClipPrompt item={item} />
 
       {item.examples.length > 0 && (
         <Card>

@@ -1,12 +1,13 @@
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useRef } from 'react'
-import { activeSlotWithReveals, fillWithReveals, letterCount, slotTemplate, type Slot } from '../core/letters'
+import { activeSlot, fillSlots, letterCount, slotTemplate, type Slot } from '../core/letters'
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
 
 /**
- * Ô chữ "Điền từ": mỗi chữ cái một gạch dưới, ô đang gõ được tô vàng, vài chữ lộ sẵn (màu xám)
- * ở vị trí ngẫu nhiên. Một ô nhập ẩn phủ lên trên để bàn phím điện thoại hoạt động bình thường.
+ * Ô chữ "Điền từ": mỗi chữ cái một gạch dưới, ô đang gõ được tô vàng. Vài ô có chữ gợi ý hiện mờ
+ * (vị trí ngẫu nhiên); người học vẫn gõ đủ mọi chữ, chữ gõ vào thay chỗ chữ mờ.
+ * Một ô nhập ẩn phủ lên trên để bàn phím điện thoại hoạt động bình thường.
  */
 export function LetterSlots({
   term,
@@ -24,8 +25,8 @@ export function LetterSlots({
   state?: SlotsState
 }) {
   const template = useMemo(() => slotTemplate(term), [term])
-  const filled = fillWithReveals(template, revealed, value)
-  const active = state === 'typing' ? activeSlotWithReveals(template, revealed, value) : -1
+  const filled = fillSlots(template, value)
+  const active = state === 'typing' ? activeSlot(template, value) : -1
   const total = letterCount(template)
   const small = total > 14
   const localRef = useRef<HTMLInputElement | null>(null)
@@ -62,15 +63,27 @@ export function LetterSlots({
                 </span>
               ) : (
                 <span key={index} className={`relative flex ${small ? 'h-8 w-[18px]' : 'h-9 w-[22px]'} items-end justify-center`}>
-                  <motion.span
-                    key={filled[index] ?? 'empty'}
-                    initial={filled[index] ? { y: -6, opacity: 0 } : false}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.12 }}
-                    className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-bold ${revealed.has(index) ? 'text-subtle' : 'text-text'}`}
-                  >
-                    {filled[index] ?? ''}
-                  </motion.span>
+                  {filled[index] ? (
+                    <motion.span
+                      key={`typed-${filled[index]}`}
+                      initial={{ y: -6, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.12 }}
+                      className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-bold text-text`}
+                    >
+                      {filled[index]}
+                    </motion.span>
+                  ) : revealed.has(index) && state === 'typing' ? (
+                    <motion.span
+                      key="hint"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.35 }}
+                      transition={{ duration: 0.2 }}
+                      className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-semibold text-muted`}
+                    >
+                      {slot.char}
+                    </motion.span>
+                  ) : null}
                   <span className={`absolute -bottom-1 left-0 h-[3px] w-full rounded-full ${index === active ? 'animate-pulse bg-sun' : 'bg-line'}`} />
                 </span>
               ),

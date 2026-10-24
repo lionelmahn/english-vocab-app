@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { checkAnswer } from './answers'
-import { activeSlot, activeSlotWithReveals, composeAnswer, composeWithReveals, fillSlots, fillWithReveals, letterCount, pickReveals, scaffoldCount, slotTemplate } from './letters'
+import { activeSlot, composeAnswer, fillSlots, letterCount, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from './letters'
 import { seededRandom } from './exercises'
 
 describe('ô chữ "Điền từ"', () => {
@@ -43,7 +43,7 @@ describe('ô chữ "Điền từ"', () => {
 
 })
 
-describe('chữ lộ sẵn ở vị trí ngẫu nhiên', () => {
+describe('chữ gợi ý mờ ở vị trí ngẫu nhiên', () => {
   it('số chữ lộ: ít, tăng theo độ dài, tối đa 3', () => {
     expect([3, 4, 6, 7, 11, 12, 17, 30].map(scaffoldCount)).toEqual([0, 1, 1, 1, 2, 2, 3, 3])
   })
@@ -61,16 +61,11 @@ describe('chữ lộ sẵn ở vị trí ngẫu nhiên', () => {
     expect(pickReveals(slotTemplate('go'), 5)).toHaveLength(1)
   })
 
-  it('chữ gõ điền vào các ô chưa lộ, ghép ra đúng từ', () => {
+  it('gợi ý tiếp theo: ô đầu tiên từ vị trí đang gõ chưa có chữ mờ', () => {
     const t = slotTemplate('examination')
-    const revealed = new Set([2, 4]) // a, i
-    expect(fillWithReveals(t, revealed, 'ex').slice(0, 5)).toEqual(['e', 'x', 'a', null, 'i'])
-    expect(activeSlotWithReveals(t, revealed, 'ex')).toBe(3)
-    expect(composeWithReveals(t, revealed, 'exmnation')).toBe('examination')
-  })
-
-  it('gõ cả từ (kể cả chữ đã lộ) vẫn được chấp nhận', () => {
-    const t = slotTemplate('examination')
-    expect(composeWithReveals(t, new Set([2, 4]), 'examination')).toBe('examination')
+    const hinted = new Set([2, 4]) // a, i
+    expect(nextHintSlot(t, hinted, 'ex')).toBe(3) // đang gõ ô 2 (đã có chữ mờ) → gợi ý ô 3
+    expect(nextHintSlot(t, hinted, 'e')).toBe(1)
+    expect(nextHintSlot(t, hinted, 'examination')).toBe(-1)
   })
 })

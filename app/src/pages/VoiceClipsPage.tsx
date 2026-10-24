@@ -9,7 +9,7 @@ import { updateSettings, useSettings } from '../lib/settings'
 import { showToast } from '../lib/toast'
 import { APP_VERSION } from '../lib/version'
 import { isAppleDevice, speak } from '../services/speech'
-import { cancelPending, clearClips, copyRequest, getPending, pasteFromClipboard, saveFromPaste, setPending, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
+import { cancelPending, clearClips, copyRequest, getPending, pasteFromClipboard, runShortcut, saveFromPaste, useClipKeys, usePending, type SaveResult } from '../services/voiceClips'
 
 type Message = { tone: 'error' | 'success'; text: string } | null
 
@@ -98,12 +98,10 @@ export function VoiceClipsPage() {
   }
 
   async function run() {
-    setPending(batch)
     setMessage(null)
     setReturned(false)
-    // Chép sẵn danh sách vào bộ nhớ tạm: phím tắt đọc từ "Bảng nhớ tạm" (chắc chắn hơn nhận qua đường dẫn).
-    await copyRequest(batch)
-    window.location.href = shortcutRunUrl(name, batch)
+    // Chép sẵn danh sách vào bộ nhớ tạm rồi mở phím tắt (phím tắt đọc từ "Bảng nhớ tạm").
+    await runShortcut(batch)
   }
 
   function preview() {

@@ -13,6 +13,7 @@ import { LookupPage } from './pages/LookupPage'
 import { NotebookPage } from './pages/NotebookPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { VoiceClipsPage } from './pages/VoiceClipsPage'
+import { VoiceClipBar } from './components/VoiceClip'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 import { StatsPage } from './pages/StatsPage'
 import { StudyPage } from './pages/StudyPage'
@@ -21,6 +22,7 @@ import { WordDetailPage } from './pages/WordDetailPage'
 import { WordFormPage } from './pages/WordFormPage'
 import { openedFromRecoveryLink, startAuth } from './services/auth'
 import { startSync } from './services/sync'
+import { usePending } from './services/voiceClips'
 
 function depthOf(pathname: string): number {
   return pathname.split('/').filter(Boolean).length
@@ -33,6 +35,8 @@ export default function App() {
   const index = tabIndexOf(location.pathname)
   const depth = depthOf(location.pathname)
   const focus = isFocusMode(location.pathname)
+  // Thanh "Dán âm thanh" nổi phía dưới: chừa chỗ để không che nội dung cuối trang.
+  const clipBar = !!usePending() && location.pathname !== '/voice'
 
   useEffect(() => {
     const toReset = () => navigate('/reset-password', { replace: true })
@@ -59,7 +63,11 @@ export default function App() {
   return (
     <MotionConfig reducedMotion={reduceMotion ? 'always' : 'user'}>
       <div className="mx-auto flex min-h-dvh max-w-lg flex-col">
-        <main className={`relative flex-1 overflow-x-clip ${focus ? '' : 'pb-[calc(4.75rem+env(safe-area-inset-bottom))]'}`}>
+        <main
+          className={`relative flex-1 overflow-x-clip ${
+            focus ? (clipBar ? 'pb-36' : '') : clipBar ? 'pb-[calc(13.5rem+env(safe-area-inset-bottom))]' : 'pb-[calc(4.75rem+env(safe-area-inset-bottom))]'
+          }`}
+        >
           <AnimatePresence mode="popLayout" initial={false} custom={nav.direction}>
             <motion.div
               key={location.pathname}
@@ -98,6 +106,7 @@ export default function App() {
           </AnimatePresence>
         </main>
         {!focus && <TabBar />}
+        <VoiceClipBar raised={!focus} />
         <Toaster />
       </div>
     </MotionConfig>

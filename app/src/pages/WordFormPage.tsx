@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useState, type FormEvent } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { BackButton, Chip, Sheet, SpeakButtons, TextArea } from '../components/kit'
+import { VoiceClipFormNote } from '../components/VoiceClip'
 import { showToast } from '../lib/toast'
 import { Button, Card, Page, SectionTitle, TextField } from '../components/ui'
 import { liveCard } from '../core/library'
@@ -209,6 +210,7 @@ function WordForm({ lib, editing, presetDeckIds }: { lib: Library; editing?: Voc
               }}
               trailing={f.term.trim() ? <SpeakButtons text={f.term.trim()} size="sm" slow={false} /> : undefined}
             />
+            <VoiceClipFormNote text={f.term} />
 
             <div>
               <span className="mb-1.5 block text-sm font-medium">Loại từ</span>
