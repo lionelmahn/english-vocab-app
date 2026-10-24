@@ -191,7 +191,7 @@ DỊCH VỤ NGOÀI: Claude API (AI) · Google/Azure TTS (giọng đọc) · Free
 |---|---|---|
 | Nghĩa tiếng Anh, IPA, âm thanh | Free Dictionary API (dữ liệu Wiktionary) | Miễn phí; giấy phép CC BY-SA, cần ghi nguồn |
 | Phát âm từ và cụm ngắn (đang dùng từ bản 0.4.0) | Bản ghi giọng người thật trên Wiktionary / Wikimedia Commons (gồm Lingua Libre) | Miễn phí; tra một lần rồi lưu trên máy; chỉ nhận file tiếng Anh; giấy phép CC BY-SA/CC BY/PD, có ghi nguồn trong Cá nhân |
-| Đọc tức thời | Giọng đọc có sẵn trên máy (Web Speech API) | 0đ; chất lượng tùy thiết bị; không lưu thành file được. **iPhone/iPad: WebKit chỉ cho web dùng giọng có sẵn của máy, giọng tải thêm “Nâng cao/Cao cấp”/Siri không dùng được** |
+| Đọc tức thời | Giọng đọc có sẵn trên máy (Web Speech API) | 0đ; chất lượng tùy thiết bị; không lưu thành file được. **iPhone/iPad: danh sách giọng của web chỉ có giọng có sẵn; muốn dùng giọng Nâng cao/Cao cấp đã tải thì để trống giọng, chỉ báo ngôn ngữ (máy dùng giọng chọn trong Cài đặt)** |
 | Âm thanh lưu lại (R7.8) | Google Cloud TTS hoặc Azure TTS | Có hạn mức miễn phí hằng tháng, đủ cho cá nhân; tạo một lần rồi lưu vào Storage |
 | Bộ từ khởi đầu (R1.7) | NGSL (~2.800 từ thông dụng), TSL (từ vựng TOEIC), NAWL (học thuật) | Giấy phép CC BY-SA. Nghĩa tiếng Việt có thể sinh một lần bằng AI rồi rà soát |
 | Nghĩa tiếng Việt khi tra từ | Người học nhập, hoặc AI gợi ý (R8.1) để người học xác nhận | Hiếm có API Anh–Việt miễn phí với giấy phép rõ ràng |
@@ -251,6 +251,7 @@ Nguyên tắc:
 > **Cập nhật 24/10/2026 (bản 0.4.0):**
 > - **Âm thanh:** từ và cụm ngắn ưu tiên bản ghi giọng người thật (Wiktionary/Wikimedia Commons, MP3 để iPhone phát được), tra trước khi vào buổi học và lưu trên máy. Câu ví dụ và từ chưa có bản ghi dùng giọng máy, app tự chọn giọng tốt nhất (Nâng cao/Cao cấp/Siri/Google…), người học chọn được giọng và xem hướng dẫn tải giọng chất lượng cao trong Cá nhân.
 > - **Bản 0.4.1:** danh sách giọng bỏ giọng vui nhộn (Bahh, Wobble, Jester…), gộp giọng trùng, ghi rõ “Nâng cao/Cao cấp”. Trên iPhone, app giải thích rằng Apple không cho web dùng giọng tải thêm (đã kiểm tra mã nguồn WebKit: chỉ lấy `isSystemVoice`). Muốn câu ví dụ hay trên iPhone thì cần giọng đọc trên máy chủ (ví dụ Cloudflare Workers AI).
+> - **Bản 0.4.2:** trên iPhone/iPad, "Tự động" không gán giọng mà chỉ báo ngôn ngữ (en-US/en-GB). Khi đó WebKit gọi `voiceWithLanguage`, trả về giọng người dùng chọn trong Cài đặt → Trợ năng → Nội dung được đọc (kể cả giọng Nâng cao/Cao cấp đã tải). Cần kiểm tra trên máy thật.
 > - **Học từ mới:** xem thẻ xong là "Điền từ" ngay cho từ đó (trước đây xem hết 5 thẻ mới kiểm tra).
 > - **Điền từ:** lộ sẵn vài chữ (1 chữ với từ 4–6 chữ cái, 2 với 7–12, tối đa 3; từ ≤3 chữ không lộ) ở **vị trí ngẫu nhiên, mỗi lần làm bài một kiểu** để không nhớ theo vị trí. Chữ lộ sẵn không tính là gợi ý; bấm "Gợi ý" lộ thêm chữ ở ô đang gõ và tính mức Khó (R6.9).
 > **Giới hạn hiện tại:** sao lưu mới chỉ gửi lên một chiều. Dữ liệu tạo trên máy này chưa hiện trên máy khác; đồng bộ hai chiều thuộc giai đoạn 2 (R11.5, R11.7). Trong lúc chờ, nên học trên một thiết bị chính.

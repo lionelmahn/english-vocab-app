@@ -114,25 +114,25 @@ function VoiceSettings() {
   const accent = settings.accent
   const list = englishVoices(accent)
   const current = accent === 'uk' ? settings.voiceUK : settings.voiceUS
-  const selected = list.some((v) => v.voiceURI === current) ? current! : ''
-  const chosen = pickVoice(accent)
+  const pinned = list.find((v) => v.voiceURI === current)
   const auto = pickVoice(accent, true)
   const apple = isAppleMobile()
+  const region = accent === 'uk' ? 'Tiếng Anh (Vương quốc Anh)' : 'Tiếng Anh (Mỹ)'
 
   return (
     <div className="flex flex-col gap-3">
       <SettingRow title="Ưu tiên giọng người thật" description="Bản ghi phát âm từng từ từ Wiktionary. Câu ví dụ và từ chưa có bản ghi dùng giọng máy.">
         <Switch label="Ưu tiên giọng người thật" checked={settings.preferRecordings} onChange={(v) => updateSettings({ preferRecordings: v })} />
       </SettingRow>
-      {list.length > 0 && (
+      {(list.length > 0 || apple) && (
         <div className="flex items-end gap-2">
           <div className="min-w-0 flex-1">
             <Select
               label="Giọng máy"
-              value={selected}
+              value={pinned ? pinned.voiceURI : ''}
               onChange={(e) => updateSettings(accent === 'uk' ? { voiceUK: e.target.value || null } : { voiceUS: e.target.value || null })}
             >
-              <option value="">Tự động ({auto ? voiceLabel(auto).split(' · ')[0] : 'giọng tốt nhất'})</option>
+              <option value="">{apple ? 'Tự động: giọng chọn trong Cài đặt' : `Tự động (${auto ? voiceLabel(auto).split(' · ')[0] : 'giọng tốt nhất'})`}</option>
               {list.map((v) => (
                 <option key={v.voiceURI} value={v.voiceURI}>
                   {voiceLabel(v)}
@@ -140,16 +140,25 @@ function VoiceSettings() {
               ))}
             </Select>
           </div>
-          <Button icon={Volume2} className="h-12 shrink-0 px-4" onClick={() => chosen && void previewVoice(chosen, accent)}>
+          <Button icon={Volume2} className="h-12 shrink-0 px-4" onClick={() => void previewVoice(pickVoice(accent), accent)}>
             Nghe thử
           </Button>
         </div>
       )}
       {apple && (
-        <p className="rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
-          Trên iPhone/iPad, Apple chỉ cho ứng dụng web dùng <b className="text-text">giọng có sẵn của máy</b>. Các giọng tải thêm “Nâng cao”, “Cao cấp” hay giọng Siri trong Cài đặt sẽ không
-          hiện ở đây, kể cả khi đã tải về. Vì vậy app ưu tiên bản ghi giọng người thật cho từng từ.
-        </p>
+        <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+          {pinned && (
+            <p className="font-semibold text-warning">
+              Đang dùng giọng “{pinned.name}” có sẵn của máy. Chọn “Tự động” để dùng giọng Nâng cao/Cao cấp bạn đã tải.
+            </p>
+          )}
+          <p>
+            Để <b className="text-text">Tự động</b>, app đọc bằng giọng bạn chọn trong <b className="text-text">Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh → {region}</b>, kể
+            cả giọng tải thêm “Nâng cao”, “Cao cấp” (các giọng này không hiện trong danh sách trên vì Apple ẩn chúng với ứng dụng web).
+          </p>
+          <p>Đổi giọng trong Cài đặt xong, tắt hẳn app (vuốt lên khỏi màn đa nhiệm) rồi mở lại và bấm “Nghe thử”.</p>
+          <p>Muốn cả từ vựng cũng đọc bằng giọng này thì tắt “Ưu tiên giọng người thật”.</p>
+        </div>
       )}
       {!apple && (
         <>

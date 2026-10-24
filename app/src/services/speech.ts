@@ -100,10 +100,24 @@ export function englishVoices(accent: Accent): SpeechSynthesisVoice[] {
   return rankVoices(voices, accent)
 }
 
-/** Giọng sẽ dùng để đọc. `auto` = bỏ qua giọng người học đã chọn (để hiện "Tự động (…)"). */
-export function pickVoice(accent: Accent, auto = false): SpeechSynthesisVoice | undefined {
+/**
+ * Giá trị đặc biệt của ô "Giọng máy": không chỉ định giọng, chỉ báo ngôn ngữ (en-US/en-GB) để máy tự chọn.
+ * Trên iPhone, Safari khi đó lấy giọng người dùng chọn trong Cài đặt → Trợ năng → Nội dung được đọc,
+ * kể cả giọng tải thêm "Nâng cao/Cao cấp" vốn bị ẩn khỏi danh sách giọng của trang web.
+ */
+export const SYSTEM_VOICE = 'system'
+
+/** Đang dùng giọng do máy tự chọn theo ngôn ngữ (mặc định trên iPhone/iPad). */
+export function usesSystemVoice(accent: Accent, auto = false): boolean {
   const preferred = auto ? null : accent === 'uk' ? getSettings().voiceUK : getSettings().voiceUS
-  return bestVoice(voices, accent, preferred)
+  return preferred === SYSTEM_VOICE || (!preferred && isAppleMobile())
+}
+
+/** Giọng sẽ dùng để đọc; `null` = để máy tự chọn. `auto` = bỏ qua giọng người học đã chọn (để hiện "Tự động (…)"). */
+export function pickVoice(accent: Accent, auto = false): SpeechSynthesisVoice | null {
+  if (usesSystemVoice(accent, auto)) return null
+  const preferred = auto ? null : accent === 'uk' ? getSettings().voiceUK : getSettings().voiceUS
+  return bestVoice(voices, accent, preferred) ?? null
 }
 
 /** Có giọng đúng chuẩn Anh–Anh/Anh–Mỹ hay phải dùng giọng tiếng Anh khác. */
@@ -112,15 +126,14 @@ export function hasExactVoice(accent: Accent): boolean {
   return voices.some((v) => langOf(v) === want)
 }
 
-function speakWithVoice(text: string, accent: Accent, slow: boolean, voice?: SpeechSynthesisVoice): Promise<void> {
+function speakWithVoice(text: string, accent: Accent, slow: boolean, voice: SpeechSynthesisVoice | null): Promise<void> {
   if (!synth || !text.trim()) return Promise.resolve()
   player?.pause()
   synth.cancel()
   return new Promise((resolve) => {
     const u = new SpeechSynthesisUtterance(text)
-    const v = voice ?? pickVoice(accent)
-    if (v) u.voice = v
-    u.lang = v?.lang ?? (accent === 'uk' ? 'en-GB' : 'en-US')
+    if (voice) u.voice = voice
+    u.lang = voice?.lang ?? (accent === 'uk' ? 'en-GB' : 'en-US')
     u.rate = slow ? 0.65 : 0.95
     let done = false
     const finish = () => {
@@ -158,11 +171,11 @@ export async function speak(text: string, { accent, slow = false }: SpeakOptions
     }
     if (url && (await playUrl(url, t, slow))) return
   }
-  await speakWithVoice(t, accent, slow)
+  await speakWithVoice(t, accent, slow, pickVoice(accent))
 }
 
-/** Nghe thử một giọng cụ thể của thiết bị (trong Cài đặt). */
-export function previewVoice(voice: SpeechSynthesisVoice, accent: Accent): Promise<void> {
+/** Nghe thử một giọng của thiết bị (trong Cài đặt); `null` = giọng máy tự chọn. */
+export function previewVoice(voice: SpeechSynthesisVoice | null, accent: Accent): Promise<void> {
   return speakWithVoice('Practice makes perfect. I have an English examination next week.', accent, false, voice)
 }
 
