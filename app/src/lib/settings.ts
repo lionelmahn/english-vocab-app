@@ -14,7 +14,7 @@ export interface AppSettings {
   accent: 'us' | 'uk'
   /** Tự phát âm khi hiện từ. */
   autoPlay: boolean
-  /** Mặt trước của flashcard: từ tiếng Anh hay nghĩa tiếng Việt. */
+  /** Mặt trước của thẻ tự đánh giá khi ôn: từ tiếng Anh hay nghĩa tiếng Việt (học từ mới luôn tiếng Anh trước). */
   flashcardFront: 'term' | 'meaning'
   /** Hiện bản dịch câu ví dụ mặc định (R7.7). */
   showTranslations: boolean

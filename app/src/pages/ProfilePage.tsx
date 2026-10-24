@@ -296,7 +296,8 @@ export function ProfilePage() {
           </div>
           <VoiceSettings />
           <div>
-            <p className="mb-2 text-[15px] font-medium">Mặt trước của thẻ</p>
+            <p className="text-[15px] font-medium">Mặt trước thẻ khi ôn</p>
+            <p className="mt-0.5 mb-2 text-[13px] leading-snug text-muted">Dùng cho kiểu ôn “Thẻ tự đánh giá”. Học từ mới luôn hiện tiếng Anh trước.</p>
             <Segmented
               layoutId="front"
               value={settings.flashcardFront}

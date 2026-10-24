@@ -141,8 +141,11 @@ function TermBack({ item }: { item: VocabItem }) {
 
 // ---- Thẻ từ mới (R4.2, R4.3, R4.8) ------------------------------------------------------------
 
+/**
+ * Thẻ giới thiệu từ mới: luôn hiện tiếng Anh trước (câu ngữ cảnh có gạch chân từ, hoặc chính từ đó),
+ * lật ra mới thấy nghĩa. Cài đặt "Mặt trước thẻ" chỉ áp dụng cho kiểu ôn bằng thẻ tự đánh giá.
+ */
 export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: (dir: -1 | 1) => void; onKnown: () => void }) {
-  const { flashcardFront } = useSettings()
   const [flipped, setFlipped] = useState(false)
   const sentence = contextSentence(item)
   useAutoPlay(item.term)
@@ -158,12 +161,6 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
       {POS_SHORT[item.partOfSpeech] && <p className="text-[16px] text-muted">({POS_SHORT[item.partOfSpeech]})</p>}
     </>
   )
-  const meaningFront = (
-    <p className="text-[26px] leading-snug font-bold">
-      <TermLabel item={item} />
-    </p>
-  )
-
   return (
     <div className="flex min-h-[calc(100dvh-7rem)] flex-col">
       <div className="relative mt-12 flex flex-1 flex-col">
@@ -176,7 +173,7 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
           onFlip={() => setFlipped((f) => !f)}
           onSwipe={flipped ? (dir) => onNext(dir) : undefined}
           showTapHint={!flipped}
-          front={flashcardFront === 'meaning' ? meaningFront : contextFront}
+          front={contextFront}
           back={<TermBack item={item} />}
         />
       </div>
