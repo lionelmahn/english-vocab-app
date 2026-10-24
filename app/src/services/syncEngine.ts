@@ -3,7 +3,7 @@ import { mergeRows, sameValue } from '../core/merge'
 import { healCards, replayCard } from '../db/cards'
 import type { VocabDatabase } from '../db/db'
 import type { CardStateRow, ID } from '../db/types'
-import { fromRemote, PUSH_ORDER, REMOTE_TABLE, toMs, toRemote, type PushRows, type PushTable } from './syncMapping'
+import { fromRemote, PUSH_ORDER, REMOTE_TABLE, remoteIdColumn, toMs, toRemote, type PushRows, type PushTable } from './syncMapping'
 
 /**
  * Đồng bộ hai chiều nhiều thiết bị (R11.5) và xử lý xung đột (R11.7), theo kế hoạch mục 3.5.
@@ -22,14 +22,17 @@ export interface Cursor {
 
 /** Kênh nói chuyện với máy chủ. Bản thật dùng Supabase; khi kiểm thử dùng Postgres trong bộ nhớ. */
 export interface SyncRemote {
-  upsert(table: string, rows: Record<string, unknown>[], opts: { ignoreDuplicates: boolean }): Promise<void>
-  /** Tối đa `limit` dòng đứng sau `after`, theo thứ tự (server_updated_at, id). */
-  pullPage(table: string, after: Cursor, limit: number): Promise<Record<string, unknown>[]>
+  /** Thêm hoặc cập nhật theo cột khóa `onConflict` (hồ sơ: user_id; bảng khác: id). */
+  upsert(table: string, rows: Record<string, unknown>[], opts: { ignoreDuplicates: boolean; onConflict: string }): Promise<void>
+  /** Tối đa `limit` dòng đứng sau `after`, theo thứ tự (server_updated_at, cột khóa `idColumn`). */
+  pullPage(table: string, after: Cursor, limit: number, idColumn: string): Promise<Record<string, unknown>[]>
 }
 
 export interface SyncContext {
   scheduler: FSRS
   now: () => number
+  /** Tài khoản đang đăng nhập (khóa của hồ sơ trên máy chủ). */
+  userId: string
 }
 
 export interface SyncResult {
@@ -144,7 +147,8 @@ async function pullTable(database: VocabDatabase, remote: SyncRemote, table: Pus
   let last: Cursor | null = null
   const total: Applied = { received: 0, merged: 0, replayed: 0, touched: [] }
   for (;;) {
-    const page = await remote.pullPage(REMOTE_TABLE[table], after, PAGE)
+    const idColumn = remoteIdColumn(table)
+    const page = await remote.pullPage(REMOTE_TABLE[table], after, PAGE, idColumn)
     if (page.length === 0) break
     const res = await applyRemote(database, table, page.map((r) => fromRemote(table, r)), ctx)
     total.received += res.received
@@ -152,7 +156,7 @@ async function pullTable(database: VocabDatabase, remote: SyncRemote, table: Pus
     total.replayed += res.replayed
     total.touched.push(...res.touched)
     const end = page[page.length - 1]
-    last = after = { ts: end.server_updated_at as string, id: end.id as string }
+    last = after = { ts: end.server_updated_at as string, id: end[idColumn] as string }
     if (page.length < PAGE) break
   }
   // Kéo theo thứ tự tăng dần nên dòng cuối cùng là mới nhất; không nhận được gì thì giữ vị trí cũ.
@@ -176,7 +180,7 @@ export async function pullAll(database: VocabDatabase, remote: SyncRemote, ctx: 
 }
 
 /** Gửi một lượt hàng đợi. Trả về số mục hàng đợi đã xử lý. Lỗi thì giữ nguyên hàng đợi để thử lại. */
-export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, batch = PUSH_BATCH): Promise<{ processed: number; sent: number }> {
+export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, userId: string, batch = PUSH_BATCH): Promise<{ processed: number; sent: number }> {
   const entries = await database.outbox.orderBy('seq').limit(batch).toArray()
   if (entries.length === 0) return { processed: 0, sent: 0 }
   const maxSeq = entries[entries.length - 1].seq!
@@ -192,12 +196,13 @@ export async function pushOutbox(database: VocabDatabase, remote: SyncRemote, ba
     if (!ids || ids.size === 0) continue
     const rows = (await database.table(table).bulkGet([...ids])).filter(Boolean)
     if (rows.length === 0) continue
-    const data = rows.map((r) => toRemote(table, r))
+    const data = rows.map((r) => toRemote(table, r, userId))
     // Lượt trả lời chỉ thêm: gửi lại không nhân đôi, không sửa bản đã có.
-    await remote.upsert(REMOTE_TABLE[table], data, { ignoreDuplicates: table === 'reviewLogs' })
+    await remote.upsert(REMOTE_TABLE[table], data, { ignoreDuplicates: table === 'reviewLogs', onConflict: remoteIdColumn(table) })
     if (table !== 'reviewLogs') {
       // Ghi lại bản máy chủ đang giữ, làm gốc cho lần gộp sau.
-      await database.syncBase.bulkPut(data.map((d) => ({ key: baseKey(table, d.id as string), row: fromRemote(table, d as Record<string, unknown>) })))
+      const saved = data.map((d) => fromRemote(table, d))
+      await database.syncBase.bulkPut(saved.map((row) => ({ key: baseKey(table, row.id), row })))
     }
     sent += data.length
   }
@@ -210,7 +215,7 @@ export async function syncOnce(database: VocabDatabase, remote: SyncRemote, ctx:
   const pulled = await pullAll(database, remote, ctx)
   let sent = 0
   for (;;) {
-    const res = await pushOutbox(database, remote)
+    const res = await pushOutbox(database, remote, ctx.userId)
     sent += res.sent
     if (res.processed === 0) break
   }

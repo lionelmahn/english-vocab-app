@@ -2,6 +2,7 @@ import type { FSRS } from 'ts-fsrs'
 import type { SessionMode } from '../core/grading'
 import { sameContent } from '../core/merge'
 import { POS_ORDER } from '../core/pos'
+import { sanitizeProfile, type ProfileData } from '../core/profile'
 import { findDuplicates, termKey } from '../core/vocab'
 import { healCards } from './cards'
 import { commit, type Change, type VocabDatabase } from './db'
@@ -32,13 +33,18 @@ export interface BackupFile {
   appVersion: string
   /** Cài đặt học của người dùng lúc sao lưu (tùy chọn khôi phục). */
   settings?: Record<string, unknown>
+  /** Hồ sơ, mục tiêu, lịch học và cài đặt học (từ bản 0.8.0). */
+  profile?: ProfileData
   data: BackupData
 }
 
 const live = <T extends { deletedAt: number | null }>(rows: T[]) => rows.filter((r) => r.deletedAt === null)
 
 /** Bản sao lưu gồm mọi từ, bộ từ, lịch ôn và lịch sử trả lời đang dùng (không gồm mục đã xóa). */
-export async function createBackup(database: VocabDatabase, meta: { appVersion: string; settings?: Record<string, unknown>; now?: number }): Promise<BackupFile> {
+export async function createBackup(
+  database: VocabDatabase,
+  meta: { appVersion: string; settings?: Record<string, unknown>; profile?: ProfileData; now?: number },
+): Promise<BackupFile> {
   const items = live(await database.vocabItems.toArray())
   const itemIds = new Set(items.map((i) => i.id))
   const decks = live(await database.decks.toArray())
@@ -49,6 +55,7 @@ export async function createBackup(database: VocabDatabase, meta: { appVersion: 
     exportedAt: new Date(meta.now ?? Date.now()).toISOString(),
     appVersion: meta.appVersion,
     settings: meta.settings,
+    profile: meta.profile,
     data: {
       vocabItems: items,
       decks,
@@ -239,6 +246,7 @@ export function readBackup(textContent: string): ReadResult {
       exportedAt: isStr(f.exportedAt) ? f.exportedAt : '',
       appVersion: isStr(f.appVersion) ? f.appVersion : '',
       settings: f.settings && typeof f.settings === 'object' ? (f.settings as Record<string, unknown>) : undefined,
+      profile: f.profile && typeof f.profile === 'object' ? sanitizeProfile(f.profile as Record<string, unknown>) : undefined,
       data: { vocabItems: items.rows, decks: decks.rows, deckItems, cardStates, reviewLogs },
     },
   }

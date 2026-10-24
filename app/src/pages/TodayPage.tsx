@@ -9,6 +9,7 @@ import { Button, Card, EmptyState, Page } from '../components/ui'
 import { currentStreak, studyDay } from '../core/day'
 import { itemLevel } from '../core/library'
 import type { MemoryLevel } from '../core/levels'
+import { deviceTimeZone, isStudyDay } from '../core/profile'
 import { progress } from '../core/session'
 import { db } from '../db/db'
 import { dueCount, learnCandidates, nextDueAt } from '../db/library'
@@ -16,6 +17,7 @@ import { formatDueIn } from '../lib/format'
 import { useLibrary, useNow } from '../lib/hooks'
 import { riseIn } from '../lib/motion'
 import { useSettings } from '../lib/settings'
+import { useProfile } from '../services/profile'
 import { PillButton } from '../study/ui'
 
 function greeting(hour: number): string {
@@ -25,7 +27,6 @@ function greeting(hour: number): string {
   return 'Chào buổi tối'
 }
 
-const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone
 const LEVEL_COLORS: Record<Exclude<MemoryLevel, 0>, string> = {
   1: '#e0714a',
   2: '#ef9f27',
@@ -76,21 +77,24 @@ export function TodayPage() {
   const now = useNow()
   const [mountedAt] = useState(() => new Date())
   const lib = useLibrary()
+  const profile = useProfile()
+  // Ngày học tính theo múi giờ trong hồ sơ (R9.2), để mọi thiết bị đếm chuỗi ngày giống nhau.
+  const tz = profile?.timeZone ?? deviceTimeZone()
   const active = useLiveQuery(async () => (await db.studySessions.where('status').equals('active').toArray()).sort((a, b) => b.updatedAt - a.updatedAt)[0] ?? null, [], null)
   const activity = useLiveQuery(
     async () => {
       const logs = await db.reviewLogs.toArray()
-      const today = studyDay(new Date(), TZ)
+      const today = studyDay(new Date(), tz)
       const days = new Set<string>()
       const learned = new Set<string>()
       for (const l of logs) {
-        const d = studyDay(new Date(l.reviewedAt), TZ)
+        const d = studyDay(new Date(l.reviewedAt), tz)
         days.add(d)
         if (d === today && l.affectsSchedule && l.mode === 'learn') learned.add(l.itemId)
       }
       return { learnedToday: learned.size, streak: currentStreak(days, today) }
     },
-    [],
+    [tz],
     { learnedToday: 0, streak: 0 },
   )
 
@@ -108,11 +112,12 @@ export function TodayPage() {
   const nextDue = lib ? nextDueAt(lib, now) : null
   const goal = Math.max(1, settings.dailyNewWords)
   const activeProgress = active ? progress(active.plan) : null
+  const restDay = !!profile && !isStudyDay(profile.studyWeekdays, new Date(now), tz)
 
   return (
     <Page
       title={greeting(mountedAt.getHours())}
-      subtitle={date.charAt(0).toUpperCase() + date.slice(1)}
+      subtitle={date.charAt(0).toUpperCase() + date.slice(1) + (restDay ? ' · ngày nghỉ theo lịch học' : '')}
       action={
         <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 shadow-[0_3px_0_0_var(--app-line-shadow)]" aria-label={`Chuỗi ${activity.streak} ngày`}>
           <Flame aria-hidden className={`h-6 w-6 ${activity.streak > 0 ? 'text-[#e0714a]' : 'text-subtle'}`} fill={activity.streak > 0 ? '#f6c344' : 'none'} />

@@ -1,61 +1,39 @@
 import { useSyncExternalStore } from 'react'
-import type { ReviewStyle } from '../core/exercises'
+import { LEARNING_DEFAULTS, LEARNING_KEYS, type LearningSettings, type SpeechSpeed } from '../core/profile'
 
 /**
- * Cài đặt giao diện và trải nghiệm học (R14.1 một phần, R14.2) của từng thiết bị.
- * Lưu trong localStorage; nếu trình duyệt chặn lưu trữ thì dùng giá trị mặc định.
- * Mang sang thiết bị khác bằng bản sao lưu (R11.3, R11.4); đồng bộ theo hồ sơ người học làm ở R1.4, R1.5.
+ * Cài đặt giao diện và trải nghiệm học (R14.1 một phần, R14.2).
+ * - Cài đặt học (giọng, số từ, cách ôn…) đi theo hồ sơ người học và đồng bộ giữa các thiết bị (services/profile).
+ * - Giọng máy đã chọn, phím tắt, hiệu ứng và âm thanh hiệu ứng là của riêng từng thiết bị.
+ * Một bản đầy đủ được giữ trong localStorage để app mở lên là có ngay; trình duyệt chặn lưu trữ thì dùng mặc định.
  */
 
-export interface AppSettings {
+export type { SpeechSpeed }
+
+export interface DeviceSettings {
   reduceMotion: boolean
   soundEffects: boolean
-  /** Giọng đọc ưu tiên. */
-  accent: 'us' | 'uk'
-  /** Tự phát âm khi hiện từ. */
-  autoPlay: boolean
-  /** Mặt trước của thẻ tự đánh giá khi ôn: từ tiếng Anh hay nghĩa tiếng Việt (học từ mới luôn tiếng Anh trước). */
-  flashcardFront: 'term' | 'meaning'
-  /** Hiện bản dịch câu ví dụ mặc định (R7.7). */
-  showTranslations: boolean
-  /** Số từ mới mỗi buổi/ngày. */
-  dailyNewWords: number
-  /** Tối đa số từ mỗi buổi ôn (R5.6). */
-  reviewLimit: number
-  /** Ôn bằng bài luyện (tự chấm) hay thẻ tự đánh giá. */
-  reviewStyle: ReviewStyle
-  /** Ưu tiên bản ghi giọng người thật (Wiktionary) cho từ và cụm ngắn. */
-  preferRecordings: boolean
   /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
   voiceUS: string | null
   voiceUK: string | null
-  /** Tốc độ giọng máy (bản ghi giọng người thật giữ tốc độ gốc). */
-  speechSpeed: SpeechSpeed
   /** Phát âm thanh "Giọng iPhone" đã tạo bằng Phím tắt (ưu tiên trên hết). */
   useVoiceClips: boolean
   /** Tên phím tắt tạo giọng iPhone. */
   shortcutName: string
 }
 
-export type SpeechSpeed = 'slower' | 'slow' | 'normal' | 'fast'
+export type AppSettings = LearningSettings & DeviceSettings
+
 /** Hệ số tốc độ cho Web Speech API (1 = tốc độ mặc định của máy). */
 export const SPEECH_RATE: Record<SpeechSpeed, number> = { slower: 0.75, slow: 0.85, normal: 0.95, fast: 1.05 }
 
 const STORAGE_KEY = 'ui-settings'
 export const DEFAULT_SETTINGS: AppSettings = {
+  ...LEARNING_DEFAULTS,
   reduceMotion: false,
   soundEffects: true,
-  accent: 'us',
-  autoPlay: true,
-  flashcardFront: 'term',
-  showTranslations: false,
-  dailyNewWords: 10,
-  reviewLimit: 50,
-  reviewStyle: 'exercises',
-  preferRecordings: true,
   voiceUS: null,
   voiceUK: null,
-  speechSpeed: 'normal',
   useVoiceClips: true,
   shortcutName: 'VocabVoice',
 }
@@ -72,18 +50,45 @@ function load(): AppSettings {
 let current = load()
 const listeners = new Set<() => void>()
 
-export function getSettings(): AppSettings {
-  return current
-}
-
-export function updateSettings(patch: Partial<AppSettings>): void {
-  current = { ...current, ...patch }
+function commitLocal(next: AppSettings) {
+  current = next
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(current))
   } catch {
     // Không lưu được (chế độ riêng tư…): vẫn áp dụng cho phiên hiện tại.
   }
   listeners.forEach((notify) => notify())
+}
+
+function pickLearning(source: Partial<AppSettings>): Partial<LearningSettings> {
+  return Object.fromEntries(LEARNING_KEYS.filter((k) => k in source).map((k) => [k, source[k]])) as Partial<LearningSettings>
+}
+
+/** Ghi phần cài đặt học vào hồ sơ; services/profile gắn vào lúc app khởi động. */
+let learningWriter: ((patch: Partial<LearningSettings>) => void) | null = null
+export function setLearningWriter(write: (patch: Partial<LearningSettings>) => void): void {
+  learningWriter = write
+}
+
+export function getSettings(): AppSettings {
+  return current
+}
+
+export function updateSettings(patch: Partial<AppSettings>): void {
+  commitLocal({ ...current, ...patch })
+  const learning = pickLearning(patch)
+  if (Object.keys(learning).length > 0) learningWriter?.(learning)
+}
+
+/** Nhận cài đặt học từ hồ sơ (vừa sửa ở đây, hoặc vừa đồng bộ về từ thiết bị khác). */
+export function applyLearningSettings(learning: LearningSettings): void {
+  if (LEARNING_KEYS.every((k) => current[k] === learning[k])) return
+  commitLocal({ ...current, ...pickLearning(learning) })
+}
+
+/** Cài đặt học đang dùng trên thiết bị này. */
+export function currentLearningSettings(): LearningSettings {
+  return { ...LEARNING_DEFAULTS, ...pickLearning(current) }
 }
 
 function subscribe(listener: () => void): () => void {
@@ -98,7 +103,7 @@ export function useSettings(): AppSettings {
 /** Giọng máy và phím tắt là của riêng từng thiết bị, không mang theo bản sao lưu. */
 const DEVICE_ONLY: readonly string[] = ['voiceUS', 'voiceUK', 'useVoiceClips', 'shortcutName']
 
-/** Cài đặt học mang sang thiết bị khác được (ghi vào bản sao lưu). */
+/** Cài đặt mang sang thiết bị khác được (ghi vào bản sao lưu). */
 export function portableSettings(): Record<string, unknown> {
   return Object.fromEntries(Object.entries(current).filter(([k]) => !DEVICE_ONLY.includes(k)))
 }

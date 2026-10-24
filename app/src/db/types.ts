@@ -1,4 +1,5 @@
 import type { DictEntry } from '../core/dictionary'
+import type { ProfileData } from '../core/profile'
 import type { ExerciseKind, SessionMode } from '../core/grading'
 import type { PartOfSpeech } from '../core/pos'
 import type { SessionPlan } from '../core/session'
@@ -27,18 +28,13 @@ export interface Example {
   vi?: string
 }
 
-export interface Profile extends Synced {
-  displayName: string
-  avatarUrl?: string
-  selfLevel?: 'beginner' | 'elementary' | 'intermediate' | 'upper_intermediate' | 'advanced'
-  learningPurpose?: string
-  dailyNewWords: number
-  dailyMinutes: number
-  /** 0 = Chủ nhật … 6 = Thứ bảy */
-  studyWeekdays: number[]
-  timeZone: string
-  preferredAccent: Accent
-}
+/**
+ * Hồ sơ, mục tiêu, lịch học và cài đặt học dùng chung (core/profile). Mỗi thiết bị giữ một dòng `id` = PROFILE_ID;
+ * trên máy chủ là dòng của tài khoản (khóa user_id).
+ */
+export interface Profile extends Synced, ProfileData {}
+
+export const PROFILE_ID = 'me'
 
 /** Mục học: một từ/cụm từ với một nghĩa xác định (quy tắc "đơn vị ghi nhớ"). */
 export interface VocabItem extends Synced {

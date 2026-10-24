@@ -3,11 +3,12 @@ import type { ExerciseKind } from '../core/grading'
 import { applyReview, createScheduler, newCard } from '../core/scheduler'
 import type { AnswerEffect, SessionPlan, Step } from '../core/session'
 import { sameContent } from '../core/merge'
+import { profileDefaults, sanitizeProfile, type ProfileData } from '../core/profile'
 import { duplicateGroups, findDuplicates, termKey, type DuplicateCandidate, type DuplicateMatch } from '../core/vocab'
 import { getDeviceId } from '../lib/device'
 import { cardToRow, rowToCard } from './cards'
 import { commit, db, notifyChange, type Change, type VocabDatabase } from './db'
-import type { CardStateRow, Deck, DeckItem, Example, ID, PartOfSpeech, ReviewLogRow, StudySessionRow, VocabItem } from './types'
+import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Example, type ID, type PartOfSpeech, type Profile, type ReviewLogRow, type StudySessionRow, type VocabItem } from './types'
 
 /** Nội dung người dùng nhập cho một mục học (R2.2, R2.3). */
 export interface ItemInput {
@@ -372,6 +373,28 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       const links = (await database.deckItems.where('deckId').equals(fromDeckId).toArray()).filter((d) => d.deletedAt === null && set.has(d.itemId))
       const added = await repo.membershipRows([toDeckId], itemIds, now)
       await save([{ table: 'deckItems', rows: [...links.map((d) => ({ ...d, deletedAt: now, updatedAt: now })), ...added] }], now)
+    },
+
+    // ---- Hồ sơ, mục tiêu, lịch học, cài đặt học (R1.4, R1.5, R9.2, R14.2) -------------------------
+
+    /** Sửa hồ sơ. Thiết bị chưa có hồ sơ thì tạo từ giá trị mặc định. Trả về hồ sơ sau khi sửa. */
+    async updateProfile(patch: Partial<ProfileData>, now = Date.now()): Promise<Profile> {
+      const saved = await database.transaction('rw', [database.profiles, database.outbox, database.syncBase], async () => {
+        let row = await database.profiles.get(PROFILE_ID)
+        if (!row) {
+          row = { id: PROFILE_ID, ...profileDefaults(), createdAt: now, updatedAt: now, deletedAt: null }
+          // Thiết bị chưa từng đồng bộ hồ sơ: lấy giá trị mặc định làm bản gốc khi gộp (R11.7), để chỉ những mục
+          // vừa sửa ở đây mới đè lên hồ sơ trên máy chủ; các mục khác vẫn lấy theo máy chủ.
+          const baseKey = `profiles:${PROFILE_ID}`
+          if (!(await database.syncBase.get(baseKey))) await database.syncBase.put({ key: baseKey, row })
+        }
+        const next: Profile = { ...row, ...sanitizeProfile({ ...row, ...patch }, row), updatedAt: now }
+        if (sameContent(next, row)) return row
+        await commit(database, [{ table: 'profiles', rows: [next] }], now)
+        return next
+      })
+      notifyChange()
+      return saved
     },
 
     // ---- Buổi học --------------------------------------------------------------------------

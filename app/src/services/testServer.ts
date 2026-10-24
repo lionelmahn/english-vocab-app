@@ -41,13 +41,15 @@ export async function asUser<T>(pg: PGlite, user: string, fn: () => Promise<T>):
   }
 }
 
-/** Giống PostgREST upsert: chèn từ JSON, xung đột id thì cập nhật (hoặc bỏ qua). */
-export function upsertAs(pg: PGlite, user: string, table: string, rows: Record<string, unknown>[], ignoreDuplicates = false) {
+/** Giống PostgREST upsert: chèn từ JSON, trùng khóa (`key`, mặc định id) thì cập nhật (hoặc bỏ qua). */
+export function upsertAs(pg: PGlite, user: string, table: string, rows: Record<string, unknown>[], ignoreDuplicates = false, key = 'id') {
   const cols = Object.keys(rows[0])
   const list = cols.map((c) => `"${c}"`).join(', ')
-  const onConflict = ignoreDuplicates ? 'do nothing' : `do update set ${cols.filter((c) => c !== 'id').map((c) => `"${c}" = excluded."${c}"`).join(', ')}`
+  const onConflict = ignoreDuplicates ? 'do nothing' : `do update set ${cols.filter((c) => c !== key).map((c) => `"${c}" = excluded."${c}"`).join(', ')}`
   return asUser(pg, user, () =>
-    pg.query(`insert into public.${table} (${list}) select ${list} from json_populate_recordset(null::public.${table}, $1) on conflict (id) ${onConflict}`, [JSON.stringify(rows)]),
+    pg.query(`insert into public.${table} (${list}) select ${list} from json_populate_recordset(null::public.${table}, $1) on conflict (${key}) ${onConflict}`, [
+      JSON.stringify(rows),
+    ]),
   )
 }
 
@@ -55,17 +57,17 @@ export function upsertAs(pg: PGlite, user: string, table: string, rows: Record<s
 export function testRemote(pg: PGlite, user: string): SyncRemote & { requests: number } {
   const remote = {
     requests: 0,
-    async upsert(table: string, rows: Record<string, unknown>[], opts: { ignoreDuplicates: boolean }) {
+    async upsert(table: string, rows: Record<string, unknown>[], opts: { ignoreDuplicates: boolean; onConflict: string }) {
       remote.requests++
-      if (rows.length > 0) await upsertAs(pg, user, table, rows, opts.ignoreDuplicates)
+      if (rows.length > 0) await upsertAs(pg, user, table, rows, opts.ignoreDuplicates, opts.onConflict)
     },
-    async pullPage(table: string, after: { ts: string; id: string }, limit: number) {
+    async pullPage(table: string, after: { ts: string; id: string }, limit: number, idColumn: string) {
       remote.requests++
       const res = await asUser(pg, user, () =>
         pg.query<{ row: Record<string, unknown> }>(
           `select to_jsonb(t) as row from public.${table} t
-           where t.server_updated_at > $1::timestamptz or (t.server_updated_at = $1::timestamptz and t.id > $2::uuid)
-           order by t.server_updated_at, t.id limit $3`,
+           where t.server_updated_at > $1::timestamptz or (t.server_updated_at = $1::timestamptz and t.${idColumn} > $2::uuid)
+           order by t.server_updated_at, t.${idColumn} limit $3`,
           [after.ts, after.id, limit],
         ),
       )

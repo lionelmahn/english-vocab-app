@@ -289,6 +289,15 @@ Nguyên tắc:
 > - **Không tìm thấy (R15.5):** gợi ý từ gần đúng ("resilent" → resilient), nút "Tự thêm vào sổ tay" mở form với từ đã điền. Gợi ý bằng AI chờ giai đoạn 5.
 > - **Kiểm thử:** 186 test (thêm bộ đọc dữ liệu Wiktionary, tra từ với mạng giả, lưu nhiều nghĩa). Đã thử trên trình duyệt với Wiktionary thật: resilient, give up, went, record, resilent.
 > - **Còn lại của giai đoạn 2 (11 chức năng P1):** R1.4, R1.5, R1.7 + bộ từ khởi đầu, R9.2, R10.1, R10.2, R10.4, R7.8, R13.8, R11.3 (xuất CSV/Excel), R14.3.
+
+> **Cập nhật 24/10/2026 (bản 0.8.0): Hồ sơ, mục tiêu, lịch học và đồng bộ cài đặt.** Xong R1.4, R1.5, R9.2 → **P1: 56/64**.
+> - **Hồ sơ (R1.4):** Cá nhân → chạm vào thẻ tên. Tên hiển thị, ảnh đại diện (thu về 192×192 JPEG, lưu thẳng trong hồ sơ, không cần kho file), trình độ tự đánh giá (5 mức A1 → C1–C2), mục đích học (chọn nhiều + tự ghi).
+> - **Mục tiêu (R1.5) và lịch học (R9.2):** Cá nhân → Đổi mục tiêu và lịch học. Từ mới/ngày, phút/ngày, ngày học trong tuần (hiện “T2–T6”, “n ngày/tuần”), giờ học (dùng cho nhắc ôn ở giai đoạn 3), múi giờ. Trang Hôm nay tính ngày học và chuỗi ngày theo múi giờ trong hồ sơ (giống nhau trên mọi máy) và báo “ngày nghỉ theo lịch học”.
+> - **Đồng bộ cài đặt:** cài đặt học (giọng Anh–Mỹ/Anh–Anh, từ mới/ngày, tối đa mỗi buổi ôn, kiểu ôn, mặt trước thẻ, tự phát âm, bản dịch ví dụ, ưu tiên giọng người thật, tốc độ giọng máy) nằm trong hồ sơ trên Supabase (cột sẵn có + ô `settings`), không cần chạy SQL. Giọng máy đã chọn, phím tắt, giảm hiệu ứng, âm thanh hiệu ứng vẫn riêng từng máy. Lần đầu mở bản 0.8.0, máy nào đã chỉnh cài đặt thì các mục đã chỉnh được chuyển vào hồ sơ.
+> - **Gộp hồ sơ (R11.7):** hai máy sửa hai mục khác nhau thì giữ cả hai; máy chưa từng đồng bộ hồ sơ mà sửa một mục thì chỉ mục đó đè lên máy chủ, tên/mục tiêu đang có không bị xóa (dùng giá trị mặc định làm bản gốc khi gộp).
+> - **Sao lưu:** file sao lưu có thêm hồ sơ; khôi phục có lựa chọn “Dùng cả hồ sơ và cài đặt học”.
+> - **Kiểm thử:** 199 test (thêm đồng bộ hồ sơ giữa hai máy, đọc/ghi hồ sơ với schema thật, làm sạch dữ liệu hồ sơ, lịch học). Đã thử trên trình duyệt: sửa hồ sơ, ảnh đại diện, mục tiêu, lịch học, chuyển cài đặt cũ vào hồ sơ, cài đặt đổi theo khi hồ sơ đổi từ máy khác; cú pháp truy vấn hồ sơ đã thử với Supabase thật.
+> - **Còn lại của giai đoạn 2 (8 chức năng P1):** R1.7 + bộ từ khởi đầu, R10.1, R10.2, R10.4, R7.8, R13.8, R11.3 (xuất CSV/Excel), R14.3.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

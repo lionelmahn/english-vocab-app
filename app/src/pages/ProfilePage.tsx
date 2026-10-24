@@ -1,8 +1,11 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { AudioLines, ChevronRight, CircleAlert, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Volume2 } from 'lucide-react'
+import { AudioLines, CalendarDays, ChevronRight, CircleAlert, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
+import { Avatar } from '../components/Avatar'
 import { Segmented, Select } from '../components/kit'
+import { SELF_LEVELS, timeZoneOffset, weekdaysLabel } from '../core/profile'
+import { useProfile } from '../services/profile'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { db } from '../db/db'
 import { updateSettings, useSettings } from '../lib/settings'
@@ -241,21 +244,28 @@ export function ProfilePage() {
   const [signingOut, setSigningOut] = useState(false)
   useVoicesReady()
 
+  const profile = useProfile()
+
   const signedIn = auth.status === 'signed_in'
-  const name = signedIn ? auth.email : 'Bạn'
-  const initial = (signedIn ? auth.email : 'B').charAt(0).toUpperCase()
+  const name = profile?.displayName || (signedIn ? auth.email : 'Bạn')
+  const level = SELF_LEVELS.find((l) => l.value === profile?.selfLevel)?.label
+  const about = [level, profile?.learningPurpose].filter(Boolean).join(' · ')
   const voiceMissing = speechAvailable() && !hasExactVoice(settings.accent)
 
   return (
     <Page title="Cá nhân">
       <Card>
-        <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xl font-bold text-accent">{initial}</div>
-          <div className="min-w-0">
+        <button type="button" onClick={() => navigate('/me/profile')} className="flex w-full items-center gap-4 text-left">
+          <Avatar src={profile?.avatarUrl} name={name} />
+          <div className="min-w-0 flex-1">
             <p className="truncate text-[17px] font-semibold">{name}</p>
-            <p className="text-sm text-muted">{signedIn ? 'Đã đăng nhập' : auth.status === 'signed_out' ? 'Chưa đăng nhập' : 'Dữ liệu lưu trên thiết bị này'}</p>
+            <p className="truncate text-sm text-muted">{about || 'Thêm tên, ảnh, trình độ và mục đích học'}</p>
+            <p className="truncate text-xs text-subtle">
+              {signedIn ? `Đã đăng nhập · ${auth.email}` : auth.status === 'signed_out' ? 'Chưa đăng nhập' : 'Dữ liệu lưu trên thiết bị này'}
+            </p>
           </div>
-        </div>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+        </button>
         {auth.status === 'signed_out' && (
           <Button variant="primary" icon={LogIn} className="mt-4 w-full" onClick={() => navigate('/login')}>
             Đăng nhập
@@ -277,8 +287,29 @@ export function ProfilePage() {
         )}
       </Card>
 
+      {profile && (
+        <Card>
+          <SectionTitle>Mục tiêu và lịch học</SectionTitle>
+          <div className="flex flex-col gap-2.5 text-[15px]">
+            <p className="flex items-center gap-3">
+              <Target aria-hidden className="h-5 w-5 shrink-0 text-accent" />
+              {profile.dailyNewWords} từ mới · {profile.dailyMinutes} phút mỗi ngày
+            </p>
+            <p className="flex items-center gap-3">
+              <CalendarDays aria-hidden className="h-5 w-5 shrink-0 text-accent" />
+              {weekdaysLabel(profile.studyWeekdays)}
+              {profile.studyTime ? ` · lúc ${profile.studyTime}` : ''} · {timeZoneOffset(profile.timeZone)}
+            </p>
+          </div>
+          <Button className="mt-4 w-full" onClick={() => navigate('/me/goals')}>
+            Đổi mục tiêu và lịch học
+          </Button>
+        </Card>
+      )}
+
       <Card>
-        <SectionTitle>Học tập</SectionTitle>
+        <SectionTitle className="mb-1">Học tập</SectionTitle>
+        <p className="mb-3 text-xs text-subtle">Đồng bộ giữa các thiết bị đăng nhập cùng tài khoản; riêng giọng máy đã chọn là của từng máy.</p>
         <div className="flex flex-col gap-4">
           <div>
             <p className="mb-2 text-[15px] font-medium">Giọng đọc</p>
@@ -323,22 +354,15 @@ export function ProfilePage() {
               {settings.reviewStyle === 'exercises' ? 'Trắc nghiệm, gõ từ và nghe viết; app tự chấm.' : 'Lật thẻ rồi tự chọn Quên / Khó / Nhớ / Dễ.'}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Select label="Từ mới mỗi buổi" value={settings.dailyNewWords} onChange={(e) => updateSettings({ dailyNewWords: Number(e.target.value) })}>
-              {[5, 10, 15, 20, 30, 50].map((n) => (
+          <Select label="Tối đa mỗi buổi ôn" value={settings.reviewLimit} onChange={(e) => updateSettings({ reviewLimit: Number(e.target.value) })}>
+            {[...new Set([20, 30, 50, 100, 200, settings.reviewLimit])]
+              .sort((a, b) => a - b)
+              .map((n) => (
                 <option key={n} value={n}>
                   {n} từ
                 </option>
               ))}
-            </Select>
-            <Select label="Tối đa mỗi buổi ôn" value={settings.reviewLimit} onChange={(e) => updateSettings({ reviewLimit: Number(e.target.value) })}>
-              {[20, 30, 50, 100, 200].map((n) => (
-                <option key={n} value={n}>
-                  {n} từ
-                </option>
-              ))}
-            </Select>
-          </div>
+          </Select>
           <div>
             <SettingRow title="Tự phát âm" description="Đọc từ khi hiện thẻ và bài nghe.">
               <Switch label="Tự phát âm" checked={settings.autoPlay} onChange={(v) => updateSettings({ autoPlay: v })} />
@@ -351,7 +375,8 @@ export function ProfilePage() {
       </Card>
 
       <Card>
-        <SectionTitle>Trải nghiệm</SectionTitle>
+        <SectionTitle className="mb-1">Trải nghiệm</SectionTitle>
+        <p className="mb-2 text-xs text-subtle">Chỉ áp dụng trên máy này.</p>
         <SettingRow title="Giảm hiệu ứng" description="Tắt chuyển động trượt, lật thẻ và pháo giấy.">
           <Switch label="Giảm hiệu ứng" checked={settings.reduceMotion} onChange={(v) => updateSettings({ reduceMotion: v })} />
         </SettingRow>

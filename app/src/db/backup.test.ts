@@ -1,6 +1,7 @@
 import 'fake-indexeddb/auto'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { SelfRating } from '../core/grading'
+import { profileDefaults } from '../core/profile'
 import { createScheduler } from '../core/scheduler'
 import { applyAction, planReview } from '../core/session'
 import { BACKUP_FORMAT, createBackup, previewRestore, readBackup, restoreBackup, type BackupFile } from './backup'
@@ -75,6 +76,19 @@ describe('sao lưu ra file (R11.3)', () => {
     const after = await createBackup(dev.db, { appVersion: '0.6.0' })
     expect(after.data.vocabItems.map((i) => i.id)).not.toContain(ids[0])
     expect(after.data.reviewLogs).toHaveLength(1)
+  })
+})
+
+describe('hồ sơ trong bản sao lưu', () => {
+  it('ghi hồ sơ vào file và đọc lại đã làm sạch; file cũ không có hồ sơ vẫn đọc được', async () => {
+    const dev = device()
+    await dev.repo.createItem(input('run', 'chạy'), [], T0)
+    const profile = { ...profileDefaults('Asia/Ho_Chi_Minh'), displayName: 'Mạnh', dailyNewWords: 20, studyWeekdays: [1, 3, 5] }
+    const file = await createBackup(dev.db, { appVersion: '0.8.0', profile })
+    const read = readBackup(JSON.stringify(file))
+    expect(read.ok && read.backup.profile).toEqual(profile)
+    const old = readBackup(JSON.stringify({ ...file, profile: undefined }))
+    expect(old.ok && old.backup.profile).toBeUndefined()
   })
 })
 

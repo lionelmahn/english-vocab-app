@@ -12,6 +12,7 @@ import { ImportPage } from './pages/ImportPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
 import { NotebookPage } from './pages/NotebookPage'
+import { GoalsPage, ProfileEditPage } from './pages/ProfileFormPages'
 import { ProfilePage } from './pages/ProfilePage'
 import { VoiceClipsPage } from './pages/VoiceClipsPage'
 import { VoiceClipBar } from './components/VoiceClip'
@@ -22,6 +23,7 @@ import { TodayPage } from './pages/TodayPage'
 import { WordDetailPage } from './pages/WordDetailPage'
 import { WordFormPage } from './pages/WordFormPage'
 import { openedFromRecoveryLink, startAuth } from './services/auth'
+import { startProfile } from './services/profile'
 import { startSync } from './services/sync'
 import { usePending } from './services/voiceClips'
 
@@ -43,6 +45,7 @@ export default function App() {
     const toReset = () => navigate('/reset-password', { replace: true })
     if (openedFromRecoveryLink) toReset()
     startAuth(toReset)
+    startProfile()
     startSync()
   }, [navigate])
 
@@ -99,6 +102,8 @@ export default function App() {
                 <Route path="/lookup" element={<LookupPage />} />
                 <Route path="/stats" element={<StatsPage />} />
                 <Route path="/me" element={<ProfilePage />} />
+                <Route path="/me/profile" element={<ProfileEditPage />} />
+                <Route path="/me/goals" element={<GoalsPage />} />
                 <Route path="/voice" element={<VoiceClipsPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />

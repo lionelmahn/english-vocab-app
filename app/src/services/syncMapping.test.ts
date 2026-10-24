@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite'
 import { beforeAll, describe, expect, it } from 'vitest'
-import type { CardStateRow, Deck, DeckItem, ReviewLogRow, VocabItem } from '../db/types'
-import { cardStateToRemote, deckItemToRemote, deckToRemote, fromRemote, reviewLogToRemote, toMs, vocabItemToRemote } from './syncMapping'
+import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Profile, type ReviewLogRow, type VocabItem } from '../db/types'
+import { cardStateToRemote, deckItemToRemote, deckToRemote, fromRemote, profileToRemote, reviewLogToRemote, toMs, vocabItemToRemote } from './syncMapping'
 import { addUser, startTestServer, upsertAs } from './testServer'
 
 /**
@@ -131,6 +131,42 @@ describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', ()
     expect(fromRemote('deckItems', await read('deck_items', link.id))).toEqual(link)
     expect(fromRemote('cardStates', await read('card_states', card.id))).toEqual(card)
     expect(fromRemote('reviewLogs', await read('review_logs', log.id))).toEqual(log)
+  })
+
+  it('hồ sơ: cột riêng và ô settings giữ nguyên sau một vòng lên rồi về', async () => {
+    const profile: Profile = {
+      id: PROFILE_ID,
+      displayName: 'Mạnh',
+      avatarUrl: 'data:image/jpeg;base64,AAAA',
+      selfLevel: 'upper_intermediate',
+      learningPurpose: 'Công việc',
+      dailyMinutes: 30,
+      studyWeekdays: [1, 2, 3, 4, 5],
+      studyTime: '21:00',
+      timeZone: 'Asia/Ho_Chi_Minh',
+      accent: 'uk',
+      dailyNewWords: 15,
+      reviewLimit: 100,
+      reviewStyle: 'flashcard',
+      flashcardFront: 'meaning',
+      showTranslations: true,
+      autoPlay: false,
+      preferRecordings: false,
+      speechSpeed: 'slow',
+      createdAt: T,
+      updatedAt: T + 1000,
+      deletedAt: null,
+    }
+    await upsertAs(pg, USER, 'profiles', [profileToRemote(profile, USER)], false, 'user_id')
+    const row = (await pg.query<{ row: Record<string, unknown> }>(`select to_jsonb(t) as row from public.profiles t where user_id = $1`, [USER])).rows[0].row
+    expect(fromRemote('profiles', row)).toEqual(profile)
+  })
+
+  it('hồ sơ mặc định do máy chủ tạo đọc ra giá trị mặc định của app', async () => {
+    const other = '00000000-0000-0000-0000-0000000000bb'
+    await addUser(pg, other)
+    const row = (await pg.query<{ row: Record<string, unknown> }>(`select to_jsonb(t) as row from public.profiles t where user_id = $1`, [other])).rows[0].row
+    expect(fromRemote('profiles', row)).toMatchObject({ displayName: '', dailyNewWords: 10, dailyMinutes: 15, studyWeekdays: [0, 1, 2, 3, 4, 5, 6], accent: 'us', reviewLimit: 50 })
   })
 
   it('đọc được mốc thời gian có micro giây của máy chủ', () => {

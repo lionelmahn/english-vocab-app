@@ -1,4 +1,5 @@
-import type { CardStateRow, Deck, DeckItem, Example, ReviewLogRow, SyncedTableName, VocabItem } from '../db/types'
+import { PROFILE_EXTRA_KEYS, profileDefaults, sanitizeProfile } from '../core/profile'
+import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Example, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
 
 /** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO) và ngược lại. */
 
@@ -6,7 +7,8 @@ const iso = (ms: number | null | undefined): string | null => (ms == null ? null
 const orNull = <T>(v: T | undefined): T | null => (v === undefined ? null : v)
 const INT_MAX = 2_147_483_647
 
-export const REMOTE_TABLE: Record<Exclude<SyncedTableName, 'profiles'>, string> = {
+export const REMOTE_TABLE: Record<SyncedTableName, string> = {
+  profiles: 'profiles',
   vocabItems: 'vocab_items',
   decks: 'decks',
   deckItems: 'deck_items',
@@ -18,8 +20,33 @@ export const REMOTE_TABLE: Record<Exclude<SyncedTableName, 'profiles'>, string> 
  * Thứ tự gửi và kéo: từ và bộ trước, liên kết sau (khóa ngoại).
  * Lượt trả lời đi trước lịch ôn, để máy chủ không bao giờ có lịch ôn mà thiếu lượt trả lời tạo ra nó.
  */
-export const PUSH_ORDER = ['vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates'] as const
+export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates'] as const
 export type PushTable = (typeof PUSH_ORDER)[number]
+
+/** Cột khóa trên máy chủ: hồ sơ có một dòng cho mỗi tài khoản, khóa là user_id. */
+export function remoteIdColumn(table: PushTable): string {
+  return table === 'profiles' ? 'user_id' : 'id'
+}
+
+/** Hồ sơ: các cài đặt không có cột riêng được gói vào ô `settings` (jsonb). */
+export function profileToRemote(r: Profile, userId: string) {
+  return {
+    user_id: userId,
+    display_name: r.displayName,
+    avatar_url: orNull(r.avatarUrl),
+    self_level: orNull(r.selfLevel),
+    learning_purpose: orNull(r.learningPurpose),
+    daily_new_words: r.dailyNewWords,
+    daily_minutes: r.dailyMinutes,
+    study_weekdays: r.studyWeekdays,
+    time_zone: r.timeZone,
+    preferred_accent: r.accent,
+    settings: Object.fromEntries(PROFILE_EXTRA_KEYS.filter((k) => r[k] !== undefined).map((k) => [k, r[k]])),
+    created_at: iso(r.createdAt),
+    updated_at: iso(r.updatedAt),
+    deleted_at: iso(r.deletedAt),
+  }
+}
 
 export function vocabItemToRemote(r: VocabItem) {
   return {
@@ -110,8 +137,11 @@ export function reviewLogToRemote(r: ReviewLogRow) {
   }
 }
 
-export function toRemote(table: PushTable, row: unknown): Record<string, unknown> {
+/** `userId` chỉ cần cho hồ sơ (khóa user_id trên máy chủ). */
+export function toRemote(table: PushTable, row: unknown, userId = ''): Record<string, unknown> {
   switch (table) {
+    case 'profiles':
+      return profileToRemote(row as Profile, userId)
     case 'vocabItems':
       return vocabItemToRemote(row as VocabItem)
     case 'decks':
@@ -227,7 +257,28 @@ export function reviewLogFromRemote(r: RemoteRow): ReviewLogRow {
   }
 }
 
+export function profileFromRemote(r: RemoteRow): Profile {
+  const extra = (r.settings && typeof r.settings === 'object' ? r.settings : {}) as Record<string, unknown>
+  const data = sanitizeProfile(
+    {
+      displayName: r.display_name,
+      avatarUrl: r.avatar_url,
+      selfLevel: r.self_level,
+      learningPurpose: r.learning_purpose,
+      dailyNewWords: r.daily_new_words,
+      dailyMinutes: r.daily_minutes,
+      studyWeekdays: r.study_weekdays,
+      timeZone: r.time_zone,
+      accent: r.preferred_accent,
+      ...Object.fromEntries(PROFILE_EXTRA_KEYS.map((k) => [k, extra[k]])),
+    },
+    profileDefaults(),
+  )
+  return { id: PROFILE_ID, ...data, createdAt: ms(r.created_at), updatedAt: ms(r.updated_at), deletedAt: msOrNull(r.deleted_at) }
+}
+
 export interface PushRows {
+  profiles: Profile
   vocabItems: VocabItem
   decks: Deck
   deckItems: DeckItem
@@ -238,6 +289,8 @@ export interface PushRows {
 export function fromRemote<K extends PushTable>(table: K, row: RemoteRow): PushRows[K]
 export function fromRemote(table: PushTable, row: RemoteRow): PushRows[PushTable] {
   switch (table) {
+    case 'profiles':
+      return profileFromRemote(row)
     case 'vocabItems':
       return vocabItemFromRemote(row)
     case 'decks':

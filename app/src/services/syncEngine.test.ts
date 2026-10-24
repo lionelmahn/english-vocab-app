@@ -6,6 +6,7 @@ import type { SelfRating } from '../core/grading'
 import { createScheduler, replayReviews } from '../core/scheduler'
 import { applyAction, planReview } from '../core/session'
 import { VocabDatabase } from '../db/db'
+import { PROFILE_ID } from '../db/types'
 import { loadLibrary } from '../db/library'
 import { createRepo, type ItemInput } from '../db/repo'
 import { bindAccount, pullStart, pushOutbox, syncOnce } from './syncEngine'
@@ -40,7 +41,7 @@ function device() {
   opened.push(db)
   const repo = createRepo(db, scheduler)
   const remote = testRemote(pg, user)
-  return { db, repo, remote, sync: () => syncOnce(db, remote, { scheduler, now: () => clock }) }
+  return { db, repo, remote, sync: () => syncOnce(db, remote, { scheduler, now: () => clock, userId: user }) }
 }
 type Device = ReturnType<typeof device>
 
@@ -100,7 +101,8 @@ describe('đồng bộ hai thiết bị qua máy chủ', () => {
 
     const laptop = device()
     const res = await laptop.sync()
-    expect(res.received).toBe(3 + 1 + 3 + 2 + 2)
+    // hồ sơ (máy chủ tạo sẵn khi có tài khoản) + 3 từ + 1 bộ + 3 liên kết + 2 lượt trả lời + 2 lịch ôn
+    expect(res.received).toBe(1 + 3 + 1 + 3 + 2 + 2)
     expect(await snapshot(laptop.db)).toEqual(await snapshot(phone.db))
     const lib = await loadLibrary(laptop.db)
     expect(lib.items).toHaveLength(3)
@@ -218,7 +220,7 @@ describe('đồng bộ hai thiết bị qua máy chủ', () => {
     await laptop.sync()
     // Điện thoại gửi ngay sau khi máy tính gửi, trước khi kịp kéo về: lịch ôn trên máy chủ thiếu lượt của máy tính.
     await review(phone, id, 'hard', T0 + 2 * DAY + 600_000)
-    while ((await pushOutbox(phone.db, phone.remote)).processed > 0);
+    while ((await pushOutbox(phone.db, phone.remote, user)).processed > 0);
     await settle(laptop, phone)
 
     const a = (await phone.db.cardStates.get(id))!
@@ -262,6 +264,47 @@ describe('đồng bộ hai thiết bị qua máy chủ', () => {
   })
 })
 
+describe('hồ sơ, mục tiêu và cài đặt học đồng bộ giữa các máy (R1.4, R1.5, R9.2, R14.2)', () => {
+  const profileOf = async (dev: Device) => {
+    const p = (await dev.db.profiles.get(PROFILE_ID))!
+    return { ...p, createdAt: 0, updatedAt: 0 }
+  }
+
+  it('máy mới đăng nhập nhận hồ sơ, mục tiêu, lịch học và cài đặt học', async () => {
+    const phone = device()
+    await phone.repo.updateProfile(
+      { displayName: 'Mạnh', selfLevel: 'intermediate', learningPurpose: 'Thi IELTS/TOEIC, Công việc', dailyNewWords: 20, dailyMinutes: 30, studyWeekdays: [1, 2, 3, 4, 5], studyTime: '20:30', timeZone: 'Asia/Ho_Chi_Minh', reviewStyle: 'flashcard', accent: 'uk' },
+      T0 + 1000,
+    )
+    await phone.sync()
+    const laptop = device()
+    await laptop.sync()
+    expect(await profileOf(laptop)).toEqual(await profileOf(phone))
+    expect(await profileOf(laptop)).toMatchObject({ displayName: 'Mạnh', dailyNewWords: 20, studyWeekdays: [1, 2, 3, 4, 5], studyTime: '20:30', reviewStyle: 'flashcard', accent: 'uk' })
+  })
+
+  it('hai máy sửa hai mục khác nhau thì giữ cả hai', async () => {
+    const phone = device()
+    const laptop = device()
+    await phone.repo.updateProfile({ displayName: 'Mạnh' }, T0 + 1000)
+    await settle(phone, laptop)
+    await phone.repo.updateProfile({ dailyNewWords: 15 }, T0 + 5000)
+    await laptop.repo.updateProfile({ reviewLimit: 100 }, T0 + 9000)
+    await settle(phone, laptop)
+    for (const d of [phone, laptop]) expect(await profileOf(d)).toMatchObject({ displayName: 'Mạnh', dailyNewWords: 15, reviewLimit: 100 })
+  })
+
+  it('máy chưa từng đồng bộ sửa một cài đặt thì không xóa hồ sơ đang có trên máy chủ', async () => {
+    const phone = device()
+    await phone.repo.updateProfile({ displayName: 'Mạnh', dailyMinutes: 45, studyWeekdays: [1, 3, 5] }, T0 + 1000)
+    await phone.sync()
+    const laptop = device()
+    await laptop.repo.updateProfile({ accent: 'uk' }, T0 + 9000) // trước lần đồng bộ đầu tiên
+    await settle(laptop, phone)
+    for (const d of [phone, laptop]) expect(await profileOf(d)).toMatchObject({ displayName: 'Mạnh', dailyMinutes: 45, studyWeekdays: [1, 3, 5], accent: 'uk' })
+  })
+})
+
 describe('pullStart — không sót dòng ghi xong muộn', () => {
   const saved = { ts: '2026-10-24T08:00:00.123456+00:00', id: '7d0c3b1e-0000-4000-8000-000000000001' }
 
@@ -285,7 +328,7 @@ describe('khi lỗi mạng giữa chừng', () => {
     const id = await phone.repo.createItem(input('run', 'chạy'), [], T0)
     await review(phone, id, 'good', T0 + 1000)
     const failing = { ...phone.remote, upsert: async () => Promise.reject(new Error('mất mạng')) }
-    await expect(syncOnce(phone.db, failing, { scheduler, now: () => clock })).rejects.toThrow('mất mạng')
+    await expect(syncOnce(phone.db, failing, { scheduler, now: () => clock, userId: user })).rejects.toThrow('mất mạng')
     expect(await phone.db.outbox.count()).toBeGreaterThan(0)
     await phone.sync()
     expect(await phone.db.outbox.count()).toBe(0)

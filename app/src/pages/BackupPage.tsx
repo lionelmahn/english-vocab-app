@@ -12,6 +12,7 @@ import { appScheduler, repo } from '../db/repo'
 import { formatDate } from '../lib/format'
 import { useLibrary } from '../lib/hooks'
 import { applyPortableSettings, portableSettings } from '../lib/settings'
+import { updateProfile, useProfile } from '../services/profile'
 import { APP_VERSION } from '../lib/version'
 import { useAuth } from '../services/auth'
 import { isAppleMobile } from '../services/speech'
@@ -54,7 +55,7 @@ function restoreSummary(r: RestoreResult, settings: boolean): string {
     r.removed && `xóa ${num.format(r.removed)} từ không có trong bản sao lưu`,
     r.skipped && `bỏ qua ${num.format(r.skipped)} từ trùng`,
     r.logs && `${num.format(r.logs)} lượt học`,
-    settings && 'cài đặt học',
+    settings && 'hồ sơ và cài đặt học',
   ].filter(Boolean)
   return parts.length > 0 ? `Đã khôi phục: ${parts.join(', ')}.` : 'Dữ liệu trên thiết bị đã có đủ nội dung của bản sao lưu, không có gì thay đổi.'
 }
@@ -65,6 +66,7 @@ export function BackupPage() {
   const auth = useAuth()
   const sync = useSyncStatus()
   const lib = useLibrary()
+  const profile = useProfile()
   const logCount = useLiveQuery(() => db.reviewLogs.count(), [], 0)
 
   // ---- Sao lưu
@@ -76,7 +78,7 @@ export function BackupPage() {
     setPreparing(true)
     setExportMsg(null)
     try {
-      const file = await createBackup(db, { appVersion: APP_VERSION, settings: portableSettings() })
+      const file = await createBackup(db, { appVersion: APP_VERSION, settings: portableSettings(), profile })
       setPrepared({ name: backupFileName(), text: JSON.stringify(file) })
     } catch (e) {
       setExportMsg({ tone: 'error', text: `Không tạo được bản sao lưu: ${(e as Error).message}` })
@@ -132,7 +134,15 @@ export function BackupPage() {
     setRestoring(true)
     try {
       const res = await restoreBackup(db, loaded.backup, { mode, duplicates: keepDuplicates ? 'keep' : 'skip' }, appScheduler)
-      const settings = withSettings && !!loaded.backup.settings && applyPortableSettings(loaded.backup.settings) > 0
+      let settings = false
+      if (withSettings) {
+        // Bản sao lưu từ 0.8.0 có hồ sơ (gồm cài đặt học); bản cũ hơn chỉ có cài đặt.
+        if (loaded.backup.settings) settings = applyPortableSettings(loaded.backup.settings) > 0
+        if (loaded.backup.profile) {
+          await updateProfile(loaded.backup.profile)
+          settings = true
+        }
+      }
       notifyChange()
       setRestoreMsg({ tone: 'success', text: restoreSummary(res, settings) })
       setLoaded(null)
@@ -256,12 +266,12 @@ export function BackupPage() {
                 </span>
               </label>
             )}
-            {loaded.backup.settings && (
+            {(loaded.backup.settings || loaded.backup.profile) && (
               <label className="flex items-start gap-2 text-sm">
                 <input type="checkbox" checked={withSettings} onChange={(e) => setWithSettings(e.target.checked)} className="mt-0.5 h-4 w-4 accent-[var(--app-accent)]" />
                 <span>
-                  Dùng cả cài đặt học trong bản sao lưu
-                  <span className="block text-xs text-subtle">Số từ mới mỗi ngày, cách ôn, giọng Anh–Mỹ/Anh–Anh… Giọng máy đã chọn trên thiết bị này được giữ.</span>
+                  Dùng cả hồ sơ và cài đặt học trong bản sao lưu
+                  <span className="block text-xs text-subtle">Tên, mục tiêu, lịch học, cách ôn, giọng Anh–Mỹ/Anh–Anh… Giọng máy đã chọn trên thiết bị này được giữ.</span>
                 </span>
               </label>
             )}

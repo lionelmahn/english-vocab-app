@@ -39,19 +39,19 @@ export function useSyncStatus(): SyncStatus {
 /** Kênh đồng bộ qua PostgREST của Supabase. */
 export function supabaseRemote(client: SupabaseClient): SyncRemote {
   return {
-    async upsert(table, rows, { ignoreDuplicates }) {
-      const { error } = await client.from(table).upsert(rows, { onConflict: 'id', ignoreDuplicates })
+    async upsert(table, rows, { ignoreDuplicates, onConflict }) {
+      const { error } = await client.from(table).upsert(rows, { onConflict, ignoreDuplicates })
       if (error) throw new Error(`${table}: ${error.message}`)
     },
-    async pullPage(table, after, limit) {
-      // Phân trang theo (server_updated_at, id) để không sót dòng ghi cùng một thời điểm.
+    async pullPage(table, after, limit, idColumn) {
+      // Phân trang theo (server_updated_at, khóa) để không sót dòng ghi cùng một thời điểm.
       const ts = `"${after.ts}"`
       const { data, error } = await client
         .from(table)
         .select('*')
-        .or(`server_updated_at.gt.${ts},and(server_updated_at.eq.${ts},id.gt.${after.id})`)
+        .or(`server_updated_at.gt.${ts},and(server_updated_at.eq.${ts},${idColumn}.gt.${after.id})`)
         .order('server_updated_at', { ascending: true })
-        .order('id', { ascending: true })
+        .order(idColumn, { ascending: true })
         .limit(limit)
       if (error) throw new Error(`${table}: ${error.message}`)
       return data as Record<string, unknown>[]
@@ -90,7 +90,7 @@ export async function syncNow(): Promise<void> {
       refetch = false
       await forgetCursors(db)
     }
-    const last = await syncOnce(db, remote, { scheduler: appScheduler, now: Date.now })
+    const last = await syncOnce(db, remote, { scheduler: appScheduler, now: Date.now, userId: auth.userId })
     setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last })
   } catch (e) {
     setStatus({ state: navigator.onLine === false ? 'offline' : 'error', error: (e as Error).message })
