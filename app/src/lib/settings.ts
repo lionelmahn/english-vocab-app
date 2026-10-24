@@ -29,7 +29,13 @@ export interface AppSettings {
   /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
   voiceUS: string | null
   voiceUK: string | null
+  /** Tốc độ giọng máy (bản ghi giọng người thật giữ tốc độ gốc). */
+  speechSpeed: SpeechSpeed
 }
+
+export type SpeechSpeed = 'slower' | 'slow' | 'normal' | 'fast'
+/** Hệ số tốc độ cho Web Speech API (1 = tốc độ mặc định của máy). */
+export const SPEECH_RATE: Record<SpeechSpeed, number> = { slower: 0.75, slow: 0.85, normal: 0.95, fast: 1.05 }
 
 const STORAGE_KEY = 'ui-settings'
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -45,6 +51,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   preferRecordings: true,
   voiceUS: null,
   voiceUK: null,
+  speechSpeed: 'normal',
 }
 
 function load(): AppSettings {

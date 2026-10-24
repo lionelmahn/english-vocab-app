@@ -117,7 +117,6 @@ function VoiceSettings() {
   const pinned = list.find((v) => v.voiceURI === current)
   const auto = pickVoice(accent, true)
   const apple = isAppleMobile()
-  const region = accent === 'uk' ? 'Tiếng Anh (Vương quốc Anh)' : 'Tiếng Anh (Mỹ)'
 
   return (
     <div className="flex flex-col gap-3">
@@ -145,6 +144,23 @@ function VoiceSettings() {
           </Button>
         </div>
       )}
+      <div>
+        <p className="mb-2 text-[15px] font-medium">Tốc độ giọng máy</p>
+        <Segmented
+          layoutId="speech-speed"
+          value={settings.speechSpeed}
+          onChange={(v) => {
+            updateSettings({ speechSpeed: v })
+            void previewVoice(pickVoice(accent), accent)
+          }}
+          options={[
+            { value: 'slower', label: 'Rất chậm' },
+            { value: 'slow', label: 'Chậm' },
+            { value: 'normal', label: 'Vừa' },
+            { value: 'fast', label: 'Nhanh' },
+          ]}
+        />
+      </div>
       {apple && (
         <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
           {pinned && (
@@ -153,8 +169,17 @@ function VoiceSettings() {
             </p>
           )}
           <p>
-            Để <b className="text-text">Tự động</b>, app đọc bằng giọng bạn chọn trong <b className="text-text">Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh → {region}</b>, kể
-            cả giọng tải thêm “Nâng cao”, “Cao cấp” (các giọng này không hiện trong danh sách trên vì Apple ẩn chúng với ứng dụng web).
+            Để <b className="text-text">Tự động</b>, app nhờ iPhone đọc bằng giọng bạn chọn trong{' '}
+            <b className="text-text">Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Anh</b>, kể cả giọng tải thêm “Nâng cao”, “Cao cấp” (các giọng này không hiện trong danh sách
+            trên vì Apple ẩn chúng với ứng dụng web).
+          </p>
+          <p>
+            Giọng chọn trong Cài đặt phải <b className="text-text">cùng giọng với app</b>: app đang để {accent === 'uk' ? 'Anh–Anh' : 'Anh–Mỹ'} thì chọn giọng{' '}
+            {accent === 'uk' ? 'Anh (Jamie, Serena, Kate, Oliver…)' : 'Mỹ (Evan, Ava, Zoe, Nathan…)'}. Khác giọng thì iPhone đọc bằng giọng mặc định{' '}
+            {accent === 'uk' ? 'Daniel' : 'Samantha'}.
+          </p>
+          <p>
+            Lưu ý: iOS 26 có lỗi đôi khi bỏ qua giọng đã chọn và vẫn đọc bằng giọng mặc định (đã có người báo Apple, chưa được sửa), hay gặp khi mở app từ màn hình chính.
           </p>
           <p>Đổi giọng trong Cài đặt xong, tắt hẳn app (vuốt lên khỏi màn đa nhiệm) rồi mở lại và bấm “Nghe thử”.</p>
           <p>Muốn cả từ vựng cũng đọc bằng giọng này thì tắt “Ưu tiên giọng người thật”.</p>

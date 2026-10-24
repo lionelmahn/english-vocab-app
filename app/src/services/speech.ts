@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import { bestVoice, langOf, rankVoices, type Accent } from '../core/voices'
 import { chooseUrl, isShortTerm } from '../core/wordAudio'
-import { getSettings } from '../lib/settings'
+import { getSettings, SPEECH_RATE } from '../lib/settings'
 import { cachedWordUrl, resolveWordAudio } from './audio'
 
 /**
@@ -134,7 +134,7 @@ function speakWithVoice(text: string, accent: Accent, slow: boolean, voice: Spee
     const u = new SpeechSynthesisUtterance(text)
     if (voice) u.voice = voice
     u.lang = voice?.lang ?? (accent === 'uk' ? 'en-GB' : 'en-US')
-    u.rate = slow ? 0.65 : 0.95
+    u.rate = (SPEECH_RATE[getSettings().speechSpeed] ?? 0.95) * (slow ? 0.7 : 1)
     let done = false
     const finish = () => {
       if (done) return
