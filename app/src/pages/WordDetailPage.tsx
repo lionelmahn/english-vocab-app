@@ -3,7 +3,7 @@ import { Archive, ArchiveRestore, Flame, Languages, Lightbulb, Pencil, StickyNot
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
-import { Badge, BackButton, IconButton, LevelDots, Sheet, SpeakButtons } from '../components/kit'
+import { Badge, BackButton, IconButton, IpaPill, LevelDots, Sheet, SpeakButtons } from '../components/kit'
 import { formatDate, formatDueIn } from '../lib/format'
 import { showToast } from '../lib/toast'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
@@ -226,14 +226,5 @@ export function WordDetailPage() {
         </div>
       </Sheet>
     </Page>
-  )
-}
-
-function IpaPill({ label, ipa, onPlay }: { label: string; ipa: string; onPlay: () => void }) {
-  return (
-    <motion.button type="button" whileTap={{ scale: 0.95 }} onClick={onPlay} className="inline-flex items-center gap-2 rounded-full bg-surface-2 px-3 py-1.5 text-sm">
-      <span className="text-xs font-semibold text-muted">{label}</span>
-      <span className="font-medium">{ipa}</span>
-    </motion.button>
   )
 }

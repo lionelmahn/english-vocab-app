@@ -1,3 +1,4 @@
+import type { DictEntry } from '../core/dictionary'
 import type { ExerciseKind, SessionMode } from '../core/grading'
 import type { PartOfSpeech } from '../core/pos'
 import type { SessionPlan } from '../core/session'
@@ -132,6 +133,19 @@ export interface OutboxEntry {
   table: SyncedTableName
   rowId: ID
   at: number
+}
+
+/** Kết quả tra từ điển đã lưu trên máy (R15), để tra lại không cần mạng. Không đồng bộ. */
+export interface DictionaryCacheEntry {
+  /** Từ đã chuẩn hóa. */
+  key: string
+  /** null: không tìm thấy. */
+  entry: DictEntry | null
+  /** Gợi ý từ gần giống khi không tìm thấy (R15.5). */
+  suggestions: string[]
+  fetchedAt: number
+  /** Phiên bản bộ đọc dữ liệu; khác phiên bản hiện tại thì tra lại. */
+  parser: number
 }
 
 /** Bản của một dòng như trên máy chủ ở lần đồng bộ gần nhất (`key` = `bảng:id`). */

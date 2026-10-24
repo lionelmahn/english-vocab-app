@@ -89,6 +89,35 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       return id
     },
 
+    /**
+     * Lưu từ từ nguồn có sẵn (R2.8): kết quả tra từ, sau này là bài học và kho chung. Một hoặc nhiều mục.
+     * Mục trùng hẳn (cùng từ, loại từ, nghĩa) với từ đã có hoặc với mục khác trong lần lưu (R2.5) không tạo thêm,
+     * chỉ được thêm vào các bộ đã chọn.
+     */
+    async saveFromSource(inputs: ItemInput[], deckIds: ID[] = [], now = Date.now()): Promise<{ created: ID[]; existing: ID[] }> {
+      const created: VocabItem[] = []
+      const existing: ID[] = []
+      for (const raw of inputs) {
+        const v = normalizeInput(raw)
+        const dup = [...(await repo.duplicatesOf(v)), ...findDuplicates(v, created)].find((m) => m.kind === 'exact')?.item
+        if (dup) {
+          if (!existing.includes(dup.id) && !created.includes(dup)) existing.push(dup.id)
+          continue
+        }
+        // createdAt tăng dần để học theo đúng thứ tự đã chọn.
+        created.push({ ...v, id: crypto.randomUUID(), termKey: termKey(v.term), archived: false, createdAt: now + created.length, updatedAt: now, deletedAt: null })
+      }
+      const links = await repo.membershipRows(deckIds, [...created.map((c) => c.id), ...existing], now)
+      await save(
+        [
+          { table: 'vocabItems', rows: created },
+          { table: 'deckItems', rows: links },
+        ],
+        now,
+      )
+      return { created: created.map((c) => c.id), existing }
+    },
+
     /** Sửa mục học; `resetProgress` = học lại từ đầu (R2.3). */
     async updateItem(id: ID, input: ItemInput, opts: { resetProgress?: boolean; deckIds?: ID[] } = {}, now = Date.now()): Promise<void> {
       const current = await database.vocabItems.get(id)

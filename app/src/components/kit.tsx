@@ -197,6 +197,16 @@ export function SpeakButtons({ text, size = 'md', slow = true }: { text: string;
   )
 }
 
+/** Phiên âm kèm nhãn giọng ("Mỹ", "Anh"); chạm để nghe. */
+export function IpaPill({ label, ipa, onPlay }: { label: string; ipa: string; onPlay: () => void }) {
+  return (
+    <motion.button type="button" whileTap={{ scale: 0.95 }} onClick={onPlay} className="inline-flex items-center gap-2 rounded-full bg-surface-2 px-3 py-1.5 text-sm">
+      <span className="text-xs font-semibold text-muted">{label}</span>
+      <span className="font-medium">{ipa}</span>
+    </motion.button>
+  )
+}
+
 // ---- Bảng trượt từ dưới lên (xác nhận, chọn hành động) ---------------------------------------
 
 export function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title?: string; children: ReactNode }) {

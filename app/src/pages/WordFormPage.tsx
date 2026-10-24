@@ -30,7 +30,8 @@ export function WordFormPage() {
     )
   }
   const presetDeck = params.get('deck')
-  return <WordForm key={editing?.id ?? 'new'} lib={lib} editing={editing} presetDeckIds={presetDeck ? [presetDeck] : []} />
+  // ?term=… khi mở từ trang Tra từ (R15.5: tự thêm từ không tìm thấy).
+  return <WordForm key={editing?.id ?? 'new'} lib={lib} editing={editing} presetDeckIds={presetDeck ? [presetDeck] : []} presetTerm={params.get('term') ?? ''} />
 }
 
 interface FormState {
@@ -51,10 +52,10 @@ interface FormState {
   deckIds: string[]
 }
 
-function initialState(editing: VocabItem | undefined, lib: Library, presetDeckIds: string[]): FormState {
+function initialState(editing: VocabItem | undefined, lib: Library, presetDeckIds: string[], presetTerm = ''): FormState {
   if (!editing) {
     return {
-      term: '',
+      term: presetTerm,
       partOfSpeech: 'noun',
       meaningVi: '',
       meaningEn: '',
@@ -109,9 +110,9 @@ function toInput(f: FormState): ItemInput {
   }
 }
 
-function WordForm({ lib, editing, presetDeckIds }: { lib: Library; editing?: VocabItem; presetDeckIds: string[] }) {
+function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; editing?: VocabItem; presetDeckIds: string[]; presetTerm: string }) {
   const navigate = useNavigate()
-  const [f, setF] = useState<FormState>(() => initialState(editing, lib, presetDeckIds))
+  const [f, setF] = useState<FormState>(() => initialState(editing, lib, presetDeckIds, presetTerm))
   const [more, setMore] = useState(() => !!editing && !!(editing.meaningEn || editing.note || editing.mnemonic || editing.source || editing.acceptedAnswers.length))
   const [errors, setErrors] = useState<{ term?: string; meaningVi?: string }>({})
   const [sameTerm, setSameTerm] = useState<DuplicateMatch<VocabItem>[] | null>(null)

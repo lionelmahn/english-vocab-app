@@ -4,6 +4,7 @@ import type {
   CardStateRow,
   Deck,
   DeckItem,
+  DictionaryCacheEntry,
   MetaEntry,
   OutboxEntry,
   Profile,
@@ -32,6 +33,7 @@ export class VocabDatabase extends Dexie {
   audioCache!: EntityTable<AudioCacheEntry, 'key'>
   voiceClips!: EntityTable<VoiceClip, 'key'>
   syncBase!: EntityTable<SyncBaseEntry, 'key'>
+  dictionary!: EntityTable<DictionaryCacheEntry, 'key'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -51,6 +53,8 @@ export class VocabDatabase extends Dexie {
     this.version(3).stores({ voiceClips: 'key' })
     // Phiên bản 4: bản đã đồng bộ của từng dòng, làm gốc khi gộp thay đổi từ nhiều thiết bị (R11.7).
     this.version(4).stores({ syncBase: 'key' })
+    // Phiên bản 5: kết quả tra từ điển (R15).
+    this.version(5).stores({ dictionary: 'key' })
   }
 }
 

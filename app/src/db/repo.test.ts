@@ -94,6 +94,29 @@ describe('repo — mục học và bộ từ', () => {
   })
 })
 
+describe('repo — lưu từ từ nguồn có sẵn (R2.8)', () => {
+  it('lưu nhiều nghĩa vào bộ đã chọn; nghĩa đã có thì chỉ thêm vào bộ; nghĩa lặp trong lần lưu chỉ tạo một', async () => {
+    const deck = await repo.createDeck({ name: 'Tra từ' })
+    const had = await repo.createItem(input('give up', 'từ bỏ', { partOfSpeech: 'phrasal_verb' }))
+    const res = await repo.saveFromSource(
+      [
+        input('give up', 'Từ bỏ.', { partOfSpeech: 'phrasal_verb' }),
+        input('give up', 'đầu hàng', { partOfSpeech: 'phrasal_verb', meaningEn: 'To surrender.', examples: [{ en: 'He gave himself up.' }] }),
+        input('give up', 'nhường', { partOfSpeech: 'phrasal_verb' }),
+        input('give up', 'Nhường', { partOfSpeech: 'phrasal_verb' }),
+      ],
+      [deck],
+      T0,
+    )
+    expect(res.existing).toEqual([had])
+    expect(res.created).toHaveLength(2)
+    const lib = await loadLibrary(database)
+    expect(lib.items.filter((i) => i.termKey === 'give up').map((i) => i.meaningVi).sort()).toEqual(['nhường', 'từ bỏ', 'đầu hàng'])
+    expect(lib.itemById.get(res.created[0])).toMatchObject({ meaningEn: 'To surrender.', examples: [{ en: 'He gave himself up.' }] })
+    for (const id of [had, ...res.created]) expect([...lib.members.get(id)!]).toEqual([deck])
+  })
+})
+
 describe('repo — gộp từ trùng (R2.5, R11.4)', () => {
   it('giữ mục có tiến độ, bổ sung thông tin còn thiếu, chuyển bộ từ, xóa mục thừa', async () => {
     const a = await repo.createDeck({ name: 'A' })
