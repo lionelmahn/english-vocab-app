@@ -13,7 +13,7 @@ import { formatDueIn } from '../lib/format'
 import { useSettings } from '../lib/settings'
 import { playCorrect, playWrong } from '../lib/sfx'
 import { speak } from '../services/speech'
-import { LetterSlots, type SlotsState } from './LetterSlots'
+import { KeyboardHint, LetterSlots, type SlotsState } from './LetterSlots'
 import { ChoiceCard, FeedbackSheet, PillButton, RoundSpeak, Sentence, SheetButton, StepFrame, TextLink, type ChoiceState, type SheetTone } from './ui'
 
 /** Kết quả trả về sau khi ghi một lượt: lịch ôn mới (nếu có) để hiện "ôn lại sau…" (R5.11). */
@@ -590,6 +590,7 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
             className="h-full min-w-0 flex-1 bg-transparent text-[20px] font-semibold outline-none placeholder:font-normal placeholder:text-subtle"
           />
         </motion.label>
+        {!done && <KeyboardHint typed={value} term={item.term} />}
       </form>
       {sheet}
     </StepFrame>

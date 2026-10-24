@@ -1,8 +1,20 @@
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useRef } from 'react'
-import { activeSlot, fillSlots, letterCount, slotTemplate, type Slot } from '../core/letters'
+import { activeSlot, fillSlots, letterCount, lettersOnly, slotTemplate, type Slot } from '../core/letters'
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
+
+/** Gõ ra chữ có dấu tiếng Việt cho một từ tiếng Anh: nhắc chuyển bàn phím (Telex biến "ar" thành "ả", "dd" thành "đ"). */
+export function KeyboardHint({ typed, term }: { typed: string; term: string }) {
+  const termIsAscii = /^[\x20-\x7e’]*$/.test(term)
+  const typedAccented = lettersOnly(typed).some((c) => c > '\x7f')
+  if (!termIsAscii || !typedAccented) return null
+  return (
+    <p className="mt-3 text-center text-[13px] leading-snug text-warning">
+      Bàn phím đang gõ tiếng Việt nên chữ bị thêm dấu. Bấm nút 🌐 trên bàn phím để chuyển sang tiếng Anh.
+    </p>
+  )
+}
 
 /**
  * Ô chữ "Điền từ": mỗi chữ cái một gạch dưới, ô đang gõ được tô vàng. Vài ô có chữ gợi ý hiện mờ
@@ -28,6 +40,7 @@ export function LetterSlots({
   const filled = fillSlots(template, value)
   const active = state === 'typing' ? activeSlot(template, value) : -1
   const total = letterCount(template)
+  const extra = lettersOnly(value).slice(total)
   const small = total > 14
   const localRef = useRef<HTMLInputElement | null>(null)
 
@@ -91,13 +104,22 @@ export function LetterSlots({
           </div>
         ))}
       </div>
+      {extra.length > 0 && state === 'typing' && (
+        <p className="mt-4 text-center text-[13px] text-danger">
+          Thừa {extra.length} chữ: <span className="font-semibold">{extra.join('')}</span>
+        </p>
+      )}
+      <KeyboardHint typed={value} term={term} />
       <input
         ref={localRef}
         value={value}
         readOnly={state !== 'typing'}
         onChange={(e) => {
-          const next = [...e.target.value].filter((c) => /[\p{L}\p{N}\s'’-]/u.test(c)).join('')
-          if ([...next].filter((c) => /[\p{L}\p{N}]/u.test(c)).length <= total + 3) onChange(next)
+          // Không "giành" nội dung với bàn phím: giữ cả dấu thanh rời (bộ gõ Telex dùng khi ghép chữ),
+          // luôn nhận thao tác xóa, và để giới hạn rộng vì Telex có thể tách "ả" thành "ar" khi xóa.
+          const next = [...e.target.value].filter((c) => /[\p{L}\p{M}\p{N}\s'’-]/u.test(c)).join('')
+          const count = lettersOnly(next).length
+          if (count <= total + 12 || count < lettersOnly(value).length) onChange(next)
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {

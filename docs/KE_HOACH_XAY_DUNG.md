@@ -257,6 +257,7 @@ Nguyên tắc:
 > - **Bản 0.5.4:** Điền từ: chữ gợi ý chỉ hiện mờ, người học vẫn gõ đủ mọi chữ (trước đây ô gợi ý bị nhảy qua). Giọng iPhone: app chép danh sách vào bộ nhớ tạm, phím tắt đọc từ "Bảng nhớ tạm"; thanh "Dán âm thanh" nổi ở mọi trang; trang từ có nút "Tạo giọng" cho từ mới; trang thêm từ ghi chú rằng giọng iPhone có sau khi lưu.
 > - **Bản 0.5.5:** thẻ giới thiệu từ mới luôn hiện tiếng Anh trước (câu ngữ cảnh gạch chân từ), lật mới ra nghĩa. Cài đặt "Mặt trước thẻ khi ôn" chỉ áp dụng cho kiểu ôn bằng thẻ tự đánh giá.
 > - **Bản 0.5.6:** mặt trước thẻ từ mới: từ cần học in đậm ở trên, câu ví dụ (gạch chân từ) ngay bên dưới.
+> - **Bản 0.5.7:** Điền từ: sửa lỗi không xóa được chữ khi gõ bằng bàn phím tiếng Việt (Telex tách "ả" thành "ar" khi xóa, vượt giới hạn số chữ nên bị chặn). Giờ luôn nhận thao tác xóa, giới hạn rộng hơn, không lọc dấu thanh rời; báo "Thừa n chữ"; nhắc chuyển sang bàn phím tiếng Anh khi gõ ra chữ có dấu (cả bài Nghe viết).
 > - **Học từ mới:** xem thẻ xong là "Điền từ" ngay cho từ đó (trước đây xem hết 5 thẻ mới kiểm tra).
 > - **Điền từ:** lộ sẵn vài chữ (1 chữ với từ 4–6 chữ cái, 2 với 7–12, tối đa 3; từ ≤3 chữ không lộ) ở **vị trí ngẫu nhiên, mỗi lần làm bài một kiểu** để không nhớ theo vị trí. Chữ lộ sẵn không tính là gợi ý; bấm "Gợi ý" lộ thêm chữ ở ô đang gõ và tính mức Khó (R6.9).
 > **Giới hạn hiện tại:** sao lưu mới chỉ gửi lên một chiều. Dữ liệu tạo trên máy này chưa hiện trên máy khác; đồng bộ hai chiều thuộc giai đoạn 2 (R11.5, R11.7). Trong lúc chờ, nên học trên một thiết bị chính.
