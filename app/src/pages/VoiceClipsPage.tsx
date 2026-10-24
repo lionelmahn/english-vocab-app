@@ -236,29 +236,31 @@ export function VoiceClipsPage() {
                 </Step>
                 <Step n={2}>
                   Thêm tác vụ <Action vi="Tách văn bản" en="Split Text" />. Bấm ô <b className="text-text">Văn bản</b> của nó → chọn <b className="text-text">Đầu vào phím tắt</b>{' '}
-                  <span className="text-subtle">(Shortcut Input)</span>. Phần tách theo để <b className="text-text">Dòng mới</b>.
+                  <span className="text-subtle">(Shortcut Input)</span>. Phần “bằng” để <b className="text-text">Dòng mới</b>.
                 </Step>
                 <Step n={3}>
-                  Thêm tác vụ <Action vi="Lặp lại với từng mục" en="Repeat with Each" />. Nó tự nhận “Văn bản đã tách”.
+                  Thêm tác vụ <Action vi="Lặp lại với từng mục" en="Repeat with Each" />. Nó tự nhận “Chia văn bản”.
                 </Step>
                 <Step n={4}>
                   Thêm <Action vi="Tạo âm thanh đọc từ văn bản" en="Make Spoken Audio from Text" />, rồi giữ và kéo nó vào <b className="text-text">giữa</b> “Lặp lại” và
-                  “Kết thúc lặp lại”. Bấm ô <b className="text-text">Văn bản</b> → chọn <b className="text-text">Mục lặp lại</b> <span className="text-subtle">(Repeat Item)</span>. Bấm mũi tên
+                  “Kết thúc lặp lại”. Bấm ô <b className="text-text">Văn bản</b> → chọn <b className="text-text">Lặp lại mục</b> <span className="text-subtle">(Repeat Item)</span>. Bấm mũi tên
                   mở rộng để chọn Ngôn ngữ, Giọng nói (ví dụ Jamie (Cao cấp)) và Tốc độ.
                 </Step>
                 <Step n={5}>
-                  Thêm <Action vi="Mã hóa Base64" en="Base64 Encode" />, cũng kéo vào trong vòng lặp, ngay dưới bước 4.
+                  Thêm <Action vi="Mã hóa Base64" en="Base64 Encode" />, kéo vào trong vòng lặp, ngay dưới bước 4.{' '}
+                  <b className="text-danger">Quan trọng:</b> ô sau chữ “Mã hóa” phải là <b className="text-text">âm thanh vừa tạo</b>, không phải “Lặp lại mục”. Bấm vào ô đó →{' '}
+                  <b className="text-text">Chọn biến</b> → chạm vào khối <b className="text-text">“Tạo âm thanh đọc từ”</b> ở trên.
                 </Step>
                 <Step n={6}>
-                  Dưới “Kết thúc lặp lại”, thêm <Action vi="Kết hợp văn bản" en="Combine Text" /> (nó tự nhận “Kết quả lặp lại”). Bấm <b className="text-text">Dòng mới</b> → chọn{' '}
+                  Dưới “Kết thúc lặp lại”, thêm <Action vi="Kết hợp văn bản" en="Combine Text" /> (nó tự nhận “Lặp lại kết quả”). Bấm <b className="text-text">Dòng mới</b> → chọn{' '}
                   <b className="text-text">Tùy chỉnh</b> → gõ dấu <b className="text-text">|</b>
                 </Step>
                 <Step n={7}>
-                  Thêm <Action vi="Sao chép vào bảng tạm" en="Copy to Clipboard" /> rồi bấm <b className="text-text">Xong</b>.
+                  Thêm <Action vi="Sao chép vào bảng nhớ tạm" en="Copy to Clipboard" /> rồi bấm <b className="text-text">Xong</b>.
                 </Step>
               </ol>
               <p className="mt-3 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
-                Thứ tự đúng: Tách văn bản → Lặp lại với từng mục → <i>Tạo âm thanh đọc từ văn bản → Mã hóa Base64</i> → Kết thúc lặp lại → Kết hợp văn bản → Sao chép vào bảng tạm. Lần
+                Thứ tự đúng: Tách (Đầu vào phím tắt) → Lặp lại với từng mục → <i>Tạo âm thanh đọc từ (Lặp lại mục) → Mã hóa (âm thanh vừa tạo)</i> → Kết thúc lặp lại → Kết hợp (Lặp lại kết quả, dấu |) → Sao chép vào bảng nhớ tạm. Lần
                 đầu chạy, iPhone có thể hỏi quyền: chọn <b>Cho phép</b>.
               </p>
               <div className="mt-3">

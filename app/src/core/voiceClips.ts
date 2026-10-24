@@ -82,7 +82,22 @@ export interface DecodedClip {
   mime: AudioMime
 }
 
-export type PasteResult = { ok: true; clips: DecodedClip[] } | { ok: false; reason: 'empty' | 'not_audio' | 'count'; got?: number }
+export type PasteResult =
+  | { ok: true; clips: DecodedClip[] }
+  | { ok: false; reason: 'empty' | 'not_audio' | 'count'; got?: number }
+  /** Phím tắt mã hóa chữ thay vì âm thanh (bước "Mã hóa" lấy nhầm "Lặp lại mục"). */
+  | { ok: false; reason: 'text'; sample: string }
+
+/** Nội dung giải mã ra là chữ đọc được (không phải âm thanh). */
+function asText(bytes: Uint8Array): string | null {
+  if (bytes.length === 0 || bytes.length > 2000) return null
+  try {
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+    return /^[\p{L}\p{N}\p{P}\p{Zs}]+$/u.test(text) ? text : null
+  } catch {
+    return null
+  }
+}
 
 /**
  * Đọc nội dung dán vào: các file Base64 nối bằng "|" (hoặc mỗi file một dòng nếu Base64 không ngắt dòng).
@@ -102,6 +117,8 @@ export function parsePasted(raw: string, expected: number): PasteResult {
     const bytes = decodeBase64(p)
     const mime = bytes && sniffAudio(bytes)
     if (!bytes || !mime) {
+      const text = bytes && asText(bytes)
+      if (text) return { ok: false, reason: 'text', sample: text }
       // Phần đầu đã là âm thanh mà phần sau hỏng: thường do tách sai (ngắt dòng Base64 + dấu phân cách "Dòng mới").
       if (clips.length > 0 && parts.length !== expected) return { ok: false, reason: 'count', got: parts.length }
       return { ok: false, reason: 'not_audio' }

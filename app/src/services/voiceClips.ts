@@ -116,6 +116,8 @@ export type SaveResult = { ok: true; saved: number } | { ok: false; message: str
 
 function explain(r: Exclude<PasteResult, { ok: true }>, expected: number): string {
   if (r.reason === 'empty') return 'Bộ nhớ tạm đang trống. Phím tắt đã chạy xong chưa?'
+  if (r.reason === 'text')
+    return `Phím tắt đang mã hóa chữ (“${r.sample}”) thay vì âm thanh. Trong phím tắt, bấm ô sau chữ “Mã hóa” → Chọn biến → chạm vào khối “Tạo âm thanh đọc từ”, rồi bấm “Tạo” lại.`
   if (r.reason === 'count')
     return `Nhận được ${r.got} âm thanh nhưng đã gửi ${expected} mục. Kiểm tra bước “Kết hợp văn bản” dùng dấu “|”, rồi bấm “Tạo” lại.`
   return 'Bộ nhớ tạm không chứa âm thanh từ phím tắt. Chạy phím tắt xong rồi hãy dán.'

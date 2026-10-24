@@ -59,6 +59,11 @@ describe('giọng iPhone qua Phím tắt', () => {
     expect(parsePasted('Never give up.', 1).ok).toBe(false)
   })
 
+  it('nhận ra phím tắt mã hóa chữ thay vì âm thanh', () => {
+    const b64 = (t: string) => btoa(String.fromCharCode(...new TextEncoder().encode(t)))
+    expect(parsePasted(`${b64('give up')}|${b64('Never give up.')}`, 2)).toEqual({ ok: false, reason: 'text', sample: 'give up' })
+  })
+
   it('dấu vết giúp nhận ra kết quả cũ', () => {
     const raw = `${fakeM4a('1')}|${fakeM4a('2')}`
     expect(pasteFingerprint(raw)).toBe(pasteFingerprint(` ${raw}\n`))
