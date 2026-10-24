@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { State } from 'ts-fsrs'
 import { deckStats, inStudyPlan, itemStatus, membership, type LibCard, type LibDeck, type LibItem } from './library'
 import { parsePos } from './pos'
-import { blankTerm, findDuplicates, foldText, meaningKey, parseTags, termKey } from './vocab'
+import { blankTerm, contextSentence, findDuplicates, findTermSpan, foldText, meaningKey, parseTags, termKey } from './vocab'
 
 describe('parsePos', () => {
   it('nhận viết tắt, tiếng Anh và tiếng Việt', () => {
@@ -118,6 +118,15 @@ describe('library — trạng thái và phạm vi học', () => {
     ])
     const cards = new Map([['a', card('a', now - 5)]])
     expect(deckStats('d', items, m, cards, now)).toEqual({ total: 2, learned: 1, due: 1, newCount: 1 })
+  })
+})
+
+describe('contextSentence', () => {
+  it('lấy câu ví dụ có chứa đúng từ đang học', () => {
+    const item = { term: 'learn', examples: [{ en: 'She learned a lot.' }, { en: 'She tries to Learn new words.' }] }
+    expect(contextSentence(item)).toBe('She tries to Learn new words.')
+    expect(findTermSpan('She tries to Learn new words.', 'learn')).toEqual({ start: 13, end: 18 })
+    expect(contextSentence({ term: 'x', examples: [] })).toBeNull()
   })
 })
 

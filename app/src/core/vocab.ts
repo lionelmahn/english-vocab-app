@@ -87,3 +87,17 @@ export function blankTerm(sentence: string, term: string): string {
   const escaped = term.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   return sentence.replace(new RegExp(`\\b${escaped}\\b`, 'gi'), '_____')
 }
+
+/** Vị trí từ đang học trong câu (khớp nguyên từ, không phân biệt hoa thường). */
+export function findTermSpan(sentence: string, term: string): { start: number; end: number } | null {
+  const escaped = term.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  if (!escaped) return null
+  const m = new RegExp(`\\b${escaped}\\b`, 'i').exec(sentence)
+  return m ? { start: m.index, end: m.index + m[0].length } : null
+}
+
+/** Câu ví dụ đầu tiên có chứa đúng từ đang học, để làm bài trong ngữ cảnh. */
+export function contextSentence(item: { term: string; examples: readonly { en: string }[] }): string | null {
+  for (const ex of item.examples) if (findTermSpan(ex.en, item.term)) return ex.en
+  return null
+}

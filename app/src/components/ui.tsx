@@ -50,12 +50,16 @@ export function SectionTitle({ children, className = 'mb-3' }: { children: React
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
 
+/** Nút "nổi": có đáy màu đậm hơn, nhấn thì lún xuống. */
+const PRESS = 'transition-[transform,box-shadow] duration-100 active:translate-y-[3px]'
 const BUTTON_STYLES: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-on-accent',
-  secondary: 'bg-surface-2 text-text',
+  primary: `bg-accent text-on-accent shadow-[0_4px_0_0_var(--app-accent-shadow)] active:shadow-[0_1px_0_0_var(--app-accent-shadow)] ${PRESS}`,
+  secondary: `border-2 border-line bg-surface text-text shadow-[0_4px_0_0_var(--app-line-shadow)] active:shadow-[0_1px_0_0_var(--app-line-shadow)] ${PRESS}`,
   ghost: 'text-accent',
-  danger: 'bg-danger text-on-danger',
+  danger: `bg-danger text-on-danger shadow-[0_4px_0_0_var(--app-danger-shadow)] active:shadow-[0_1px_0_0_var(--app-danger-shadow)] ${PRESS}`,
 }
+const DISABLED =
+  'disabled:border-transparent disabled:bg-surface-2 disabled:text-subtle disabled:shadow-[0_4px_0_0_var(--app-line-shadow)] disabled:active:translate-y-0'
 
 export function Button({
   variant = 'secondary',
@@ -67,11 +71,11 @@ export function Button({
   return (
     <motion.button
       type="button"
-      whileTap={tapScale}
-      className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[15px] font-semibold whitespace-nowrap ${BUTTON_STYLES[variant]} ${className}`}
+      whileTap={variant === 'ghost' ? tapScale : undefined}
+      className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[15px] font-bold whitespace-nowrap ${BUTTON_STYLES[variant]} ${variant === 'ghost' ? '' : DISABLED} ${className}`}
       {...rest}
     >
-      {Icon && <Icon aria-hidden className="h-5 w-5" strokeWidth={2.2} />}
+      {Icon && <Icon aria-hidden className="h-5 w-5" strokeWidth={2.4} />}
       {children}
     </motion.button>
   )

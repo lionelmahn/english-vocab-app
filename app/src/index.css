@@ -1,8 +1,5 @@
 @import 'tailwindcss';
-@import '@fontsource/be-vietnam-pro/400.css';
-@import '@fontsource/be-vietnam-pro/500.css';
-@import '@fontsource/be-vietnam-pro/600.css';
-@import '@fontsource/be-vietnam-pro/700.css';
+@import '@fontsource-variable/nunito/wght.css';
 
 /* Màu theo vai trò; tự đổi theo chế độ sáng/tối của hệ điều hành. */
 :root {
@@ -22,6 +19,14 @@
   --app-on-danger: #ffffff;
   --app-warning: #ba7517;
   --app-warning-soft: #faeeda;
+  /* Màu "đáy" của nút nổi (hiệu ứng nhấn xuống) */
+  --app-accent-shadow: #0a4f3e;
+  --app-danger-shadow: #9a321f;
+  --app-line-shadow: #d3d9d2;
+  /* Vàng: ô đang chọn, thanh tiến độ */
+  --app-sun: #ef9f27;
+  --app-sun-soft: #fff4dc;
+  --app-sun-shadow: #c9821a;
   color-scheme: light;
 }
 
@@ -43,6 +48,12 @@
     --app-on-danger: #3a1e16;
     --app-warning: #fac775;
     --app-warning-soft: #3a2a10;
+    --app-accent-shadow: #2f8f72;
+    --app-danger-shadow: #b8664d;
+    --app-line-shadow: #0b0f0d;
+    --app-sun: #f4b347;
+    --app-sun-soft: #3a2a10;
+    --app-sun-shadow: #b97d22;
     color-scheme: dark;
   }
 }
@@ -64,7 +75,13 @@
   --color-on-danger: var(--app-on-danger);
   --color-warning: var(--app-warning);
   --color-warning-soft: var(--app-warning-soft);
-  --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --color-accent-shadow: var(--app-accent-shadow);
+  --color-danger-shadow: var(--app-danger-shadow);
+  --color-line-shadow: var(--app-line-shadow);
+  --color-sun: var(--app-sun);
+  --color-sun-soft: var(--app-sun-soft);
+  --color-sun-shadow: var(--app-sun-shadow);
+  --font-sans: 'Nunito Variable', ui-rounded, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 html,

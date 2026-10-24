@@ -1,5 +1,6 @@
 import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useSettings } from '../lib/settings'
 
 const COLORS = ['#1d9e75', '#5dcaa5', '#ef9f27', '#d85a30', '#7f77dd', '#378add']
@@ -55,5 +56,5 @@ export function Confetti({ fire }: { fire: boolean }) {
     return () => cancelAnimationFrame(raf)
   }, [fire, systemReduce, reduceMotion])
 
-  return <canvas ref={ref} aria-hidden className="pointer-events-none fixed inset-0 z-30 h-full w-full" />
+  return createPortal(<canvas ref={ref} aria-hidden className="pointer-events-none fixed inset-0 z-30 h-full w-full" />, document.body)
 }

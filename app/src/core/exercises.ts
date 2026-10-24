@@ -19,18 +19,18 @@ export interface ExerciseOptions {
 export const AUDIO_EXERCISES: ReadonlySet<ExerciseKind> = new Set(['dictation', 'listen_choose', 'audio_choice'])
 
 /**
- * Từ còn mới: nhận diện (trắc nghiệm). Nhớ khá trở lên: nhớ lại (gõ từ, nghe viết).
- * `reps` (số lần đã ôn) dùng để luân phiên dạng bài giữa các lần ôn.
+ * Từ còn mới: nhận diện (trắc nghiệm, nghe chọn nghĩa). Nhớ khá trở lên: nhớ lại (điền từ, nghe viết)
+ * xen với chọn âm thanh. `reps` (số lần đã ôn) dùng để luân phiên dạng bài giữa các lần ôn.
  */
 export function chooseExercise(level: MemoryLevel, reps: number, opts: ExerciseOptions): ExerciseKind {
   if (opts.style === 'flashcard') return 'flashcard'
   let cycle: ExerciseKind[]
-  if (level <= 1) cycle = ['mcq_meaning', 'mcq_meaning', 'recall_typing']
-  else if (level <= 3) cycle = ['recall_typing', 'mcq_meaning', 'dictation']
-  else cycle = ['recall_typing', 'dictation']
+  if (level <= 1) cycle = ['mcq_meaning', 'listen_choose', 'recall_typing']
+  else if (level <= 3) cycle = ['recall_typing', 'audio_choice', 'mcq_meaning', 'dictation']
+  else cycle = ['recall_typing', 'dictation', 'audio_choice']
   let pick = cycle[reps % cycle.length]
-  if (pick === 'dictation' && opts.audioOff) pick = 'recall_typing'
-  if (pick === 'mcq_meaning' && !opts.canMultipleChoice) pick = 'recall_typing'
+  if (opts.audioOff) pick = withoutAudio(pick)
+  if (!opts.canMultipleChoice && CHOICE_EXERCISES.has(pick)) pick = 'recall_typing'
   return pick
 }
 
@@ -39,8 +39,12 @@ export function checkExercise(opts: Pick<ExerciseOptions, 'canMultipleChoice'>):
   return opts.canMultipleChoice ? 'mcq_meaning' : 'recall_typing'
 }
 
-/** Thay dạng bài cần nghe bằng dạng không cần âm thanh (R6.12). */
+/** Dạng bài chọn phương án (cần đủ từ trong sổ tay để làm phương án nhiễu). */
+export const CHOICE_EXERCISES: ReadonlySet<ExerciseKind> = new Set(['mcq_meaning', 'listen_choose', 'audio_choice', 'cloze_choice', 'matching'])
+
+/** Thay dạng bài cần nghe bằng dạng không cần âm thanh, giữ độ khó tương đương (R6.12). */
 export function withoutAudio(kind: ExerciseKind): ExerciseKind {
+  if (kind === 'listen_choose') return 'mcq_meaning'
   return AUDIO_EXERCISES.has(kind) ? 'recall_typing' : kind
 }
 
@@ -76,7 +80,12 @@ export function shuffle<T>(arr: readonly T[], rand: () => number = Math.random):
  * Phương án cho trắc nghiệm nghĩa: 1 đúng + 3 nghĩa khác (ưu tiên cùng loại từ để khó đoán hơn).
  * Trả về null nếu không đủ nghĩa khác nhau.
  */
-export function buildMeaningChoices(target: ChoiceSource, pool: readonly ChoiceSource[], rand: () => number = Math.random): ChoiceSource[] | null {
+export function buildMeaningChoices(
+  target: ChoiceSource,
+  pool: readonly ChoiceSource[],
+  rand: () => number = Math.random,
+  count = MIN_CHOICES,
+): ChoiceSource[] | null {
   const targetKey = meaningKey(target.meaningVi)
   const seen = new Set([targetKey])
   const candidates: ChoiceSource[] = []
@@ -86,7 +95,7 @@ export function buildMeaningChoices(target: ChoiceSource, pool: readonly ChoiceS
     seen.add(k)
     candidates.push(c)
   }
-  if (candidates.length < MIN_CHOICES - 1) return null
+  if (candidates.length < count - 1) return null
   const samePos = shuffle(
     candidates.filter((c) => c.partOfSpeech === target.partOfSpeech),
     rand,
@@ -95,8 +104,37 @@ export function buildMeaningChoices(target: ChoiceSource, pool: readonly ChoiceS
     candidates.filter((c) => c.partOfSpeech !== target.partOfSpeech),
     rand,
   )
-  const distractors = [...samePos, ...others].slice(0, MIN_CHOICES - 1)
+  const distractors = [...samePos, ...others].slice(0, count - 1)
   return shuffle([target, ...distractors], rand)
+}
+
+export interface TermSource extends ChoiceSource {
+  term: string
+}
+
+/**
+ * Phương án cho "chọn âm thanh đúng" (R6.11): 1 từ đúng + từ khác (khác mặt chữ, ưu tiên cùng loại từ).
+ * Trả về null nếu không đủ từ khác nhau.
+ */
+export function buildTermChoices<T extends TermSource>(target: T, pool: readonly T[], rand: () => number = Math.random, count = 3): T[] | null {
+  const seen = new Set([target.term.trim().toLowerCase()])
+  const candidates: T[] = []
+  for (const c of pool) {
+    const k = c.term.trim().toLowerCase()
+    if (c.id === target.id || !k || seen.has(k)) continue
+    seen.add(k)
+    candidates.push(c)
+  }
+  if (candidates.length < count - 1) return null
+  const samePos = shuffle(
+    candidates.filter((c) => c.partOfSpeech === target.partOfSpeech),
+    rand,
+  )
+  const others = shuffle(
+    candidates.filter((c) => c.partOfSpeech !== target.partOfSpeech),
+    rand,
+  )
+  return shuffle([target, ...[...samePos, ...others].slice(0, count - 1)], rand)
 }
 
 /** Đếm số nghĩa khác nhau trong sổ tay, để biết có làm được trắc nghiệm không. */

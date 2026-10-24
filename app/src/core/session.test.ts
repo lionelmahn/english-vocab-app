@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { Rating } from 'ts-fsrs'
-import { buildMeaningChoices, chooseExercise, seededRandom } from './exercises'
-import { applyAction, currentStep, isFinished, planLearn, planReview, RETRY_GAP, summarize, type SessionAction, type SessionPlan } from './session'
+import { buildMeaningChoices, buildTermChoices, chooseExercise, seededRandom } from './exercises'
+import { addActiveTime, applyAction, currentStep, isFinished, planLearn, planReview, RETRY_GAP, summarize, type SessionAction, type SessionPlan } from './session'
 
 const right = (exercise: 'mcq_meaning' | 'recall_typing' | 'dictation' = 'mcq_meaning'): SessionAction => ({
   type: 'answer',
@@ -135,8 +135,49 @@ describe('exercises', () => {
     expect(choices.filter((c) => c.partOfSpeech === 'adjective')).toHaveLength(3)
   })
 
+  it('luân phiên có cả bài nghe chọn nghĩa và chọn âm thanh', () => {
+    expect(chooseExercise(1, 1, opts)).toBe('listen_choose')
+    expect(chooseExercise(2, 1, opts)).toBe('audio_choice')
+    expect(chooseExercise(1, 1, { ...opts, audioOff: true })).toBe('mcq_meaning')
+    expect(chooseExercise(2, 1, { ...opts, audioOff: true })).toBe('recall_typing')
+    expect(chooseExercise(2, 1, { ...opts, canMultipleChoice: false })).toBe('recall_typing')
+  })
+
+  it('không tiện nghe: nghe chọn nghĩa đổi thành trắc nghiệm nghĩa', () => {
+    const plan = planReview(['a', 'b'], (id) => (id === 'a' ? 'listen_choose' : 'audio_choice'), 0)
+    const r = applyAction(plan, { type: 'no_audio' })
+    expect(r.plan.steps.map((s) => s.exercise)).toEqual(['mcq_meaning', 'recall_typing'])
+  })
+
+  it('phương án âm thanh: khác mặt chữ, ưu tiên cùng loại từ', () => {
+    const t = { id: 't', term: 'learn by heart', meaningVi: 'học thuộc lòng', partOfSpeech: 'phrase' as const }
+    const pool = [
+      t,
+      { id: '1', term: 'Learn by heart', meaningVi: 'x', partOfSpeech: 'phrase' as const },
+      { id: '2', term: 'give up', meaningVi: 'từ bỏ', partOfSpeech: 'phrase' as const },
+      { id: '3', term: 'truant', meaningVi: 'trốn học', partOfSpeech: 'verb' as const },
+      { id: '4', term: 'exam', meaningVi: 'kỳ thi', partOfSpeech: 'noun' as const },
+    ]
+    const c = buildTermChoices(t, pool, seededRandom(7))!
+    expect(c).toHaveLength(3)
+    expect(c.map((x) => x.id)).toContain('t')
+    expect(c.map((x) => x.id)).toContain('2')
+    expect(c.map((x) => x.id)).not.toContain('1')
+    expect(buildTermChoices(t, [t, pool[1]])).toBeNull()
+  })
+
   it('không đủ nghĩa thì không làm trắc nghiệm', () => {
     const t = { id: 't', meaningVi: 'a', partOfSpeech: 'noun' as const }
     expect(buildMeaningChoices(t, [t, { id: '1', meaningVi: 'b', partOfSpeech: 'noun' as const }])).toBeNull()
+  })
+})
+
+describe('thời gian học thực tế', () => {
+  it('mỗi bước tính tối đa 2 phút, tổng kết dùng thời gian thực tế', () => {
+    let plan = planReview(['a'], () => 'mcq_meaning', 0)
+    plan = addActiveTime(plan, 5_000)
+    plan = addActiveTime(plan, 10 * 60_000)
+    expect(plan.activeMs).toBe(125_000)
+    expect(summarize(plan, 12 * 3_600_000).durationMs).toBe(125_000)
   })
 })

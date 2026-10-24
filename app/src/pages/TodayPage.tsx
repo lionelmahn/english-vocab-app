@@ -1,19 +1,22 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { FileUp, Flame, GraduationCap, Layers, Play, Plus, Repeat, Sparkles, Target, type LucideIcon } from 'lucide-react'
+import { FileUp, Flame, GraduationCap, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { AnimatedNumber } from '../components/AnimatedNumber'
-import { formatDueIn } from '../lib/format'
-import { ProgressRing } from '../components/ProgressRing'
+import { Buddy } from '../components/Buddy'
 import { Button, Card, EmptyState, Page } from '../components/ui'
 import { currentStreak, studyDay } from '../core/day'
+import { itemLevel } from '../core/library'
+import type { MemoryLevel } from '../core/levels'
 import { progress } from '../core/session'
 import { db } from '../db/db'
 import { dueCount, learnCandidates, nextDueAt } from '../db/library'
+import { formatDueIn } from '../lib/format'
 import { useLibrary, useNow } from '../lib/hooks'
 import { riseIn } from '../lib/motion'
 import { useSettings } from '../lib/settings'
+import { PillButton } from '../study/ui'
 
 function greeting(hour: number): string {
   if (hour < 11) return 'Chào buổi sáng'
@@ -23,23 +26,50 @@ function greeting(hour: number): string {
 }
 
 const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone
+const LEVEL_COLORS: Record<Exclude<MemoryLevel, 0>, string> = {
+  1: '#e0714a',
+  2: '#ef9f27',
+  3: '#a3c74f',
+  4: '#2fa883',
+  5: '#0f6e56',
+}
 
-function Stat({ icon: Icon, label, value, tone = 'accent' }: { icon: LucideIcon; label: string; value: number; tone?: 'accent' | 'warning' }) {
-  const toneClass = tone === 'warning' ? 'bg-warning-soft text-warning' : 'bg-accent-soft text-accent'
+/** Biểu đồ cột 5 cấp ghi nhớ (R10.7), cột mọc dần lên. */
+function LevelBars({ counts }: { counts: Record<Exclude<MemoryLevel, 0>, number> }) {
+  const levels = [1, 2, 3, 4, 5] as const
+  const max = Math.max(1, ...levels.map((l) => counts[l]))
   return (
-    <div className="flex items-center gap-3">
-      <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${toneClass}`}>
-        <Icon aria-hidden className="h-[18px] w-[18px]" strokeWidth={2.2} />
-      </span>
-      <div className="flex flex-1 items-baseline justify-between gap-2">
-        <span className="text-sm text-muted">{label}</span>
-        <AnimatedNumber value={value} className="text-[17px] font-bold tabular-nums" />
+    <div className="px-2">
+      <div className="flex h-52 items-end justify-between gap-3">
+        {levels.map((l, i) => {
+          const h = counts[l] === 0 ? 0 : Math.max(0.08, counts[l] / max)
+          return (
+            <div key={l} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
+              <span className="text-[13px] font-bold whitespace-nowrap text-muted">{counts[l]} từ</span>
+              <motion.div
+                className="w-full max-w-14 rounded-t-2xl"
+                style={{ backgroundColor: LEVEL_COLORS[l] }}
+                initial={{ height: 0 }}
+                animate={{ height: `${h * 85}%` }}
+                transition={{ type: 'spring', stiffness: 90, damping: 16, delay: 0.08 * i }}
+              />
+            </div>
+          )
+        })}
+      </div>
+      <div className="h-1.5 rounded-full bg-line" />
+      <div className="mt-2 flex justify-between gap-3">
+        {levels.map((l) => (
+          <span key={l} className="flex-1 text-center text-[18px] font-extrabold">
+            {l}
+          </span>
+        ))}
       </div>
     </div>
   )
 }
 
-/** Kế hoạch hôm nay (R9.1): từ cần ôn, từ mới, tiến độ mục tiêu, chuỗi ngày. */
+/** Hôm nay (R9.1): bảng ôn tập — số từ theo cấp, từ đến giờ ôn, học từ mới, chuỗi ngày. */
 export function TodayPage() {
   const navigate = useNavigate()
   const settings = useSettings()
@@ -53,61 +83,44 @@ export function TodayPage() {
       const today = studyDay(new Date(), TZ)
       const days = new Set<string>()
       const learned = new Set<string>()
-      const reviewed = new Set<string>()
       for (const l of logs) {
         const d = studyDay(new Date(l.reviewedAt), TZ)
         days.add(d)
-        if (d !== today || !l.affectsSchedule) continue
-        if (l.mode === 'learn') learned.add(l.itemId)
-        else if (l.mode === 'review') reviewed.add(l.itemId)
+        if (d === today && l.affectsSchedule && l.mode === 'learn') learned.add(l.itemId)
       }
-      return { learnedToday: learned.size, reviewedToday: reviewed.size, streak: currentStreak(days, today) }
+      return { learnedToday: learned.size, streak: currentStreak(days, today) }
     },
     [],
-    { learnedToday: 0, reviewedToday: 0, streak: 0 },
+    { learnedToday: 0, streak: 0 },
   )
 
   const date = new Intl.DateTimeFormat('vi-VN', { weekday: 'long', day: 'numeric', month: 'long' }).format(mountedAt)
+  const live = lib?.items.filter((i) => !i.archived) ?? []
+  const counts: Record<Exclude<MemoryLevel, 0>, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+  let notLearned = 0
+  for (const i of live) {
+    const l = itemLevel(lib!.cards.get(i.id))
+    if (l === 0) notLearned++
+    else counts[l]++
+  }
   const due = lib ? dueCount(lib, now) : 0
   const newAvailable = lib ? learnCandidates(lib).length : 0
   const nextDue = lib ? nextDueAt(lib, now) : null
-  const goal = settings.dailyNewWords
+  const goal = Math.max(1, settings.dailyNewWords)
   const activeProgress = active ? progress(active.plan) : null
-  const empty = lib && lib.items.length === 0
 
   return (
-    <Page title={greeting(mountedAt.getHours())} subtitle={date.charAt(0).toUpperCase() + date.slice(1)}>
-      <Card>
-        <div className="flex items-center gap-5">
-          <ProgressRing value={activity.learnedToday / Math.max(1, goal)}>
-            <AnimatedNumber value={activity.learnedToday} className="text-[28px] leading-none font-bold tabular-nums" />
-            <span className="mt-1 text-xs text-muted">/ {goal} từ mới</span>
-          </ProgressRing>
-          <div className="flex flex-1 flex-col gap-3">
-            <Stat icon={Layers} label="Đến hạn ôn" value={due} tone={due > 0 ? 'warning' : 'accent'} />
-            <Stat icon={Target} label="Đã ôn hôm nay" value={activity.reviewedToday} />
-            <Stat icon={Flame} label="Chuỗi ngày" value={activity.streak} tone="warning" />
-          </div>
-        </div>
-      </Card>
-
-      {active && activeProgress && (
-        <Card className="border-accent">
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
-              <p className="font-semibold">Buổi {active.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
-              <p className="text-sm text-muted">
-                Đã làm {activeProgress.done}/{activeProgress.total} bước
-              </p>
-            </div>
-            <Button variant="primary" icon={Play} onClick={() => navigate('/study')}>
-              Tiếp tục
-            </Button>
-          </div>
-        </Card>
-      )}
-
-      {empty ? (
+    <Page
+      title={greeting(mountedAt.getHours())}
+      subtitle={date.charAt(0).toUpperCase() + date.slice(1)}
+      action={
+        <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 shadow-[0_3px_0_0_var(--app-line-shadow)]" aria-label={`Chuỗi ${activity.streak} ngày`}>
+          <Flame aria-hidden className={`h-6 w-6 ${activity.streak > 0 ? 'text-[#e0714a]' : 'text-subtle'}`} fill={activity.streak > 0 ? '#f6c344' : 'none'} />
+          <AnimatedNumber value={activity.streak} className="text-[20px] font-extrabold tabular-nums" />
+        </span>
+      }
+    >
+      {lib && lib.items.length === 0 ? (
         <EmptyState icon={Sparkles} title="Bắt đầu với từ đầu tiên" body="Thêm từ vào sổ tay hoặc nhập danh sách bạn đang có. Lịch ôn sẽ tự sắp xếp thời điểm ôn cho từng từ.">
           <Button variant="primary" icon={Plus} onClick={() => navigate('/words/new')}>
             Thêm từ
@@ -118,31 +131,77 @@ export function TodayPage() {
         </EmptyState>
       ) : (
         lib && (
-          <motion.div variants={riseIn} className="flex flex-col gap-2.5">
-            {due > 0 && (
-              <Button variant="primary" icon={Repeat} className="h-14 w-full text-[16px]" onClick={() => navigate('/review')}>
-                Ôn tập ngay · {due} từ
-              </Button>
-            )}
-            {newAvailable > 0 && (
-              <Button variant={due > 0 ? 'secondary' : 'primary'} icon={GraduationCap} className="h-14 w-full text-[16px]" onClick={() => navigate('/learn')}>
-                Học từ mới · còn {newAvailable} từ
-              </Button>
-            )}
-            {due === 0 && newAvailable === 0 && (
-              <Card className="flex flex-col items-center py-6 text-center">
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 15 }} className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft">
-                  <Sparkles aria-hidden className="h-7 w-7 text-accent" />
-                </motion.div>
-                <p className="font-semibold">Hôm nay xong rồi!</p>
-                <p className="mt-1 text-sm text-muted">{nextDue ? `Lượt ôn tiếp theo: ${formatDueIn(nextDue, now)}.` : 'Thêm từ mới để tiếp tục học.'}</p>
-                <Button className="mt-4" icon={Plus} onClick={() => navigate('/words/new')}>
-                  Thêm từ
-                </Button>
+          <>
+            {active && activeProgress && (
+              <Card className="border-sun">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <p className="font-bold">Buổi {active.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
+                    <p className="text-sm text-muted">
+                      Đã làm {activeProgress.done}/{activeProgress.total} bước
+                    </p>
+                  </div>
+                  <Button variant="primary" icon={Play} onClick={() => navigate('/study')}>
+                    Tiếp tục
+                  </Button>
+                </div>
               </Card>
             )}
-            {due === 0 && newAvailable > 0 && nextDue && <p className="text-center text-sm text-muted">Chưa có từ đến hạn. Lượt ôn tiếp theo: {formatDueIn(nextDue, now)}.</p>}
-          </motion.div>
+
+            <motion.div variants={riseIn} className="flex justify-center">
+              <Link to="/notebook" className="flex items-center gap-3 rounded-full bg-surface-2 py-1.5 pr-5 pl-1.5">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface shadow-[0_3px_0_0_var(--app-line-shadow)]">
+                  <NotebookPen aria-hidden className="h-5 w-5 text-[#e0714a]" />
+                </span>
+                <span className="text-[16px] text-muted">
+                  Sổ tay đã có <b className="text-[18px] text-text">{live.length}</b> từ
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={riseIn} className="pt-2">
+              <LevelBars counts={counts} />
+              {notLearned > 0 && <p className="mt-2 text-center text-[13px] text-muted">{notLearned} từ chưa học</p>}
+            </motion.div>
+
+            <motion.div variants={riseIn} className="flex flex-col items-center gap-3 pt-2">
+              {due > 0 ? (
+                <p className="text-[18px] font-bold">
+                  Đến giờ ôn tập: <AnimatedNumber value={due} className="text-[22px] font-extrabold text-sun" /> từ
+                </p>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <Buddy mood="happy" size={44} />
+                  <p className="text-[15px] font-semibold text-muted">{nextDue ? `Lượt ôn tiếp theo: ${formatDueIn(nextDue, now)}` : 'Học vài từ mới để bắt đầu ôn tập nhé'}</p>
+                </div>
+              )}
+              <PillButton disabled={due === 0} onClick={() => navigate('/review')}>
+                Ôn tập ngay
+              </PillButton>
+            </motion.div>
+
+            <Card className="mt-2">
+              <div className="flex items-center gap-4">
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold">Học từ mới</p>
+                  <p className="text-sm text-muted">
+                    Hôm nay {activity.learnedToday}/{goal} từ · còn {newAvailable} từ chưa học
+                  </p>
+                  <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-surface-2">
+                    <motion.div
+                      className="h-full rounded-full bg-gradient-to-r from-[#f6c344] to-[var(--app-sun)]"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.min(1, activity.learnedToday / goal) * 100}%` }}
+                      transition={{ duration: 0.8 }}
+                    />
+                  </div>
+                </div>
+                <Button variant={due > 0 ? 'secondary' : 'primary'} icon={GraduationCap} disabled={newAvailable === 0} className="shrink-0 px-4" onClick={() => navigate('/learn')}>
+                  Học
+                </Button>
+              </div>
+            </Card>
+          </>
         )
       )}
     </Page>

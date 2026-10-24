@@ -35,6 +35,8 @@ export interface SessionPlan {
   outcomes: Record<string, ItemOutcome>
   audioOff: boolean
   startedAt: number
+  /** Thời gian học thực tế (mili-giây), không tính lúc tạm dừng hay bỏ máy. */
+  activeMs?: number
 }
 
 export type SessionAction =
@@ -56,6 +58,14 @@ export interface AnswerEffect {
 }
 
 const NO_EFFECT: AnswerEffect = { log: false, grade: null, correct: null, schedule: false, requeued: false }
+
+/** Thời gian tối đa tính cho một bước, để lúc bỏ máy không bị cộng vào thời gian học. */
+export const MAX_STEP_MS = 120_000
+
+/** Cộng thời gian của một bước vào thời gian học thực tế. */
+export function addActiveTime(plan: SessionPlan, stepMs: number): SessionPlan {
+  return { ...plan, activeMs: (plan.activeMs ?? 0) + Math.max(0, Math.min(stepMs, MAX_STEP_MS)) }
+}
 
 /** Số lượt luyện lại tối đa cho một từ trong một buổi. */
 export const MAX_RETRIES = 2
@@ -206,5 +216,6 @@ export function summarize(plan: SessionPlan, endedAt: number): SessionSummary {
     else correct++
     if (o.grade === Rating.Again || o.grade === Rating.Hard || o.wrong > 0) needWork.push(id)
   }
-  return { items: entries.length, correct, wrong, known, needWork, durationMs: Math.max(0, endedAt - plan.startedAt) }
+  const durationMs = plan.activeMs ?? Math.max(0, endedAt - plan.startedAt)
+  return { items: entries.length, correct, wrong, known, needWork, durationMs }
 }

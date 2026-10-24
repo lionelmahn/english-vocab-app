@@ -1,28 +1,31 @@
-import { GraduationCap, Pause, Repeat, Sparkles, Trophy, X } from 'lucide-react'
+import { GraduationCap, Pause, Repeat, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { AnimatedNumber } from '../components/AnimatedNumber'
 import { Confetti } from '../components/Confetti'
 import { BackButton, Badge, Chip, Sheet } from '../components/kit'
 import { formatDueIn } from '../lib/format'
 import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
-import { buildMeaningChoices, seededRandom, type ChoiceSource } from '../core/exercises'
-import type { AttemptResult } from '../core/grading'
+import { buildMeaningChoices, buildTermChoices, seededRandom, type ChoiceSource, type TermSource } from '../core/exercises'
+import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { liveCard } from '../core/library'
 import { newCard } from '../core/scheduler'
-import { applyAction, currentStep, progress, summarize, type SessionAction, type SessionPlan, type Step } from '../core/session'
+import { addActiveTime, applyAction, currentStep, progress, summarize, type SessionAction, type SessionPlan, type Step } from '../core/session'
 import { dueCount, learnCandidates, nextDueAt, type Library } from '../db/library'
 import { rowToCard } from '../db/cards'
 import { appScheduler, repo } from '../db/repo'
 import type { StudySessionRow } from '../db/types'
 import { useLibrary, useNow } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
-import { useSettings } from '../lib/settings'
+import { getSettings, useSettings } from '../lib/settings'
 import { playComplete } from '../lib/sfx'
 import { speechAvailable } from '../services/speech'
 import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
-import { FlashcardStep, IntroStep, MultipleChoiceStep, TypingStep, type AnswerOutcome } from '../study/steps'
+import { AudioChoiceStep, DictationStep, FlashcardStep, IntroStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
+import { StudyProgress } from '../study/ui'
+import { Buddy } from '../components/Buddy'
 
 type Mode = 'learn' | 'review' | 'resume'
 type Phase = { kind: 'setup' } | { kind: 'running'; session: StudySessionRow } | { kind: 'summary'; plan: SessionPlan; endedAt: number }
@@ -219,14 +222,16 @@ function Setup({
   )
 }
 
-// ---- Chạy buổi học (R4.2–R4.6, R5.3, R5.5, R5.10, R6.12) --------------------------------------
+// ---- Chạy buổi học (R4.2–R4.6, R5.3, R5.5, R5.10, R6.11, R6.12) --------------------------------
 
 function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session: StudySessionRow; onEnd: (plan: SessionPlan) => void; onPause: () => void }) {
   const [plan, setPlan] = useState(session.plan)
   const planRef = useRef(session.plan)
-  const [view, setView] = useState<{ step: Step | undefined; key: number; cursor: number }>(() => ({ step: currentStep(session.plan), key: 0, cursor: session.plan.cursor }))
+  const [view, setView] = useState<{ step: Step | undefined; key: number }>(() => ({ step: currentStep(session.plan), key: 0 }))
   const [exitDir, setExitDir] = useState(0)
   const [pauseOpen, setPauseOpen] = useState(false)
+  const [finishing, setFinishing] = useState(false)
+  const finishingRef = useRef(false)
   const shownAt = useRef(Date.now())
   const busy = useRef(false)
 
@@ -237,18 +242,24 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
 
   /** Áp dụng hành động, ghi lượt trả lời và lịch ôn, lưu tiến trình. */
   const act = useCallback(
-    async (step: Step, action: SessionAction): Promise<AnswerOutcome> => {
-      const { plan: next, effect } = applyAction(planRef.current, action)
-      commitPlan(next)
+    async (step: Step, action: SessionAction, exercise?: ExerciseKind): Promise<AnswerOutcome> => {
       const at = Date.now()
-      const { card } = await repo.recordStep(session, step, effect, next, { at, responseMs: at - shownAt.current })
+      const { plan: applied, effect } = applyAction(planRef.current, action)
+      const next = addActiveTime(applied, at - shownAt.current)
+      commitPlan(next)
+      const { card } = await repo.recordStep(session, step, effect, next, { at, responseMs: at - shownAt.current, exercise })
       return { card }
     },
     [session],
   )
 
+  /** Kết thúc: hiện màn "đang cập nhật lịch ôn" một nhịp ngắn rồi sang tổng kết. */
   const finish = useCallback(async () => {
-    await repo.endSession(session.id, 'completed', planRef.current)
+    if (finishingRef.current) return
+    finishingRef.current = true
+    setFinishing(true)
+    const minWait = new Promise((r) => setTimeout(r, getSettings().reduceMotion ? 200 : 1100))
+    await Promise.all([repo.endSession(session.id, 'completed', planRef.current), minWait])
     onEnd(planRef.current)
   }, [session.id, onEnd])
 
@@ -261,7 +272,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
         return
       }
       shownAt.current = Date.now()
-      setView((v) => ({ step: next, key: v.key + 1, cursor: planRef.current.cursor }))
+      setView((v) => ({ step: next, key: v.key + 1 }))
     },
     [finish],
   )
@@ -278,10 +289,15 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
     }
   }, [step, item, act, advance, finish])
 
-  const choices = useMemo<ChoiceSource[] | null>(() => {
-    if (!item || step?.exercise !== 'mcq_meaning') return null
-    return buildMeaningChoices(item, lib.items.filter((i) => !i.archived), seededRandom(view.key * 7919 + item.term.length))
-  }, [item, step, lib.items, view.key])
+  const pool = useMemo(() => lib.items.filter((i) => !i.archived), [lib.items])
+  const meaningChoices = useMemo<ChoiceSource[] | null>(() => {
+    if (!item || (step?.exercise !== 'mcq_meaning' && step?.exercise !== 'listen_choose')) return null
+    return buildMeaningChoices(item, pool, seededRandom(view.key * 7919 + item.term.length), step.exercise === 'listen_choose' ? 3 : 4)
+  }, [item, step, pool, view.key])
+  const termChoices = useMemo<TermSource[] | null>(() => {
+    if (!item || step?.exercise !== 'audio_choice') return null
+    return buildTermChoices(item, pool, seededRandom(view.key * 104729 + item.term.length), 3)
+  }, [item, step, pool, view.key])
 
   const preview = useMemo(() => {
     if (!item || step?.exercise !== 'flashcard' || step.kind === 'intro') return null
@@ -297,7 +313,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
       if (!step || busy.current) return { card: null }
       busy.current = true
       try {
-        return await act(step, { type: 'answer', result })
+        return await act(step, { type: 'answer', result }, result.kind === 'answer' ? result.exercise : undefined)
       } finally {
         busy.current = false
       }
@@ -305,11 +321,21 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
     [step, act],
   )
 
+  const noAudio = useCallback(() => {
+    if (!step) return
+    const { plan: next } = applyAction(planRef.current, { type: 'no_audio' })
+    commitPlan(next)
+    void repo.recordStep(session, step, { log: false, grade: null, correct: null, schedule: false, requeued: false }, next, { at: Date.now(), responseMs: null })
+    shownAt.current = Date.now()
+    setExitDir(0)
+    setView((v) => ({ step: currentStep(next), key: v.key + 1 }))
+  }, [step, session])
+
   const { done, total } = progress(plan)
-  const pct = total ? done / total : 0
 
   let body = null
   if (step && item) {
+    const next = () => advance(0)
     if (step.kind === 'intro') {
       body = (
         <IntroStep
@@ -318,44 +344,30 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           onKnown={() => void act(step, { type: 'intro_known' }).then(() => advance(0))}
         />
       )
+    } else if (step.kind === 'known_check') {
+      body = <SlotsStep item={item} knownCheck onAnswer={answer} onContinue={next} />
     } else if (step.exercise === 'flashcard') {
       body = <FlashcardStep item={item} preview={preview} onAnswer={answer} onContinue={(dir) => advance(dir)} />
-    } else if (step.exercise === 'mcq_meaning' && choices) {
-      body = <MultipleChoiceStep item={item} choices={choices} onAnswer={answer} onContinue={() => advance(0)} />
+    } else if ((step.exercise === 'mcq_meaning' || step.exercise === 'listen_choose') && meaningChoices) {
+      body = <MeaningChoiceStep item={item} choices={meaningChoices} listen={step.exercise === 'listen_choose'} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
+    } else if (step.exercise === 'audio_choice' && termChoices) {
+      body = <AudioChoiceStep item={item} choices={termChoices} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
+    } else if (step.exercise === 'dictation') {
+      body = <DictationStep item={item} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
     } else {
-      const typingMode = step.kind === 'known_check' ? 'known_check' : step.exercise === 'dictation' ? 'dictation' : 'recall'
-      body = (
-        <TypingStep
-          item={item}
-          mode={typingMode}
-          onAnswer={answer}
-          onContinue={() => advance(0)}
-          onNoAudio={() => {
-            const { plan: next } = applyAction(planRef.current, { type: 'no_audio' })
-            commitPlan(next)
-            void repo.recordStep(session, step, { log: false, grade: null, correct: null, schedule: false, requeued: false }, next, { at: Date.now(), responseMs: null })
-            shownAt.current = Date.now()
-            setView((v) => ({ step: currentStep(next), key: v.key + 1, cursor: next.cursor }))
-          }}
-        />
-      )
+      body = <SlotsStep item={item} knownCheck={false} onAnswer={answer} onContinue={next} />
     }
   }
 
   return (
-    <div className="flex min-h-dvh flex-col px-4 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+    <div className="flex min-h-dvh flex-col px-4 pt-[calc(env(safe-area-inset-top)+0.75rem)]">
       <div className="flex items-center gap-3">
-        <motion.button type="button" whileTap={{ scale: 0.88 }} aria-label="Tạm dừng" onClick={() => setPauseOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-2 text-muted">
-          <X aria-hidden className="h-5 w-5" />
-        </motion.button>
-        <div className="h-3 flex-1 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuenow={done} aria-valuemax={total}>
-          <motion.div className="h-full rounded-full bg-accent" animate={{ width: `${pct * 100}%` }} transition={{ type: 'spring', stiffness: 120, damping: 20 }} />
-        </div>
-        <span className="min-w-12 text-right text-sm font-semibold text-muted tabular-nums">
-          {Math.min(view.cursor + 1, total)}/{total}
-        </span>
+        <button type="button" aria-label="Tạm dừng" onClick={() => setPauseOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center text-muted">
+          <X aria-hidden className="h-7 w-7" strokeWidth={3} />
+        </button>
+        <StudyProgress value={total ? done / total : 0} />
       </div>
-      <div className="mt-2 flex h-6 items-center justify-center">
+      <div className="flex h-7 items-center justify-center">
         <AnimatePresence>
           {step?.kind === 'retry' && (
             <motion.span initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
@@ -370,7 +382,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
         </AnimatePresence>
       </div>
 
-      <div className="relative mx-auto mt-2 w-full max-w-md flex-1">
+      <div className="relative mx-auto w-full max-w-md flex-1">
         <AnimatePresence mode="popLayout" initial={false} custom={exitDir}>
           <motion.div
             key={view.key}
@@ -390,6 +402,26 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {createPortal(
+      <AnimatePresence>
+        {finishing && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-8">
+            <motion.div initial={{ scale: 0.9, y: 10 }} animate={{ scale: 1, y: 0 }} className="w-full max-w-xs rounded-3xl bg-surface px-6 py-7 text-center">
+              <p className="text-[18px] font-bold">
+                Đang cập nhật <span className="text-sun">lịch ôn</span>
+              </p>
+              <div className="mt-5 flex justify-center gap-3" aria-hidden>
+                {[0, 1, 2].map((i) => (
+                  <motion.span key={i} className="h-4 w-4 rounded-full bg-sun" animate={{ y: [0, -10, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }} />
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>,
+        document.body,
+      )}
 
       <Sheet open={pauseOpen} onClose={() => setPauseOpen(false)} title="Tạm dừng buổi học?">
         <div className="flex flex-col gap-3">
@@ -439,14 +471,9 @@ function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionP
       <Confetti fire={great} />
       <Page title={title} subtitle={`${minutes} phút`}>
         <Card className="flex flex-col items-center py-6 text-center">
-          <motion.div
-            initial={{ scale: 0, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
-            className="mb-3 flex h-20 w-20 items-center justify-center rounded-[26px] bg-warning-soft"
-          >
-            <Trophy aria-hidden className="h-10 w-10 text-warning" />
-          </motion.div>
+          <div className="mb-3">
+            <Buddy mood={great || answered === 0 ? 'cheer' : 'happy'} size={104} />
+          </div>
           <div className="grid w-full grid-cols-3">
             <SumStat label={plan.mode === 'learn' ? 'Từ đã học' : 'Số từ'} value={s.items} />
             <SumStat label="Nhớ" value={s.correct} tone="accent" />
