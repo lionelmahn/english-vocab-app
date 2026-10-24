@@ -298,6 +298,14 @@ Nguyên tắc:
 > - **Sao lưu:** file sao lưu có thêm hồ sơ; khôi phục có lựa chọn “Dùng cả hồ sơ và cài đặt học”.
 > - **Kiểm thử:** 199 test (thêm đồng bộ hồ sơ giữa hai máy, đọc/ghi hồ sơ với schema thật, làm sạch dữ liệu hồ sơ, lịch học). Đã thử trên trình duyệt: sửa hồ sơ, ảnh đại diện, mục tiêu, lịch học, chuyển cài đặt cũ vào hồ sơ, cài đặt đổi theo khi hồ sơ đổi từ máy khác; cú pháp truy vấn hồ sơ đã thử với Supabase thật.
 > - **Còn lại của giai đoạn 2 (8 chức năng P1):** R1.7 + bộ từ khởi đầu, R10.1, R10.2, R10.4, R7.8, R13.8, R11.3 (xuất CSV/Excel), R14.3.
+
+> **Cập nhật 24/10/2026 (bản 0.9.0): Thống kê và xuất từ vựng.** Xong R10.1, R10.2, R10.4, R11.3 → **P1: 60/64**.
+> - **Tổng quan (R10.1):** trang Thống kê mở đầu bằng 4 ô: trong sổ tay, chưa học, đang học (đã có lịch ôn), đến hạn ôn.
+> - **Mục tiêu (R10.4):** hôm nay so với mục tiêu từ mới và số phút; dải 7 ngày của tuần (T2 → CN) đánh dấu ngày đạt mục tiêu, có học chưa đủ, bỏ lỡ, nghỉ theo lịch, hôm nay chưa học. Một ngày đạt khi học đủ số phút (gồm cả ôn tập). Thời gian học ước tính từ lượt trả lời: câu đầu buổi tính thời gian trả lời, các câu sau tính khoảng cách tới câu trước, tối đa 3 phút, để bỏ app mở không bị tính.
+> - **Hoạt động (R10.2):** chọn 7 ngày / 30 ngày / 12 tuần; 4 ô lượt trả lời (so với kỳ trước), từ mới đã học, tỷ lệ đúng, thời gian học; biểu đồ cột chồng ôn tập / học từ mới (màu đã kiểm tra phân biệt được với người mù màu ở cả chế độ sáng và tối), chạm vào cột để xem số, có bảng số liệu thay cho biểu đồ. Mọi số liệu tính lại từ lịch sử trả lời theo múi giờ hồ sơ nên khớp trên mọi máy.
+> - **Xuất từ vựng (R11.3):** Sao lưu, khôi phục, xuất file → Xuất từ vựng ra file: CSV (UTF-8, mở được bằng Excel/Google Sheets), chọn mọi từ hoặc một bộ, tùy chọn gồm từ đã lưu trữ. Cột trùng với file mẫu của trang Nhập nên nhập lại được; thêm cột cấp ghi nhớ, ngày ôn tiếp theo, yêu thích, từ khó, lưu trữ để xem.
+> - **Kiểm thử:** 209 test (thêm tính hoạt động theo ngày, thời gian học, mục tiêu tuần, xuất CSV và nhập lại). Đã thử trên trình duyệt với 30 ngày lịch sử mẫu ở chế độ sáng và tối; sửa lỗi đổi khoảng thời gian khi đang chọn cột.
+> - **Còn lại của giai đoạn 2 (4 chức năng P1):** R1.7 (thiết lập lần đầu) + bộ từ khởi đầu NGSL/TSL, R7.8 + R13.8 (âm thanh), R14.3 (hướng dẫn). Cần chốt: cách có nghĩa tiếng Việt cho bộ từ khởi đầu, có dùng giọng máy chủ (Google/Azure) hay không.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

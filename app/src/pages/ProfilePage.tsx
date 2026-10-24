@@ -394,7 +394,7 @@ export function ProfilePage() {
         <SectionTitle>Dữ liệu</SectionTitle>
         <div className="flex flex-col gap-2">
           <Button icon={DatabaseBackup} className="w-full" onClick={() => navigate('/backup')}>
-            Sao lưu và khôi phục
+            Sao lưu, khôi phục, xuất file
           </Button>
           <Button icon={FileUp} className="w-full" onClick={() => navigate('/import')}>
             Nhập từ file Excel/CSV

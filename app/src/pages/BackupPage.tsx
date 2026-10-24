@@ -1,14 +1,15 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { ArchiveRestore, CloudDownload, Combine, DatabaseBackup, FileJson, LogIn, RotateCcw, Share } from 'lucide-react'
+import { ArchiveRestore, CloudDownload, Combine, DatabaseBackup, FileJson, FileSpreadsheet, LogIn, RotateCcw, Share } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { BackButton, Badge, Segmented, Sheet } from '../components/kit'
+import { BackButton, Badge, Segmented, Select, Sheet } from '../components/kit'
 import { Button, Card, FormMessage, Page, SectionTitle } from '../components/ui'
 import { duplicateGroups } from '../core/vocab'
 import { backupFileName, createBackup, previewRestore, readBackup, restoreBackup, type BackupFile, type RestorePreview, type RestoreResult } from '../db/backup'
 import { db, notifyChange } from '../db/db'
 import { appScheduler, repo } from '../db/repo'
+import { exportFileName, exportRows, toCsv } from '../import/export'
 import { formatDate } from '../lib/format'
 import { useLibrary } from '../lib/hooks'
 import { applyPortableSettings, portableSettings } from '../lib/settings'
@@ -27,8 +28,8 @@ function isPhone(): boolean {
 }
 
 /** Điện thoại: mở bảng chia sẻ (iPhone chọn "Lưu vào Tệp"). Máy tính: tải file xuống. */
-async function saveFile(name: string, text: string): Promise<'saved' | 'cancelled'> {
-  const file = new File([text], name, { type: 'application/json' })
+async function saveFile(name: string, text: string, type = 'application/json'): Promise<'saved' | 'cancelled'> {
+  const file = new File([text], name, { type })
   if (isPhone() && navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file], title: name })
@@ -205,6 +206,8 @@ export function BackupPage() {
         <FormMessage message={exportMsg} />
       </Card>
 
+      <ExportCard />
+
       <Card>
         <SectionTitle className="mb-1">Khôi phục từ file</SectionTitle>
         {!loaded ? (
@@ -349,5 +352,51 @@ export function BackupPage() {
         </div>
       </Sheet>
     </Page>
+  )
+}
+
+/** Xuất từ vựng ra CSV (R11.3): mở bằng Excel/Google Sheets, hoặc nhập lại vào app. */
+function ExportCard() {
+  const lib = useLibrary()
+  const [deckId, setDeckId] = useState('')
+  const [archived, setArchived] = useState(false)
+  const [msg, setMsg] = useState<Message>(null)
+  if (!lib) return null
+  const rows = exportRows(lib, { deckId: deckId || undefined, includeArchived: archived })
+  const deck = lib.decks.find((d) => d.id === deckId)
+
+  async function doExport() {
+    setMsg(null)
+    const name = exportFileName(deck?.name)
+    // Tạo nội dung ngay trong lần chạm, để bảng chia sẻ của điện thoại mở được.
+    const res = await saveFile(name, toCsv(rows), 'text/csv')
+    if (res === 'saved') setMsg({ tone: 'success', text: `Đã xuất ${num.format(rows.length)} từ vào ${name}.` })
+  }
+
+  return (
+    <Card>
+      <SectionTitle className="mb-1">Xuất từ vựng ra file</SectionTitle>
+      <p className="mb-3 text-sm leading-relaxed text-muted">
+        File CSV mở được bằng Excel, Google Sheets, và nhập lại vào app. Có thêm cấp ghi nhớ và ngày ôn tiếp theo để xem. Muốn chuyển cả tiến độ học sang máy khác thì dùng “Sao lưu ra file”.
+      </p>
+      <div className="flex flex-col gap-3">
+        <Select label="Từ cần xuất" value={deckId} onChange={(e) => setDeckId(e.target.value)}>
+          <option value="">Mọi từ trong sổ tay</option>
+          {lib.decks.map((d) => (
+            <option key={d.id} value={d.id}>
+              Bộ “{d.name}”
+            </option>
+          ))}
+        </Select>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={archived} onChange={(e) => setArchived(e.target.checked)} className="h-4 w-4 accent-[var(--app-accent)]" />
+          Gồm cả từ đã lưu trữ
+        </label>
+        <Button icon={FileSpreadsheet} className="w-full disabled:opacity-60" disabled={rows.length === 0} onClick={() => void doExport()}>
+          {rows.length === 0 ? 'Không có từ nào để xuất' : `Xuất ${num.format(rows.length)} từ (CSV)`}
+        </Button>
+      </div>
+      <FormMessage message={msg} />
+    </Card>
   )
 }
