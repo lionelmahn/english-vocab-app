@@ -122,15 +122,176 @@ describe('parsePronunciation — phiên âm Anh–Mỹ, Anh–Anh', () => {
     expect(ipa).toEqual({ uk: '/ˈrɛk.ɔːd/', us: '/ˈrɛk.ɚd/' })
     expect(byPos.noun).toEqual({ uk: '/ˈrɛk.ɔːd/', us: '/ˈrɛk.ɚd/' })
     expect(byPos.adjective).toEqual(byPos.noun)
-    expect(byPos.verb).toEqual({ uk: '/rɪˈkɔːd/', us: '/rəˈkord/' })
+    expect(byPos.verb).toEqual({ uk: '/rɪˈkɔːd/', us: '/rəˈkɔrd/' })
+  })
+
+  it('từ chức năng lấy dạng đọc nhấn, không lấy dạng đọc lướt, giọng SSB hay giọng vùng ("should", "the")', () => {
+    const should = [
+      '===Pronunciation===',
+      '* {{IPA|en|/ʃəd/|a=weak form}}',
+      '* {{IPA|en|/ʃʊd/|a=strong form}}',
+      '* {{IPA| en|/ʃɵd/|a=SSB,strong form}}',
+      '* {{IPA|en|/ʃʉd/|a=Scotland,NI,strong form}}',
+      '* {{a|en|Early Modern}}',
+      '** {{IPA|en|/ʃʊ(l)d/<ref:<<name:Dobson>>>|a=weak form}}',
+      '===Verb===',
+    ].join('\n')
+    expect(parsePronunciation(should, 'should').ipa).toEqual({ us: '/ʃʊd/', uk: '/ʃʊd/' })
+    const the = [
+      '===Pronunciation===',
+      '* {{a|en|RP}}',
+      "** {{IPA|en|/ðə/|a=weak form before consonants}}, {{enPR|''th''ə}}",
+      "** {{IPA|en|/ði/ [ðɪj]|a=weak form before vowels}}, {{enPR|''th''ē}}",
+      "** {{IPA|en|/ðiː/|a=strong form}}, {{enPR|''th''ē}}",
+      '* {{a|en|GA}}',
+      "** {{IPA|en|/ðə/|a=weak form before consonants}}, {{enPR|''th''ə}}",
+      "** {{IPA|en|/ði/ [ðɪj]|a=strong form}}, {{enPR|''th''ē}}",
+      '* {{audio|en|en-uk-the-stressed.ogg|a=UK|IPA=/ðiː/}}',
+    ].join('\n')
+    expect(parsePronunciation(the, 'the').ipa).toEqual({ uk: '/ðiː/', us: '/ði/' })
+  })
+
+  it('phiên âm hẹp […] dùng phiên âm /…/ ở dòng cha; dòng cha không hợp giọng thì đổi phiên âm hẹp về dạng từ điển', () => {
+    const might = ['* {{enPR|mīt}}, {{IPA|en|/maɪt/}}', '** {{IPA|en|[maɪt]|a=RP}}', '** {{IPA|en|[mɐɪt]|a=US}}', '** {{IPA|en|[mɑjt]|a=SSB}}']
+    expect(parsePronunciation(['===Pronunciation===', ...might].join('\n')).ipa).toEqual({ us: '/maɪt/', uk: '/maɪt/' })
+    const pass = [
+      '* {{IPA|en|/pɑːs/}}',
+      '** {{IPA|en|[pʰɑːs]|a=RP,South Africa}}',
+      '** {{IPA|en|[pʰaːs]|a=Boston}}',
+      '* {{IPA|en|/pæs/}}',
+      '** {{IPA|en|[pʰæs]|[pʰɛə̯s]|[pʰeə̯s]|a=GA,Canada}}',
+      '** {{IPA|en|[pʰeə̯s]|a=NYC}}',
+    ]
+    expect(parsePronunciation(['===Pronunciation===', ...pass].join('\n')).ipa).toEqual({ uk: '/pɑːs/', us: '/pæs/' })
+    const number = ['* {{enPR|nŭmʹbər}}, {{IPA|en|/ˈnʌmbər/}}', '** {{IPA|en|[ˈnʌmbə]|a=RP}}', '** {{IPA|en|[ˈnʌ̟mbɚ]|a=US,CA}}', '** {{IPA|en|[ˈnɐmbɐ]|a=AU}}']
+    expect(parsePronunciation(['===Pronunciation===', ...number].join('\n')).ipa).toEqual({ uk: '/ˈnʌmbə/', us: '/ˈnʌmbɚ/' })
+  })
+
+  it('nhãn của file ghi âm không áp cho phiên âm bên dưới; giọng vùng (l-vocalization) không được chọn', () => {
+    const bill = ['===Pronunciation===', '* {{IPA|en|/ˈbɪl/|[ˈbɪɫ]}}', '** {{audio|en|en-uk-bill.ogg|a=UK}}', '*** {{IPA|en|/ˈbɪʊ̯/|[ˈbɪʊ̯]|a=l-vocalization}}'].join('\n')
+    expect(parsePronunciation(bill).ipa).toEqual({ us: '/bɪl/', uk: '/bɪl/' })
+  })
+
+  it('nhãn riêng cho từng phiên âm (a2=, q2=) và mẫu lồng trong mẫu ({{R:…}})', () => {
+    const only = ['===Pronunciation===', '*{{IPA|en|/ˈoʊn.li/}}', '** {{IPA|en|/ˈəʊn.li/|/ˈəʊn.i/|q2=in fast speech|a=UK}}', '** {{IPA|en|/ˈoʊn.li/|a=US}}'].join('\n')
+    expect(parsePronunciation(only).ipa).toEqual({ us: '/ˈoʊn.li/', uk: '/ˈəʊn.li/' })
+    const catchText = [
+      '===Pronunciation===',
+      '* {{enPR|kăch|a=RP,Australia}}, {{IPA|en|/kæt͡ʃ/|/kɛt͡ʃ/|a2=obsolete|ref2={{R:en:Ross:1953|37}}}}',
+      '* {{enPR|kăch|kĕch|a=US,Canada}}, {{IPA|en|/kæt͡ʃ/|/kɛt͡ʃ/}}',
+    ].join('\n')
+    expect(parsePronunciation(catchText).ipa).toEqual({ uk: '/kætʃ/', us: '/kætʃ/' })
+  })
+
+  it('nhãn loại từ: {{sense|noun}}, {{a|en|adjective|noun}}; nhãn nghĩa lạ ("past of presend") xếp sau', () => {
+    const estimate = [
+      '===Pronunciation===',
+      '* {{a|en|UK}}',
+      '** {{sense|noun}} {{IPA|en|/ˈɛs.tɪ.mət/}}',
+      '** {{sense|verb}} {{IPA|en|/ˈɛs.tɪˌmeɪt/}}',
+      '* {{a|en|US}}',
+      '** {{sense|noun}}{{IPA|en|/ˈɛs.tə.mət/}}',
+      '** {{sense|verb}} {{IPA|en|/ˈɛs.təˌmeɪt/}}',
+      '===Etymology 1===',
+      '====Noun====',
+      '===Etymology 2===',
+      '====Verb====',
+    ].join('\n')
+    const e = parsePronunciation(estimate, 'estimate')
+    expect(e.byPos.noun).toEqual({ uk: '/ˈɛs.tɪ.mət/', us: '/ˈɛs.tə.mət/' })
+    expect(e.byPos.verb).toEqual({ uk: '/ˈɛs.tɪˌmeɪt/', us: '/ˈɛs.təˌmeɪt/' })
+    const present = [
+      '===Pronunciation===',
+      '* {{a|en|adjective|noun}}',
+      '** {{enPR|prĕzʹənt|a=RP,GA,CA}}, {{IPA|en|/ˈpɹɛz.ənt/}}',
+      '** {{IPA|en|/ˈpɹez.ənt/|a=AU,NZ}}',
+      '* {{a|en|verb}}',
+      "** {{enPR|prĭzĕnt'|a=RP}}, {{IPA|en|/pɹɪˈzɛnt/}}",
+      '** {{IPA|en|/pɹɪˈzɛnt/|a=GA}}',
+      '** {{IPA|en|/pɹiˈzɛnt/|a=US}}',
+      '* {{a|en|past of "presend"}}',
+      '** {{IPA|en|/pɹiːˈsɛnt/|a=RP}}',
+      '** {{IPA|en|/pɹiˈsɛnt/|a=GA,Canada}}',
+      '===Etymology 1===',
+      '====Adjective====',
+      '====Noun====',
+      '===Etymology 2===',
+      '====Verb====',
+    ].join('\n')
+    const p = parsePronunciation(present, 'present')
+    expect(p.ipa).toEqual({ uk: '/ˈprɛz.ənt/', us: '/ˈprɛz.ənt/' })
+    expect(p.byPos.noun).toEqual(p.ipa)
+    expect(p.byPos.adjective).toEqual(p.ipa)
+    expect(p.byPos.verb).toEqual({ uk: '/prɪˈzɛnt/', us: '/prɪˈzɛnt/' })
+  })
+
+  it('"Pronunciation 1", "Pronunciation 2" bao các Etymology bên trong ("separate")', () => {
+    const separate = [
+      '==English==',
+      '===Pronunciation 1===',
+      '* {{IPA|en|/ˈsɛp.əˌɹeɪt/|/ˈsɛpˌɹeɪt/|/ˈsɛp.ɚˌeɪt/<a:rhotic,also>|a=GA,CA}}',
+      '* {{IPA|en|/ˈsɛp.əˌɹæɪt/|a=AU,NZ}}',
+      '====Etymology====',
+      '====Verb====',
+      '===Pronunciation 2===',
+      '* {{IPA|en|/ˈsɛp.(ə.)ɹət/|a=RP}}',
+      '* {{IPA|en|/ˈsɛp.ɹət/|a=GA,CA}}',
+      '====Etymology 1====',
+      '=====Adjective=====',
+      '====Etymology 2====',
+      '=====Noun=====',
+    ].join('\n')
+    const { byPos } = parsePronunciation(separate, 'separate')
+    expect(byPos.verb).toEqual({ us: '/ˈsɛp.əˌreɪt/' })
+    expect(byPos.adjective).toEqual({ uk: '/ˈsɛp.ə.rət/', us: '/ˈsɛp.rət/' })
+    expect(byPos.noun).toEqual(byPos.adjective)
+  })
+
+  it('tiêu đề con Stressed/Unstressed trong phần Pronunciation ("to"); phiên âm chỉ của giọng vùng thì không dùng', () => {
+    const to = [
+      '==English==',
+      '===Etymology 1===',
+      '====Pronunciation====',
+      '=====Stressed=====',
+      '* {{enPR|to͞o}}, {{IPA|en|/tuː/}}',
+      '** {{a|en|UK}}',
+      '*** {{IPA|en|[tu̟ː]|[tʰʊw]|a=RP}}',
+      '*** {{IPA|en|[tʰʉw]|a=SSB}}',
+      '** {{IPA|en|[tʰu̟(ː)]|a=US}}',
+      '=====Unstressed=====',
+      '* {{IPA|en|q=before a consonant|/tə/|/tʊ/}}',
+      '** {{IPA|en|[ɾə]|a=US|q=after a vowel}}',
+      '====Preposition====',
+      '===Etymology 2===',
+      '====Pronunciation====',
+      '* {{IPA|en|/t̪oː/|[t̪oː]|a=India}}',
+      '====Particle====',
+    ].join('\n')
+    const { ipa, byPos } = parsePronunciation(to, 'to')
+    expect(ipa).toEqual({ us: '/tu/', uk: '/tuː/' })
+    expect(byPos.preposition).toEqual(ipa)
+    expect(parsePronunciation('===Pronunciation===\n* {{IPA|en|/t̪oː/|[t̪oː]|a=India}}')).toEqual({ ipa: {}, byPos: {} })
+  })
+
+  it('viết theo giọng: Anh–Anh bỏ âm nối (r), Anh–Mỹ dùng /ɚ/, /ɔr/ và không ghi ː', () => {
+    const or = ['===Pronunciation===', '* {{a|en|RP}}', '** {{IPA|en|/ə(ɹ)/|a=weak form}}', '** {{IPA|en|/ɔː(ɹ)/|a=strong form}}', '* {{a|en|GA}}', '** {{IPA|en|/ɚ/|a=weak form}}', '** {{IPA|en|/oɹ/|a=strong form}}']
+    expect(parsePronunciation(or.join('\n')).ipa).toEqual({ uk: '/ɔː/', us: '/ɔr/' })
+    expect(parsePronunciation('===Pronunciation===\n* {{IPA|en|/ˈɛvə(ɹ)/}}').ipa).toEqual({ uk: '/ˈɛvə/', us: '/ˈɛvɚ/' })
+    expect(parsePronunciation('===Pronunciation===\n* {{IPA|en|/ˈiːvən/}}').ipa).toEqual({ uk: '/ˈiːvən/', us: '/ˈivən/' })
   })
 
   it('không có phiên âm thì trả về rỗng', () => {
     expect(parsePronunciation('===Pronunciation===\n* {{audio|en|LL-Q1860 (eng)-give up.wav|a=Southern England}}')).toEqual({ ipa: {}, byPos: {} })
   })
 
-  it('tidyIpa bỏ dấu nối âm', () => {
-    expect(tidyIpa(' /ˈd͡ʒʌd͡ʒ/ ')).toBe('/ˈdʒʌdʒ/')
+  it('tidyIpa: bỏ dấu nối âm và dấu phụ, viết l̩ n̩ thành əl ən, viết âm trong ngoặc, từ một âm tiết không ghi dấu nhấn', () => {
+    expect(tidyIpa(' /ˈd͡ʒʌd͡ʒ.mənt/ ')).toBe('/ˈdʒʌdʒ.mənt/')
+    expect(tidyIpa('/ˈbʊt/')).toBe('/bʊt/')
+    expect(tidyIpa('/ˈlɪ.tl̩/')).toBe('/ˈlɪ.təl/')
+    expect(tidyIpa('/ˈækʃən̩/')).toBe('/ˈækʃən/')
+    expect(tidyIpa('/ˈpæ̞t(ə)n/')).toBe('/ˈpætən/')
+    expect(tidyIpa('/sɪn(t)s/')).toBe('/sɪns/')
+    expect(tidyIpa('/(h)waɪl/')).toBe('/waɪl/')
   })
 })
 

@@ -14,7 +14,7 @@ const API = 'https://en.wiktionary.org/w/api.php'
 const FOUND_TTL = 30 * 86_400_000
 const MISSING_TTL = 86_400_000
 /** Tăng khi đổi cách đọc dữ liệu từ điển, để kết quả cũ trên máy được tra lại. */
-const PARSER_VERSION = 1
+const PARSER_VERSION = 2
 
 export type LookupResult =
   | { status: 'found'; entry: DictEntry }

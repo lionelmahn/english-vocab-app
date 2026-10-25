@@ -99,7 +99,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Bộ từ có sẵn”',
-            text: 'Ở “Sổ tay” → “Bộ từ” → “Thêm bộ có sẵn”. Bộ “1.000 từ thông dụng nhất” gồm 1.000 từ hay gặp nhất (lấy từ NGSL, một danh sách từ tiếng Anh thông dụng), mỗi từ có nghĩa, loại từ, câu ví dụ và bản dịch; từ phổ biến nhất được học trước.',
+            text: 'Ở “Sổ tay” → “Bộ từ” → “Thêm bộ có sẵn”. Bộ “1.000 từ thông dụng nhất” gồm 1.000 từ hay gặp nhất (lấy từ NGSL, một danh sách từ tiếng Anh thông dụng), mỗi từ có nghĩa, loại từ, phiên âm Anh–Mỹ và Anh–Anh (lấy từ Wiktionary), câu ví dụ và bản dịch; từ phổ biến nhất được học trước. Nếu bạn đã thêm bộ này trước khi có phiên âm, app tự điền phiên âm còn trống cho các từ đó.',
           },
         ],
       },

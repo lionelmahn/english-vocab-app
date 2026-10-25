@@ -4,7 +4,7 @@ import { applyReview, createScheduler, newCard } from '../core/scheduler'
 import type { AnswerEffect, SessionPlan, Step } from '../core/session'
 import { sameContent } from '../core/merge'
 import { profileDefaults, sanitizeProfile, type ProfileData } from '../core/profile'
-import { duplicateGroups, findDuplicates, termKey, type DuplicateCandidate, type DuplicateMatch } from '../core/vocab'
+import { duplicateGroups, findDuplicates, meaningKey, termKey, type DuplicateCandidate, type DuplicateMatch } from '../core/vocab'
 import { getDeviceId } from '../lib/device'
 import { cardToRow, rowToCard } from './cards'
 import { commit, db, notifyChange, type Change, type VocabDatabase } from './db'
@@ -128,7 +128,28 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       const found = decks.find((d) => d.name.trim().toLowerCase() === name.trim().toLowerCase())
       const deckId = found?.id ?? (await repo.createDeck({ name }, now))
       const res = await repo.saveFromSource(inputs, [deckId], now)
+      await repo.fillMissingIpa(inputs, now)
       return { deckId, created: res.created.length, existing: res.existing.length }
+    },
+
+    /**
+     * Điền phiên âm còn trống cho từ đã có trong sổ tay từ dữ liệu soạn sẵn (bộ khởi đầu có phiên âm từ bản 0.12.2).
+     * Chỉ điền vào ô trống, không sửa phiên âm người học đã có. Một từ khớp khi cùng từ và loại từ, và là từ của chính
+     * nguồn đó (cùng `source`) hoặc trùng hẳn nghĩa. Trả về số từ được điền.
+     */
+    async fillMissingIpa(inputs: ItemInput[], now = Date.now()): Promise<number> {
+      const byKey = new Map(inputs.map((i) => [`${termKey(i.term)}|${i.partOfSpeech}`, i]))
+      const rows: VocabItem[] = []
+      for (const item of await database.vocabItems.toArray()) {
+        if (item.deletedAt !== null || (item.ipaUs && item.ipaUk)) continue
+        const from = byKey.get(`${item.termKey}|${item.partOfSpeech}`)
+        if (!from || (item.source !== from.source && meaningKey(item.meaningVi) !== meaningKey(from.meaningVi))) continue
+        const ipaUs = item.ipaUs || clean(from.ipaUs)
+        const ipaUk = item.ipaUk || clean(from.ipaUk)
+        if (ipaUs !== item.ipaUs || ipaUk !== item.ipaUk) rows.push({ ...item, ipaUs, ipaUk, updatedAt: now })
+      }
+      if (rows.length > 0) await save([{ table: 'vocabItems', rows }], now)
+      return rows.length
     },
 
     /** Sửa mục học; `resetProgress` = học lại từ đầu (R2.3). */

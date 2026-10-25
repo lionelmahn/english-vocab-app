@@ -133,6 +133,34 @@ describe('repo — bộ từ khởi đầu (R1.7)', () => {
     const ordered = lib.items.filter((i) => i.id !== had).sort((a, b) => a.createdAt - b.createdAt).map((i) => i.term)
     expect(ordered).toEqual(['be', 'and'])
   })
+
+  it('điền phiên âm còn trống cho từ đã có (từ của bộ hoặc trùng hẳn nghĩa), không sửa phiên âm đã có', async () => {
+    const NGSL = 'NGSL 1.2 (CC BY-SA 4.0)'
+    const be = await repo.createItem(input('be', 'là', { partOfSpeech: 'verb', source: NGSL }), [], T0)
+    const and = await repo.createItem(input('and', 'và', { partOfSpeech: 'conjunction', source: NGSL, ipaUk: '/ənd/' }), [], T0)
+    const the = await repo.createItem(input('the', '(mạo từ xác định) chỉ người, vật đã biết', { partOfSpeech: 'other' }), [], T0)
+    const lead = await repo.createItem(input('lead', 'chì', { partOfSpeech: 'verb' }), [], T0)
+    const gone = await repo.createItem(input('have', 'có', { partOfSpeech: 'verb', source: NGSL }), [], T0)
+    await repo.deleteItems([gone], T0 + 1)
+    const word = (term: string, partOfSpeech: ItemInput['partOfSpeech'], meaningVi: string, ipaUs: string, ipaUk: string) =>
+      input(term, meaningVi, { partOfSpeech, source: NGSL, ipaUs, ipaUk })
+    const words = [
+      word('the', 'other', '(mạo từ xác định) chỉ người, vật đã biết', '/ði/', '/ðiː/'),
+      word('be', 'verb', 'thì, là, ở', '/bi/', '/biː/'),
+      word('and', 'conjunction', 'và', '/ænd/', '/ænd/'),
+      word('lead', 'verb', 'dẫn dắt', '/lid/', '/liːd/'),
+      word('have', 'verb', 'có', '/hæv/', '/hæv/'),
+    ]
+    expect(await repo.fillMissingIpa(words, T0 + 50)).toBe(3)
+    const get = async (id: string) => (await database.vocabItems.get(id))!
+    expect(await get(be)).toMatchObject({ meaningVi: 'là', ipaUs: '/bi/', ipaUk: '/biː/', updatedAt: T0 + 50 })
+    expect(await get(and)).toMatchObject({ ipaUs: '/ænd/', ipaUk: '/ənd/' })
+    expect(await get(the)).toMatchObject({ ipaUs: '/ði/', ipaUk: '/ðiː/' })
+    expect((await get(lead)).ipaUs).toBeUndefined()
+    expect((await get(gone)).ipaUs).toBeUndefined()
+    expect(await database.outbox.filter((o) => o.table === 'vocabItems' && o.rowId === be && o.at === T0 + 50).count()).toBe(1)
+    expect(await repo.fillMissingIpa(words, T0 + 60)).toBe(0)
+  })
 })
 
 describe('repo — gộp từ trùng (R2.5, R11.4)', () => {

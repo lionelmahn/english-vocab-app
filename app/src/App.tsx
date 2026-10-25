@@ -29,6 +29,7 @@ import { WordFormPage } from './pages/WordFormPage'
 import { openedFromRecoveryLink, startAuth } from './services/auth'
 import { startProfile } from './services/profile'
 import { startPush } from './services/push'
+import { fillStarterIpa } from './services/starterIpa'
 import { startSync, useSyncStatus } from './services/sync'
 import { useAuth } from './services/auth'
 import { welcomeDone } from './lib/welcome'
@@ -49,6 +50,16 @@ function useWelcomeRedirect(pathname: string, navigate: (to: string, opts: { rep
     if (auth.status === 'loading' || (auth.status === 'signed_in' && !sync.lastSyncedAt)) return
     navigate('/welcome', { replace: true })
   }, [words, auth.status, sync.lastSyncedAt, pathname, navigate])
+}
+
+/** Điền phiên âm cho từ của bộ khởi đầu đã thêm từ trước; đã đăng nhập thì đợi đồng bộ lần đầu để có đủ từ. */
+function useStarterIpaFill() {
+  const auth = useAuth()
+  const sync = useSyncStatus()
+  useEffect(() => {
+    if (auth.status === 'loading' || (auth.status === 'signed_in' && !sync.lastSyncedAt)) return
+    void fillStarterIpa()
+  }, [auth.status, sync.lastSyncedAt])
 }
 
 function depthOf(pathname: string): number {
@@ -82,6 +93,7 @@ export default function App() {
   }
 
   useWelcomeRedirect(location.pathname, navigate)
+  useStarterIpaFill()
 
   useEffect(() => {
     document.documentElement.dataset.reduceMotion = String(reduceMotion)

@@ -260,7 +260,9 @@ function groupClips(assets: readonly AudioAsset[]): Map<string, ClipGroup> {
 
 /**
  * Đưa Giọng iPhone trên máy vào danh sách đồng bộ: mỗi khóa một dòng. Bản tạo lại sau lần tải lên trước
- * được tải lên lại; bản đã xóa ở máy khác (sau khi tạo) thì bỏ qua. Hai máy cùng tạo một khóa thì giữ một dòng.
+ * thành dòng mới (dòng cũ bỏ đi, file cũ bị xóa khỏi kho): giữ dòng cũ thì đường dẫn file không đổi, dòng chỉ khác
+ * thời điểm sửa và có thể bị đồng bộ coi là không đổi, máy khác không tải bản mới.
+ * Bản đã xóa ở máy khác (sau khi tạo) thì bỏ qua. Hai máy cùng tạo một khóa thì giữ một dòng.
  */
 export async function ensureClipAssets(database: VocabDatabase, accent: Accent, now = Date.now()): Promise<number> {
   const versions = await clipVersions(database)
@@ -271,7 +273,10 @@ export async function ensureClipAssets(database: VocabDatabase, accent: Accent, 
   for (const [key, createdAt] of versions) {
     const g = groups.get(key)
     if (g?.winner) {
-      if (createdAt > g.winner.updatedAt && g.winner.storagePath) rows.push({ ...g.winner, storagePath: undefined, updatedAt: now })
+      if (createdAt > g.winner.updatedAt && g.winner.storagePath) {
+        rows.push({ ...g.winner, deletedAt: now, updatedAt: now })
+        fresh.push(key)
+      }
     } else if (createdAt > (g?.deletedAt ?? 0)) fresh.push(key)
   }
   for (const clip of await database.voiceClips.bulkGet(fresh)) {

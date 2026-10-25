@@ -11,12 +11,12 @@ const text = readFileSync(fileURLToPath(new URL('./ngsl-1000.txt', import.meta.u
 const items = parseStarter(text, 'NGSL 1.2 (CC BY-SA 4.0)')
 
 describe('bộ 1.000 từ thông dụng (NGSL 1.2)', () => {
-  it('đủ 1.000 từ, đúng thứ tự hạng, mỗi dòng 6 cột', () => {
+  it('đủ 1.000 từ, đúng thứ tự hạng, mỗi dòng 8 cột', () => {
     const rows = text.trim().split('\n').slice(1)
     expect(rows).toHaveLength(1000)
     rows.forEach((r, i) => {
       const cols = r.split('|')
-      expect(cols).toHaveLength(6)
+      expect(cols).toHaveLength(8)
       expect(Number(cols[0])).toBe(i + 1)
     })
     expect(items).toHaveLength(1000)
@@ -30,6 +30,18 @@ describe('bộ 1.000 từ thông dụng (NGSL 1.2)', () => {
       expect(POS_ORDER, it.term).toContain(it.partOfSpeech)
       expect(it.examples[0]?.vi, it.term).toBeTruthy()
     }
+  })
+
+  it('từ nào cũng có phiên âm Anh–Mỹ và Anh–Anh, viết trong /…/ bằng ký hiệu quen thuộc của từ điển', () => {
+    const symbols = /^\/[pbtdkɡfvθðszʃʒhmnŋlrjwiɪeɛæʌɑɒɔʊuɜɝəɚaoˈˌ.ː ]+\/$/
+    for (const it of items) {
+      expect(it.ipaUs, it.term).toMatch(symbols)
+      expect(it.ipaUk, it.term).toMatch(symbols)
+      // Anh–Anh không có âm r sau nguyên âm, /ɚ/, /oʊ/; Anh–Mỹ không có /ɒ/, /əʊ/, /ɜ/ không r và dấu ː.
+      expect(it.ipaUk, it.term).not.toMatch(/ɚ|ɝ|oʊ|r(?![.ˈˌ]?[aeiouæɑɒɔəɛɜɪʊʌ])/)
+      expect(it.ipaUs, it.term).not.toMatch(/ɒ|əʊ|ɜ|ː/)
+    }
+    expect(items.find((it) => it.term === 'present')).toMatchObject({ partOfSpeech: 'noun', ipaUs: '/ˈprɛz.ənt/', ipaUk: '/ˈprɛz.ənt/' })
   })
 
   it('câu ví dụ chứa đúng mặt chữ của từ (để gạch chân và làm bài điền từ)', () => {

@@ -14,6 +14,8 @@ export interface StarterDeck {
   count: number
   /** Ghi nguồn theo giấy phép. */
   attribution: string
+  /** Nguồn ghi trên từng từ của bộ (để nhận ra từ của bộ trong sổ tay). */
+  source: string
   load: () => Promise<ItemInput[]>
 }
 
@@ -23,26 +25,30 @@ export const STARTER_DECKS: readonly StarterDeck[] = [
   {
     id: 'ngsl-1000',
     name: '1.000 từ thông dụng nhất',
-    description: '1.000 từ xuất hiện nhiều nhất trong tiếng Anh hằng ngày, học từ phổ biến nhất trở đi. Mỗi từ có nghĩa chính, loại từ, câu ví dụ và bản dịch.',
+    description:
+      '1.000 từ xuất hiện nhiều nhất trong tiếng Anh hằng ngày, học từ phổ biến nhất trở đi. Mỗi từ có nghĩa chính, loại từ, phiên âm Anh–Mỹ và Anh–Anh, câu ví dụ và bản dịch.',
     count: 1000,
     attribution:
-      'Danh sách từ: New General Service List 1.2 của C. Browne, B. Culligan và J. Phillips (newgeneralservicelist.com), giấy phép CC BY-SA 4.0. Nghĩa tiếng Việt và câu ví dụ do app soạn, cùng giấy phép.',
+      'Danh sách từ: New General Service List 1.2 của C. Browne, B. Culligan và J. Phillips (newgeneralservicelist.com), giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0), app chuẩn hóa cách viết. Nghĩa tiếng Việt và câu ví dụ do app soạn, cùng giấy phép.',
+    source: NGSL_SOURCE,
     load: async () => parseStarter((await import('./ngsl-1000.txt?raw')).default, NGSL_SOURCE),
   },
 ]
 
 /**
- * Đọc file bộ từ: mỗi dòng `hạng|từ|loại từ|nghĩa|câu ví dụ|dịch câu ví dụ` (dòng đầu là tiêu đề).
+ * Đọc file bộ từ: mỗi dòng `hạng|từ|loại từ|nghĩa|câu ví dụ|dịch câu ví dụ|phiên âm Mỹ|phiên âm Anh` (dòng đầu là tiêu đề).
  * Giữ đúng thứ tự trong file để học từ phổ biến nhất trước.
  */
 export function parseStarter(text: string, source: string): ItemInput[] {
   const lines = text.split(/\r?\n/).filter((l) => l.trim())
   return lines.slice(1).map((line) => {
-    const [, term, pos, meaningVi, example, exampleVi] = line.split('|')
+    const [, term, pos, meaningVi, example, exampleVi, ipaUs, ipaUk] = line.split('|')
     return {
       term: term.trim(),
       partOfSpeech: POS_ORDER.includes(pos as PartOfSpeech) ? (pos as PartOfSpeech) : 'other',
       meaningVi: meaningVi.trim(),
+      ipaUs: ipaUs?.trim() || undefined,
+      ipaUk: ipaUk?.trim() || undefined,
       examples: example ? [{ en: example.trim(), vi: exampleVi?.trim() || undefined }] : [],
       acceptedAnswers: [],
       source,
