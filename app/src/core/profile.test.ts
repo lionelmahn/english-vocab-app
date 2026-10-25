@@ -1,5 +1,6 @@
+import { default_w } from 'ts-fsrs'
 import { describe, expect, it } from 'vitest'
-import { isStudyDay, LEARNING_DEFAULTS, profileDefaults, sameTimeZone, sanitizeProfile, timeZoneOffset, weekdaysLabel } from './profile'
+import { FSRS_DEFAULTS, isStudyDay, LEARNING_DEFAULTS, profileDefaults, sameTimeZone, sanitizeFsrs, sanitizeProfile, timeZoneOffset, weekdaysLabel } from './profile'
 
 describe('sanitizeProfile — khớp ràng buộc của bảng profiles', () => {
   const base = profileDefaults('Asia/Ho_Chi_Minh')
@@ -67,5 +68,28 @@ describe('isStudyDay — theo ngày học bắt đầu lúc 4:00', () => {
 
   it('timeZoneOffset hiện GMT+7 cho Việt Nam', () => {
     expect(timeZoneOffset(tz, saturday)).toBe('GMT+7')
+  })
+})
+
+describe('sanitizeFsrs — mục tiêu ghi nhớ và tham số lịch ôn (R5.13)', () => {
+  it('giữ giá trị hợp lệ, bỏ tham số sai, mục tiêu ngoài khoảng thì lấy giá trị gốc', () => {
+    const w = [...default_w]
+    expect(sanitizeFsrs({ retention: 0.85, weights: w, optimizedAt: 5, optimizedReviews: 420.4, improvement: 0.05 })).toEqual({
+      retention: 0.85,
+      weights: w,
+      optimizedAt: 5,
+      optimizedReviews: 420,
+      improvement: 0.05,
+    })
+    expect(sanitizeFsrs({ retention: 0.5, weights: [1, 2, 3], optimizedAt: 5 })).toEqual(FSRS_DEFAULTS)
+    expect(sanitizeFsrs({ retention: 0.95, weights: w.map(() => NaN) }).weights).toBeNull()
+    expect(sanitizeFsrs(undefined)).toEqual(FSRS_DEFAULTS)
+    // Tham số vượt giới hạn của ts-fsrs được kéo về trong giới hạn.
+    expect(sanitizeFsrs({ retention: 0.9, weights: w.map((v, i) => (i === 7 ? 5 : v)) }).weights![7]).toBe(0.75)
+  })
+
+  it('hồ sơ cũ chưa có mục này thì dùng mặc định', () => {
+    const { fsrs: _f, ...old } = profileDefaults('Asia/Ho_Chi_Minh')
+    expect(sanitizeProfile(old).fsrs).toEqual(FSRS_DEFAULTS)
   })
 })

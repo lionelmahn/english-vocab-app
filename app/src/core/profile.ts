@@ -1,3 +1,4 @@
+import { clipParameters } from 'ts-fsrs'
 import { studyDay } from './day'
 import type { ReviewStyle } from './exercises'
 import { REMINDER_DEFAULTS, sanitizeReminders, type ReminderPrefs } from './reminders'
@@ -58,6 +59,38 @@ export const LEARNING_DEFAULTS: LearningSettings = {
 
 export const LEARNING_KEYS = Object.keys(LEARNING_DEFAULTS) as (keyof LearningSettings)[]
 
+/**
+ * Lịch ôn (R5.13): mục tiêu ghi nhớ và tham số FSRS riêng (nếu đã tối ưu). Đồng bộ qua cột `fsrs_params` của hồ sơ.
+ */
+export interface FsrsSettings {
+  /** Xác suất còn nhớ khi đến hạn ôn, 0,80–0,95. */
+  retention: number
+  /** 21 tham số đã tối ưu theo lịch sử ôn của người học; null = tham số mặc định. */
+  weights: number[] | null
+  /** Lần tối ưu gần nhất: lúc nào, dùng bao nhiêu lượt ôn, dự đoán sát hơn mặc định bao nhiêu (0,05 = 5%). */
+  optimizedAt: number | null
+  optimizedReviews: number
+  improvement: number | null
+}
+
+export const RETENTION_OPTIONS = [0.8, 0.85, 0.9, 0.95] as const
+export const FSRS_DEFAULTS: FsrsSettings = { retention: 0.9, weights: null, optimizedAt: null, optimizedReviews: 0, improvement: null }
+
+const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+
+export function sanitizeFsrs(raw: unknown, base: FsrsSettings = FSRS_DEFAULTS): FsrsSettings {
+  if (!raw || typeof raw !== 'object') return { ...base }
+  const r = raw as Record<string, unknown>
+  const weights = Array.isArray(r.weights) && r.weights.length === 21 && r.weights.every(finite) ? clipParameters([...r.weights], 1, true) : null
+  return {
+    retention: finite(r.retention) && r.retention >= 0.7 && r.retention <= 0.97 ? Math.round(r.retention * 100) / 100 : base.retention,
+    weights,
+    optimizedAt: weights && finite(r.optimizedAt) ? r.optimizedAt : null,
+    optimizedReviews: weights && finite(r.optimizedReviews) ? Math.max(0, Math.round(r.optimizedReviews)) : 0,
+    improvement: weights && finite(r.improvement) ? r.improvement : null,
+  }
+}
+
 export interface ProfileFields {
   displayName: string
   /** Ảnh đại diện đã thu nhỏ (data URL JPEG), lưu thẳng trong hồ sơ. */
@@ -75,6 +108,8 @@ export interface ProfileFields {
   timeZone: string
   /** Nhắc học, nhắc ôn và giờ yên lặng (R9.3, R9.4, R9.6). */
   reminders: ReminderPrefs
+  /** Mục tiêu ghi nhớ và tham số lịch ôn (R5.13). */
+  fsrs: FsrsSettings
 }
 
 export type ProfileData = ProfileFields & LearningSettings
@@ -93,7 +128,7 @@ export function deviceTimeZone(): string {
 }
 
 export function profileDefaults(timeZone = deviceTimeZone()): ProfileData {
-  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, reminders: { ...REMINDER_DEFAULTS }, ...LEARNING_DEFAULTS }
+  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, reminders: { ...REMINDER_DEFAULTS }, fsrs: { ...FSRS_DEFAULTS }, ...LEARNING_DEFAULTS }
 }
 
 export function isValidTimeZone(tz: string): boolean {
@@ -131,6 +166,7 @@ export function sanitizeProfile(raw: Partial<Record<keyof ProfileData, unknown>>
     studyTime: time,
     timeZone: tz,
     reminders: sanitizeReminders(raw.reminders, base.reminders),
+    fsrs: sanitizeFsrs(raw.fsrs, base.fsrs),
     accent: oneOf(raw.accent, ['us', 'uk'], base.accent),
     dailyNewWords: clampInt(raw.dailyNewWords, 0, 200, base.dailyNewWords),
     reviewLimit: clampInt(raw.reviewLimit, 1, 1000, base.reviewLimit),

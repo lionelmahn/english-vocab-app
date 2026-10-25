@@ -1,3 +1,4 @@
+import { default_w } from 'ts-fsrs'
 import type { PGlite } from '@electric-sql/pglite'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Profile, type ReviewLogRow, type VocabItem } from '../db/types'
@@ -145,6 +146,7 @@ describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', ()
       studyTime: '21:00',
       timeZone: 'Asia/Ho_Chi_Minh',
       reminders: { study: false, due: true, dueMin: 20, duePerDay: 1, quietStart: '23:00', quietEnd: '06:30' },
+      fsrs: { retention: 0.85, weights: default_w.map((w, i) => (i === 8 ? 1.5 : w)), optimizedAt: T, optimizedReviews: 512, improvement: 0.061 },
       accent: 'uk',
       dailyNewWords: 15,
       reviewLimit: 100,

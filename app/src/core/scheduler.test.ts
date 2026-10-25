@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Rating, State } from 'ts-fsrs'
-import { applyReview, createScheduler, isDue, newCard, replayReviews, type ScheduledReview } from './scheduler'
+import { default_w, Rating, State } from 'ts-fsrs'
+import { applyReview, configureScheduler, createScheduler, intervalRatio, isDue, newCard, replayReviews, type ScheduledReview } from './scheduler'
 
 const t0 = new Date('2026-10-01T08:00:00Z')
 const at = (days: number, minutes = 0) => new Date(t0.getTime() + days * 86_400_000 + minutes * 60_000)
@@ -67,5 +67,43 @@ describe('replayReviews — đồng bộ không mất lượt, không phụ thu�
   it('nhận trùng một lượt (gửi lại khi mạng chập chờn) không bị tính hai lần', () => {
     const withDup = [...logs, { ...logs[2] }]
     expect(replayReviews(s, t0, withDup)).toEqual(replayReviews(s, t0, logs))
+  })
+})
+
+describe('mục tiêu ghi nhớ và tham số riêng (R5.13)', () => {
+  it('đổi mục tiêu ghi nhớ trên bộ lập lịch đang dùng: mục tiêu thấp thì hẹn xa hơn', () => {
+    const s = createScheduler()
+    const review = () => {
+      let card = newCard(t0)
+      let now = t0
+      for (let i = 0; i < 4; i++) {
+        card = applyReview(s, card, Rating.Good, now).card
+        now = card.due
+      }
+      return card.scheduled_days
+    }
+    const base = review()
+    configureScheduler(s, { requestRetention: 0.8 })
+    expect(review()).toBeGreaterThan(base)
+    configureScheduler(s, { requestRetention: 0.95 })
+    expect(review()).toBeLessThan(base)
+    configureScheduler(s, { requestRetention: 0.9 })
+    expect(review()).toBe(base)
+  })
+
+  it('dùng tham số riêng, rồi về lại mặc định', () => {
+    const s = createScheduler()
+    const w = [...default_w]
+    w[0] = 2
+    configureScheduler(s, { requestRetention: 0.9, weights: w })
+    expect(s.parameters.w[0]).toBe(2)
+    configureScheduler(s, { requestRetention: 0.9, weights: null })
+    expect(s.parameters.w[0]).toBe(default_w[0])
+  })
+
+  it('tỷ lệ khoảng cách ôn so với 90%', () => {
+    expect(intervalRatio(0.9)).toBeCloseTo(1, 6)
+    expect(intervalRatio(0.85)).toBeGreaterThan(1.5)
+    expect(intervalRatio(0.95)).toBeLessThan(0.6)
   })
 })

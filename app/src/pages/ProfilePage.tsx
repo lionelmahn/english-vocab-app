@@ -1,4 +1,4 @@
-import { AudioLines, Bell, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -295,6 +295,9 @@ export function ProfilePage() {
               <Switch label="Hiện bản dịch câu ví dụ" checked={settings.showTranslations} onChange={(v) => updateSettings({ showTranslations: v })} />
             </SettingRow>
           </div>
+          <Button icon={Brain} className="w-full" onClick={() => navigate('/me/memory')}>
+            Mục tiêu ghi nhớ{profile ? ` · ${Math.round(profile.fsrs.retention * 100)}%` : ''}
+          </Button>
         </div>
       </Card>
 

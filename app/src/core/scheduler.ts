@@ -1,4 +1,4 @@
-import { createEmptyCard, fsrs, generatorParameters, type Card, type FSRS, type Grade, type RecordLogItem } from 'ts-fsrs'
+import { computeDecayFactor, createEmptyCard, default_w, fsrs, generatorParameters, type Card, type FSRS, type FSRSParameters, type Grade, type RecordLogItem } from 'ts-fsrs'
 
 /**
  * Bọc thư viện ts-fsrs (R5.1, R5.4). Lịch ôn tính riêng cho từng mục học.
@@ -9,20 +9,43 @@ export interface SchedulerOptions {
   requestRetention?: number
   maximumIntervalDays?: number
   /** Tham số đã tối ưu từ lịch sử của người học (R5.13). */
-  weights?: readonly number[]
+  weights?: readonly number[] | null
+}
+
+function schedulerParams(options: SchedulerOptions): FSRSParameters {
+  return generatorParameters({
+    request_retention: options.requestRetention ?? 0.9,
+    maximum_interval: options.maximumIntervalDays ?? 36500,
+    // Tắt ngẫu nhiên hóa để mọi thiết bị tính ra cùng một lịch khi đồng bộ.
+    enable_fuzz: false,
+    enable_short_term: true,
+    w: options.weights ? [...options.weights] : [...default_w],
+  })
 }
 
 export function createScheduler(options: SchedulerOptions = {}): FSRS {
-  return fsrs(
-    generatorParameters({
-      request_retention: options.requestRetention ?? 0.9,
-      maximum_interval: options.maximumIntervalDays ?? 36500,
-      // Tắt ngẫu nhiên hóa để mọi thiết bị tính ra cùng một lịch khi đồng bộ.
-      enable_fuzz: false,
-      enable_short_term: true,
-      ...(options.weights ? { w: [...options.weights] } : {}),
-    }),
-  )
+  return fsrs(schedulerParams(options))
+}
+
+/**
+ * Đổi mục tiêu ghi nhớ và tham số của bộ lập lịch đang dùng (R5.13), giữ nguyên đối tượng để mọi nơi dùng chung.
+ * Chỉ ảnh hưởng các lượt ôn từ nay; lịch đã hẹn của từng từ giữ nguyên.
+ */
+export function configureScheduler(scheduler: FSRS, options: SchedulerOptions): void {
+  const next = schedulerParams(options)
+  const cur = scheduler.parameters
+  if (cur.request_retention === next.request_retention && cur.w.length === next.w.length && cur.w.every((v, i) => v === next.w[i])) return
+  scheduler.parameters = next
+}
+
+/**
+ * Khoảng cách ôn ở mục tiêu ghi nhớ `retention` so với ở 90% (cùng độ bền trí nhớ). Ví dụ 85% → khoảng 1,9 lần.
+ * Tính theo đường cong quên của FSRS: I(r) ∝ r^(1/decay) − 1.
+ */
+export function intervalRatio(retention: number, weights: readonly number[] = default_w): number {
+  const { decay } = computeDecayFactor([...weights])
+  const at = (r: number) => Math.pow(r, 1 / decay) - 1
+  return at(retention) / at(0.9)
 }
 
 export function newCard(now: Date): Card {

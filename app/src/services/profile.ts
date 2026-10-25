@@ -1,9 +1,10 @@
 import { liveQuery } from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { LEARNING_DEFAULTS, LEARNING_KEYS, profileDefaults, type LearningSettings, type ProfileData } from '../core/profile'
+import { LEARNING_DEFAULTS, LEARNING_KEYS, profileDefaults, sanitizeFsrs, type LearningSettings, type ProfileData } from '../core/profile'
+import { configureScheduler } from '../core/scheduler'
 import { sanitizeReminders } from '../core/reminders'
 import { db } from '../db/db'
-import { repo } from '../db/repo'
+import { appScheduler, repo } from '../db/repo'
 import { PROFILE_ID, type Profile } from '../db/types'
 import { applyLearningSettings, currentLearningSettings, setLearningWriter } from '../lib/settings'
 
@@ -15,7 +16,7 @@ import { applyLearningSettings, currentLearningSettings, setLearningWriter } fro
 export function dataOf(row: Profile): ProfileData {
   const { id: _id, createdAt: _c, updatedAt: _u, deletedAt: _d, ...data } = row
   // Hồ sơ lưu từ bản cũ có thể thiếu mục mới (ví dụ tùy chọn nhắc nhở từ 0.12.0): điền giá trị mặc định.
-  return { ...profileDefaults(data.timeZone), ...data, reminders: sanitizeReminders(data.reminders) }
+  return { ...profileDefaults(data.timeZone), ...data, reminders: sanitizeReminders(data.reminders), fsrs: sanitizeFsrs(data.fsrs) }
 }
 
 function learningOf(row: ProfileData): LearningSettings {
@@ -44,8 +45,12 @@ export function startProfile(): void {
   let first = true
   liveQuery(() => db.profiles.get(PROFILE_ID)).subscribe({
     next: (row) => {
-      if (row) applyLearningSettings(learningOf(row))
-      else if (first) {
+      if (row) {
+        applyLearningSettings(learningOf(row))
+        // Mục tiêu ghi nhớ và tham số riêng (R5.13) áp vào bộ lập lịch dùng chung, kể cả khi đổi từ máy khác.
+        const { retention, weights } = sanitizeFsrs(row.fsrs)
+        configureScheduler(appScheduler, { requestRetention: retention, weights })
+      } else if (first) {
         // Lần đầu chạy bản có hồ sơ: chuyển các cài đặt học đã chỉnh trên máy này vào hồ sơ.
         // Máy chưa chỉnh gì thì để yên, chờ nhận hồ sơ từ máy chủ.
         const mine = currentLearningSettings()

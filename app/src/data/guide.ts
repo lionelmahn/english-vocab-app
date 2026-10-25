@@ -1,3 +1,4 @@
+import { MIN_REVIEWS } from '../core/fsrsOptimizer'
 import { LEVEL_LABELS, LEVEL_THRESHOLDS_DAYS } from '../core/levels'
 import { LEARNING_DEFAULTS, profileDefaults } from '../core/profile'
 import { foldText } from '../core/vocab'
@@ -375,10 +376,10 @@ export const GUIDE: GuideTopic[] = [
     id: 'schedule',
     title: 'Lịch ôn hoạt động thế nào',
     summary: 'Vì sao mỗi từ có ngày ôn khác nhau',
-    keywords: ['fsrs', 'thuật toán', 'khoảng cách', 'hạn ôn', 'đến hạn', 'lặp lại ngắt quãng'],
+    keywords: ['fsrs', 'thuật toán', 'khoảng cách', 'hạn ôn', 'đến hạn', 'lặp lại ngắt quãng', 'mục tiêu ghi nhớ', 'tối ưu', 'tham số'],
     blocks: [
       {
-        p: 'App dùng một thuật toán ôn tập (tên là FSRS) để đoán khi nào bạn sắp quên từng từ và hẹn ôn vào đúng lúc đó: khi đến hạn ôn, khả năng bạn còn nhớ từ đó vẫn vào khoảng 90%. Từ nhớ chắc thì khoảng cách giữa các lần ôn dài dần (vài ngày, vài tuần, vài tháng); từ hay quên thì được ôn dày hơn.',
+        p: 'App dùng một thuật toán ôn tập (tên là FSRS) để đoán khi nào bạn sắp quên từng từ và hẹn ôn vào đúng lúc đó: khi đến hạn ôn, khả năng bạn còn nhớ từ đó vẫn vào khoảng 90% (đổi được, xem phần Mục tiêu ghi nhớ bên dưới). Từ nhớ chắc thì khoảng cách giữa các lần ôn dài dần (vài ngày, vài tuần, vài tháng); từ hay quên thì được ôn dày hơn.',
       },
       { h: 'Câu trả lời của bạn làm gì' },
       {
@@ -403,6 +404,22 @@ export const GUIDE: GuideTopic[] = [
           'Ôn trễ hạn không bị phạt; nếu vẫn nhớ, lần sau thường còn được hẹn xa hơn.',
           'Mỗi từ có lịch riêng; một từ nằm trong nhiều bộ vẫn chỉ có một lịch.',
           'Lưu trữ hoặc tạm dừng ôn một từ thì app không đổi lịch của từ, nhưng thời gian vẫn trôi: khôi phục hoặc bỏ tạm dừng sau ngày hẹn thì từ đến hạn ôn ngay.',
+        ],
+      },
+      { h: 'Mục tiêu ghi nhớ' },
+      {
+        p: '“Cá nhân” → “Mục tiêu ghi nhớ”: chọn 80%, 85%, 90% (mặc định) hoặc 95%. Đây là xác suất bạn còn nhớ một từ khi nó đến hạn. Chọn cao thì lần ôn gần nhau hơn, ít quên nhưng mỗi ngày ôn nhiều hơn; chọn thấp thì ôn thưa hơn nhưng quên nhiều hơn. Trang ghi khoảng cách ôn dài hay ngắn hơn bao nhiêu lần so với mức 90%. Mục tiêu mới áp dụng từ lần ôn tiếp theo của mỗi từ; lịch đã hẹn giữ nguyên. Lựa chọn dùng chung trên mọi máy đã đăng nhập.',
+      },
+      {
+        p: 'Mục “Trí nhớ thực tế” cho biết bạn nhớ bao nhiêu phần trăm ở các lượt ôn cách lần trước từ một ngày trở lên, và app dự đoán bao nhiêu. Hai con số lệch nhau nhiều là dấu hiệu nên tối ưu tham số.',
+      },
+      { h: 'Tối ưu theo lịch sử của bạn' },
+      {
+        list: [
+          'Thuật toán có 21 tham số; mặc định là con số chung từ lịch sử ôn của rất nhiều người. Bấm “Tối ưu tham số” để app tính lại cho riêng bạn ngay trên máy này (không gửi dữ liệu đi đâu, không tốn phí).',
+          `Cần ít nhất ${MIN_REVIEWS} lượt ôn cách lần trước từ một ngày trở lên, có cả lần nhớ lẫn lần quên; chưa đủ thì nút bị mờ và trang ghi còn thiếu bao nhiêu.`,
+          'App để riêng một phần năm lịch sử để kiểm tra: tham số mới chỉ được dùng nếu dự đoán sát hơn mặc định trên phần đó. Nếu không, app giữ nguyên.',
+          'Tham số mới dùng chung trên mọi máy và áp dụng từ lần ôn tiếp theo của mỗi từ. Bấm “Dùng lại tham số mặc định” để quay về. Nên tối ưu lại sau vài tháng, khi lịch sử dài thêm.',
         ],
       },
       { tip: 'Chỉ cần mở app mỗi ngày và ôn hết các từ đến hạn. Bỏ vài ngày cũng không mất gì: từ đến hạn chờ sẵn, và app ôn từ dễ quên nhất trước.' },
