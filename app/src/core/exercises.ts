@@ -41,6 +41,20 @@ export function chooseExercise(level: MemoryLevel, reps: number, opts: ExerciseO
   return pick
 }
 
+/** Dạng bài người học chọn được cho bài kiểm tra (R6.6), theo thứ tự hiển thị. */
+export const TEST_EXERCISES: readonly ExerciseKind[] = ['mcq_meaning', 'cloze_choice', 'matching', 'recall_typing', 'cloze_typing', 'listen_choose', 'dictation', 'audio_choice']
+
+/**
+ * Dạng bài cho một câu kiểm tra: chọn ngẫu nhiên trong các dạng đã chọn mà từ này làm được (có câu ví dụ, đủ phương
+ * án, nghe được). Không dạng nào làm được thì gõ từ theo nghĩa.
+ */
+export function pickTestExercise(kinds: readonly ExerciseKind[], opts: { hasContext: boolean; canMultipleChoice: boolean; audio: boolean }, rand: () => number = Math.random): ExerciseKind {
+  const ok = kinds.filter(
+    (k) => (!CONTEXT_EXERCISES.has(k) || opts.hasContext) && (!CHOICE_EXERCISES.has(k) || opts.canMultipleChoice) && (!AUDIO_EXERCISES.has(k) || opts.audio),
+  )
+  return ok.length > 0 ? ok[Math.floor(rand() * ok.length)] : 'recall_typing'
+}
+
 /** Từ không có câu ví dụ: điền từ vào câu đổi thành dạng tương đương không cần câu. */
 export function withoutContext(kind: ExerciseKind): ExerciseKind {
   if (kind === 'cloze_choice') return 'mcq_meaning'

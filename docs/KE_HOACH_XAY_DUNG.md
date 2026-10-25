@@ -386,6 +386,11 @@ Nguyên tắc:
 > - “Ghép từ với nghĩa”: 4 từ và 4 nghĩa; chỉ từ đang ôn được chấm (ghép đúng ngay là Nhớ, ghép nhầm từ đó hoặc vào nghĩa của nó là Quên); các cặp còn lại khác cả mặt chữ lẫn nghĩa.
 > - Vòng luân phiên dạng bài: cấp 1 thêm chọn từ hợp câu và ghép từ; cấp 2–3 thêm chọn từ hợp câu và gõ từ hợp câu; cấp 4–5 thêm gõ từ hợp câu. Từ không có câu ví dụ chứa đúng từ thì đổi sang chọn nghĩa / gõ từ theo nghĩa; sổ tay chưa đủ 4 nghĩa thì đổi sang gõ từ.
 > - Hướng dẫn (bài Ôn tập) cập nhật. 284 test. Đã thử cả ba bài trên trình duyệt ở khung điện thoại.
+
+> **Cập nhật 25/10/2026 (bản 0.19.0): Bài kiểm tra tùy chọn (R6.6) và lịch sử bài làm (R6.8).**
+> - Thống kê → “Bài kiểm tra”: phạm vi (mọi từ đã học, từ hay quên, một bộ), dạng bài (chọn nhiều; mỗi câu lấy ngẫu nhiên một dạng từ đó làm được), số câu (10–50), thời gian (không giới hạn, 5, 10, 15 phút). Bài kiểm tra không đổi lịch ôn, không có lượt luyện lại; có đồng hồ đếm ngược, hết giờ tự kết thúc, câu chưa làm không tính. Màn kết quả ghi điểm, số câu chưa làm, “Xem lại bài làm”, “Làm bài kiểm tra khác”.
+> - Thống kê → “Lịch sử bài làm”: mọi buổi học, ôn, luyện, kiểm tra (mới nhất trước) với số từ, tỷ lệ đúng (theo câu trả lời đầu tiên của mỗi từ), thời gian; chạm để xem từng câu (từ, dạng bài, đúng/sai, thời gian trả lời, gợi ý, lượt luyện lại). Dựng từ lượt trả lời nên có cả buổi làm trên máy khác.
+> - 289 test (bài kiểm tra, đếm giờ, chọn dạng bài, lịch sử). Đã thử trên trình duyệt: tạo bài 5 phút, làm sai 1 câu, kết thúc sớm (điểm 0/1, 5 câu chưa làm, lịch ôn không đổi), xem lại bài làm và danh sách lịch sử.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

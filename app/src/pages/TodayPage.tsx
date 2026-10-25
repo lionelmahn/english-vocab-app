@@ -15,6 +15,7 @@ import { progress } from '../core/session'
 import { db } from '../db/db'
 import { dueCount, learnCandidates, nextDueAt } from '../db/library'
 import { formatDueIn } from '../lib/format'
+import { SESSION_NOUN } from '../lib/labels'
 import { useLibrary, useNow } from '../lib/hooks'
 import { riseIn } from '../lib/motion'
 import { useSettings } from '../lib/settings'
@@ -160,7 +161,7 @@ export function TodayPage() {
               <Card className="border-sun">
                 <div className="flex items-center gap-3">
                   <div className="flex-1">
-                    <p className="font-bold">Buổi {active.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
+                    <p className="font-bold">Buổi {SESSION_NOUN[active.mode]} đang dở</p>
                     <p className="text-sm text-muted">
                       Đã làm {activeProgress.done}/{activeProgress.total} bước
                     </p>

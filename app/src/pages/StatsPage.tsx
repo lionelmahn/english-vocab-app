@@ -1,10 +1,11 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Check, Table2 } from 'lucide-react'
+import { Check, ClipboardCheck, History, Table2 } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Segmented } from '../components/kit'
 import { HelpButton, HelpTitle } from '../components/Guide'
-import { Card, Page, SectionTitle } from '../components/ui'
+import { Button, Card, Page, SectionTitle } from '../components/ui'
 import { studyDay } from '../core/day'
 import { itemLevel, itemStatus } from '../core/library'
 import { LEVEL_LABELS, type MemoryLevel } from '../core/levels'
@@ -43,6 +44,7 @@ export function StatsPage() {
   const lib = useLibrary()
   const profile = useProfile()
   const now = useNow()
+  const navigate = useNavigate()
   const logs = useLiveQuery(() => db.reviewLogs.toArray(), [])
   const [range, setRange] = useState<Range>('7d')
   const tz = profile?.timeZone ?? deviceTimeZone()
@@ -109,6 +111,20 @@ export function StatsPage() {
           })}
         </ul>
         <p className="mt-4 text-xs leading-relaxed text-subtle">Cấp được tính từ độ bền trí nhớ của thuật toán ôn tập, không phải khoảng ôn cố định.</p>
+      </Card>
+
+      {/* R6.6, R6.8 — kiểm tra và lịch sử bài làm */}
+      <Card>
+        <SectionTitle className="mb-1">Kiểm tra và lịch sử</SectionTitle>
+        <p className="mb-3 text-xs text-subtle">Tự kiểm tra các từ đã học (không đổi lịch ôn), và xem lại kết quả từng buổi.</p>
+        <div className="grid grid-cols-2 gap-2">
+          <Button icon={ClipboardCheck} className="h-11 text-sm" onClick={() => navigate('/test')}>
+            Bài kiểm tra
+          </Button>
+          <Button icon={History} className="h-11 text-sm" onClick={() => navigate('/history')}>
+            Lịch sử bài làm
+          </Button>
+        </div>
       </Card>
     </Page>
   )

@@ -1,4 +1,4 @@
-import { GraduationCap, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
+import { ClipboardCheck, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -7,6 +7,7 @@ import { AnimatedNumber } from '../components/AnimatedNumber'
 import { Confetti } from '../components/Confetti'
 import { BackButton, Badge, Chip, Sheet } from '../components/kit'
 import { formatDueIn } from '../lib/format'
+import { SESSION_NOUN } from '../lib/labels'
 import { HelpButton } from '../components/Guide'
 import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
 import { buildMatchingPairs, buildMeaningChoices, buildTermChoices, seededRandom, type ChoiceSource, type TermSource } from '../core/exercises'
@@ -14,7 +15,7 @@ import { contextSentence } from '../core/vocab'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { liveCard } from '../core/library'
 import { newCard } from '../core/scheduler'
-import { addActiveTime, applyAction, currentStep, progress, summarize, type SessionAction, type SessionPlan, type Step } from '../core/session'
+import { addActiveTime, applyAction, currentStep, progress, summarize, timeLeft, type SessionAction, type SessionPlan, type Step } from '../core/session'
 import { dueCount, learnCandidates, nextDueAt, type Library } from '../db/library'
 import { rowToCard } from '../db/cards'
 import { appScheduler, repo } from '../db/repo'
@@ -32,7 +33,7 @@ import { StudyProgress } from '../study/ui'
 import { Buddy } from '../components/Buddy'
 
 type Mode = 'learn' | 'review' | 'resume'
-type Phase = { kind: 'setup' } | { kind: 'running'; session: StudySessionRow } | { kind: 'summary'; plan: SessionPlan; endedAt: number }
+type Phase = { kind: 'setup' } | { kind: 'running'; session: StudySessionRow } | { kind: 'summary'; plan: SessionPlan; endedAt: number; sessionId: string }
 
 /** Học từ mới (R4), ôn tập theo lịch (R5.3) và tiếp tục buổi dở (R4.6). */
 export function StudyPage({ mode }: { mode: Mode }) {
@@ -64,7 +65,7 @@ export function StudyPage({ mode }: { mode: Mode }) {
         key={phase.session.id}
         lib={lib}
         session={phase.session}
-        onEnd={(plan) => setPhase({ kind: 'summary', plan, endedAt: Date.now() })}
+        onEnd={(plan) => setPhase({ kind: 'summary', plan, endedAt: Date.now(), sessionId: phase.session.id })}
         onPause={() => navigate('/')}
       />
     )
@@ -75,6 +76,7 @@ export function StudyPage({ mode }: { mode: Mode }) {
         lib={lib}
         plan={phase.plan}
         endedAt={phase.endedAt}
+        sessionId={phase.sessionId}
         onStart={async (plan) => setPhase({ kind: 'running', session: await repo.startSession(plan) })}
       />
     )
@@ -142,7 +144,7 @@ function Setup({
     <Page title={mode === 'learn' ? 'Học từ mới' : 'Ôn tập'} back={<BackButton fallback="/" />} action={<HelpButton topic={mode === 'learn' ? 'learn' : 'review'} />}>
       {resumable && resumeProgress && (
         <Card className="border-accent bg-accent-soft">
-          <p className="text-[0.9375rem] font-semibold text-accent-strong">Bạn có một buổi {resumable.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
+          <p className="text-[0.9375rem] font-semibold text-accent-strong">Bạn có một buổi {SESSION_NOUN[resumable.mode]} đang dở</p>
           <p className="mt-0.5 text-sm text-accent-strong/80">
             Đã làm {resumeProgress.done}/{resumeProgress.total} bước. Bắt đầu buổi mới sẽ bỏ buổi này.
           </p>
@@ -384,6 +386,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
   }, [step, session])
 
   const { done, total } = progress(plan)
+  const timeUp = useCallback(() => void finish(), [finish])
 
   let body = null
   if (step && item) {
@@ -423,6 +426,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           <X aria-hidden className="h-7 w-7" strokeWidth={3} />
         </button>
         <StudyProgress value={total ? done / total : 0} />
+        {plan.timeLimitMs && <TestClock plan={plan} onTimeUp={timeUp} />}
       </div>
       <div className="flex h-7 items-center justify-center">
         <AnimatePresence>
@@ -434,6 +438,11 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           {plan.mode === 'retry' && step?.kind !== 'retry' && (
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <Badge>Luyện từ cần củng cố · không đổi lịch ôn</Badge>
+            </motion.span>
+          )}
+          {plan.mode === 'test' && (
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <Badge>Kiểm tra · không đổi lịch ôn</Badge>
             </motion.span>
           )}
         </AnimatePresence>
@@ -504,9 +513,23 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
   )
 }
 
+/** Đồng hồ đếm ngược của bài kiểm tra có giới hạn thời gian (R6.6); hết giờ thì kết thúc buổi. */
+function TestClock({ plan, onTimeUp }: { plan: SessionPlan; onTimeUp: () => void }) {
+  const now = useNow(1000)
+  const remaining = timeLeft(plan, now) ?? 0
+  useEffect(() => {
+    if (remaining === 0) onTimeUp()
+  }, [remaining, onTimeUp])
+  return (
+    <span className={`shrink-0 text-[0.9375rem] font-bold tabular-nums ${remaining < 60_000 ? 'text-danger' : 'text-muted'}`} aria-label="Thời gian còn lại">
+      {Math.floor(remaining / 60_000)}:{String(Math.floor((remaining % 60_000) / 1000)).padStart(2, '0')}
+    </span>
+  )
+}
+
 // ---- Tổng kết (R4.7, R5.12) -------------------------------------------------------------------
 
-function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionPlan; endedAt: number; onStart: (plan: SessionPlan) => void }) {
+function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; plan: SessionPlan; endedAt: number; sessionId: string; onStart: (plan: SessionPlan) => void }) {
   const navigate = useNavigate()
   const now = useNow()
   const s = useMemo(() => summarize(plan, endedAt), [plan, endedAt])
@@ -521,7 +544,9 @@ function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionP
     playComplete()
   }, [])
 
-  const title = plan.mode === 'learn' ? 'Hoàn thành buổi học!' : plan.mode === 'retry' ? 'Đã luyện xong!' : 'Hoàn thành buổi ôn!'
+  const test = plan.mode === 'test'
+  const unanswered = test ? new Set(plan.steps.map((st) => st.itemId)).size - s.items : 0
+  const title = plan.mode === 'learn' ? 'Hoàn thành buổi học!' : plan.mode === 'retry' ? 'Đã luyện xong!' : test ? 'Kết quả kiểm tra' : 'Hoàn thành buổi ôn!'
 
   return (
     <>
@@ -532,16 +557,17 @@ function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionP
             <Buddy mood={great || answered === 0 ? 'cheer' : 'happy'} size={104} />
           </div>
           <div className="grid w-full grid-cols-3">
-            <SumStat label={plan.mode === 'learn' ? 'Từ đã học' : 'Số từ'} value={s.items} />
-            <SumStat label="Nhớ" value={s.correct} tone="accent" />
-            <SumStat label="Quên" value={s.wrong} tone={s.wrong ? 'danger' : undefined} />
+            <SumStat label={plan.mode === 'learn' ? 'Từ đã học' : test ? 'Số câu' : 'Số từ'} value={s.items} />
+            <SumStat label={test ? 'Đúng' : 'Nhớ'} value={s.correct} tone="accent" />
+            <SumStat label={test ? 'Sai' : 'Quên'} value={s.wrong} tone={s.wrong ? 'danger' : undefined} />
           </div>
           {answered > 0 && (
             <p className="mt-4 text-sm text-muted">
-              Tỷ lệ nhớ <b className="text-text">{Math.round(accuracy * 100)}%</b>
+              {test ? 'Điểm' : 'Tỷ lệ nhớ'} <b className="text-text">{test ? `${s.correct}/${answered} câu (${Math.round(accuracy * 100)}%)` : `${Math.round(accuracy * 100)}%`}</b>
               {s.known > 0 && ` · ${s.known} từ bạn đã biết sẵn`}
             </p>
           )}
+          {unanswered > 0 && <p className="mt-1 text-sm text-warning">Hết giờ hoặc dừng sớm: {unanswered} câu chưa làm.</p>}
         </Card>
 
         {s.needWork.length > 0 && (
@@ -585,6 +611,16 @@ function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionP
           {plan.mode === 'learn' && moreNew > 0 && (
             <Button variant={s.needWork.length ? 'secondary' : 'primary'} icon={GraduationCap} onClick={() => navigate('/learn')}>
               Học thêm từ mới
+            </Button>
+          )}
+          {test && (
+            <Button icon={ClipboardCheck} onClick={() => navigate('/test')}>
+              Làm bài kiểm tra khác
+            </Button>
+          )}
+          {s.items > 0 && (
+            <Button icon={History} onClick={() => navigate(`/history/${sessionId}`)}>
+              Xem lại bài làm
             </Button>
           )}
           <Button onClick={() => navigate('/')}>Về trang Hôm nay</Button>

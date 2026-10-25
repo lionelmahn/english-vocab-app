@@ -238,7 +238,7 @@ export const GUIDE: GuideTopic[] = [
     id: 'review',
     title: 'Ôn tập',
     summary: 'Khi nào cần ôn, các dạng bài, cách chấm và màn tổng kết',
-    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố'],
+    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố', 'kiểm tra', 'bài thi', 'lịch sử', 'đồng hồ', 'ghép từ', 'điền từ vào câu'],
     blocks: [
       { p: 'Mỗi từ đã học có một thời điểm đến hạn ôn riêng. Khi có từ đến hạn, trang “Hôm nay” hiện “Đến giờ ôn tập:” và nút “Ôn tập ngay”; bấm vào rồi bấm “Bắt đầu ôn”.' },
       {
@@ -287,6 +287,21 @@ export const GUIDE: GuideTopic[] = [
         ],
       },
       { p: 'Như khi học mới, chỉ câu trả lời đầu tiên của mỗi từ trong buổi được tính. Trả lời sai thì từ quay lại ở bước “Luyện lại” để bạn luyện thêm, nhưng kết quả của từ vẫn là Quên.' },
+      { h: 'Bài kiểm tra tự chọn' },
+      {
+        p: 'Tab “Thống kê” → “Bài kiểm tra”. Chọn “Phạm vi” (“Mọi từ đã học”, “Từ hay quên” là các từ đã quên ít nhất một lần, quên nhiều xếp trước, hoặc một bộ), các dạng bài (mỗi câu lấy ngẫu nhiên một dạng mà từ đó làm được), số câu và thời gian, rồi bấm “Bắt đầu kiểm tra”.',
+      },
+      {
+        list: [
+          'Bài kiểm tra chỉ dùng các từ đã học và không làm đổi lịch ôn; trả lời sai cũng không có lượt luyện lại.',
+          'Có giới hạn thời gian thì góc trên hiện đồng hồ đếm ngược (đỏ khi còn dưới 1 phút). Hết giờ, bài tự kết thúc; câu chưa làm không tính.',
+          'Màn kết quả ghi điểm (số câu đúng trên số câu đã làm). Bấm nút luyện lại các từ cần củng cố để luyện các từ sai, “Xem lại bài làm” để xem từng câu.',
+        ],
+      },
+      { h: 'Lịch sử bài làm' },
+      {
+        p: 'Tab “Thống kê” → “Lịch sử bài làm”: mọi buổi học, ôn, luyện và kiểm tra, mới nhất trước, kèm số từ, tỷ lệ đúng và thời gian. Chạm một buổi để xem từng câu: từ, dạng bài, đúng hay sai, thời gian trả lời, có dùng gợi ý không, và lượt luyện lại. Tỷ lệ đúng tính theo câu trả lời đầu tiên của mỗi từ. Lịch sử được dựng từ các câu trả lời đã lưu nên có cả các buổi làm trên máy khác.',
+      },
       { h: 'Đang ở nơi không bật tiếng được' },
       {
         p: 'Bấm “Tạm thời không nghe được” ở bài nghe. Bài đó và mọi bài nghe còn lại của buổi đổi sang bài không cần nghe, không bị tính sai. Buổi sau các bài nghe quay lại bình thường.',

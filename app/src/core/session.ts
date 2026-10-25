@@ -37,6 +37,8 @@ export interface SessionPlan {
   startedAt: number
   /** Thời gian học thực tế (mili-giây), không tính lúc tạm dừng hay bỏ máy. */
   activeMs?: number
+  /** Bài kiểm tra có giới hạn thời gian (R6.6): hết giờ tính từ lúc bắt đầu thì kết thúc. */
+  timeLimitMs?: number
 }
 
 export type SessionAction =
@@ -110,6 +112,27 @@ export function planReview(
   }
 }
 
+/**
+ * Bài kiểm tra tùy chọn (R6.6): mỗi từ một câu, dạng bài đã chọn sẵn; không làm đổi lịch ôn, trả lời sai không có
+ * lượt luyện lại. `timeLimitMs` = giới hạn thời gian (không có = không giới hạn).
+ */
+export function planTest(items: readonly { id: string; exercise: ExerciseKind }[], startedAt: number, timeLimitMs?: number): SessionPlan {
+  return {
+    mode: 'test',
+    steps: items.map((i) => ({ itemId: i.id, kind: 'exercise' as const, exercise: i.exercise })),
+    cursor: 0,
+    outcomes: initOutcomes(items.map((i) => i.id)),
+    audioOff: false,
+    startedAt,
+    ...(timeLimitMs ? { timeLimitMs } : {}),
+  }
+}
+
+/** Thời gian còn lại của bài kiểm tra có giới hạn (mili-giây, không âm); null nếu không giới hạn. */
+export function timeLeft(plan: SessionPlan, now: number): number | null {
+  return plan.timeLimitMs ? Math.max(0, plan.startedAt + plan.timeLimitMs - now) : null
+}
+
 export function currentStep(plan: SessionPlan): Step | undefined {
   return plan.steps[plan.cursor]
 }
@@ -179,7 +202,8 @@ export function applyAction(plan: SessionPlan, action: SessionAction): { plan: S
       let requeued = false
       if (!correct) {
         next.wrong++
-        if (next.retries < MAX_RETRIES) {
+        // Bài kiểm tra không có lượt luyện lại.
+        if (next.retries < MAX_RETRIES && plan.mode !== 'test') {
           next.retries++
           const retryExercise = plan.audioOff ? withoutAudio(step.exercise) : step.exercise
           steps = insertAt<Step>(steps, plan.cursor + 1 + RETRY_GAP, { itemId: step.itemId, kind: 'retry', exercise: retryExercise })
@@ -214,8 +238,8 @@ export function summarize(plan: SessionPlan, endedAt: number): SessionSummary {
   for (const [id, o] of Object.entries(plan.outcomes)) {
     if (!reached.has(id)) continue
     if (o.known) known++
-    // Buổi luyện lại không tính lịch nên không có điểm: từ có trả lời sai trong buổi là Quên, còn lại là Nhớ.
-    const grade = o.grade ?? (plan.mode === 'retry' ? (o.wrong > 0 ? Rating.Again : Rating.Good) : null)
+    // Buổi luyện lại, luyện tự do, kiểm tra không tính lịch nên không có điểm: từ có trả lời sai là Quên, còn lại là Nhớ.
+    const grade = o.grade ?? (plan.mode === 'retry' || plan.mode === 'practice' || plan.mode === 'test' ? (o.wrong > 0 ? Rating.Again : Rating.Good) : null)
     if (grade === null) continue
     if (grade === Rating.Again) wrong++
     else correct++

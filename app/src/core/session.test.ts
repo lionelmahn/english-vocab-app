@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { Rating } from 'ts-fsrs'
-import { buildMatchingPairs, buildMeaningChoices, buildTermChoices, chooseExercise, seededRandom } from './exercises'
-import { addActiveTime, applyAction, currentStep, isFinished, planLearn, planReview, RETRY_GAP, summarize, type SessionAction, type SessionPlan } from './session'
+import { buildMatchingPairs, buildMeaningChoices, buildTermChoices, chooseExercise, pickTestExercise, seededRandom } from './exercises'
+import { addActiveTime, applyAction, currentStep, isFinished, planLearn, planReview, planTest, RETRY_GAP, summarize, timeLeft, type SessionAction, type SessionPlan } from './session'
 
 const right = (exercise: 'mcq_meaning' | 'recall_typing' | 'dictation' = 'mcq_meaning'): SessionAction => ({
   type: 'answer',
@@ -187,6 +187,16 @@ describe('exercises', () => {
     expect(buildMatchingPairs(t, pool.slice(0, 3), seededRandom(7))).toBeNull()
   })
 
+  it('bài kiểm tra: dạng bài lấy trong các dạng đã chọn mà từ làm được (R6.6)', () => {
+    const kinds = ['cloze_choice', 'dictation', 'matching'] as const
+    const can = { hasContext: true, canMultipleChoice: true, audio: true }
+    const rand = seededRandom(42)
+    const seen = new Set(Array.from({ length: 40 }, () => pickTestExercise(kinds, can, rand)))
+    expect([...seen].sort()).toEqual(['cloze_choice', 'dictation', 'matching'])
+    expect(pickTestExercise(kinds, { hasContext: false, canMultipleChoice: true, audio: false }, seededRandom(3))).toBe('matching')
+    expect(pickTestExercise(['cloze_typing'], { hasContext: false, canMultipleChoice: false, audio: false })).toBe('recall_typing')
+  })
+
   it('luân phiên có cả bài nghe chọn nghĩa và chọn âm thanh', () => {
     expect(chooseExercise(1, 1, opts)).toBe('listen_choose')
     expect(chooseExercise(2, 1, opts)).toBe('audio_choice')
@@ -221,6 +231,37 @@ describe('exercises', () => {
   it('không đủ nghĩa thì không làm trắc nghiệm', () => {
     const t = { id: 't', meaningVi: 'a', partOfSpeech: 'noun' as const }
     expect(buildMeaningChoices(t, [t, { id: '1', meaningVi: 'b', partOfSpeech: 'noun' as const }])).toBeNull()
+  })
+})
+
+describe('bài kiểm tra tùy chọn (R6.6)', () => {
+  it('không đổi lịch, sai không có lượt luyện lại; kết quả tính đúng/sai từng câu, câu chưa làm không tính', () => {
+    let plan = planTest(
+      [
+        { id: 'a', exercise: 'mcq_meaning' },
+        { id: 'b', exercise: 'recall_typing' },
+        { id: 'c', exercise: 'dictation' },
+      ],
+      0,
+      5 * 60_000,
+    )
+    expect(plan.mode).toBe('test')
+    let r = applyAction(plan, wrong())
+    expect(r.effect).toMatchObject({ log: true, schedule: false, requeued: false })
+    expect(r.plan.steps).toHaveLength(3)
+    plan = applyAction(r.plan, right('recall_typing')).plan
+    // Hết giờ trước câu c.
+    expect(summarize(plan, 1000)).toMatchObject({ items: 2, correct: 1, wrong: 1, needWork: ['a'] })
+    r = applyAction(plan, right('dictation'))
+    expect(isFinished(r.plan)).toBe(true)
+  })
+
+  it('đếm thời gian còn lại từ lúc bắt đầu', () => {
+    const plan = planTest([{ id: 'a', exercise: 'mcq_meaning' }], 1000, 60_000)
+    expect(timeLeft(plan, 1000)).toBe(60_000)
+    expect(timeLeft(plan, 31_000)).toBe(30_000)
+    expect(timeLeft(plan, 99_000)).toBe(0)
+    expect(timeLeft(planTest([{ id: 'a', exercise: 'mcq_meaning' }], 0), 5000)).toBeNull()
   })
 })
 
