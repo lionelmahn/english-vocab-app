@@ -1,4 +1,4 @@
-import { BarChart3, BookOpenCheck, CalendarClock, ChevronRight, CloudCog, Gauge, House, Layers, Plus, Rocket, Search, Target, Volume2, type LucideIcon } from 'lucide-react'
+import { BarChart3, Bell, BookOpenCheck, CalendarClock, ChevronRight, CloudCog, Gauge, House, Layers, Plus, Rocket, Search, Target, Volume2, type LucideIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
@@ -18,6 +18,7 @@ const ICONS: Record<GuideTopicId, LucideIcon> = {
   today: House,
   goals: Target,
   stats: BarChart3,
+  reminders: Bell,
   audio: Volume2,
   sync: CloudCog,
 }

@@ -32,6 +32,8 @@ export default defineConfig({
       workbox: {
         // Chỉ lưu sẵn font woff2 (mọi trình duyệt hiện đại đều dùng), bỏ bản woff cũ.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // Nhận thông báo nhắc học/nhắc ôn (public/push-sw.js).
+        importScripts: ['push-sw.js'],
       },
     }),
   ],

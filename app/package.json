@@ -1,12 +1,13 @@
 {
   "name": "english-vocab",
   "private": true,
-  "version": "0.11.1",
+  "version": "0.12.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
+    "push-keys": "node scripts/push-keys.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

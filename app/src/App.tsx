@@ -11,6 +11,7 @@ import { StarterDecksPage, WelcomePage } from './pages/StarterPages'
 import { DeckAddWordsPage, DeckDetailPage, DeckFormPage } from './pages/DeckPages'
 import { HelpPage, HelpTopicPage } from './pages/HelpPage'
 import { ImportPage } from './pages/ImportPage'
+import { RemindersPage } from './pages/RemindersPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
 import { NotebookPage } from './pages/NotebookPage'
@@ -26,6 +27,7 @@ import { WordDetailPage } from './pages/WordDetailPage'
 import { WordFormPage } from './pages/WordFormPage'
 import { openedFromRecoveryLink, startAuth } from './services/auth'
 import { startProfile } from './services/profile'
+import { startPush } from './services/push'
 import { startSync, useSyncStatus } from './services/sync'
 import { useAuth } from './services/auth'
 import { welcomeDone } from './lib/welcome'
@@ -68,6 +70,7 @@ export default function App() {
     startAuth(toReset)
     startProfile()
     startSync()
+    startPush()
   }, [navigate])
 
   // Hướng trượt: đổi tab thì theo thứ tự tab; cùng tab thì đi sâu trượt từ phải, quay lại trượt từ trái.
@@ -128,6 +131,7 @@ export default function App() {
                 <Route path="/me" element={<ProfilePage />} />
                 <Route path="/me/profile" element={<ProfileEditPage />} />
                 <Route path="/me/goals" element={<GoalsPage />} />
+                <Route path="/me/reminders" element={<RemindersPage />} />
                 <Route path="/voice" element={<VoiceClipsPage />} />
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/help/:topic" element={<HelpTopicPage />} />

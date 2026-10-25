@@ -144,6 +144,7 @@ describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', ()
       studyWeekdays: [1, 2, 3, 4, 5],
       studyTime: '21:00',
       timeZone: 'Asia/Ho_Chi_Minh',
+      reminders: { study: false, due: true, dueMin: 20, duePerDay: 1, quietStart: '23:00', quietEnd: '06:30' },
       accent: 'uk',
       dailyNewWords: 15,
       reviewLimit: 100,

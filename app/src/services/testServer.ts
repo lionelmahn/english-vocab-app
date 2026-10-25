@@ -12,9 +12,13 @@ import type { SyncRemote } from './syncEngine'
 const migration = (name: string) => fileURLToPath(new URL(`../../../supabase/migrations/${name}`, import.meta.url))
 const INIT = migration('20261023000000_init.sql')
 const AUDIO = migration('20261025000000_audio_storage.sql')
+const REMINDERS = migration('20261026000000_reminders.sql')
 
-/** `audio: false` = máy chủ chưa chạy file SQL âm thanh (để thử đồng bộ vẫn chạy). */
-export async function startTestServer({ audio = true }: { audio?: boolean } = {}): Promise<PGlite> {
+/**
+ * `audio: false` = máy chủ chưa chạy file SQL âm thanh (để thử đồng bộ vẫn chạy).
+ * `reminders: true` = chạy thêm file SQL nhắc nhở (phần bảng và hàm; phần lịch chạy cần pg_cron của Supabase nên bỏ qua).
+ */
+export async function startTestServer({ audio = true, reminders = false }: { audio?: boolean; reminders?: boolean } = {}): Promise<PGlite> {
   const pg = new PGlite()
   await pg.exec(`
     create schema auth;
@@ -38,6 +42,10 @@ export async function startTestServer({ audio = true }: { audio?: boolean } = {}
         $$ select (string_to_array(name, '/'))[1:array_length(string_to_array(name, '/'), 1) - 1] $$;
     `)
     await pg.exec(readFileSync(AUDIO, 'utf8'))
+  }
+  if (reminders) {
+    await pg.exec('create role service_role;')
+    await pg.exec(readFileSync(REMINDERS, 'utf8').split('-- ==== LỊCH CHẠY')[0])
   }
   return pg
 }

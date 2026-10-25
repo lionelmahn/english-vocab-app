@@ -239,7 +239,7 @@ function GoalsForm({ profile }: { profile: ProfileData }) {
 
       <Card>
         <SectionTitle className="mb-1">Giờ học</SectionTitle>
-        <p className="mb-3 text-sm text-muted">Giờ bạn thường học mỗi ngày. App sẽ nhắc ôn vào giờ này khi có tính năng nhắc nhở (giai đoạn 3).</p>
+        <p className="mb-3 text-sm text-muted">Giờ bạn thường học mỗi ngày. Bật nhắc nhở (Cá nhân → Nhắc nhở) thì app nhắc học vào giờ này.</p>
         <div className="flex items-center gap-3">
           <label className="flex h-12 flex-1 items-center rounded-2xl border border-line bg-surface px-4 focus-within:border-accent">
             <input

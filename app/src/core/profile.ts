@@ -1,5 +1,6 @@
 import { studyDay } from './day'
 import type { ReviewStyle } from './exercises'
+import { REMINDER_DEFAULTS, sanitizeReminders, type ReminderPrefs } from './reminders'
 
 /**
  * Hồ sơ người học (R1.4), mục tiêu (R1.5), lịch học (R9.2) và cài đặt học dùng chung (R14.2).
@@ -72,12 +73,14 @@ export interface ProfileFields {
   studyTime?: string
   /** Múi giờ tính ngày học, chuỗi ngày và giờ nhắc. */
   timeZone: string
+  /** Nhắc học, nhắc ôn và giờ yên lặng (R9.3, R9.4, R9.6). */
+  reminders: ReminderPrefs
 }
 
 export type ProfileData = ProfileFields & LearningSettings
 
 /** Mục chỉ có trên máy chủ ở ô `settings` (không có cột riêng). */
-export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime'] as const
+export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime', 'reminders'] as const
 
 export const ALL_WEEKDAYS = [0, 1, 2, 3, 4, 5, 6]
 
@@ -90,7 +93,7 @@ export function deviceTimeZone(): string {
 }
 
 export function profileDefaults(timeZone = deviceTimeZone()): ProfileData {
-  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, ...LEARNING_DEFAULTS }
+  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, reminders: { ...REMINDER_DEFAULTS }, ...LEARNING_DEFAULTS }
 }
 
 export function isValidTimeZone(tz: string): boolean {
@@ -127,6 +130,7 @@ export function sanitizeProfile(raw: Partial<Record<keyof ProfileData, unknown>>
     studyWeekdays: [...new Set(days)].sort((a, b) => a - b),
     studyTime: time,
     timeZone: tz,
+    reminders: sanitizeReminders(raw.reminders, base.reminders),
     accent: oneOf(raw.accent, ['us', 'uk'], base.accent),
     dailyNewWords: clampInt(raw.dailyNewWords, 0, 200, base.dailyNewWords),
     reviewLimit: clampInt(raw.reviewLimit, 1, 1000, base.reviewLimit),

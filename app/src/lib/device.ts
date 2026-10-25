@@ -15,3 +15,10 @@ export function getDeviceId(): string {
   }
   return cached
 }
+
+/** App đang chạy ở dạng đã cài lên màn hình chính (không phải trong tab trình duyệt). */
+export function isInstalled(): boolean {
+  const standalone = typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches
+  const iosStandalone = typeof navigator !== 'undefined' && (navigator as Navigator & { standalone?: boolean }).standalone === true
+  return standalone || iosStandalone
+}

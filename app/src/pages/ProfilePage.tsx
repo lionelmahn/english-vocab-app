@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { AudioLines, CalendarDays, ChevronRight, CircleAlert, CircleHelp, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, CalendarDays, ChevronRight, CircleAlert, CircleHelp, CloudOff, DatabaseBackup, FileUp, LoaderCircle, LogIn, LogOut, RefreshCw, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -10,6 +10,7 @@ import { HelpTitle } from '../components/Guide'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { db } from '../db/db'
 import { updateSettings, useSettings } from '../lib/settings'
+import { isInstalled } from '../lib/device'
 import { APP_VERSION } from '../lib/version'
 import { checkCloud, signOut, useAuth, type CloudCheck } from '../services/auth'
 import { voiceLabel } from '../core/voices'
@@ -29,11 +30,6 @@ function SettingRow({ title, description, children }: { title: string; descripti
   )
 }
 
-function isInstalled(): boolean {
-  const standalone = typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches
-  const iosStandalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
-  return standalone || iosStandalone
-}
 
 function StatusLine({ icon, tone, children }: { icon: ReactNode; tone: 'ok' | 'muted' | 'error'; children: ReactNode }) {
   const color = tone === 'ok' ? 'text-accent' : tone === 'error' ? 'text-danger' : 'text-subtle'
@@ -315,6 +311,9 @@ export function ProfilePage() {
           </div>
           <Button className="mt-4 w-full" onClick={() => navigate('/me/goals')}>
             Đổi mục tiêu và lịch học
+          </Button>
+          <Button icon={Bell} className="mt-2 w-full" onClick={() => navigate('/me/reminders')}>
+            Nhắc nhở
           </Button>
         </Card>
       )}

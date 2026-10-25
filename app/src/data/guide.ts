@@ -1,6 +1,7 @@
 import { LEVEL_LABELS, LEVEL_THRESHOLDS_DAYS } from '../core/levels'
 import { LEARNING_DEFAULTS, profileDefaults } from '../core/profile'
 import { foldText } from '../core/vocab'
+import { REMINDER_DEFAULTS } from '../core/reminders'
 import { CLIP_BATCH } from '../core/voiceClips'
 
 /**
@@ -9,7 +10,7 @@ import { CLIP_BATCH } from '../core/voiceClips'
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'audio' | 'sync'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync'
 
 export type GuideBlock =
   | { h: string }
@@ -494,6 +495,48 @@ export const GUIDE: GuideTopic[] = [
     ],
   },
   {
+    id: 'reminders',
+    title: 'Nhắc nhở',
+    summary: 'Nhắc học đúng giờ và nhắc ôn khi có từ đến hạn',
+    keywords: ['thông báo', 'nhắc học', 'nhắc ôn', 'giờ yên lặng', 'push'],
+    blocks: [
+      {
+        p: 'App gửi thông báo lên điện thoại kể cả khi app đang đóng: nhắc học vào giờ học, và nhắc ôn khi có nhiều từ đến hạn. Cần đăng nhập; trên iPhone còn cần cài app lên màn hình chính.',
+      },
+      { h: 'Bật trên từng máy' },
+      {
+        steps: [
+          'Vào “Cá nhân” → “Nhắc nhở”.',
+          'Bấm “Bật nhắc nhở trên máy này”, rồi chọn “Cho phép” khi máy hỏi.',
+          'Bấm “Gửi thử” để chắc thông báo đến được máy.',
+        ],
+      },
+      {
+        p: 'Mỗi máy bật riêng, còn các tùy chọn bên dưới dùng chung cho mọi máy đã bật. Muốn một máy thôi nhận, bấm “Tắt trên máy này” trên máy đó, hoặc xóa máy đó trong danh sách các máy.',
+      },
+      { h: 'Nhắc gì, lúc nào' },
+      {
+        terms: [
+          {
+            term: '“Nhắc giờ học”',
+            text: 'Vào giờ học đặt ở “Mục tiêu và lịch học”, đúng ngày học, nếu hôm đó bạn chưa trả lời câu nào. Mỗi ngày nhắc tối đa một lần; lỡ đúng giờ thì app vẫn nhắc trong 2 tiếng sau đó.',
+          },
+          {
+            term: '“Nhắc khi có từ đến hạn”',
+            text: `Khi có từ ${REMINDER_DEFAULTS.dueMin} từ đến hạn trở lên (đổi được), tối đa ${REMINDER_DEFAULTS.duePerDay} lần mỗi ngày (đổi được). Hai lần nhắc cách nhau ít nhất 3 tiếng, và không nhắc nếu bạn vừa học trong 1 tiếng trước đó. Các từ đến hạn được gộp vào một thông báo, không báo từng từ.`,
+          },
+          { term: '“Giờ yên lặng”', text: `Không nhắc gì trong khoảng này, kể cả giờ học (mặc định ${REMINDER_DEFAULTS.quietStart}–${REMINDER_DEFAULTS.quietEnd}).` },
+        ],
+      },
+      {
+        p: 'Máy chủ kiểm tra 15 phút một lần nên thông báo có thể đến trễ vài phút. Chạm vào thông báo để mở thẳng trang ôn tập hoặc học từ mới. Số từ đến hạn trong thông báo tính cả từ chỉ nằm trong bộ đang tắt, nên có thể lớn hơn số ở trang Hôm nay.',
+      },
+      {
+        tip: 'Không thấy thông báo? Kiểm tra trang Nhắc nhở ghi “Đã bật trên máy này.” và “Gửi thử” được; iPhone không ở chế độ Tập trung hay Không làm phiền; trong Cài đặt của iPhone → Thông báo, app đang được phép gửi thông báo.',
+      },
+    ],
+  },
+  {
     id: 'audio',
     title: 'Phát âm và âm thanh',
     summary: 'Nguồn phát âm, ghi âm, tải file, báo đọc sai và Giọng iPhone',
@@ -601,7 +644,7 @@ export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
   { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
-  { title: 'Âm thanh và dữ liệu', topics: ['audio', 'sync'] },
+  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync'] },
 ]
 
 export function guideTopic(id: GuideTopicId): GuideTopic {
