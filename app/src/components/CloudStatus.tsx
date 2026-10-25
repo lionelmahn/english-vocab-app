@@ -33,8 +33,12 @@ function syncText(sync: SyncStatus, pending: number): string {
 export function CloudStatus() {
   const auth = useAuth()
   const sync = useSyncStatus()
-  // Âm thanh chờ kho trên máy chủ mở thì không tính là "chờ gửi" (báo riêng bên dưới).
-  const pending = useLiveQuery(() => (sync.audio === 'not_ready' ? db.outbox.filter((e) => e.table !== 'audioAssets').count() : db.outbox.count()), [sync.audio], 0)
+  // Âm thanh, hình chờ kho trên máy chủ mở thì không tính là "chờ gửi" (báo riêng bên dưới).
+  const pending = useLiveQuery(
+    () => db.outbox.filter((e) => !(sync.audio === 'not_ready' && e.table === 'audioAssets') && !(sync.images === 'not_ready' && e.table === 'itemImages')).count(),
+    [sync.audio, sync.images],
+    0,
+  )
   const userId = auth.status === 'signed_in' ? auth.userId : null
   const [checked, setChecked] = useState<{ userId: string; result: CloudCheck } | null>(null)
 
@@ -79,6 +83,16 @@ export function CloudStatus() {
           {sync.audio === 'error' && (
             <StatusLine icon={<CircleAlert aria-hidden className={icon} />} tone="muted">
               Chưa tải được file âm thanh lên/về ({sync.audioError}). Dữ liệu học vẫn đồng bộ bình thường; sẽ thử lại lần sau.
+            </StatusLine>
+          )}
+          {sync.images === 'not_ready' && (
+            <StatusLine icon={<CircleAlert aria-hidden className={icon} />} tone="muted">
+              Kho hình minh họa trên máy chủ chưa mở: ảnh gắn cho từ đang chỉ lưu trên máy này. Chạy file SQL hình (supabase/migrations/20261028000000_item_images.sql) trong Supabase để đồng bộ.
+            </StatusLine>
+          )}
+          {sync.images === 'error' && (
+            <StatusLine icon={<CircleAlert aria-hidden className={icon} />} tone="muted">
+              Chưa tải được ảnh lên ({sync.imagesError}). Dữ liệu học vẫn đồng bộ bình thường; sẽ thử lại lần sau.
             </StatusLine>
           )}
           <Button icon={RefreshCw} className="w-full disabled:opacity-60" disabled={sync.state === 'syncing'} onClick={() => void syncNow()}>

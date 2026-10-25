@@ -19,6 +19,7 @@ import { useSettings } from '../lib/settings'
 import { speak } from '../services/speech'
 import { VoiceClipPrompt } from '../components/VoiceClip'
 import { WordAudioCard } from '../components/WordAudio'
+import { WordImageCard } from '../components/WordImage'
 import { SpeakPractice } from '../components/SpeakPractice'
 import { ReportSheet } from '../components/ReportSheet'
 
@@ -127,6 +128,8 @@ export function WordDetailPage() {
           )}
         </Card>
       )}
+
+      <WordImageCard item={item} />
 
       <WordAudioCard item={item} />
 

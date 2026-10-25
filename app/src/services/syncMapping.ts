@@ -1,5 +1,5 @@
 import { PROFILE_EXTRA_KEYS, profileDefaults, sanitizeProfile } from '../core/profile'
-import { PROFILE_ID, type AudioAsset, type CardStateRow, type Deck, type DeckItem, type Example, type LookupEntry, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
+import { PROFILE_ID, type AudioAsset, type CardStateRow, type Deck, type DeckItem, type Example, type ItemImage, type LookupEntry, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
 
 /** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO) và ngược lại. */
 
@@ -16,19 +16,20 @@ export const REMOTE_TABLE: Record<SyncedTableName, string> = {
   reviewLogs: 'review_logs',
   audioAssets: 'audio_assets',
   lookupHistory: 'lookup_history',
+  itemImages: 'item_images',
 }
 
 /**
  * Thứ tự gửi và kéo: từ và bộ trước, liên kết sau (khóa ngoại).
  * Lượt trả lời đi trước lịch ôn, để máy chủ không bao giờ có lịch ôn mà thiếu lượt trả lời tạo ra nó.
  */
-export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates', 'audioAssets', 'lookupHistory'] as const
+export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates', 'audioAssets', 'lookupHistory', 'itemImages'] as const
 
 /**
- * Bảng cần chạy thêm SQL trên Supabase (âm thanh, 20261025000000_audio_storage.sql). Chưa chạy thì bảng này
- * tạm bỏ qua khi đồng bộ, các bảng khác vẫn đồng bộ bình thường.
+ * Bảng cần chạy thêm SQL trên Supabase (âm thanh: 20261025000000_audio_storage.sql; hình minh họa:
+ * 20261028000000_item_images.sql). Chưa chạy thì bảng đó tạm bỏ qua khi đồng bộ, các bảng khác vẫn đồng bộ bình thường.
  */
-export const OPTIONAL_TABLES: ReadonlySet<PushTable> = new Set(['audioAssets'])
+export const OPTIONAL_TABLES: ReadonlySet<PushTable> = new Set(['audioAssets', 'itemImages'])
 export type PushTable = (typeof PUSH_ORDER)[number]
 
 /** Cột khóa trên máy chủ: hồ sơ có một dòng cho mỗi tài khoản, khóa là user_id. */
@@ -167,6 +168,20 @@ export function audioAssetToRemote(r: AudioAsset, userId: string) {
   }
 }
 
+export function itemImageToRemote(r: ItemImage) {
+  return {
+    id: r.id,
+    item_id: r.itemId,
+    storage_path: orNull(r.storagePath),
+    mime: orNull(r.mime),
+    width: orNull(r.width),
+    height: orNull(r.height),
+    created_at: iso(r.createdAt),
+    updated_at: iso(r.updatedAt),
+    deleted_at: iso(r.deletedAt),
+  }
+}
+
 export function lookupToRemote(r: LookupEntry) {
   return { id: r.id, query: r.query.slice(0, 200), looked_up_at: iso(r.lookedUpAt), deleted_at: iso(r.deletedAt) }
 }
@@ -190,6 +205,8 @@ export function toRemote(table: PushTable, row: unknown, userId = ''): Record<st
       return reviewLogToRemote(row as ReviewLogRow)
     case 'lookupHistory':
       return lookupToRemote(row as LookupEntry)
+    case 'itemImages':
+      return itemImageToRemote(row as ItemImage)
   }
 }
 
@@ -345,6 +362,22 @@ export interface PushRows {
   cardStates: CardStateRow
   reviewLogs: ReviewLogRow
   lookupHistory: LookupEntry
+  itemImages: ItemImage
+}
+
+export function itemImageFromRemote(r: RemoteRow): ItemImage {
+  const num = (v: unknown) => (typeof v === 'number' ? v : undefined)
+  return {
+    id: r.id as string,
+    itemId: r.item_id as string,
+    storagePath: text(r.storage_path),
+    mime: text(r.mime),
+    width: num(r.width),
+    height: num(r.height),
+    createdAt: ms(r.created_at),
+    updatedAt: ms(r.updated_at),
+    deletedAt: msOrNull(r.deleted_at),
+  }
 }
 
 export function lookupFromRemote(r: RemoteRow): LookupEntry {
@@ -372,5 +405,7 @@ export function fromRemote(table: PushTable, row: RemoteRow): PushRows[PushTable
       return reviewLogFromRemote(row)
     case 'lookupHistory':
       return lookupFromRemote(row)
+    case 'itemImages':
+      return itemImageFromRemote(row)
   }
 }

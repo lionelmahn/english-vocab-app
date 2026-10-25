@@ -7,6 +7,7 @@ import { getSupabase } from './supabase'
 import { flushReports } from './feedback'
 import { getSettings } from '../lib/settings'
 import { syncAudio } from './audioStore'
+import { syncImages } from './images'
 import { bindAccount, forgetCursors, syncOnce, type SyncRemote, type SyncResult } from './syncEngine'
 
 /**
@@ -26,9 +27,12 @@ export interface SyncStatus {
    */
   audio: 'unknown' | 'ready' | 'not_ready' | 'error'
   audioError: string | null
+  /** Kho hình minh họa (R2.6), cùng ý nghĩa như `audio`. */
+  images: 'unknown' | 'ready' | 'not_ready' | 'error'
+  imagesError: string | null
 }
 
-let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null, last: null, audio: 'unknown', audioError: null }
+let status: SyncStatus = { state: 'off', lastSyncedAt: null, error: null, last: null, audio: 'unknown', audioError: null, images: 'unknown', imagesError: null }
 const listeners = new Set<() => void>()
 function setStatus(patch: Partial<SyncStatus>) {
   status = { ...status, ...patch }
@@ -119,7 +123,22 @@ export async function syncNow(): Promise<void> {
         audioError = message
       }
     }
-    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last, audio, audioError })
+    let images: SyncStatus['images'] = 'ready'
+    let imagesError: string | null = null
+    if (last.skipped.includes('itemImages')) images = 'not_ready'
+    else {
+      try {
+        if (await syncImages(await client, auth.userId)) {
+          const more = await syncOnce(db, remote, ctx)
+          last = { ...more, received: last.received + more.received, sent: last.sent + more.sent, merged: last.merged + more.merged, replayed: last.replayed + more.replayed }
+        }
+      } catch (e) {
+        const message = (e as Error).message
+        images = /bucket not found/i.test(message) ? 'not_ready' : 'error'
+        imagesError = message
+      }
+    }
+    setStatus({ state: 'idle', lastSyncedAt: Date.now(), error: null, last, audio, audioError, images, imagesError })
   } catch (e) {
     setStatus({ state: navigator.onLine === false ? 'offline' : 'error', error: (e as Error).message })
   } finally {

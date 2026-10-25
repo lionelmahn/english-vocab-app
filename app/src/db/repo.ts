@@ -199,12 +199,15 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       const items = (await database.vocabItems.bulkGet(ids)).filter((x): x is VocabItem => !!x && x.deletedAt === null)
       const links = (await database.deckItems.where('itemId').anyOf(ids).toArray()).filter((d) => d.deletedAt === null)
       const cards = (await database.cardStates.bulkGet(ids)).filter((x): x is CardStateRow => !!x && x.deletedAt === null)
+      // Hình minh họa (R2.6) bỏ theo từ; file trên kho được xóa ở lượt đồng bộ sau.
+      const images = (await database.itemImages.where('itemId').anyOf(ids).toArray()).filter((x) => x.deletedAt === null)
       const gone = <T extends { deletedAt: number | null; updatedAt: number }>(r: T) => ({ ...r, deletedAt: now, updatedAt: now })
       await save(
         [
           { table: 'vocabItems', rows: items.map(gone) },
           { table: 'deckItems', rows: links.map(gone) },
           { table: 'cardStates', rows: cards.map(gone) },
+          { table: 'itemImages', rows: images.map(gone) },
         ],
         now,
       )

@@ -13,6 +13,7 @@ import type { CardStateRow, VocabItem } from '../db/types'
 import { formatDueIn } from '../lib/format'
 import { useSettings } from '../lib/settings'
 import { playCorrect, playWrong } from '../lib/sfx'
+import { useItemImage } from '../services/images'
 import { speak } from '../services/speech'
 import { KeyboardHint, LetterSlots, type SlotsState } from './LetterSlots'
 import { ChoiceCard, FeedbackSheet, PillButton, RoundMic, RoundSpeak, Sentence, SheetButton, StepFrame, TextLink, type ChoiceState, type SheetTone } from './ui'
@@ -129,9 +130,11 @@ function FlipCard({
 
 function TermBack({ item }: { item: VocabItem }) {
   const { accent } = useSettings()
+  const pic = useItemImage(item.id)
   const ipa = accent === 'uk' ? (item.ipaUk ?? item.ipaUs) : (item.ipaUs ?? item.ipaUk)
   return (
     <>
+      {pic?.url && <img src={pic.url} alt="" className="max-h-32 max-w-full rounded-2xl object-contain" />}
       <p className="text-[2rem] leading-tight font-extrabold break-words">{item.term}</p>
       {ipa && <p className="text-[1.125rem] text-muted">{ipa}</p>}
       <p className="mt-1 text-[1.375rem] leading-snug font-bold">

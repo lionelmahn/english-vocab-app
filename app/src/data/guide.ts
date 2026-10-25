@@ -147,6 +147,15 @@ export const GUIDE: GuideTopic[] = [
           '“Sao chép bộ từ” (cuối trang của một bộ) tạo bộ mới cùng tên, thêm chữ (bản sao), gồm các từ của bộ gốc theo đúng thứ tự, để bạn thêm bớt từ hay đổi tên mà bộ gốc giữ nguyên. Hai bộ dùng chung các từ, nên tiến độ là một và sửa nội dung một từ thì đổi ở cả hai bộ.',
         ],
       },
+      { h: 'Hình minh họa, ghi chú và mẹo nhớ' },
+      {
+        list: [
+          'Ở trang một từ, thẻ “Hình minh họa” có nút “Thêm ảnh”: chọn ảnh có sẵn hoặc chụp bằng camera. App thu nhỏ ảnh (cạnh dài tối đa 1024 điểm ảnh, dưới 1 MB) trước khi lưu, nên ảnh chụp từ điện thoại cũng lưu nhanh. Bấm “Đổi ảnh” để thay, “Xóa ảnh” để bỏ.',
+          'Ảnh hiện ở trang của từ và ở mặt sau thẻ từ khi học (lúc lật thẻ giới thiệu hoặc thẻ tự đánh giá).',
+          'Ảnh được lưu trên máy trước rồi đồng bộ sang các máy khác đã đăng nhập; máy khác tải ảnh về khi cần hiện (cần mạng lần đầu). Kho ảnh trên máy chủ cần chạy file SQL hình minh họa một lần; chưa chạy thì ảnh chỉ nằm trên máy đã thêm, và mục “Đồng bộ” ở “Cá nhân” sẽ nhắc.',
+          'Ghi chú và mẹo nhớ nhập ở trang sửa từ, trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)”; chúng hiện ở trang của từ. Âm thanh của từ (ghi âm, tải file, chọn bản Wiktionary) xem bài hướng dẫn về âm thanh.',
+        ],
+      },
       { h: 'Sửa, lưu trữ, xóa' },
       {
         terms: [
@@ -864,7 +873,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Xóa tài khoản”',
-            text: 'Xóa tài khoản cùng mọi dữ liệu trên máy chủ (gồm cả file âm thanh). Các máy khác bị đăng xuất. Dữ liệu trên máy đang dùng vẫn giữ để dùng tiếp không cần tài khoản. Cần chạy file SQL xóa tài khoản trên Supabase một lần; nếu chưa chạy, app sẽ báo.',
+            text: 'Xóa tài khoản cùng mọi dữ liệu trên máy chủ (gồm cả file âm thanh và ảnh). Các máy khác bị đăng xuất. Dữ liệu trên máy đang dùng vẫn giữ để dùng tiếp không cần tài khoản. Cần chạy file SQL xóa tài khoản trên Supabase một lần; nếu chưa chạy, app sẽ báo.',
           },
         ],
       },

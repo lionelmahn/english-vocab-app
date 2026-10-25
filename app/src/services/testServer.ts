@@ -14,13 +14,20 @@ const INIT = migration('20261023000000_init.sql')
 const AUDIO = migration('20261025000000_audio_storage.sql')
 const REMINDERS = migration('20261026000000_reminders.sql')
 const ACCOUNT = migration('20261027000000_account.sql')
+const IMAGES = migration('20261028000000_item_images.sql')
 
 /**
  * `audio: false` = máy chủ chưa chạy file SQL âm thanh (để thử đồng bộ vẫn chạy).
  * `reminders: true` = chạy thêm file SQL nhắc nhở (phần bảng và hàm; phần lịch chạy cần pg_cron của Supabase nên bỏ qua).
  * `account: true` = chạy thêm file SQL xóa tài khoản.
+ * `images: false` = máy chủ chưa chạy file SQL hình minh họa.
  */
-export async function startTestServer({ audio = true, reminders = false, account = false }: { audio?: boolean; reminders?: boolean; account?: boolean } = {}): Promise<PGlite> {
+export async function startTestServer({
+  audio = true,
+  reminders = false,
+  account = false,
+  images = true,
+}: { audio?: boolean; reminders?: boolean; account?: boolean; images?: boolean } = {}): Promise<PGlite> {
   const pg = new PGlite()
   await pg.exec(`
     create schema auth;
@@ -33,8 +40,8 @@ export async function startTestServer({ audio = true, reminders = false, account
     grant execute on function auth.uid() to authenticated;
   `)
   await pg.exec(readFileSync(INIT, 'utf8'))
-  if (audio) {
-    // Kho file của Supabase (schema storage) rút gọn, đủ để chạy file SQL âm thanh.
+  if (audio || images) {
+    // Kho file của Supabase (schema storage) rút gọn, đủ để chạy file SQL âm thanh và hình.
     await pg.exec(`
       create schema storage;
       create table storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint, allowed_mime_types text[]);
@@ -43,8 +50,9 @@ export async function startTestServer({ audio = true, reminders = false, account
       create function storage.foldername(name text) returns text[] language sql immutable as
         $$ select (string_to_array(name, '/'))[1:array_length(string_to_array(name, '/'), 1) - 1] $$;
     `)
-    await pg.exec(readFileSync(AUDIO, 'utf8'))
   }
+  if (audio) await pg.exec(readFileSync(AUDIO, 'utf8'))
+  if (images) await pg.exec(readFileSync(IMAGES, 'utf8'))
   if (reminders) {
     await pg.exec('create role service_role;')
     await pg.exec(readFileSync(REMINDERS, 'utf8').split('-- ==== LỊCH CHẠY')[0])

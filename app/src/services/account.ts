@@ -1,5 +1,6 @@
 import { db } from '../db/db'
 import { AUDIO_BUCKET } from './audioStore'
+import { IMAGE_BUCKET } from './images'
 import { disablePush, pushState } from './push'
 import { getSupabase } from './supabase'
 
@@ -43,7 +44,7 @@ export async function signOutOthers(): Promise<string | null> {
 const MISSING_FUNCTION = 'PGRST202'
 
 /**
- * Xóa tài khoản và mọi dữ liệu trên máy chủ: xóa file âm thanh trong kho của tài khoản, rồi gọi hàm
+ * Xóa tài khoản và mọi dữ liệu trên máy chủ: xóa file âm thanh và ảnh trong kho của tài khoản, rồi gọi hàm
  * delete_my_account() (xóa tài khoản, dữ liệu xóa theo). Xong thì đăng xuất trên máy này. Trả về null nếu xong.
  */
 export async function deleteAccount(): Promise<string | null> {
@@ -53,19 +54,24 @@ export async function deleteAccount(): Promise<string | null> {
   const uid = data.session?.user.id
   if (!uid) return 'Bạn cần đăng nhập để xóa tài khoản.'
 
-  // File âm thanh trong kho (kho chưa mở thì bỏ qua).
-  const bucket = client.storage.from(AUDIO_BUCKET)
-  for (let round = 0; round < 50; round++) {
-    const { data: files, error } = await bucket.list(uid, { limit: 1000 })
-    if (error || !files || files.length === 0) break
-    const { error: removeError } = await bucket.remove(files.map((f) => `${uid}/${f.name}`))
-    if (removeError) return `Chưa xóa được file âm thanh trên máy chủ: ${removeError.message}`
+  // File âm thanh và ảnh trong kho (kho chưa mở thì bỏ qua).
+  for (const [name, label] of [
+    [AUDIO_BUCKET, 'âm thanh'],
+    [IMAGE_BUCKET, 'ảnh'],
+  ] as const) {
+    const bucket = client.storage.from(name)
+    for (let round = 0; round < 50; round++) {
+      const { data: files, error } = await bucket.list(uid, { limit: 1000 })
+      if (error || !files || files.length === 0) break
+      const { error: removeError } = await bucket.remove(files.map((f) => `${uid}/${f.name}`))
+      if (removeError) return `Chưa xóa được file ${label} trên máy chủ: ${removeError.message}`
+    }
   }
 
   const { error } = await client.rpc('delete_my_account')
   if (error) {
     if (error.code === MISSING_FUNCTION || /delete_my_account/.test(error.message)) {
-      return 'Máy chủ chưa cài chức năng xóa tài khoản: chạy file supabase/migrations/20261027000000_account.sql trong SQL Editor của Supabase rồi thử lại. File âm thanh đã được xóa.'
+      return 'Máy chủ chưa cài chức năng xóa tài khoản: chạy file supabase/migrations/20261027000000_account.sql trong SQL Editor của Supabase rồi thử lại. File âm thanh và ảnh đã được xóa.'
     }
     return `Chưa xóa được tài khoản: ${error.message}`
   }

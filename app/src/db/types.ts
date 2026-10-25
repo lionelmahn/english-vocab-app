@@ -121,7 +121,26 @@ export interface StudySessionRow {
   updatedAt: number
 }
 
-export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs' | 'audioAssets' | 'lookupHistory'
+export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs' | 'audioAssets' | 'lookupHistory' | 'itemImages'
+
+/**
+ * Hình minh họa của một từ (R2.6), đồng bộ qua bảng `item_images`; file ở kho "images" trên Supabase.
+ * Mỗi từ dùng ảnh còn hiệu lực mới nhất. `storagePath` trống = file chưa tải lên (đang nằm ở máy đã thêm ảnh).
+ */
+export interface ItemImage extends Synced {
+  itemId: ID
+  storagePath?: string
+  mime?: string
+  width?: number
+  height?: number
+}
+
+/** File ảnh trên máy (ảnh mình thêm, hoặc đã tải về từ kho). */
+export interface ImageBlob {
+  id: ID
+  data: ArrayBuffer
+  mime: string
+}
 
 /** Loại báo lỗi (R14.4), khớp ràng buộc của bảng `feedback_reports`. */
 export type FeedbackKind = 'bug' | 'content' | 'answer' | 'other'
