@@ -1,6 +1,7 @@
 import type { FSRS } from 'ts-fsrs'
 import { checkExercise, chooseExercise, distinctMeaningCount, MIN_CHOICES, type ReviewStyle } from '../core/exercises'
 import { itemLevel } from '../core/library'
+import { contextSentence } from '../core/vocab'
 import { planLearn, planReview, type SessionPlan } from '../core/session'
 import { dueQueue, learnCandidates, type Library } from '../db/library'
 import type { ID } from '../db/types'
@@ -32,7 +33,8 @@ export function buildReviewPlan(
     cards.map((c) => c.id),
     (id) => {
       const c = byId.get(id)!
-      return chooseExercise(itemLevel(c), c.reps, { audioOff: !opts.audioAvailable, canMultipleChoice: mcq, style: opts.style })
+      const item = lib.itemById.get(id)
+      return chooseExercise(itemLevel(c), c.reps, { audioOff: !opts.audioAvailable, canMultipleChoice: mcq, style: opts.style, hasContext: !!item && !!contextSentence(item) })
     },
     opts.now,
   )

@@ -380,6 +380,12 @@ Nguyên tắc:
 > - Đã thử trên trình duyệt với micro giả lập (trình duyệt thử chặn micro thật): ghi, dừng, ghi lại, phát mẫu rồi bản ghi đúng thứ tự; báo lỗi đúng khi micro bị chặn. Chưa thử với micro thật trên iPhone.
 > - Hướng dẫn: thêm phần Luyện đọc (bài Phát âm), nút micro (bài Học từ mới). 282 test.
 > - **Giai đoạn 3 xong** (nhắc nhở, ngoại tuyến, giao diện, tài khoản, quyền riêng tư, luyện đọc). Việc nhỏ còn hẹn: nút “Đổi giờ học” ở trang Nhắc nhở. Tiếp theo: giai đoạn 4 (luyện tập nâng cao).
+
+> **Cập nhật 25/10/2026 (bản 0.18.0): Bắt đầu giai đoạn 4 — điền từ vào câu (R6.4) và ghép từ với nghĩa (R6.5).**
+> - “Chọn từ hợp với chỗ trống”: câu ví dụ bị che từ, chọn 1 trong 4 từ (dạng nhận diện, tối đa Nhớ). “Điền từ hợp với câu”: gõ từ theo ô chữ, chỉ có câu có chỗ trống và bản dịch cả câu, không có nghĩa của từ.
+> - “Ghép từ với nghĩa”: 4 từ và 4 nghĩa; chỉ từ đang ôn được chấm (ghép đúng ngay là Nhớ, ghép nhầm từ đó hoặc vào nghĩa của nó là Quên); các cặp còn lại khác cả mặt chữ lẫn nghĩa.
+> - Vòng luân phiên dạng bài: cấp 1 thêm chọn từ hợp câu và ghép từ; cấp 2–3 thêm chọn từ hợp câu và gõ từ hợp câu; cấp 4–5 thêm gõ từ hợp câu. Từ không có câu ví dụ chứa đúng từ thì đổi sang chọn nghĩa / gõ từ theo nghĩa; sổ tay chưa đủ 4 nghĩa thì đổi sang gõ từ.
+> - Hướng dẫn (bài Ôn tập) cập nhật. 284 test. Đã thử cả ba bài trên trình duyệt ở khung điện thoại.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Rating } from 'ts-fsrs'
-import { buildMeaningChoices, buildTermChoices, chooseExercise, seededRandom } from './exercises'
+import { buildMatchingPairs, buildMeaningChoices, buildTermChoices, chooseExercise, seededRandom } from './exercises'
 import { addActiveTime, applyAction, currentStep, isFinished, planLearn, planReview, RETRY_GAP, summarize, type SessionAction, type SessionPlan } from './session'
 
 const right = (exercise: 'mcq_meaning' | 'recall_typing' | 'dictation' = 'mcq_meaning'): SessionAction => ({
@@ -155,6 +155,36 @@ describe('exercises', () => {
     expect(choices.map((c) => c.id)).toContain('t')
     expect(choices.map((c) => c.id)).not.toContain('2')
     expect(choices.filter((c) => c.partOfSpeech === 'adjective')).toHaveLength(3)
+  })
+
+  it('điền từ vào câu và ghép từ chỉ dùng khi có câu ví dụ / đủ phương án (R6.4, R6.5)', () => {
+    const ctx = { ...opts, hasContext: true }
+    expect(chooseExercise(1, 2, ctx)).toBe('cloze_choice')
+    expect(chooseExercise(1, 3, ctx)).toBe('matching')
+    expect(chooseExercise(2, 5, ctx)).toBe('cloze_typing')
+    expect(chooseExercise(4, 2, ctx)).toBe('cloze_typing')
+    // Không có câu ví dụ chứa từ: đổi sang dạng tương đương.
+    expect(chooseExercise(1, 2, opts)).toBe('mcq_meaning')
+    expect(chooseExercise(4, 2, opts)).toBe('recall_typing')
+    // Không đủ nghĩa khác để làm phương án: chọn từ và ghép từ đổi thành gõ từ.
+    expect(chooseExercise(1, 2, { ...ctx, canMultipleChoice: false })).toBe('recall_typing')
+    expect(chooseExercise(1, 3, { ...ctx, canMultipleChoice: false })).toBe('recall_typing')
+  })
+
+  it('ghép từ: 4 cặp khác cả mặt chữ lẫn nghĩa, có từ cần ôn', () => {
+    const t = { id: 't', term: 'run', meaningVi: 'chạy', partOfSpeech: 'verb' as const }
+    const pool = [
+      t,
+      { id: '1', term: 'Run', meaningVi: 'điều hành', partOfSpeech: 'verb' as const },
+      { id: '2', term: 'jog', meaningVi: 'Chạy.', partOfSpeech: 'verb' as const },
+      { id: '3', term: 'walk', meaningVi: 'đi bộ', partOfSpeech: 'verb' as const },
+      { id: '4', term: 'swim', meaningVi: 'bơi', partOfSpeech: 'verb' as const },
+      { id: '5', term: 'table', meaningVi: 'cái bàn', partOfSpeech: 'noun' as const },
+    ]
+    const pairs = buildMatchingPairs(t, pool, seededRandom(7))!
+    expect(pairs).toHaveLength(4)
+    expect(pairs.map((p) => p.id).sort()).toEqual(['3', '4', '5', 't'])
+    expect(buildMatchingPairs(t, pool.slice(0, 3), seededRandom(7))).toBeNull()
   })
 
   it('luân phiên có cả bài nghe chọn nghĩa và chọn âm thanh', () => {

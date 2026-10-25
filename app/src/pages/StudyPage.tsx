@@ -9,7 +9,8 @@ import { BackButton, Badge, Chip, Sheet } from '../components/kit'
 import { formatDueIn } from '../lib/format'
 import { HelpButton } from '../components/Guide'
 import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
-import { buildMeaningChoices, buildTermChoices, seededRandom, type ChoiceSource, type TermSource } from '../core/exercises'
+import { buildMatchingPairs, buildMeaningChoices, buildTermChoices, seededRandom, type ChoiceSource, type TermSource } from '../core/exercises'
+import { contextSentence } from '../core/vocab'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { liveCard } from '../core/library'
 import { newCard } from '../core/scheduler'
@@ -26,7 +27,7 @@ import { prefetchWordAudio } from '../services/audio'
 import { speechAvailable } from '../services/speech'
 import { useNewWordAdvice, workloadText, type TodayWorkload } from '../services/workload'
 import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
-import { AudioChoiceStep, DictationStep, FlashcardStep, IntroStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
+import { AudioChoiceStep, ClozeChoiceStep, DictationStep, FlashcardStep, IntroStep, MatchingStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
 import { StudyProgress } from '../study/ui'
 import { Buddy } from '../components/Buddy'
 
@@ -342,8 +343,12 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
     return buildMeaningChoices(item, pool, seededRandom(view.key * 7919 + item.term.length), step.exercise === 'listen_choose' ? 3 : 4)
   }, [item, step, pool, view.key])
   const termChoices = useMemo<TermSource[] | null>(() => {
-    if (!item || step?.exercise !== 'audio_choice') return null
-    return buildTermChoices(item, pool, seededRandom(view.key * 104729 + item.term.length), 3)
+    if (!item || (step?.exercise !== 'audio_choice' && step?.exercise !== 'cloze_choice')) return null
+    return buildTermChoices(item, pool, seededRandom(view.key * 104729 + item.term.length), step.exercise === 'cloze_choice' ? 4 : 3)
+  }, [item, step, pool, view.key])
+  const matchingPairs = useMemo<TermSource[] | null>(() => {
+    if (!item || step?.exercise !== 'matching') return null
+    return buildMatchingPairs(item, pool, seededRandom(view.key * 15485863 + item.term.length), 4)
   }, [item, step, pool, view.key])
 
   const preview = useMemo(() => {
@@ -399,10 +404,15 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
       body = <MeaningChoiceStep item={item} choices={meaningChoices} listen={step.exercise === 'listen_choose'} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
     } else if (step.exercise === 'audio_choice' && termChoices) {
       body = <AudioChoiceStep item={item} choices={termChoices} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
+    } else if (step.exercise === 'cloze_choice' && termChoices && contextSentence(item)) {
+      body = <ClozeChoiceStep item={item} choices={termChoices} onAnswer={answer} onContinue={next} />
+    } else if (step.exercise === 'matching' && matchingPairs) {
+      body = <MatchingStep key={view.key} item={item} pairs={matchingPairs} onAnswer={answer} onContinue={next} />
     } else if (step.exercise === 'dictation') {
       body = <DictationStep item={item} onAnswer={answer} onContinue={next} onNoAudio={noAudio} />
     } else {
-      body = <SlotsStep item={item} knownCheck={false} onAnswer={answer} onContinue={next} />
+      // Gõ từ theo nghĩa; cũng là bài thay thế khi thiếu phương án hoặc thiếu câu ví dụ.
+      body = <SlotsStep item={item} knownCheck={false} cloze={step.exercise === 'cloze_typing' && !!contextSentence(item)} onAnswer={answer} onContinue={next} />
     }
   }
 

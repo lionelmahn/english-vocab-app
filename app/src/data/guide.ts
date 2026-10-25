@@ -261,10 +261,20 @@ export const GUIDE: GuideTopic[] = [
       { h: 'Các dạng bài trong “Bài luyện”' },
       {
         list: [
-          'Cấp 1: chọn nghĩa đúng của từ, nghe từ rồi chọn nghĩa, và “Điền từ”.',
-          'Cấp 2–3: “Điền từ”, nghe các phương án để chọn từ đúng (điền vào chỗ trống trong câu ví dụ, hoặc theo nghĩa nếu từ không có câu ví dụ), chọn nghĩa đúng, và “Nghe và viết lại”.',
-          'Cấp 4–5: “Điền từ”, “Nghe và viết lại”, và nghe các phương án để chọn từ đúng.',
-          'Các bài phải chọn đáp án cần sổ tay có ít nhất 4 nghĩa khác nhau để làm phương án; chưa đủ thì app cho bài gõ từ thay thế.',
+          'Cấp 1: chọn nghĩa đúng của từ, nghe từ rồi chọn nghĩa, “Chọn từ hợp với chỗ trống”, “Ghép từ với nghĩa”, và “Điền từ”.',
+          'Cấp 2–3: “Điền từ”, nghe các phương án để chọn từ đúng (điền vào chỗ trống trong câu ví dụ, hoặc theo nghĩa nếu từ không có câu ví dụ), “Chọn từ hợp với chỗ trống”, chọn nghĩa đúng, “Nghe và viết lại”, và “Điền từ hợp với câu”.',
+          'Cấp 4–5: “Điền từ”, “Nghe và viết lại”, “Điền từ hợp với câu”, và nghe các phương án để chọn từ đúng.',
+          'Các bài phải chọn đáp án cần sổ tay có ít nhất 4 nghĩa khác nhau để làm phương án; chưa đủ thì app cho bài gõ từ thay thế. Bài theo câu cần từ có câu ví dụ chứa đúng từ đó; không có thì app đổi sang chọn nghĩa hoặc gõ từ theo nghĩa.',
+        ],
+      },
+      {
+        terms: [
+          { term: '“Chọn từ hợp với chỗ trống”', text: 'Câu ví dụ bị che từ cần ôn; chọn từ đúng trong 4 từ. Chỉ dựa vào ngữ cảnh, không có nghĩa tiếng Việt.' },
+          { term: '“Điền từ hợp với câu”', text: 'Như “Điền từ” nhưng không có nghĩa của từ: chỉ có câu ví dụ có chỗ trống và bản dịch của cả câu, nên phải đoán từ theo ngữ cảnh.' },
+          {
+            term: '“Ghép từ với nghĩa”',
+            text: '4 từ và 4 nghĩa: chạm một từ rồi chạm nghĩa của nó; ghép đúng thì cặp đó tô xanh. Chỉ từ đang ôn được chấm: ghép đúng ngay lần đầu là Nhớ, ghép nhầm từ đó (hoặc ghép nhầm một từ khác vào nghĩa của nó) là Quên. Ghép nhầm giữa các từ còn lại không tính.',
+          },
         ],
       },
       { h: 'Cách chấm' },

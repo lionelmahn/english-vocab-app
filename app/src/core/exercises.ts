@@ -13,25 +13,39 @@ export interface ExerciseOptions {
   /** Sổ tay có đủ nghĩa khác để làm phương án nhiễu. */
   canMultipleChoice: boolean
   style: ReviewStyle
+  /** Từ có câu ví dụ chứa đúng mặt chữ, nên làm được bài điền từ vào câu (R6.4). */
+  hasContext?: boolean
 }
 
 /** Dạng bài cần nghe. */
 export const AUDIO_EXERCISES: ReadonlySet<ExerciseKind> = new Set(['dictation', 'listen_choose', 'audio_choice'])
 
+/** Dạng bài cần câu ví dụ có chứa từ (R6.4). */
+export const CONTEXT_EXERCISES: ReadonlySet<ExerciseKind> = new Set(['cloze_choice', 'cloze_typing'])
+
 /**
- * Từ còn mới: nhận diện (trắc nghiệm, nghe chọn nghĩa). Nhớ khá trở lên: nhớ lại (điền từ, nghe viết)
- * xen với chọn âm thanh. `reps` (số lần đã ôn) dùng để luân phiên dạng bài giữa các lần ôn.
+ * Từ còn mới: nhận diện (trắc nghiệm, nghe chọn nghĩa, chọn từ hợp với câu, ghép từ và nghĩa). Nhớ khá trở lên:
+ * nhớ lại (gõ từ theo nghĩa, nghe viết, gõ từ hợp với câu) xen với chọn âm thanh. `reps` (số lần đã ôn) dùng để
+ * luân phiên dạng bài giữa các lần ôn.
  */
 export function chooseExercise(level: MemoryLevel, reps: number, opts: ExerciseOptions): ExerciseKind {
   if (opts.style === 'flashcard') return 'flashcard'
   let cycle: ExerciseKind[]
-  if (level <= 1) cycle = ['mcq_meaning', 'listen_choose', 'recall_typing']
-  else if (level <= 3) cycle = ['recall_typing', 'audio_choice', 'mcq_meaning', 'dictation']
-  else cycle = ['recall_typing', 'dictation', 'audio_choice']
+  if (level <= 1) cycle = ['mcq_meaning', 'listen_choose', 'cloze_choice', 'matching', 'recall_typing']
+  else if (level <= 3) cycle = ['recall_typing', 'audio_choice', 'cloze_choice', 'mcq_meaning', 'dictation', 'cloze_typing']
+  else cycle = ['recall_typing', 'dictation', 'cloze_typing', 'audio_choice']
   let pick = cycle[reps % cycle.length]
+  if (!opts.hasContext) pick = withoutContext(pick)
   if (opts.audioOff) pick = withoutAudio(pick)
   if (!opts.canMultipleChoice && CHOICE_EXERCISES.has(pick)) pick = 'recall_typing'
   return pick
+}
+
+/** Từ không có câu ví dụ: điền từ vào câu đổi thành dạng tương đương không cần câu. */
+export function withoutContext(kind: ExerciseKind): ExerciseKind {
+  if (kind === 'cloze_choice') return 'mcq_meaning'
+  if (kind === 'cloze_typing') return 'recall_typing'
+  return kind
 }
 
 /** Bài kiểm tra ngay sau khi lật thẻ từ mới (R4.4): điền từ theo ô chữ. */
@@ -123,6 +137,34 @@ export function buildTermChoices<T extends TermSource>(target: T, pool: readonly
     const k = c.term.trim().toLowerCase()
     if (c.id === target.id || !k || seen.has(k)) continue
     seen.add(k)
+    candidates.push(c)
+  }
+  if (candidates.length < count - 1) return null
+  const samePos = shuffle(
+    candidates.filter((c) => c.partOfSpeech === target.partOfSpeech),
+    rand,
+  )
+  const others = shuffle(
+    candidates.filter((c) => c.partOfSpeech !== target.partOfSpeech),
+    rand,
+  )
+  return shuffle([target, ...[...samePos, ...others].slice(0, count - 1)], rand)
+}
+
+/**
+ * Các cặp cho bài ghép từ và nghĩa (R6.5): từ cần ôn + từ khác, khác cả mặt chữ lẫn nghĩa để mỗi từ chỉ ghép được
+ * với đúng một nghĩa. Ưu tiên cùng loại từ. Trả về null nếu không đủ.
+ */
+export function buildMatchingPairs<T extends TermSource>(target: T, pool: readonly T[], rand: () => number = Math.random, count = 4): T[] | null {
+  const terms = new Set([target.term.trim().toLowerCase()])
+  const meanings = new Set([meaningKey(target.meaningVi)])
+  const candidates: T[] = []
+  for (const c of pool) {
+    const t = c.term.trim().toLowerCase()
+    const m = meaningKey(c.meaningVi)
+    if (c.id === target.id || !t || !m || terms.has(t) || meanings.has(m)) continue
+    terms.add(t)
+    meanings.add(m)
     candidates.push(c)
   }
   if (candidates.length < count - 1) return null

@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useMotionValue, useTransform, type PanInfo } f
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Rating, type Card as FsrsCard, type Grade } from 'ts-fsrs'
 import { checkAnswer } from '../core/answers'
-import type { ChoiceSource, TermSource } from '../core/exercises'
+import { shuffle, type ChoiceSource, type TermSource } from '../core/exercises'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { composeAnswer, letterCount, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from '../core/letters'
 import { POS_SHORT } from '../core/pos'
@@ -372,6 +372,127 @@ export function AudioChoiceStep({
   )
 }
 
+// ---- Chọn từ hợp với chỗ trống trong câu (R6.4) -----------------------------------------------
+
+export function ClozeChoiceStep({ item, choices, onAnswer, onContinue }: { item: VocabItem; choices: TermSource[]; onAnswer: AnswerFn; onContinue: () => void }) {
+  const [selected, setSelected] = useState<string | null>(null)
+  const { shown, submit } = useAnswer(onAnswer)
+  const sentence = contextSentence(item) ?? ''
+
+  function check() {
+    if (!selected || shown) return
+    const ok = selected === item.id
+    void submit({ kind: 'answer', exercise: 'cloze_choice', correct: ok }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
+  }
+  useEnter(() => (shown ? onContinue() : check()))
+
+  return (
+    <StepFrame
+      title="Chọn từ hợp với chỗ trống"
+      footer={
+        <>
+          <PillButton disabled={!selected || !!shown} onClick={check}>
+            Kiểm tra
+          </PillButton>
+          {!shown && <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>}
+        </>
+      }
+    >
+      <div className="rounded-3xl border-2 border-accent bg-surface px-5 py-5 text-center text-[1.3125rem] leading-relaxed">
+        <Sentence text={sentence} term={item.term} mode="blank" />
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {choices.map((c) => (
+          <ChoiceCard key={c.id} state={stateFor(c.id, item.id, selected, !!shown)} onClick={() => !shown && setSelected(c.id)}>
+            <span className="break-words">{c.term}</span>
+          </ChoiceCard>
+        ))}
+      </div>
+      <AnimatePresence>
+        {shown && (
+          <FeedbackSheet key="sheet" tone={shown.tone} item={item} title={shown.title} nextDue={shown.card?.due} actions={<SheetButton onClick={onContinue}>Tiếp tục</SheetButton>} />
+        )}
+      </AnimatePresence>
+    </StepFrame>
+  )
+}
+
+// ---- Ghép từ và nghĩa (R6.5) -------------------------------------------------------------------
+
+/**
+ * Ghép từng từ với nghĩa của nó. Chỉ từ đang ôn được chấm: ghép đúng ngay lần đầu là nhớ (dạng nhận diện, tối đa
+ * mức Nhớ); ghép nhầm từ đó hoặc nghĩa của nó là quên. Ghép nhầm giữa các từ còn lại không tính.
+ */
+export function MatchingStep({ item, pairs, onAnswer, onContinue }: { item: VocabItem; pairs: TermSource[]; onAnswer: AnswerFn; onContinue: () => void }) {
+  const [terms] = useState(() => shuffle(pairs))
+  const [meanings] = useState(() => shuffle(pairs))
+  const [picked, setPicked] = useState<string | null>(null)
+  const [matched, setMatched] = useState<Set<string>>(() => new Set())
+  const [wrongPair, setWrongPair] = useState<[string, string] | null>(null)
+  const [targetMissed, setTargetMissed] = useState(false)
+  const { shown, submit } = useAnswer(onAnswer)
+  useEnter(() => shown && onContinue())
+
+  function pickMeaning(id: string) {
+    if (!picked || shown || matched.has(id)) return
+    if (picked === id) {
+      const next = new Set(matched).add(id)
+      setMatched(next)
+      setPicked(null)
+      if (next.size === pairs.length) {
+        void submit(
+          { kind: 'answer', exercise: 'matching', correct: !targetMissed },
+          targetMissed ? 'wrong' : 'correct',
+          targetMissed ? 'Đã ghép nhầm từ này' : 'Ghép đúng hết!',
+        )
+      }
+      return
+    }
+    if (picked === item.id || id === item.id) setTargetMissed(true)
+    playWrong()
+    setWrongPair([picked, id])
+    setPicked(null)
+    setTimeout(() => setWrongPair(null), 450)
+  }
+
+  const termState = (id: string): ChoiceState => (matched.has(id) ? 'right' : wrongPair?.[0] === id ? 'wrong' : picked === id ? 'selected' : 'idle')
+  const meaningState = (id: string): ChoiceState => (matched.has(id) ? 'right' : wrongPair?.[1] === id ? 'wrong' : 'idle')
+
+  return (
+    <StepFrame
+      title="Ghép từ với nghĩa"
+      footer={
+        <>
+          <p className="text-center text-[0.8125rem] text-muted">Chạm một từ, rồi chạm nghĩa của từ đó.</p>
+          {!shown && <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>}
+        </>
+      }
+    >
+      <div className="grid grid-cols-2 gap-3">
+        <div className="flex flex-col gap-3">
+          {terms.map((p) => (
+            <ChoiceCard key={p.id} state={termState(p.id)} onClick={() => !shown && !matched.has(p.id) && setPicked(p.id)}>
+              <span className="break-words">{p.term}</span>
+            </ChoiceCard>
+          ))}
+        </div>
+        <div className="flex flex-col gap-3">
+          {meanings.map((p) => (
+            <ChoiceCard key={p.id} state={meaningState(p.id)} onClick={() => pickMeaning(p.id)}>
+              <span className="text-[0.9375rem] leading-snug break-words">{p.meaningVi}</span>
+            </ChoiceCard>
+          ))}
+        </div>
+      </div>
+      <AnimatePresence>
+        {shown && (
+          <FeedbackSheet key="sheet" tone={shown.tone} item={item} title={shown.title} nextDue={shown.card?.due} actions={<SheetButton onClick={onContinue}>Tiếp tục</SheetButton>} />
+        )}
+      </AnimatePresence>
+    </StepFrame>
+  )
+}
+
 // ---- Chấm câu gõ tay (R6.7) -------------------------------------------------------------------
 
 type TypedVerdict = 'correct' | 'near' | 'wrong'
@@ -457,17 +578,23 @@ function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: Answe
 
 // ---- Điền từ theo ô chữ (R6.2) và kiểm tra nhanh từ đã biết (R4.8) ----------------------------
 
-export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: VocabItem; knownCheck: boolean; onAnswer: AnswerFn; onContinue: () => void }) {
+/**
+ * Gõ từ theo ô chữ. Thường: nhìn nghĩa (và câu ví dụ có chỗ trống). `cloze` (R6.4): chỉ nhìn câu có chỗ trống và bản
+ * dịch của câu, không có nghĩa của từ, nên phải đoán từ theo ngữ cảnh.
+ */
+export function SlotsStep({ item, knownCheck, cloze = false, onAnswer, onContinue }: { item: VocabItem; knownCheck: boolean; cloze?: boolean; onAnswer: AnswerFn; onContinue: () => void }) {
   const [value, setValue] = useState('')
   const template = useMemo(() => slotTemplate(item.term), [item.term])
   const total = letterCount(template)
   // Vài chữ gợi ý mờ ở vị trí ngẫu nhiên, mỗi lần làm bài một kiểu (không tính là dùng gợi ý); vẫn phải gõ đủ.
   const [revealed, setRevealed] = useState<Set<number>>(() => new Set(pickReveals(template, scaffoldCount(total))))
   const [hintUsed, setHintUsed] = useState(false)
-  const { check, sheet, state, shown, submit, done } = useTypedAnswer(item, 'recall_typing', onAnswer, onContinue)
+  const exercise: ExerciseKind = cloze ? 'cloze_typing' : 'recall_typing'
+  const { check, sheet, state, shown, submit, done } = useTypedAnswer(item, exercise, onAnswer, onContinue)
   const typedLetters = [...value].filter((c) => /[\p{L}\p{N}]/u.test(c)).length
   const nextHint = nextHintSlot(template, revealed, value)
   const sentence = contextSentence(item)
+  const sentenceVi = sentence ? item.examples.find((e) => e.en === sentence)?.vi : undefined
 
   function doCheck() {
     if (done) {
@@ -490,7 +617,7 @@ export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: Vo
 
   return (
     <StepFrame
-      title={knownCheck ? 'Bạn đã biết từ này? Điền từ' : 'Điền từ'}
+      title={knownCheck ? 'Bạn đã biết từ này? Điền từ' : cloze ? 'Điền từ hợp với câu' : 'Điền từ'}
       footer={
         <>
           <PillButton disabled={typedLetters === 0 || done} onClick={doCheck}>
@@ -513,16 +640,25 @@ export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: Vo
         </>
       }
     >
-      <div className="flex flex-col items-center gap-2 py-2 text-center">
-        <p className="text-[1.625rem] leading-snug font-bold">
-          <TermLabel item={item} />
-        </p>
-        {sentence && (
-          <p className="max-w-sm text-[1rem] leading-relaxed text-muted italic">
+      {cloze && sentence ? (
+        <div className="flex flex-col items-center gap-2 py-2 text-center">
+          <p className="max-w-sm text-[1.3125rem] leading-relaxed">
             <Sentence text={sentence} term={item.term} mode="blank" />
           </p>
-        )}
-      </div>
+          {sentenceVi && <p className="max-w-sm text-[0.9375rem] leading-relaxed text-muted italic">{sentenceVi}</p>}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-2 py-2 text-center">
+          <p className="text-[1.625rem] leading-snug font-bold">
+            <TermLabel item={item} />
+          </p>
+          {sentence && (
+            <p className="max-w-sm text-[1rem] leading-relaxed text-muted italic">
+              <Sentence text={sentence} term={item.term} mode="blank" />
+            </p>
+          )}
+        </div>
+      )}
       <LetterSlots term={item.term} value={value} onChange={setValue} onEnter={doCheck} revealed={revealed} state={state} />
       {hintUsed && !done && <p className="-mt-2 text-center text-[0.8125rem] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
       {sheet}
