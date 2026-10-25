@@ -277,7 +277,7 @@ function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; e
                     aria-label={`Câu ví dụ ${i + 1}`}
                     placeholder="Children are often more resilient than adults."
                     onChange={(e) => patch({ examples: f.examples.map((x, j) => (j === i ? { ...x, en: e.target.value } : x)) })}
-                    className="min-w-0 flex-1 resize-none bg-transparent text-[15px] leading-relaxed outline-none placeholder:text-subtle"
+                    className="min-w-0 flex-1 resize-none bg-transparent text-[0.9375rem] leading-relaxed outline-none placeholder:text-subtle"
                   />
                   {f.examples.length > 1 && (
                     <button

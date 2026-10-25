@@ -63,7 +63,7 @@ export function RemindersPage() {
           }}
           onLogin={() => navigate('/login')}
         />
-        {message && <p className={`mt-3 text-[13px] leading-snug ${message.tone === 'ok' ? 'text-accent' : 'text-danger'}`}>{message.text}</p>}
+        {message && <p className={`mt-3 text-[0.8125rem] leading-snug ${message.tone === 'ok' ? 'text-accent' : 'text-danger'}`}>{message.text}</p>}
       </Card>
 
       <Card>
@@ -120,8 +120,8 @@ export function RemindersPage() {
             )}
           </div>
           <div className="pt-3">
-            <p className="text-[15px] font-medium">Giờ yên lặng</p>
-            <p className="mt-0.5 mb-2 text-[13px] leading-snug text-muted">Không nhắc gì trong khoảng này, kể cả giờ học.</p>
+            <p className="text-[0.9375rem] font-medium">Giờ yên lặng</p>
+            <p className="mt-0.5 mb-2 text-[0.8125rem] leading-snug text-muted">Không nhắc gì trong khoảng này, kể cả giờ học.</p>
             <div className="grid grid-cols-2 gap-3">
               <TimeField label="Từ" value={prefs.quietStart} onChange={(v) => setPrefs({ quietStart: v })} />
               <TimeField label="Đến" value={prefs.quietEnd} onChange={(v) => setPrefs({ quietEnd: v })} />
@@ -145,11 +145,11 @@ export function RemindersPage() {
                 <li key={d.id} className="flex items-center gap-3 py-2.5">
                   <Bell aria-hidden className="h-5 w-5 shrink-0 text-accent" />
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[15px] font-medium">
+                    <span className="block text-[0.9375rem] font-medium">
                       {d.device || 'Máy không rõ tên'}
                       {state?.kind === 'on' && state.endpoint === d.endpoint && <span className="font-normal text-muted"> · máy này</span>}
                     </span>
-                    <span className="block text-[12px] text-subtle">Bật từ {formatDate(Date.parse(d.created_at))}</span>
+                    <span className="block text-[0.75rem] text-subtle">Bật từ {formatDate(Date.parse(d.created_at))}</span>
                   </span>
                   <button
                     type="button"
@@ -177,8 +177,8 @@ function Row({ title, description, children }: { title: string; description: str
   return (
     <div className="flex items-center gap-4 py-3">
       <div className="flex-1">
-        <p className="text-[15px] font-medium">{title}</p>
-        <p className="mt-0.5 text-[13px] leading-snug text-muted">{description}</p>
+        <p className="text-[0.9375rem] font-medium">{title}</p>
+        <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted">{description}</p>
       </div>
       {children}
     </div>
@@ -190,7 +190,7 @@ function TimeField({ label, value, onChange }: { label: string; value: string; o
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium">{label}</span>
       <span className="flex h-12 items-center rounded-2xl border border-line bg-surface px-4 focus-within:border-accent">
-        <input type="time" aria-label={`Giờ yên lặng ${label.toLowerCase()}`} value={value} onChange={(e) => e.target.value && onChange(e.target.value)} className="h-full w-full bg-transparent text-[15px] outline-none" />
+        <input type="time" aria-label={`Giờ yên lặng ${label.toLowerCase()}`} value={value} onChange={(e) => e.target.value && onChange(e.target.value)} className="h-full w-full bg-transparent text-[0.9375rem] outline-none" />
       </span>
     </label>
   )

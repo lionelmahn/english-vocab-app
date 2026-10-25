@@ -72,8 +72,8 @@ export function StarterDecksPage() {
                 <BookOpenCheck aria-hidden className="h-6 w-6 text-accent" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[16px] font-semibold">{deck.name}</p>
-                <p className="text-[13px] text-muted">{num.format(deck.count)} từ{have ? ` · đã có trong sổ tay (${num.format(have.count)} từ)` : ''}</p>
+                <p className="text-[1rem] font-semibold">{deck.name}</p>
+                <p className="text-[0.8125rem] text-muted">{num.format(deck.count)} từ{have ? ` · đã có trong sổ tay (${num.format(have.count)} từ)` : ''}</p>
               </div>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted">{deck.description}</p>
@@ -103,7 +103,7 @@ export function StarterDecksPage() {
                 </Button>
               )}
             </div>
-            <p className="mt-3 text-[11px] leading-relaxed text-subtle">{deck.attribution}</p>
+            <p className="mt-3 text-[0.6875rem] leading-relaxed text-subtle">{deck.attribution}</p>
           </Card>
         )
       })}
@@ -180,8 +180,8 @@ function Welcome({ profile }: { profile: ProfileData }) {
           {step === 0 && (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
               <Buddy size={110} mood="cheer" />
-              <h1 className="text-[26px] leading-tight font-bold">Chào bạn!</h1>
-              <p className="max-w-xs text-[15px] leading-relaxed text-muted">
+              <h1 className="text-[1.625rem] leading-tight font-bold">Chào bạn!</h1>
+              <p className="max-w-xs text-[0.9375rem] leading-relaxed text-muted">
                 Vài bước ngắn để app hợp với bạn: trình độ, mục tiêu, lịch học và một bộ từ để bắt đầu ngay.
               </p>
               {isCloudConfigured && auth.status === 'signed_out' && (
@@ -194,7 +194,7 @@ function Welcome({ profile }: { profile: ProfileData }) {
 
           {step === 1 && (
             <>
-              <h1 className="text-[24px] leading-tight font-bold">Trình độ và mục đích</h1>
+              <h1 className="text-[1.5rem] leading-tight font-bold">Trình độ và mục đích</h1>
               <div className="flex flex-col gap-2">
                 {SELF_LEVELS.map((l) => {
                   const on = profile.selfLevel === l.value
@@ -207,8 +207,8 @@ function Welcome({ profile }: { profile: ProfileData }) {
                       className={`flex items-center gap-3 rounded-2xl border-2 px-4 py-2.5 text-left transition-colors ${on ? 'border-accent bg-accent-soft' : 'border-line bg-surface'}`}
                     >
                       <div className="min-w-0 flex-1">
-                        <p className="text-[15px] font-semibold">{l.label}</p>
-                        <p className="text-[13px] text-muted">{l.hint}</p>
+                        <p className="text-[0.9375rem] font-semibold">{l.label}</p>
+                        <p className="text-[0.8125rem] text-muted">{l.hint}</p>
                       </div>
                       {on && <Check aria-hidden className="h-5 w-5 shrink-0 text-accent" strokeWidth={2.6} />}
                     </button>
@@ -232,7 +232,7 @@ function Welcome({ profile }: { profile: ProfileData }) {
 
           {step === 2 && (
             <>
-              <h1 className="text-[24px] leading-tight font-bold">Mục tiêu mỗi ngày</h1>
+              <h1 className="text-[1.5rem] leading-tight font-bold">Mục tiêu mỗi ngày</h1>
               <SectionTitle className="">Số từ mới</SectionTitle>
               <div className="flex flex-wrap gap-2">
                 {NEW_WORDS.map((n) => (
@@ -255,7 +255,7 @@ function Welcome({ profile }: { profile: ProfileData }) {
 
           {step === 3 && (
             <>
-              <h1 className="text-[24px] leading-tight font-bold">Giọng và lịch học</h1>
+              <h1 className="text-[1.5rem] leading-tight font-bold">Giọng và lịch học</h1>
               <SectionTitle className="">Giọng đọc</SectionTitle>
               <Segmented
                 layoutId="welcome-accent"
@@ -293,7 +293,7 @@ function Welcome({ profile }: { profile: ProfileData }) {
                   aria-label="Giờ học"
                   value={profile.studyTime ?? ''}
                   onChange={(e) => set({ studyTime: e.target.value || undefined })}
-                  className="h-full w-full bg-transparent text-[15px] outline-none"
+                  className="h-full w-full bg-transparent text-[0.9375rem] outline-none"
                 />
               </label>
             </>
@@ -301,7 +301,7 @@ function Welcome({ profile }: { profile: ProfileData }) {
 
           {step === 4 && (
             <>
-              <h1 className="text-[24px] leading-tight font-bold">Bộ từ để bắt đầu</h1>
+              <h1 className="text-[1.5rem] leading-tight font-bold">Bộ từ để bắt đầu</h1>
               <button
                 type="button"
                 aria-pressed={withDeck}
@@ -314,14 +314,14 @@ function Welcome({ profile }: { profile: ProfileData }) {
                   {withDeck && <Check aria-hidden className="h-4 w-4" strokeWidth={3} />}
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[16px] font-semibold">{deck.name}</span>
+                  <span className="block text-[1rem] font-semibold">{deck.name}</span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted">{deck.description}</span>
                 </span>
               </button>
               <p className="text-sm leading-relaxed text-muted">
                 Mỗi ngày app đưa ra {profile.dailyNewWords} từ mới theo thứ tự phổ biến. Từ nào đã biết, chọn “Mình đã biết từ này” khi học để bỏ qua. Bạn cũng có thể tự thêm từ, nhập từ file hoặc tra từ để lưu.
               </p>
-              <p className="text-[11px] leading-relaxed text-subtle">{deck.attribution}</p>
+              <p className="text-[0.6875rem] leading-relaxed text-subtle">{deck.attribution}</p>
             </>
           )}
         </motion.div>

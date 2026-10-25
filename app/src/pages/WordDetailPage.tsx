@@ -61,7 +61,7 @@ export function WordDetailPage() {
     >
       <Card>
         <div className="flex items-center justify-between gap-3">
-          <p className="text-[22px] leading-snug font-semibold">{item.meaningVi}</p>
+          <p className="text-[1.375rem] leading-snug font-semibold">{item.meaningVi}</p>
           <SpeakButtons text={item.term} />
         </div>
         {item.meaningEn && <p className="mt-1 text-sm text-muted italic">{item.meaningEn}</p>}
@@ -90,7 +90,7 @@ export function WordDetailPage() {
             {item.examples.map((ex, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
-                  <p className="text-[15px] leading-relaxed">{ex.en}</p>
+                  <p className="text-[0.9375rem] leading-relaxed">{ex.en}</p>
                   <AnimatePresence initial={false}>
                     {showVi && ex.vi && (
                       <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden text-sm text-muted">
@@ -165,12 +165,12 @@ export function WordDetailPage() {
         <div className="flex flex-wrap gap-2">
           {decks.length === 0 && <span className="text-sm text-muted">Chưa thuộc bộ nào.</span>}
           {decks.map((d) => (
-            <Link key={d.id} to={`/decks/${d.id}`} className="rounded-full bg-accent-soft px-3 py-1.5 text-[13px] font-semibold text-accent">
+            <Link key={d.id} to={`/decks/${d.id}`} className="rounded-full bg-accent-soft px-3 py-1.5 text-[0.8125rem] font-semibold text-accent">
               {d.name}
             </Link>
           ))}
           {item.tags.map((t) => (
-            <Link key={t} to={`/notebook?tag=${encodeURIComponent(t)}`} className="rounded-full bg-surface-2 px-3 py-1.5 text-[13px] text-muted">
+            <Link key={t} to={`/notebook?tag=${encodeURIComponent(t)}`} className="rounded-full bg-surface-2 px-3 py-1.5 text-[0.8125rem] text-muted">
               #{t}
             </Link>
           ))}

@@ -116,8 +116,8 @@ function ProfileForm({ profile }: { profile: ProfileData }) {
                 className={`flex items-center gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors ${on ? 'border-accent bg-accent-soft' : 'border-line bg-surface'}`}
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-[15px] font-semibold">{l.label}</p>
-                  <p className="text-[13px] text-muted">{l.hint}</p>
+                  <p className="text-[0.9375rem] font-semibold">{l.label}</p>
+                  <p className="text-[0.8125rem] text-muted">{l.hint}</p>
                 </div>
                 {on && <Check aria-hidden className="h-5 w-5 shrink-0 text-accent" strokeWidth={2.6} />}
               </motion.button>
@@ -247,7 +247,7 @@ function GoalsForm({ profile }: { profile: ProfileData }) {
               aria-label="Giờ học"
               value={profile.studyTime ?? ''}
               onChange={(e) => set({ studyTime: e.target.value || undefined })}
-              className="h-full w-full bg-transparent text-[15px] outline-none"
+              className="h-full w-full bg-transparent text-[0.9375rem] outline-none"
             />
           </label>
           {profile.studyTime && (

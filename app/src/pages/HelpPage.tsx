@@ -32,8 +32,8 @@ function TopicRow({ id, title, summary, onOpen }: { id: GuideTopicId; title: str
         <Icon aria-hidden className="h-5 w-5" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[15px] font-semibold">{title}</span>
-        <span className="block text-[13px] leading-snug text-muted">{summary}</span>
+        <span className="block text-[0.9375rem] font-semibold">{title}</span>
+        <span className="block text-[0.8125rem] leading-snug text-muted">{summary}</span>
       </span>
       <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
     </button>
@@ -57,7 +57,7 @@ export function HelpPage() {
             placeholder="Tìm, ví dụ: cấp ghi nhớ, đồng bộ"
             aria-label="Tìm trong hướng dẫn"
             autoCapitalize="none"
-            className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-subtle"
+            className="h-full min-w-0 flex-1 bg-transparent text-[0.9375rem] outline-none placeholder:text-subtle"
           />
         </label>
       </motion.div>
@@ -77,7 +77,7 @@ export function HelpPage() {
       ) : (
         GUIDE_GROUPS.map((g) => (
           <Card key={g.title}>
-            <h2 className="mb-1 text-[13px] font-bold tracking-wide text-subtle uppercase">{g.title}</h2>
+            <h2 className="mb-1 text-[0.8125rem] font-bold tracking-wide text-subtle uppercase">{g.title}</h2>
             <div className="divide-y divide-line">
               {g.topics.map((id) => {
                 const t = GUIDE.find((x) => x.id === id)!
@@ -112,7 +112,7 @@ export function HelpTopicPage() {
       </Card>
       {next && (
         <Card>
-          <p className="text-[12px] font-semibold text-subtle">Mục tiếp theo</p>
+          <p className="text-[0.75rem] font-semibold text-subtle">Mục tiếp theo</p>
           <TopicRow id={next.id} title={next.title} summary={next.summary} onOpen={() => navigate(`/help/${next.id}`, { replace: true })} />
         </Card>
       )}

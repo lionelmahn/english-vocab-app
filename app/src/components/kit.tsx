@@ -18,7 +18,7 @@ export function BackButton({ fallback, label = 'Quay lại' }: { fallback: strin
       type="button"
       whileTap={tapScale}
       onClick={() => (location.key === 'default' ? navigate(fallback, { replace: true }) : navigate(-1))}
-      className="-ml-2 inline-flex h-10 items-center gap-1 rounded-xl px-2 text-[15px] font-semibold whitespace-nowrap text-accent"
+      className="-ml-2 inline-flex h-10 items-center gap-1 rounded-xl px-2 text-[0.9375rem] font-semibold whitespace-nowrap text-accent"
     >
       <ArrowLeft aria-hidden className="h-5 w-5" />
       {label}
@@ -87,7 +87,7 @@ export function Chip({ active, onClick, children }: { active: boolean; onClick: 
       whileTap={{ scale: 0.94 }}
       onClick={onClick}
       aria-pressed={active}
-      className={`h-9 shrink-0 rounded-full border px-3.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
+      className={`h-9 shrink-0 rounded-full border px-3.5 text-[0.8125rem] font-medium whitespace-nowrap transition-colors ${
         active ? 'border-accent bg-accent-soft text-accent' : 'border-line bg-surface text-muted'
       }`}
     >
@@ -103,7 +103,7 @@ export function Badge({ children, tone = 'neutral' }: { children: ReactNode; ton
     warning: 'bg-warning-soft text-warning',
     danger: 'bg-danger-soft text-danger',
   }[tone]
-  return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[11px] font-semibold whitespace-nowrap ${cls}`}>{children}</span>
+  return <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[0.6875rem] font-semibold whitespace-nowrap ${cls}`}>{children}</span>
 }
 
 /** 5 chấm cấp ghi nhớ (R5.9). */
@@ -128,7 +128,7 @@ export function Select({ label, children, ...rest }: { label: string; children: 
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium">{label}</span>
       <select
-        className="h-12 w-full appearance-none rounded-2xl border border-line bg-surface px-4 text-[15px] outline-none focus:border-accent"
+        className="h-12 w-full appearance-none rounded-2xl border border-line bg-surface px-4 text-[0.9375rem] outline-none focus:border-accent"
         {...rest}
       >
         {children}
@@ -143,7 +143,7 @@ export function TextArea({ label, ...rest }: { label: string } & React.TextareaH
       <span className="mb-1.5 block text-sm font-medium">{label}</span>
       <textarea
         rows={2}
-        className="w-full resize-none rounded-2xl border border-line bg-surface px-4 py-3 text-[15px] leading-relaxed outline-none placeholder:text-subtle focus:border-accent"
+        className="w-full resize-none rounded-2xl border border-line bg-surface px-4 py-3 text-[0.9375rem] leading-relaxed outline-none placeholder:text-subtle focus:border-accent"
         {...rest}
       />
     </label>
@@ -234,7 +234,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
             className="relative w-full max-w-lg rounded-t-[28px] bg-surface px-5 pt-3 pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
           >
             <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-line" />
-            {title && <h2 className="mb-2 text-[18px] font-bold">{title}</h2>}
+            {title && <h2 className="mb-2 text-[1.125rem] font-bold">{title}</h2>}
             {children}
           </motion.div>
         </motion.div>

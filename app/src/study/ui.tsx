@@ -100,7 +100,7 @@ export function ChoiceCard({ state, onClick, children, label }: { state: ChoiceS
       onClick={onClick}
       animate={state === 'wrong' ? { x: [0, -8, 8, -5, 5, 0] } : state === 'right' ? { scale: [1, 1.03, 1] } : {}}
       transition={{ duration: 0.35 }}
-      className={`flex min-h-16 w-full items-center justify-center gap-2 rounded-2xl border-2 px-4 py-3 text-center text-[17px] font-semibold transition-[transform,box-shadow,background-color] duration-100 active:translate-y-[3px] ${cls}`}
+      className={`flex min-h-16 w-full items-center justify-center gap-2 rounded-2xl border-2 px-4 py-3 text-center text-[1.0625rem] font-semibold transition-[transform,box-shadow,background-color] duration-100 active:translate-y-[3px] ${cls}`}
     >
       {children}
     </motion.button>
@@ -115,7 +115,7 @@ export function PillButton({ children, disabled, onClick, type = 'button' }: { c
       type={type}
       disabled={disabled}
       onClick={onClick}
-      className="h-14 w-full max-w-sm rounded-full bg-accent text-[18px] font-bold text-on-accent shadow-[0_5px_0_0_var(--app-accent-shadow)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_0_var(--app-accent-shadow)] disabled:bg-surface-2 disabled:text-subtle disabled:shadow-[0_5px_0_0_var(--app-line-shadow)] disabled:active:translate-y-0"
+      className="h-14 w-full max-w-sm rounded-full bg-accent text-[1.125rem] font-bold text-on-accent shadow-[0_5px_0_0_var(--app-accent-shadow)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_0_var(--app-accent-shadow)] disabled:bg-surface-2 disabled:text-subtle disabled:shadow-[0_5px_0_0_var(--app-line-shadow)] disabled:active:translate-y-0"
     >
       {children}
     </button>
@@ -124,7 +124,7 @@ export function PillButton({ children, disabled, onClick, type = 'button' }: { c
 
 export function TextLink({ children, onClick }: { children: ReactNode; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} className="py-1.5 text-[15px] font-semibold text-muted underline decoration-1 underline-offset-4">
+    <button type="button" onClick={onClick} className="py-1.5 text-[0.9375rem] font-semibold text-muted underline decoration-1 underline-offset-4">
       {children}
     </button>
   )
@@ -134,7 +134,7 @@ export function TextLink({ children, onClick }: { children: ReactNode; onClick: 
 export function StepFrame({ title, children, footer }: { title: string; children: ReactNode; footer: ReactNode }) {
   return (
     <div className="flex min-h-[calc(100dvh-7rem)] flex-col">
-      <p className="pt-2 text-center text-[17px] font-semibold text-muted">{title}</p>
+      <p className="pt-2 text-center text-[1.0625rem] font-semibold text-muted">{title}</p>
       <div className="flex flex-1 flex-col gap-5 pt-5">{children}</div>
       <div className="sticky bottom-0 flex flex-col items-center gap-2 bg-bg pt-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">{footer}</div>
     </div>
@@ -205,21 +205,21 @@ export function FeedbackSheet({
           </button>
           <div className="min-w-0 flex-1">
             {title && (
-              <p className="mb-0.5 flex items-center gap-1.5 text-[15px] font-bold opacity-90">
+              <p className="mb-0.5 flex items-center gap-1.5 text-[0.9375rem] font-bold opacity-90">
                 {tone === 'correct' ? <Check aria-hidden className="h-4 w-4" strokeWidth={3} /> : tone === 'wrong' ? <X aria-hidden className="h-4 w-4" strokeWidth={3} /> : null}
                 {title}
               </p>
             )}
-            <p className="text-[26px] leading-tight font-extrabold break-words">
-              {item.term} {POS_SHORT[item.partOfSpeech] && <span className="text-[17px] font-semibold opacity-85">({POS_SHORT[item.partOfSpeech]})</span>}
+            <p className="text-[1.625rem] leading-tight font-extrabold break-words">
+              {item.term} {POS_SHORT[item.partOfSpeech] && <span className="text-[1.0625rem] font-semibold opacity-85">({POS_SHORT[item.partOfSpeech]})</span>}
             </p>
             <AnimatePresence initial={false}>
               {!collapsed && (
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                  {ipa && <p className="mt-1 text-[16px] opacity-90">{ipa}</p>}
-                  <p className="mt-1 text-[17px] font-semibold">{item.meaningVi}</p>
+                  {ipa && <p className="mt-1 text-[1rem] opacity-90">{ipa}</p>}
+                  <p className="mt-1 text-[1.0625rem] font-semibold">{item.meaningVi}</p>
                   {ex && (
-                    <div className="mt-2.5 text-[16px] leading-relaxed">
+                    <div className="mt-2.5 text-[1rem] leading-relaxed">
                       <p>
                         {ex.en}{' '}
                         {ex.vi && (
@@ -231,8 +231,8 @@ export function FeedbackSheet({
                       {showVi && ex.vi && <p className="mt-1 opacity-85">{ex.vi}</p>}
                     </div>
                   )}
-                  {note && <div className="mt-2.5 text-[15px] leading-relaxed">{note}</div>}
-                  {nextDue != null && <p className="mt-2 text-[13px] font-semibold opacity-80">Ôn lại sau: {formatDueIn(nextDue, shownAt).replace(' nữa', '')}</p>}
+                  {note && <div className="mt-2.5 text-[0.9375rem] leading-relaxed">{note}</div>}
+                  {nextDue != null && <p className="mt-2 text-[0.8125rem] font-semibold opacity-80">Ôn lại sau: {formatDueIn(nextDue, shownAt).replace(' nữa', '')}</p>}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -248,14 +248,14 @@ export function FeedbackSheet({
 /** Nút trắng trên bảng kết quả. */
 export function SheetButton({ children, onClick, subtle = false }: { children: ReactNode; onClick: () => void; subtle?: boolean }) {
   return subtle ? (
-    <button type="button" onClick={onClick} className="py-1 text-[15px] font-bold underline decoration-1 underline-offset-4 opacity-90">
+    <button type="button" onClick={onClick} className="py-1 text-[0.9375rem] font-bold underline decoration-1 underline-offset-4 opacity-90">
       {children}
     </button>
   ) : (
     <button
       type="button"
       onClick={onClick}
-      className="h-14 w-full max-w-sm rounded-full bg-white text-[18px] font-bold text-[#18201c] shadow-[0_5px_0_0_rgba(0,0,0,0.18)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.18)]"
+      className="h-14 w-full max-w-sm rounded-full bg-white text-[1.125rem] font-bold text-[#18201c] shadow-[0_5px_0_0_rgba(0,0,0,0.18)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_0_rgba(0,0,0,0.18)]"
     >
       {children}
     </button>

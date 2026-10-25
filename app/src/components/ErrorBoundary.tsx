@@ -19,7 +19,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
     if (!this.state.error) return this.props.children
     return (
       <div className="px-4 pt-[calc(env(safe-area-inset-top)+3rem)] text-center">
-        <p className="text-[20px] font-bold">Trang này gặp lỗi</p>
+        <p className="text-[1.25rem] font-bold">Trang này gặp lỗi</p>
         <p className="mt-2 text-sm leading-relaxed text-muted">Dữ liệu của bạn vẫn an toàn. Thử tải lại app; nếu vẫn lỗi, chụp màn hình trang này gửi để sửa.</p>
         <p className="mt-3 text-xs break-words text-subtle">{this.state.error.message}</p>
         <div className="mt-6 flex flex-col gap-2">

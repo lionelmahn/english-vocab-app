@@ -79,7 +79,7 @@ export function LookupPage() {
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
-            className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-subtle"
+            className="h-full min-w-0 flex-1 bg-transparent text-[0.9375rem] outline-none placeholder:text-subtle"
           />
         </label>
         <Button type="submit" variant="primary" className="h-12 px-4" disabled={!cleanQuery(input)}>
@@ -172,7 +172,7 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
     <div className="flex flex-col gap-3">
       <Card>
         <div className="flex items-start justify-between gap-3">
-          <h2 className="min-w-0 text-[28px] leading-tight font-bold break-words">{entry.title}</h2>
+          <h2 className="min-w-0 text-[1.75rem] leading-tight font-bold break-words">{entry.title}</h2>
           <SpeakButtons text={entry.title} />
         </div>
         {(entry.ipa.us || entry.ipa.uk) && (
@@ -222,7 +222,7 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
                   <li key={k} className={`flex items-start gap-3 rounded-2xl px-3 py-2.5 transition-colors ${on ? 'bg-accent-soft' : ''}`}>
                     <span className="mt-0.5 w-5 shrink-0 text-right text-sm font-semibold text-subtle tabular-nums">{si + 1}</span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-[15px] leading-snug">{sense.definition}</p>
+                      <p className="text-[0.9375rem] leading-snug">{sense.definition}</p>
                       {sense.examples.map((ex, i) => (
                         <p key={i} className="mt-1 text-sm leading-snug text-muted italic">
                           {ex}
@@ -462,7 +462,7 @@ function NotFound({ q, suggestions, onLookup }: { q: string; suggestions: string
     <Card>
       <div className="flex flex-col items-center gap-2 pt-2 text-center">
         <SearchX aria-hidden className="h-8 w-8 text-subtle" />
-        <p className="text-[15px] font-semibold">Không tìm thấy “{q}” trong từ điển</p>
+        <p className="text-[0.9375rem] font-semibold">Không tìm thấy “{q}” trong từ điển</p>
         <p className="text-sm leading-relaxed text-muted">Kiểm tra lại chính tả, thử dạng gốc của từ (ví dụ “give up” thay vì “gave up”), hoặc tự thêm vào sổ tay.</p>
       </div>
       {suggestions.length > 0 && (

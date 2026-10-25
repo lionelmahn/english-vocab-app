@@ -356,6 +356,14 @@ Nguyên tắc:
 > - **Hướng dẫn:** bài mới “Dùng khi không có mạng”, thêm dòng về trang Hôm nay. Thẻ “Máy chủ và đồng bộ” tách thành thành phần dùng chung.
 > - **Kiểm thử:** 280 test (kế hoạch âm thanh từng từ, tải/phát/xóa file với mạng giả lập, tra gộp). Đã thử trên trình duyệt: tải thật 5 file (77 KB) từ Wikimedia; giả lập mất mạng thì từ đã tải phát từ máy, từ chưa tải đọc bằng giọng máy; sáng và tối ở khung điện thoại.
 > - **Còn lại của giai đoạn 3:** R14.1 (sáng/tối, cỡ chữ), R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
+
+> **Cập nhật 25/10/2026 (bản 0.15.0): Giao diện sáng/tối và cỡ chữ (R14.1).** Cá nhân → Trải nghiệm: “Giao diện” (Theo máy / Sáng / Tối) và “Cỡ chữ” (Nhỏ / Vừa / Lớn / Rất lớn), lưu riêng từng máy.
+> - Chọn cố định thì gắn `data-theme` lên trang (CSS có bộ màu tối cho cả hai đường), màu thanh trạng thái đổi theo; index.html áp sẵn trước khi app chạy nên không nháy màu.
+> - Cỡ chữ đổi cỡ chữ gốc của trang (93,75–125%); mọi cỡ chữ cố định theo px (190 chỗ) được đổi sang rem nên chữ, khoảng cách và nút phóng to đều nhau. Đã quét 21 trang ở cỡ Rất lớn trên khung điện thoại: không trang nào tràn ngang.
+> - Sửa lỗi có sẵn: ô “Điền từ” của từ dài (ví dụ "responsibility", 14 chữ) tràn ra ngoài khung trên điện thoại. Cỡ ô giờ chọn theo từ dài nhất, tính bằng rem, và xuống dòng thay vì tràn khi quá chật.
+> - Ngôn ngữ giao diện (phần còn lại của R14.1): giữ tiếng Việt, chưa làm bản tiếng Anh vì app dành cho người học Việt.
+> - 280 test. Hướng dẫn cập nhật (bài Bắt đầu nhanh, Đồng bộ: cài đặt riêng từng máy).
+> - **Còn lại của giai đoạn 3:** R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

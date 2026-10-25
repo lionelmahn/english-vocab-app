@@ -34,7 +34,7 @@ export function OfflinePage() {
     <Page title="Dùng khi không có mạng" subtitle="Học ngoại tuyến, âm thanh tải về và dung lượng" back={<BackButton fallback="/me" />} action={<HelpButton topic="offline" />}>
       <Card>
         <SectionTitle className="mb-2">Học khi không có mạng</SectionTitle>
-        <p className={`flex items-center gap-2 text-[15px] font-semibold ${online ? 'text-accent' : 'text-warning'}`}>
+        <p className={`flex items-center gap-2 text-[0.9375rem] font-semibold ${online ? 'text-accent' : 'text-warning'}`}>
           {online ? <Wifi aria-hidden className="h-5 w-5" /> : <WifiOff aria-hidden className="h-5 w-5" />}
           {online ? 'Đang có mạng' : 'Đang ngoại tuyến'}
         </p>
@@ -53,7 +53,7 @@ export function OfflinePage() {
           Bản ghi giọng người thật (Wiktionary) phát qua mạng; tải về để nghe cả khi mất mạng. Giọng máy, Giọng iPhone và bản bạn tự ghi âm vốn đã nằm trên máy. App tải bản của giọng{' '}
           {accentName} (giọng đang chọn ở Cá nhân); đổi giọng thì tải lại.
         </p>
-        {!online && settings.preferRecordings && <p className="mb-2 text-[13px] text-warning">Cần có mạng để tải âm thanh.</p>}
+        {!online && settings.preferRecordings && <p className="mb-2 text-[0.8125rem] text-warning">Cần có mạng để tải âm thanh.</p>}
         {!settings.preferRecordings ? (
           <p className="text-sm leading-relaxed text-muted">Bạn đang tắt “Ưu tiên giọng người thật” nên app đọc từ bằng giọng máy, không cần tải gì.</p>
         ) : !lib ? (
@@ -123,14 +123,14 @@ export function OfflinePage() {
           </div>
         )}
         {estimate?.persisted === true && (
-          <p className="mt-3 flex gap-2 text-[13px] leading-snug text-accent">
+          <p className="mt-3 flex gap-2 text-[0.8125rem] leading-snug text-accent">
             <HardDrive aria-hidden className="mt-px h-4 w-4 shrink-0" />
             Đã bật giữ dữ liệu lâu dài: trình duyệt không tự xóa dữ liệu của app khi máy đầy bộ nhớ.
           </p>
         )}
         {estimate?.persisted === false && (
           <div className="mt-3 flex flex-col gap-2">
-            <p className="text-[13px] leading-snug text-muted">Khi máy hết bộ nhớ, trình duyệt có thể tự xóa dữ liệu của trang web. Bật giữ lâu dài để tránh việc này.</p>
+            <p className="text-[0.8125rem] leading-snug text-muted">Khi máy hết bộ nhớ, trình duyệt có thể tự xóa dữ liệu của trang web. Bật giữ lâu dài để tránh việc này.</p>
             <Button
               icon={HardDrive}
               className="w-full"
@@ -153,8 +153,8 @@ function StorageRow({ label, value, action }: { label: string; value: string; ac
   return (
     <div className="flex items-center gap-3 py-2.5">
       <div className="min-w-0 flex-1">
-        <p className="text-[15px] font-medium">{label}</p>
-        <p className="text-[13px] leading-snug text-muted">{value}</p>
+        <p className="text-[0.9375rem] font-medium">{label}</p>
+        <p className="text-[0.8125rem] leading-snug text-muted">{value}</p>
       </div>
       {action}
     </div>
@@ -181,8 +181,8 @@ function AudioRow({ id, name, words, accent }: { id: string; name: string; words
 
   return (
     <div className="py-3">
-      <p className="text-[15px] font-semibold">{name}</p>
-      <p className="mt-0.5 text-[13px] leading-snug text-muted">{details.join(' · ')}</p>
+      <p className="text-[0.9375rem] font-semibold">{name}</p>
+      <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted">{details.join(' · ')}</p>
       {(canDownload || canRemove || (mine && !mine.result)) && (
         <div className="mt-2 flex gap-2">
           {mine && !mine.result ? (
@@ -235,7 +235,7 @@ function JobProgress({ job }: { job: DownloadJob }) {
     const { saved, failed: errors, stopped } = job.result
     const text = stopped ? `Đã dừng, tải được ${saved} file.` : saved === 0 && errors === 0 ? 'Không có file nào cần tải thêm.' : `Đã tải ${saved} file.`
     return (
-      <p className={`mt-2 text-[13px] ${errors > 0 ? 'text-warning' : 'text-accent'}`}>
+      <p className={`mt-2 text-[0.8125rem] ${errors > 0 ? 'text-warning' : 'text-accent'}`}>
         {text}
         {errors > 0 && ` ${errors} file chưa tải được (mạng chập chờn?), bấm Tải để thử lại.`}
       </p>
@@ -247,7 +247,7 @@ function JobProgress({ job }: { job: DownloadJob }) {
       <div className="h-2 overflow-hidden rounded-full bg-surface-2">
         <div className="h-full rounded-full bg-accent transition-[width] duration-300" style={{ width: `${phase === 'looking' ? 8 : Math.max(4, ratio * 100)}%` }} />
       </div>
-      <p className="mt-1 text-[12px] text-subtle">
+      <p className="mt-1 text-[0.75rem] text-subtle">
         {phase === 'looking' ? `Đang tìm bản ghi cho ${total} từ…` : `Đang tải ${done}/${total} file${failed > 0 ? ` (${failed} lỗi)` : ''}…`}
       </p>
     </div>

@@ -117,8 +117,8 @@ export function StatsPage() {
 function StatTile({ label, value, hint }: { label: string; value: string | number; hint?: string }) {
   return (
     <Card className="p-3.5">
-      <p className="text-[13px] text-muted">{label}</p>
-      <p className="mt-0.5 text-[26px] leading-tight font-bold">{typeof value === 'number' ? num.format(value) : value}</p>
+      <p className="text-[0.8125rem] text-muted">{label}</p>
+      <p className="mt-0.5 text-[1.625rem] leading-tight font-bold">{typeof value === 'number' ? num.format(value) : value}</p>
       {hint && <p className="text-xs text-subtle">{hint}</p>}
     </Card>
   )
@@ -171,7 +171,7 @@ function GoalsCard({ activity, today, goals }: { activity: Map<string, DayActivi
         <Meter label="Thời gian học" value={minutes} goal={goals.dailyMinutes} unit="phút" />
       </div>
       <div className="mt-5 mb-2 flex items-baseline justify-between gap-3">
-        <p className="text-[15px] font-semibold">Tuần này</p>
+        <p className="text-[0.9375rem] font-semibold">Tuần này</p>
         <p className="text-sm text-muted">
           Đạt mục tiêu <b className="text-text">{week.met}</b> ngày · lịch học {week.scheduled} ngày
         </p>
@@ -184,7 +184,7 @@ function GoalsCard({ activity, today, goals }: { activity: Map<string, DayActivi
               key={d.day}
               title={`${WEEKDAY_SHORT[d.weekday]} ${shortDate(d.day)}: ${s.label}`}
               aria-label={`${WEEKDAY_SHORT[d.weekday]} ${shortDate(d.day)}: ${s.label}`}
-              className={`flex aspect-square flex-col items-center justify-center rounded-2xl border-2 text-[13px] font-bold ${s.cls}`}
+              className={`flex aspect-square flex-col items-center justify-center rounded-2xl border-2 text-[0.8125rem] font-bold ${s.cls}`}
             >
               {d.state === 'met' ? <Check aria-hidden className="h-4 w-4" strokeWidth={3} /> : WEEKDAY_SHORT[d.weekday]}
             </li>
@@ -298,7 +298,7 @@ function ActivityCard({ activity, today, range }: { activity: Map<string, DayAct
               {/* Lưới ngang mảnh: 0, giữa, đỉnh. */}
               {[0, 0.5, 1].map((f) => (
                 <div key={f} className="absolute right-0 left-7 border-t border-line" style={{ top: PLOT_H - f * PLOT_H }}>
-                  <span className="absolute -top-2 -left-7 w-6 text-right text-[11px] leading-none text-subtle tabular-nums">{num.format(Math.round(max * f))}</span>
+                  <span className="absolute -top-2 -left-7 w-6 text-right text-[0.6875rem] leading-none text-subtle tabular-nums">{num.format(Math.round(max * f))}</span>
                 </div>
               ))}
               <div className="absolute right-0 bottom-[22px] left-7 flex items-end" style={{ height: PLOT_H }}>
@@ -319,7 +319,7 @@ function ActivityCard({ activity, today, range }: { activity: Map<string, DayAct
                     >
                       {/* Số trên đỉnh: chỉ ở cột cao nhất và cột đang chọn. */}
                       {total > 0 && (i === peak || active) && (
-                        <span className="mb-0.5 text-[11px] leading-none font-semibold text-muted tabular-nums">{num.format(total)}</span>
+                        <span className="mb-0.5 text-[0.6875rem] leading-none font-semibold text-muted tabular-nums">{num.format(total)}</span>
                       )}
                       <span
                         className={`flex w-[min(24px,calc(100%-2px))] flex-col gap-[2px] transition-opacity ${active ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}
@@ -335,7 +335,7 @@ function ActivityCard({ activity, today, range }: { activity: Map<string, DayAct
               </div>
               <div className="absolute right-0 bottom-0 left-7 flex">
                 {list.map((b, i) => (
-                  <span key={b.start} className="flex-1 text-center text-[10px] leading-none text-subtle">
+                  <span key={b.start} className="flex-1 text-center text-[0.625rem] leading-none text-subtle">
                     {(list.length - 1 - i) % labelEvery === 0 ? (week ? shortDate(b.start) : list.length <= 7 ? WEEKDAY_SHORT[weekdayOf(b.start)] : shortDate(b.start)) : ''}
                   </span>
                 ))}

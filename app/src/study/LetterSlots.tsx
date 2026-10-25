@@ -4,13 +4,19 @@ import { activeSlot, fillSlots, letterCount, lettersOnly, slotTemplate, type Slo
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
 
+const SLOT_SIZES = {
+  normal: { gap: 'gap-1.5', slot: 'h-9 w-[1.375rem]', text: 'text-[1.5rem]' },
+  small: { gap: 'gap-1', slot: 'h-8 w-[1.125rem]', text: 'text-[1.25rem]' },
+  tiny: { gap: 'gap-[0.1875rem]', slot: 'h-7 w-[0.9375rem]', text: 'text-[1.0625rem]' },
+}
+
 /** Gõ ra chữ có dấu tiếng Việt cho một từ tiếng Anh: nhắc chuyển bàn phím (Telex biến "ar" thành "ả", "dd" thành "đ"). */
 export function KeyboardHint({ typed, term }: { typed: string; term: string }) {
   const termIsAscii = /^[\x20-\x7e’]*$/.test(term)
   const typedAccented = lettersOnly(typed).some((c) => c > '\x7f')
   if (!termIsAscii || !typedAccented) return null
   return (
-    <p className="mt-3 text-center text-[13px] leading-snug text-warning">
+    <p className="mt-3 text-center text-[0.8125rem] leading-snug text-warning">
       Bàn phím đang gõ tiếng Việt nên chữ bị thêm dấu. Bấm nút 🌐 trên bàn phím để chuyển sang tiếng Anh.
     </p>
   )
@@ -41,7 +47,6 @@ export function LetterSlots({
   const active = state === 'typing' ? activeSlot(template, value) : -1
   const total = letterCount(template)
   const extra = lettersOnly(value).slice(total)
-  const small = total > 14
   const localRef = useRef<HTMLInputElement | null>(null)
 
   // Đã điền đủ ô mà gõ thêm: không nhận chữ thừa, ô chữ cuối rung lên và gạch dưới nháy đỏ.
@@ -74,6 +79,11 @@ export function LetterSlots({
     else words[words.length - 1].push({ slot, index })
   })
 
+  // Cỡ ô theo từ dài nhất (một từ không được xuống dòng giữa chừng): "responsibility" 14 chữ vẫn vừa khung điện thoại.
+  // Kích thước tính bằng rem nên theo cỡ chữ đã chọn; quá chật (cỡ chữ rất lớn) thì xuống dòng thay vì tràn khung.
+  const longest = Math.max(...words.map((w) => w.filter((x) => x.slot.kind === 'letter').length))
+  const size = SLOT_SIZES[longest > 10 || total > 22 ? 'tiny' : longest > 8 || total > 14 ? 'small' : 'normal']
+
   const border = state === 'right' ? 'border-accent' : state === 'wrong' ? 'border-danger' : state === 'near' ? 'border-sun' : 'border-line'
 
   return (
@@ -85,25 +95,21 @@ export function LetterSlots({
     >
       <div className="flex flex-wrap justify-center gap-x-5 gap-y-4" aria-hidden>
         {words.map((w, wi) => (
-          <div key={wi} className={`flex ${small ? 'gap-1' : 'gap-1.5'}`}>
+          <div key={wi} className={`flex flex-wrap justify-center gap-y-4 ${size.gap}`}>
             {w.map(({ slot, index }) =>
               slot.kind === 'fixed' ? (
-                <span key={index} className={`${small ? 'text-[20px]' : 'text-[24px]'} font-bold text-muted`}>
+                <span key={index} className={`${size.text} font-bold text-muted`}>
                   {slot.char}
                 </span>
               ) : (
-                <span
-                  key={index}
-                  ref={index === lastLetter ? lastRef : undefined}
-                  className={`relative flex ${small ? 'h-8 w-[18px]' : 'h-9 w-[22px]'} items-end justify-center`}
-                >
+                <span key={index} ref={index === lastLetter ? lastRef : undefined} className={`relative flex ${size.slot} items-end justify-center`}>
                   {filled[index] ? (
                     <motion.span
                       key={`typed-${filled[index]}`}
                       initial={{ y: -6, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ duration: 0.12 }}
-                      className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-bold text-text`}
+                      className={`${size.text} leading-none font-bold text-text`}
                     >
                       {filled[index]}
                     </motion.span>
@@ -113,7 +119,7 @@ export function LetterSlots({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.35 }}
                       transition={{ duration: 0.2 }}
-                      className={`${small ? 'text-[20px]' : 'text-[24px]'} leading-none font-semibold text-muted`}
+                      className={`${size.text} leading-none font-semibold text-muted`}
                     >
                       {slot.char}
                     </motion.span>
@@ -130,7 +136,7 @@ export function LetterSlots({
         ))}
       </div>
       {extra.length > 0 && state === 'typing' && (
-        <p className="mt-4 text-center text-[13px] text-danger">
+        <p className="mt-4 text-center text-[0.8125rem] text-danger">
           Thừa {extra.length} chữ: <span className="font-semibold">{extra.join('')}</span>
         </p>
       )}
@@ -161,7 +167,7 @@ export function LetterSlots({
         autoComplete="off"
         spellCheck={false}
         enterKeyHint="done"
-        className="absolute inset-0 h-full w-full cursor-text rounded-3xl bg-transparent text-[16px] text-transparent caret-transparent opacity-0 outline-none"
+        className="absolute inset-0 h-full w-full cursor-text rounded-3xl bg-transparent text-[1rem] text-transparent caret-transparent opacity-0 outline-none"
       />
     </motion.div>
   )

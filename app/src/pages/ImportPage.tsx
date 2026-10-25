@@ -228,7 +228,7 @@ export function ImportPage() {
                   <li key={r.line} className={`flex items-center gap-3 rounded-2xl px-3 py-2 ${skipped ? 'opacity-50' : ''}`}>
                     <span className="w-6 shrink-0 text-right text-xs text-subtle tabular-nums">{r.line}</span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[15px]">
+                      <p className="truncate text-[0.9375rem]">
                         <span className="font-semibold">{r.term || '—'}</span> <span className="text-xs text-subtle">{POS_SHORT[r.partOfSpeech]}</span>
                       </p>
                       <p className="truncate text-sm text-muted">{r.message && r.status === 'error' ? r.message : r.meaningVi}</p>

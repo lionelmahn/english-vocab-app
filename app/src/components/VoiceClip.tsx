@@ -34,7 +34,7 @@ export function VoiceClipBar({ raised }: { raised: boolean }) {
           <div className="rounded-2xl border-2 border-accent/40 bg-surface p-3 shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
             <div className="flex items-start gap-2.5">
               <AudioLines aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-              <p className="flex-1 text-[13px] leading-snug">
+              <p className="flex-1 text-[0.8125rem] leading-snug">
                 Phím tắt chạy xong thì bấm <b>Dán âm thanh</b> ({pending.texts.length} mục), rồi bấm “Dán” khi iPhone hỏi.
               </p>
               <button
@@ -49,7 +49,7 @@ export function VoiceClipBar({ raised }: { raised: boolean }) {
                 <X aria-hidden className="h-4 w-4" />
               </button>
             </div>
-            {error && <p className="mt-2 text-[12px] leading-snug text-danger">{error}</p>}
+            {error && <p className="mt-2 text-[0.75rem] leading-snug text-danger">{error}</p>}
             <Button
               variant="primary"
               icon={ClipboardPaste}
@@ -89,7 +89,7 @@ export function VoiceClipPrompt({ item }: { item: { term: string; examples: read
       <Card>
         <div className="flex items-center gap-3">
           <AudioLines aria-hidden className="h-5 w-5 shrink-0 text-accent" />
-          <p className="flex-1 text-[13px] leading-snug text-muted">Muốn nghe từ bằng giọng Nâng cao/Cao cấp bạn tải trên iPhone?</p>
+          <p className="flex-1 text-[0.8125rem] leading-snug text-muted">Muốn nghe từ bằng giọng Nâng cao/Cao cấp bạn tải trên iPhone?</p>
           <Button variant="ghost" className="h-9 shrink-0 px-2 text-sm" onClick={() => navigate('/voice')}>
             Thiết lập
           </Button>
@@ -102,8 +102,8 @@ export function VoiceClipPrompt({ item }: { item: { term: string; examples: read
       <div className="flex items-center gap-3">
         <AudioLines aria-hidden className="h-5 w-5 shrink-0 text-accent" />
         <div className="min-w-0 flex-1">
-          <p className="text-[14px] font-semibold">Chưa có giọng iPhone</p>
-          <p className="text-[12px] leading-snug text-muted">
+          <p className="text-[0.875rem] font-semibold">Chưa có giọng iPhone</p>
+          <p className="text-[0.75rem] leading-snug text-muted">
             {missing.length === 1 ? '1 mục' : `${missing.length} mục (từ và câu ví dụ)`} đang phát bằng giọng tạm.
           </p>
         </div>
@@ -121,5 +121,5 @@ export function VoiceClipFormNote({ text }: { text: string }) {
   const have = useClipKeys()
   const t = text.trim()
   if (!t || !isAppleDevice() || !settings.useVoiceClips || have.size === 0 || have.has(clipKey(t))) return null
-  return <p className="-mt-2 text-[12px] leading-snug text-muted">Đang nghe giọng tạm. Lưu từ xong, bấm “Tạo giọng” ở trang của từ để có giọng iPhone bạn chọn.</p>
+  return <p className="-mt-2 text-[0.75rem] leading-snug text-muted">Đang nghe giọng tạm. Lưu từ xong, bấm “Tạo giọng” ở trang của từ để có giọng iPhone bạn chọn.</p>
 }

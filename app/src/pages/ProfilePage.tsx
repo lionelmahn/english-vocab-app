@@ -20,8 +20,8 @@ function SettingRow({ title, description, children }: { title: string; descripti
   return (
     <div className="flex items-center gap-4 py-2">
       <div className="flex-1">
-        <p className="text-[15px] font-medium">{title}</p>
-        {description && <p className="mt-0.5 text-[13px] leading-snug text-muted">{description}</p>}
+        <p className="text-[0.9375rem] font-medium">{title}</p>
+        {description && <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted">{description}</p>}
       </div>
       {children}
     </div>
@@ -58,8 +58,8 @@ function VoiceSettings() {
             <AudioLines aria-hidden className="h-5 w-5" />
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block text-[15px] font-bold text-accent-strong">Giọng iPhone (Nâng cao/Cao cấp)</span>
-            <span className="block text-[13px] leading-snug text-muted">
+            <span className="block text-[0.9375rem] font-bold text-accent-strong">Giọng iPhone (Nâng cao/Cao cấp)</span>
+            <span className="block text-[0.8125rem] leading-snug text-muted">
               {clipKeys.size > 0 ? `Đã có ${clipKeys.size} âm thanh. ` : ''}Dùng giọng bạn tải trong Cài đặt, qua app Phím tắt.
             </span>
           </span>
@@ -88,7 +88,7 @@ function VoiceSettings() {
         </div>
       )}
       <div>
-        <p className="mb-2 text-[15px] font-medium">Tốc độ giọng máy</p>
+        <p className="mb-2 text-[0.9375rem] font-medium">Tốc độ giọng máy</p>
         <Segmented
           layoutId="speech-speed"
           value={settings.speechSpeed}
@@ -105,7 +105,7 @@ function VoiceSettings() {
         />
       </div>
       {apple && (
-        <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+        <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[0.8125rem] leading-relaxed text-muted">
           {pinned && (
             <p className="font-semibold text-warning">
               Đang dùng giọng “{pinned.name}” có sẵn của máy. Chọn “Tự động” để dùng giọng Nâng cao/Cao cấp bạn đã tải.
@@ -134,7 +134,7 @@ function VoiceSettings() {
             {help ? 'Ẩn hướng dẫn' : 'Giọng máy nghe chưa hay? Tải giọng chất lượng cao'}
           </button>
           {help && (
-            <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+            <div className="flex flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-[0.8125rem] leading-relaxed text-muted">
               <p>
                 <b className="text-text">Android:</b> Cài đặt → Hệ thống → Ngôn ngữ → Đầu ra chuyển văn bản thành lời nói → Dịch vụ của Google → Cài đặt → Cài đặt dữ liệu giọng nói → Tiếng Anh (Mỹ/Vương
                 quốc Anh) → tải giọng chất lượng cao. Sau đó tắt hẳn trình duyệt rồi mở lại app.
@@ -149,7 +149,7 @@ function VoiceSettings() {
           )}
         </>
       )}
-      <p className="text-[11px] leading-relaxed text-subtle">Bản ghi phát âm: Wiktionary / Wikimedia Commons, giấy phép CC BY-SA, CC BY hoặc phạm vi công cộng.</p>
+      <p className="text-[0.6875rem] leading-relaxed text-subtle">Bản ghi phát âm: Wiktionary / Wikimedia Commons, giấy phép CC BY-SA, CC BY hoặc phạm vi công cộng.</p>
     </div>
   )
 }
@@ -176,7 +176,7 @@ export function ProfilePage() {
         <button type="button" onClick={() => navigate('/me/profile')} className="flex w-full items-center gap-4 text-left">
           <Avatar src={profile?.avatarUrl} name={name} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[17px] font-semibold">{name}</p>
+            <p className="truncate text-[1.0625rem] font-semibold">{name}</p>
             <p className="truncate text-sm text-muted">{about || 'Thêm tên, ảnh, trình độ và mục đích học'}</p>
             <p className="truncate text-xs text-subtle">
               {signedIn ? `Đã đăng nhập · ${auth.email}` : auth.status === 'signed_out' ? 'Chưa đăng nhập' : 'Dữ liệu lưu trên thiết bị này'}
@@ -208,7 +208,7 @@ export function ProfilePage() {
       {profile && (
         <Card>
           <SectionTitle>Mục tiêu và lịch học</SectionTitle>
-          <div className="flex flex-col gap-2.5 text-[15px]">
+          <div className="flex flex-col gap-2.5 text-[0.9375rem]">
             <p className="flex items-center gap-3">
               <Target aria-hidden className="h-5 w-5 shrink-0 text-accent" />
               {profile.dailyNewWords} từ mới · {profile.dailyMinutes} phút mỗi ngày
@@ -233,7 +233,7 @@ export function ProfilePage() {
         <p className="mb-3 text-xs text-subtle">Đồng bộ giữa các thiết bị đăng nhập cùng tài khoản; riêng giọng máy đã chọn là của từng máy.</p>
         <div className="flex flex-col gap-4">
           <div>
-            <p className="mb-2 text-[15px] font-medium">Giọng đọc</p>
+            <p className="mb-2 text-[0.9375rem] font-medium">Giọng đọc</p>
             <Segmented
               layoutId="accent"
               value={settings.accent}
@@ -248,8 +248,8 @@ export function ProfilePage() {
           </div>
           <VoiceSettings />
           <div>
-            <p className="text-[15px] font-medium">Mặt trước thẻ khi ôn</p>
-            <p className="mt-0.5 mb-2 text-[13px] leading-snug text-muted">Dùng cho kiểu ôn “Thẻ tự đánh giá”. Học từ mới luôn hiện tiếng Anh trước.</p>
+            <p className="text-[0.9375rem] font-medium">Mặt trước thẻ khi ôn</p>
+            <p className="mt-0.5 mb-2 text-[0.8125rem] leading-snug text-muted">Dùng cho kiểu ôn “Thẻ tự đánh giá”. Học từ mới luôn hiện tiếng Anh trước.</p>
             <Segmented
               layoutId="front"
               value={settings.flashcardFront}
@@ -261,7 +261,7 @@ export function ProfilePage() {
             />
           </div>
           <div>
-            <p className="mb-2 text-[15px] font-medium">Kiểu ôn tập</p>
+            <p className="mb-2 text-[0.9375rem] font-medium">Kiểu ôn tập</p>
             <Segmented
               layoutId="style"
               value={settings.reviewStyle}
@@ -298,6 +298,34 @@ export function ProfilePage() {
       <Card>
         <SectionTitle className="mb-1">Trải nghiệm</SectionTitle>
         <p className="mb-2 text-xs text-subtle">Chỉ áp dụng trên máy này.</p>
+        <div className="py-2">
+          <p className="mb-2 text-[0.9375rem] font-medium">Giao diện</p>
+          <Segmented
+            layoutId="theme"
+            value={settings.theme}
+            onChange={(v) => updateSettings({ theme: v })}
+            options={[
+              { value: 'system', label: 'Theo máy' },
+              { value: 'light', label: 'Sáng' },
+              { value: 'dark', label: 'Tối' },
+            ]}
+          />
+        </div>
+        <div className="py-2">
+          <p className="mb-2 text-[0.9375rem] font-medium">Cỡ chữ</p>
+          <Segmented
+            layoutId="text-size"
+            value={settings.textSize}
+            onChange={(v) => updateSettings({ textSize: v })}
+            options={[
+              { value: 'small', label: 'Nhỏ' },
+              { value: 'normal', label: 'Vừa' },
+              { value: 'large', label: 'Lớn' },
+              { value: 'larger', label: 'Rất lớn' },
+            ]}
+          />
+          <p className="mt-2 text-[0.8125rem] leading-snug text-muted">Phóng to cả chữ lẫn nút trong app. Cỡ chữ đặt trong Cài đặt của iPhone không áp cho app này.</p>
+        </div>
         <SettingRow title="Giảm hiệu ứng" description="Tắt chuyển động trượt, lật thẻ và pháo giấy.">
           <Switch label="Giảm hiệu ứng" checked={settings.reduceMotion} onChange={(v) => updateSettings({ reduceMotion: v })} />
         </SettingRow>
@@ -332,8 +360,8 @@ export function ProfilePage() {
             <CircleHelp aria-hidden className="h-5 w-5" />
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block text-[15px] font-semibold">Hướng dẫn sử dụng</span>
-            <span className="block text-[13px] leading-snug text-muted">Thêm từ, học, ôn và ý nghĩa các con số</span>
+            <span className="block text-[0.9375rem] font-semibold">Hướng dẫn sử dụng</span>
+            <span className="block text-[0.8125rem] leading-snug text-muted">Thêm từ, học, ôn và ý nghĩa các con số</span>
           </span>
           <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
         </button>

@@ -10,7 +10,16 @@ import { LEARNING_DEFAULTS, LEARNING_KEYS, type LearningSettings, type SpeechSpe
 
 export type { SpeechSpeed }
 
+export type ThemeChoice = 'system' | 'light' | 'dark'
+export type TextSize = 'small' | 'normal' | 'large' | 'larger'
+
+/** Cỡ chữ gốc của trang: cỡ chữ, khoảng cách và nút đều tính theo rem nên phóng to đều nhau. */
+export const TEXT_SCALE: Record<TextSize, string> = { small: '93.75%', normal: '100%', large: '112.5%', larger: '125%' }
+
 export interface DeviceSettings {
+  /** Giao diện sáng/tối: theo hệ điều hành hoặc chọn cố định (R14.1). */
+  theme: ThemeChoice
+  textSize: TextSize
   reduceMotion: boolean
   soundEffects: boolean
   /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
@@ -30,6 +39,8 @@ export const SPEECH_RATE: Record<SpeechSpeed, number> = { slower: 0.75, slow: 0.
 const STORAGE_KEY = 'ui-settings'
 export const DEFAULT_SETTINGS: AppSettings = {
   ...LEARNING_DEFAULTS,
+  theme: 'system',
+  textSize: 'normal',
   reduceMotion: false,
   soundEffects: true,
   voiceUS: null,

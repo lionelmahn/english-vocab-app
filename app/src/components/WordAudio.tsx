@@ -126,8 +126,8 @@ export function WordAudioCard({ item }: { item: WordRef }) {
           <Volume2 aria-hidden className="relative h-5 w-5" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[15px] font-semibold">{sourceLabel(source, accent)}</span>
-          <span className="block text-[12px] text-muted">Đang dùng cho giọng {ACCENT_LABEL[accent]} · chạm để nghe</span>
+          <span className="block text-[0.9375rem] font-semibold">{sourceLabel(source, accent)}</span>
+          <span className="block text-[0.75rem] text-muted">Đang dùng cho giọng {ACCENT_LABEL[accent]} · chạm để nghe</span>
         </span>
       </button>
 
@@ -181,7 +181,7 @@ export function WordAudioCard({ item }: { item: WordRef }) {
       )}
 
       {(chosen?.source === 'recording' || chosen?.source === 'upload') && (
-        <p className="mt-3 text-[12px] leading-snug text-subtle">
+        <p className="mt-3 text-[0.75rem] leading-snug text-subtle">
           {auth.status !== 'signed_in'
             ? 'Bản này đang lưu trên máy này; đăng nhập để có trên các máy khác.'
             : sync.audio === 'not_ready'
@@ -227,7 +227,7 @@ function ToolButton({ icon: Icon, onClick, children }: { icon: LucideIcon; onCli
       type="button"
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="flex flex-col items-center gap-1 rounded-2xl border-2 border-line bg-surface px-1 py-2.5 text-[13px] font-semibold"
+      className="flex flex-col items-center gap-1 rounded-2xl border-2 border-line bg-surface px-1 py-2.5 text-[0.8125rem] font-semibold"
     >
       <Icon aria-hidden className="h-5 w-5 text-accent" />
       {children}
@@ -237,7 +237,7 @@ function ToolButton({ icon: Icon, onClick, children }: { icon: LucideIcon; onCli
 
 function LinkButton({ icon: Icon, onClick, children }: { icon: LucideIcon; onClick: () => void; children: ReactNode }) {
   return (
-    <button type="button" onClick={onClick} className="flex items-center gap-1.5 py-1 text-[13px] font-semibold text-muted">
+    <button type="button" onClick={onClick} className="flex items-center gap-1.5 py-1 text-[0.8125rem] font-semibold text-muted">
       <Icon aria-hidden className="h-4 w-4" />
       {children}
     </button>
@@ -337,7 +337,7 @@ function Recorder({ accent, onRecorded }: { accent: Accent; onRecorded: (blob: B
       <p className="h-5 text-sm font-semibold tabular-nums">
         {phase === 'recording' ? `Đang ghi… ${Math.floor(elapsed)}/${MAX_SECONDS} giây · bấm để dừng` : phase === 'asking' ? 'Đang mở micro…' : 'Bấm để bắt đầu'}
       </p>
-      {error && <p className="text-center text-[13px] leading-snug text-danger">{error}</p>}
+      {error && <p className="text-center text-[0.8125rem] leading-snug text-danger">{error}</p>}
     </div>
   )
 }
@@ -375,7 +375,7 @@ function Review({
       <Button icon={Play} onClick={() => void preview()}>
         Nghe thử
       </Button>
-      {error && <p className="text-[13px] leading-snug text-danger">{error}</p>}
+      {error && <p className="text-[0.8125rem] leading-snug text-danger">{error}</p>}
       <div className="grid grid-cols-2 gap-3">
         <Button icon={RotateCcw} onClick={onRetry}>
           {source === 'recording' ? 'Ghi lại' : 'Chọn file khác'}
@@ -426,7 +426,7 @@ function ChooseRecording({ item, accent, assets, current, onDone }: { item: Word
 
   return (
     <div className="flex max-h-[60vh] flex-col gap-2 overflow-y-auto pt-1">
-      <p className="mb-1 text-[13px] leading-snug text-muted">Nghe từng bản rồi chọn bản dùng cho giọng {ACCENT_LABEL[accent]}. Bản đọc sai thì báo để không phát nữa.</p>
+      <p className="mb-1 text-[0.8125rem] leading-snug text-muted">Nghe từng bản rồi chọn bản dùng cho giọng {ACCENT_LABEL[accent]}. Bản đọc sai thì báo để không phát nữa.</p>
       {list.map((r) => {
         const flag = flags.get(r.url)
         const inUse = r.url === currentUrl
@@ -447,7 +447,7 @@ function ChooseRecording({ item, accent, assets, current, onDone }: { item: Word
                 {inUse && <Badge tone="accent">Đang dùng</Badge>}
                 {flag && <Badge tone="danger">Đã báo sai</Badge>}
               </p>
-              <p className="truncate text-[11px] text-subtle">{r.file}</p>
+              <p className="truncate text-[0.6875rem] text-subtle">{r.file}</p>
             </div>
             {flag ? (
               <button type="button" aria-label="Bỏ báo sai" onClick={() => void removeAsset(flag)} className="rounded-xl p-2 text-muted">
@@ -475,7 +475,7 @@ function ChooseRecording({ item, accent, assets, current, onDone }: { item: Word
           </div>
         )
       })}
-      <p className="mt-1 text-[11px] leading-snug text-subtle">Bản ghi của cộng đồng Wiktionary/Wikimedia Commons, giấy phép mở (CC BY-SA, CC BY hoặc PD).</p>
+      <p className="mt-1 text-[0.6875rem] leading-snug text-subtle">Bản ghi của cộng đồng Wiktionary/Wikimedia Commons, giấy phép mở (CC BY-SA, CC BY hoặc PD).</p>
     </div>
   )
 }

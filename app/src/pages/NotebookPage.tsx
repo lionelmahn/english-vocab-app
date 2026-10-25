@@ -148,7 +148,7 @@ function WordsView({ lib }: { lib: Library }) {
             placeholder="Tìm từ hoặc nghĩa"
             aria-label="Tìm trong sổ tay"
             autoCapitalize="none"
-            className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-subtle"
+            className="h-full min-w-0 flex-1 bg-transparent text-[0.9375rem] outline-none placeholder:text-subtle"
           />
         </label>
         <motion.button
@@ -160,7 +160,7 @@ function WordsView({ lib }: { lib: Library }) {
         >
           <SlidersHorizontal aria-hidden className="h-5 w-5" />
           {advancedCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-on-accent">
+            <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[0.6875rem] font-bold text-on-accent">
               {advancedCount}
             </span>
           )}
@@ -306,8 +306,8 @@ function DecksView({ lib }: { lib: Library }) {
           <Card key={d.id} className={d.archived ? 'opacity-60' : ''}>
             <div className="flex items-start gap-3">
               <Link to={`/decks/${d.id}`} className="min-w-0 flex-1">
-                <p className="truncate text-[16px] font-semibold">{d.name}</p>
-                <p className="mt-0.5 text-[13px] text-muted">
+                <p className="truncate text-[1rem] font-semibold">{d.name}</p>
+                <p className="mt-0.5 text-[0.8125rem] text-muted">
                   {s.total} từ · {s.learned} đã học{s.due > 0 && <span className="font-semibold text-warning"> · {s.due} đến hạn</span>}
                 </p>
               </Link>

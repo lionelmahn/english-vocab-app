@@ -18,7 +18,7 @@ function Progress({ label, done, total }: { label: string; done: number; total: 
   const pct = total === 0 ? 0 : Math.round((done / total) * 100)
   return (
     <div>
-      <div className="mb-1 flex justify-between text-[13px]">
+      <div className="mb-1 flex justify-between text-[0.8125rem]">
         <span className="font-medium">{label}</span>
         <span className="text-muted tabular-nums">
           {done}/{total}
@@ -34,7 +34,7 @@ function Progress({ label, done, total }: { label: string; done: number; total: 
 function Step({ n, children }: { n: number; children: ReactNode }) {
   return (
     <li className="flex gap-3">
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-strong">{n}</span>
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[0.8125rem] font-bold text-accent-strong">{n}</span>
       <div className="min-w-0 flex-1 pt-0.5">{children}</div>
     </li>
   )
@@ -117,7 +117,7 @@ export function VoiceClipsPage() {
     <Page title="Giọng iPhone" subtitle="Đọc từ và câu bằng giọng Nâng cao/Cao cấp bạn đã tải, nhờ app Phím tắt." back={<BackButton fallback="/me" />}>
       {!apple && (
         <Card>
-          <p className="text-[14px] leading-relaxed text-muted">Tính năng này cần app Phím tắt trên iPhone, iPad hoặc Mac. Mở app trên iPhone để tạo giọng.</p>
+          <p className="text-[0.875rem] leading-relaxed text-muted">Tính năng này cần app Phím tắt trên iPhone, iPad hoặc Mac. Mở app trên iPhone để tạo giọng.</p>
         </Card>
       )}
 
@@ -129,8 +129,8 @@ export function VoiceClipsPage() {
         </div>
         <div className="mt-3 flex items-center gap-3 border-t border-line pt-3">
           <div className="flex-1">
-            <p className="text-[15px] font-medium">Dùng giọng iPhone khi phát âm</p>
-            <p className="mt-0.5 text-[13px] leading-snug text-muted">Mục nào chưa có thì dùng bản ghi Wiktionary hoặc giọng máy.</p>
+            <p className="text-[0.9375rem] font-medium">Dùng giọng iPhone khi phát âm</p>
+            <p className="mt-0.5 text-[0.8125rem] leading-snug text-muted">Mục nào chưa có thì dùng bản ghi Wiktionary hoặc giọng máy.</p>
           </div>
           <Switch label="Dùng giọng iPhone khi phát âm" checked={settings.useVoiceClips} onChange={(v) => updateSettings({ useVoiceClips: v })} />
         </div>
@@ -146,12 +146,12 @@ export function VoiceClipsPage() {
         {!lib ? (
           <p className="text-sm text-muted">Đang tải…</p>
         ) : todo.length === 0 ? (
-          <p className="text-[14px] leading-relaxed text-muted">
+          <p className="text-[0.875rem] leading-relaxed text-muted">
             {all.length === 0 ? 'Sổ tay chưa có từ nào.' : 'Mọi từ và câu ví dụ đều đã có giọng iPhone. Thêm từ mới thì quay lại đây tạo tiếp.'}
           </p>
         ) : (
           <div className="flex flex-col gap-3">
-            <p className="text-[14px] leading-relaxed text-muted">
+            <p className="text-[0.875rem] leading-relaxed text-muted">
               Còn <b className="text-text">{todo.length}</b> mục chưa có. Mỗi lượt tạo {CLIP_BATCH} mục: app mở phím tắt “{name}”, phím tắt đọc lần lượt rồi chép âm thanh vào bộ nhớ tạm.
             </p>
             <Button variant={pending ? 'secondary' : 'primary'} icon={Wand2} className="w-full" onClick={run} disabled={busy}>
@@ -170,7 +170,7 @@ export function VoiceClipsPage() {
               className="overflow-hidden"
             >
               <div className={`mt-3 flex flex-col gap-3 rounded-2xl p-3 ${returned ? 'bg-accent-soft' : 'bg-surface-2'}`}>
-                <p className="text-[14px] leading-relaxed">
+                <p className="text-[0.875rem] leading-relaxed">
                   <b>Bước 2:</b> đợi phím tắt chạy xong ({pending.texts.length} mục), quay lại app rồi bấm <b>Dán âm thanh</b>. Khi iPhone hiện nút “Dán”, bấm vào đó.
                 </p>
                 <Button
@@ -185,7 +185,7 @@ export function VoiceClipsPage() {
                 >
                   {busy ? 'Đang lưu…' : 'Dán âm thanh'}
                 </Button>
-                <div className="flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold">
+                <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.8125rem] font-semibold">
                   <a
                     href={shortcutRunUrl(name, pending.texts)}
                     className="text-accent"
@@ -234,13 +234,13 @@ export function VoiceClipsPage() {
 
       <Card>
         <button type="button" className="flex w-full items-center justify-between text-left" onClick={() => setGuideOpen(!guideShown)} aria-expanded={guideShown}>
-          <span className="text-[15px] font-semibold">Tạo phím tắt “{name}” (làm một lần)</span>
+          <span className="text-[0.9375rem] font-semibold">Tạo phím tắt “{name}” (làm một lần)</span>
           <ChevronDown aria-hidden className={`h-5 w-5 text-muted transition-transform ${guideShown ? 'rotate-180' : ''}`} />
         </button>
         <AnimatePresence initial={false}>
           {guideShown && (
             <motion.div key="guide" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-              <ol className="mt-3 flex flex-col gap-3 text-[14px] leading-relaxed text-muted">
+              <ol className="mt-3 flex flex-col gap-3 text-[0.875rem] leading-relaxed text-muted">
                 <Step n={1}>
                   Mở app <b className="text-text">Phím tắt</b>, bấm <b className="text-text">+</b>. Bấm tên ở trên cùng → <b className="text-text">Đổi tên</b> thành{' '}
                   <b className="text-text">{name}</b> (đúng chữ hoa, chữ thường).
@@ -270,7 +270,7 @@ export function VoiceClipsPage() {
                   Thêm <Action vi="Sao chép vào bảng nhớ tạm" en="Copy to Clipboard" /> rồi bấm <b className="text-text">Xong</b>.
                 </Step>
               </ol>
-              <p className="mt-3 rounded-2xl bg-surface-2 p-3 text-[13px] leading-relaxed text-muted">
+              <p className="mt-3 rounded-2xl bg-surface-2 p-3 text-[0.8125rem] leading-relaxed text-muted">
                 Thứ tự đúng: Tách (Bảng nhớ tạm) → Lặp lại với từng mục → <i>Tạo âm thanh đọc từ (Lặp lại mục) → Mã hóa (âm thanh vừa tạo)</i> → Kết thúc lặp lại → Kết hợp (Lặp lại kết quả, dấu |) → Sao chép vào bảng nhớ tạm. Lần
                 đầu chạy, iPhone có thể hỏi quyền dán/truy cập bảng nhớ tạm: chọn <b>Luôn cho phép</b>.
               </p>
@@ -285,7 +285,7 @@ export function VoiceClipsPage() {
       {have.size > 0 && (
         <Card>
           <div className="flex items-center gap-3">
-            <p className="flex-1 text-[13px] leading-snug text-muted">Muốn đổi sang giọng khác? Xóa hết rồi tạo lại với giọng mới trong phím tắt.</p>
+            <p className="flex-1 text-[0.8125rem] leading-snug text-muted">Muốn đổi sang giọng khác? Xóa hết rồi tạo lại với giọng mới trong phím tắt.</p>
             <Button
               icon={Trash2}
               className="h-10 shrink-0 px-3 text-sm"
@@ -300,7 +300,7 @@ export function VoiceClipsPage() {
           </div>
         </Card>
       )}
-      <p className="text-center text-[12px] text-subtle">Phiên bản app {APP_VERSION}</p>
+      <p className="text-center text-[0.75rem] text-subtle">Phiên bản app {APP_VERSION}</p>
     </Page>
   )
 }

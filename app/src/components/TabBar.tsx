@@ -30,7 +30,7 @@ export function TabBar() {
                     strokeWidth={isActive ? 2.3 : 1.9}
                   />
                 </motion.span>
-                <span className={`text-[11px] transition-colors ${isActive ? 'font-semibold text-accent' : 'text-muted'}`}>{tab.label}</span>
+                <span className={`text-[0.6875rem] transition-colors ${isActive ? 'font-semibold text-accent' : 'text-muted'}`}>{tab.label}</span>
               </Link>
             </li>
           )

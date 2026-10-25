@@ -13,6 +13,21 @@
     <meta name="apple-mobile-web-app-title" content="Từ vựng" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>Ôn từ vựng</title>
+    <script>
+      // Áp giao diện và cỡ chữ đã chọn trước khi app chạy, để không nháy màu (giống lib/appearance.ts).
+      try {
+        var s = JSON.parse(localStorage.getItem('ui-settings') || '{}')
+        var sizes = { small: '93.75%', normal: '100%', large: '112.5%', larger: '125%' }
+        if (s.theme === 'light' || s.theme === 'dark') {
+          document.documentElement.dataset.theme = s.theme
+          var bar = s.theme === 'dark' ? '#0e1311' : '#f5f6f2'
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.content = bar
+          })
+        }
+        if (sizes[s.textSize]) document.documentElement.style.fontSize = sizes[s.textSize]
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

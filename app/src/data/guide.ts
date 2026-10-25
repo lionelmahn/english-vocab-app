@@ -58,7 +58,7 @@ export const GUIDE: GuideTopic[] = [
           { term: '“Sổ tay”', text: 'Mọi từ và bộ từ của bạn: tìm, lọc, sửa, xếp vào bộ.' },
           { term: '“Tra từ”', text: 'Tra nghĩa và phiên âm trên Wiktionary (một từ điển miễn phí trên mạng) rồi lưu nhanh vào sổ tay.' },
           { term: '“Thống kê”', text: 'Tiến độ, mục tiêu, hoạt động theo ngày và cấp ghi nhớ.' },
-          { term: '“Cá nhân”', text: 'Hồ sơ, mục tiêu, cài đặt, đồng bộ, sao lưu và trang hướng dẫn này.' },
+          { term: '“Cá nhân”', text: 'Hồ sơ, mục tiêu, cài đặt (giọng đọc, giao diện sáng/tối, cỡ chữ), đồng bộ, sao lưu và trang hướng dẫn này.' },
         ],
       },
       { h: 'Cài app lên điện thoại' },
@@ -613,7 +613,7 @@ export const GUIDE: GuideTopic[] = [
         list: [
           'Nếu sửa những chỗ khác nhau trên hai máy, app giữ cả hai thay đổi; nếu cả hai máy cùng sửa một chỗ, app giữ lần sửa sau cùng.',
           'Lượt học không bao giờ bị mất hay tính hai lần; lịch ôn được tính lại từ toàn bộ lượt học khi cần.',
-          'Mục tiêu, lịch học và cài đặt học dùng chung. Riêng “Giảm hiệu ứng”, “Âm thanh hiệu ứng”, công tắc “Dùng giọng iPhone khi phát âm”, giọng máy đã chọn và tên phím tắt là của từng máy: đổi ở máy nào chỉ có tác dụng ở máy đó.',
+          'Mục tiêu, lịch học và cài đặt học dùng chung. Riêng “Giao diện” (sáng, tối hoặc theo máy), “Cỡ chữ”, “Giảm hiệu ứng”, “Âm thanh hiệu ứng”, công tắc “Dùng giọng iPhone khi phát âm”, giọng máy đã chọn và tên phím tắt là của từng máy: đổi ở máy nào chỉ có tác dụng ở máy đó.',
         ],
       },
       { h: 'Trạng thái ở thẻ “Máy chủ và đồng bộ”' },

@@ -26,7 +26,7 @@ export function Page({
       )}
       <motion.header variants={riseIn} className="mb-5 flex items-end justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="text-[26px] leading-tight font-bold tracking-tight">{title}</h1>
+          <h1 className="text-[1.625rem] leading-tight font-bold tracking-tight">{title}</h1>
           {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}
         </div>
         {action && <div className="shrink-0">{action}</div>}
@@ -45,7 +45,7 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
 }
 
 export function SectionTitle({ children, className = 'mb-3' }: { children: ReactNode; className?: string }) {
-  return <h2 className={`text-[15px] font-semibold ${className}`}>{children}</h2>
+  return <h2 className={`text-[0.9375rem] font-semibold ${className}`}>{children}</h2>
 }
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
@@ -72,7 +72,7 @@ export function Button({
     <motion.button
       type="button"
       whileTap={variant === 'ghost' ? tapScale : undefined}
-      className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[15px] font-bold whitespace-nowrap ${BUTTON_STYLES[variant]} ${variant === 'ghost' ? '' : DISABLED} ${className}`}
+      className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[0.9375rem] font-bold whitespace-nowrap ${BUTTON_STYLES[variant]} ${variant === 'ghost' ? '' : DISABLED} ${className}`}
       {...rest}
     >
       {Icon && <Icon aria-hidden className="h-5 w-5" strokeWidth={2.4} />}
@@ -84,7 +84,7 @@ export function Button({
 /** Nhãn cho tính năng chưa làm, kèm giai đoạn sẽ có. */
 export function PhaseBadge({ phase }: { phase: number }) {
   return (
-    <span className="inline-flex shrink-0 items-center rounded-full bg-warning-soft px-2.5 py-1 text-[11px] font-semibold text-warning">
+    <span className="inline-flex shrink-0 items-center rounded-full bg-warning-soft px-2.5 py-1 text-[0.6875rem] font-semibold text-warning">
       Giai đoạn {phase}
     </span>
   )
@@ -100,7 +100,7 @@ export function EmptyState({ icon: Icon, title, body, children }: { icon: Lucide
       >
         <Icon aria-hidden className="h-8 w-8 text-accent" strokeWidth={1.9} />
       </motion.div>
-      <p className="text-[17px] font-semibold">{title}</p>
+      <p className="text-[1.0625rem] font-semibold">{title}</p>
       <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-muted">{body}</p>
       {children && <div className="mt-5 flex w-full flex-col gap-2.5">{children}</div>}
     </Card>
@@ -122,13 +122,13 @@ export function TextField({
       >
         <input
           ref={ref}
-          className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-subtle"
+          className="h-full min-w-0 flex-1 bg-transparent text-[0.9375rem] outline-none placeholder:text-subtle"
           aria-invalid={error ? true : undefined}
           {...input}
         />
         {trailing}
       </span>
-      {error && <span className="mt-1.5 block text-[13px] text-danger">{error}</span>}
+      {error && <span className="mt-1.5 block text-[0.8125rem] text-danger">{error}</span>}
     </label>
   )
 }

@@ -1,7 +1,10 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/nunito/wght.css';
 
-/* Màu theo vai trò; tự đổi theo chế độ sáng/tối của hệ điều hành. */
+/*
+ * Màu theo vai trò. Mặc định theo chế độ sáng/tối của hệ điều hành; chọn cố định ở Cá nhân → Giao diện thì
+ * <html data-theme="light|dark"> (R14.1). Bộ màu tối có hai chỗ (theo hệ điều hành và chọn cố định), sửa phải sửa cả hai.
+ */
 :root {
   --app-bg: #f5f6f2;
   --app-surface: #ffffff;
@@ -34,7 +37,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --app-bg: #0e1311;
     --app-surface: #161c19;
     --app-surface-2: #1e2622;
@@ -61,6 +64,34 @@
     --app-chart-learn: #c98419;
     color-scheme: dark;
   }
+}
+
+:root[data-theme='dark'] {
+  --app-bg: #0e1311;
+  --app-surface: #161c19;
+  --app-surface-2: #1e2622;
+  --app-text: #e7ede9;
+  --app-muted: #a0aca5;
+  --app-subtle: #75817a;
+  --app-border: #29322e;
+  --app-accent: #5dcaa5;
+  --app-accent-strong: #9fe1cb;
+  --app-accent-soft: #123a2f;
+  --app-on-accent: #04342c;
+  --app-danger: #f0997b;
+  --app-danger-soft: #3a1e16;
+  --app-on-danger: #3a1e16;
+  --app-warning: #fac775;
+  --app-warning-soft: #3a2a10;
+  --app-accent-shadow: #2f8f72;
+  --app-danger-shadow: #b8664d;
+  --app-line-shadow: #0b0f0d;
+  --app-sun: #f4b347;
+  --app-sun-soft: #3a2a10;
+  --app-sun-shadow: #b97d22;
+  --app-chart-review: #1f9a72;
+  --app-chart-learn: #c98419;
+  color-scheme: dark;
 }
 
 @theme inline {

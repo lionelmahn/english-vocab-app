@@ -141,7 +141,7 @@ function Setup({
     <Page title={mode === 'learn' ? 'Học từ mới' : 'Ôn tập'} back={<BackButton fallback="/" />} action={<HelpButton topic={mode === 'learn' ? 'learn' : 'review'} />}>
       {resumable && resumeProgress && (
         <Card className="border-accent bg-accent-soft">
-          <p className="text-[15px] font-semibold text-accent-strong">Bạn có một buổi {resumable.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
+          <p className="text-[0.9375rem] font-semibold text-accent-strong">Bạn có một buổi {resumable.mode === 'learn' ? 'học' : 'ôn'} đang dở</p>
           <p className="mt-0.5 text-sm text-accent-strong/80">
             Đã làm {resumeProgress.done}/{resumeProgress.total} bước. Bắt đầu buổi mới sẽ bỏ buổi này.
           </p>
@@ -221,7 +221,7 @@ function Setup({
             </>
           ) : (
             <Card>
-              <p className="text-[40px] leading-none font-bold text-warning">
+              <p className="text-[2.5rem] leading-none font-bold text-warning">
                 <AnimatedNumber value={available} />
               </p>
               <p className="mt-1 text-sm text-muted">
@@ -455,7 +455,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
         {finishing && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-8">
             <motion.div initial={{ scale: 0.9, y: 10 }} animate={{ scale: 1, y: 0 }} className="w-full max-w-xs rounded-3xl bg-surface px-6 py-7 text-center">
-              <p className="text-[18px] font-bold">
+              <p className="text-[1.125rem] font-bold">
                 Đang cập nhật <span className="text-sun">lịch ôn</span>
               </p>
               <div className="mt-5 flex justify-center gap-3" aria-hidden>
@@ -587,7 +587,7 @@ function Summary({ lib, plan, endedAt, onStart }: { lib: Library; plan: SessionP
 function SumStat({ label, value, tone }: { label: string; value: number; tone?: 'accent' | 'danger' }) {
   return (
     <div>
-      <AnimatedNumber value={value} className={`text-[30px] font-bold tabular-nums ${tone === 'accent' ? 'text-accent' : tone === 'danger' ? 'text-danger' : ''}`} />
+      <AnimatedNumber value={value} className={`text-[1.875rem] font-bold tabular-nums ${tone === 'accent' ? 'text-accent' : tone === 'danger' ? 'text-danger' : ''}`} />
       <p className="text-xs text-muted">{label}</p>
     </div>
   )

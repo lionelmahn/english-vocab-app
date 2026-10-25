@@ -129,12 +129,12 @@ function TermBack({ item }: { item: VocabItem }) {
   const ipa = accent === 'uk' ? (item.ipaUk ?? item.ipaUs) : (item.ipaUs ?? item.ipaUk)
   return (
     <>
-      <p className="text-[32px] leading-tight font-extrabold break-words">{item.term}</p>
-      {ipa && <p className="text-[18px] text-muted">{ipa}</p>}
-      <p className="mt-1 text-[22px] leading-snug font-bold">
+      <p className="text-[2rem] leading-tight font-extrabold break-words">{item.term}</p>
+      {ipa && <p className="text-[1.125rem] text-muted">{ipa}</p>}
+      <p className="mt-1 text-[1.375rem] leading-snug font-bold">
         <TermLabel item={item} />
       </p>
-      {item.examples[0]?.vi && <p className="mt-2 text-[15px] text-muted italic">{item.examples[0].vi}</p>}
+      {item.examples[0]?.vi && <p className="mt-2 text-[0.9375rem] text-muted italic">{item.examples[0].vi}</p>}
     </>
   )
 }
@@ -154,13 +154,13 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
   // Mặt trước: từ cần học in đậm ở trên, câu ví dụ (gạch chân từ) ngay bên dưới.
   const contextFront = (
     <>
-      <p className="text-[34px] leading-tight font-extrabold break-words">{item.term}</p>
+      <p className="text-[2.125rem] leading-tight font-extrabold break-words">{item.term}</p>
       {sentence ? (
-        <p className="mt-4 text-[20px] leading-relaxed">
+        <p className="mt-4 text-[1.25rem] leading-relaxed">
           <Sentence text={sentence} term={item.term} mode="underline" />
         </p>
       ) : (
-        POS_SHORT[item.partOfSpeech] && <p className="text-[16px] text-muted">({POS_SHORT[item.partOfSpeech]})</p>
+        POS_SHORT[item.partOfSpeech] && <p className="text-[1rem] text-muted">({POS_SHORT[item.partOfSpeech]})</p>
       )}
     </>
   )
@@ -266,11 +266,11 @@ export function MeaningChoiceStep({
           <RoundSpeak text={item.term} size="lg" />
         </div>
       ) : sentence ? (
-        <div className="rounded-3xl border-2 border-accent bg-surface px-5 py-5 text-center text-[21px] leading-relaxed">
+        <div className="rounded-3xl border-2 border-accent bg-surface px-5 py-5 text-center text-[1.3125rem] leading-relaxed">
           <Sentence text={sentence} term={item.term} mode="underline" />
         </div>
       ) : (
-        <p className="py-4 text-center text-[34px] leading-tight font-extrabold break-words">{item.term}</p>
+        <p className="py-4 text-center text-[2.125rem] leading-tight font-extrabold break-words">{item.term}</p>
       )}
       <div className="flex flex-col gap-3">
         {choices.map((c) => (
@@ -329,11 +329,11 @@ export function AudioChoiceStep({
       }
     >
       {sentence ? (
-        <div className="rounded-3xl border-2 border-accent bg-surface px-5 py-5 text-center text-[21px] leading-relaxed">
+        <div className="rounded-3xl border-2 border-accent bg-surface px-5 py-5 text-center text-[1.3125rem] leading-relaxed">
           <Sentence text={sentence} term={item.term} mode="blank" />
         </div>
       ) : (
-        <p className="py-4 text-center text-[26px] leading-snug font-bold">
+        <p className="py-4 text-center text-[1.625rem] leading-snug font-bold">
           <TermLabel item={item} />
         </p>
       )}
@@ -351,7 +351,7 @@ export function AudioChoiceStep({
               }}
             >
               <Volume2 aria-hidden className={`h-7 w-7 ${state === 'selected' ? 'text-sun' : state === 'idle' || state === 'dim' ? 'text-muted' : ''}`} strokeWidth={2.4} />
-              {shown && <span className="text-[17px] font-bold">{c.term}</span>}
+              {shown && <span className="text-[1.0625rem] font-bold">{c.term}</span>}
             </ChoiceCard>
           )
         })}
@@ -507,17 +507,17 @@ export function SlotsStep({ item, knownCheck, onAnswer, onContinue }: { item: Vo
       }
     >
       <div className="flex flex-col items-center gap-2 py-2 text-center">
-        <p className="text-[26px] leading-snug font-bold">
+        <p className="text-[1.625rem] leading-snug font-bold">
           <TermLabel item={item} />
         </p>
         {sentence && (
-          <p className="max-w-sm text-[16px] leading-relaxed text-muted italic">
+          <p className="max-w-sm text-[1rem] leading-relaxed text-muted italic">
             <Sentence text={sentence} term={item.term} mode="blank" />
           </p>
         )}
       </div>
       <LetterSlots term={item.term} value={value} onChange={setValue} onEnter={doCheck} revealed={revealed} state={state} />
-      {hintUsed && !done && <p className="-mt-2 text-center text-[13px] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
+      {hintUsed && !done && <p className="-mt-2 text-center text-[0.8125rem] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
       {sheet}
     </StepFrame>
   )
@@ -587,7 +587,7 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
             autoComplete="off"
             spellCheck={false}
             enterKeyHint="done"
-            className="h-full min-w-0 flex-1 bg-transparent text-[20px] font-semibold outline-none placeholder:font-normal placeholder:text-subtle"
+            className="h-full min-w-0 flex-1 bg-transparent text-[1.25rem] font-semibold outline-none placeholder:font-normal placeholder:text-subtle"
           />
         </motion.label>
         {!done && <KeyboardHint typed={value} term={item.term} />}
@@ -646,16 +646,16 @@ export function FlashcardStep({
 
   const front =
     flashcardFront === 'term' ? (
-      <p className="text-[36px] leading-tight font-extrabold break-words">{item.term}</p>
+      <p className="text-[2.25rem] leading-tight font-extrabold break-words">{item.term}</p>
     ) : (
-      <p className="text-[26px] leading-snug font-bold">
+      <p className="text-[1.625rem] leading-snug font-bold">
         <TermLabel item={item} />
       </p>
     )
 
   return (
     <div className="flex min-h-[calc(100dvh-7rem)] flex-col">
-      <p className="pt-2 text-center text-[17px] font-semibold text-muted">Bạn có nhớ từ này?</p>
+      <p className="pt-2 text-center text-[1.0625rem] font-semibold text-muted">Bạn có nhớ từ này?</p>
       <div className="relative mt-12 flex flex-1 flex-col">
         <div className="absolute -top-8 left-1/2 z-10 flex -translate-x-1/2 gap-4">
           <RoundSpeak text={item.term} />
@@ -682,8 +682,8 @@ export function FlashcardStep({
                   onClick={() => void rate(r.grade)}
                   className={`flex h-16 flex-col items-center justify-center rounded-2xl font-extrabold transition-transform duration-100 active:translate-y-[3px] ${r.cls}`}
                 >
-                  <span className="text-[16px]">{r.label}</span>
-                  {preview && <span className="text-[11px] font-semibold opacity-80">{formatDueIn(preview[r.grade].due.getTime(), now).replace(' nữa', '')}</span>}
+                  <span className="text-[1rem]">{r.label}</span>
+                  {preview && <span className="text-[0.6875rem] font-semibold opacity-80">{formatDueIn(preview[r.grade].due.getTime(), now).replace(' nữa', '')}</span>}
                 </button>
               ))}
             </motion.div>

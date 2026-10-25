@@ -4,6 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { TabBar } from './components/TabBar'
 import { Toaster } from './components/kit'
 import { pageTransition, pageVariants } from './lib/motion'
+import { applyAppearance } from './lib/appearance'
 import { useSettings } from './lib/settings'
 import { isFocusMode, tabIndexOf } from './lib/tabs'
 import { BackupPage } from './pages/BackupPage'
@@ -70,7 +71,7 @@ function depthOf(pathname: string): number {
 export default function App() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { reduceMotion } = useSettings()
+  const { reduceMotion, theme, textSize } = useSettings()
   const index = tabIndexOf(location.pathname)
   const depth = depthOf(location.pathname)
   const focus = isFocusMode(location.pathname)
@@ -99,6 +100,9 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dataset.reduceMotion = String(reduceMotion)
   }, [reduceMotion])
+
+  // Giao diện sáng/tối và cỡ chữ (R14.1); index.html áp sẵn lúc mở app để không nháy màu.
+  useEffect(() => applyAppearance(theme, textSize), [theme, textSize])
 
   useEffect(() => {
     window.scrollTo(0, 0)

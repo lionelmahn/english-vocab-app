@@ -148,8 +148,8 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
         {!deck.archived && (
           <div className="mt-4 flex items-center justify-between gap-4 border-t border-line pt-3">
             <div>
-              <p className="text-[15px] font-medium">Đưa vào kế hoạch học</p>
-              <p className="text-[13px] text-muted">Tắt thì từ chỉ thuộc bộ này sẽ không được học và ôn.</p>
+              <p className="text-[0.9375rem] font-medium">Đưa vào kế hoạch học</p>
+              <p className="text-[0.8125rem] text-muted">Tắt thì từ chỉ thuộc bộ này sẽ không được học và ôn.</p>
             </div>
             <Switch label="Đưa vào kế hoạch học" checked={deck.active} onChange={(v) => void repo.updateDeck(deck.id, { active: v })} />
           </div>
@@ -333,7 +333,7 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
 function Stat({ label, value, tone }: { label: string; value: number; tone?: 'warning' }) {
   return (
     <div>
-      <p className={`text-[24px] font-bold tabular-nums ${tone === 'warning' ? 'text-warning' : ''}`}>{value}</p>
+      <p className={`text-[1.5rem] font-bold tabular-nums ${tone === 'warning' ? 'text-warning' : ''}`}>{value}</p>
       <p className="text-xs text-muted">{label}</p>
     </div>
   )

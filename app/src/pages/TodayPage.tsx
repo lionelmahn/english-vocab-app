@@ -49,7 +49,7 @@ function LevelBars({ counts }: { counts: Record<Exclude<MemoryLevel, 0>, number>
           const h = counts[l] === 0 ? 0 : Math.max(0.08, counts[l] / max)
           return (
             <div key={l} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
-              <span className="text-[13px] font-bold whitespace-nowrap text-muted">{counts[l]} từ</span>
+              <span className="text-[0.8125rem] font-bold whitespace-nowrap text-muted">{counts[l]} từ</span>
               <motion.div
                 className="w-full max-w-14 rounded-t-2xl"
                 style={{ backgroundColor: LEVEL_COLORS[l] }}
@@ -64,7 +64,7 @@ function LevelBars({ counts }: { counts: Record<Exclude<MemoryLevel, 0>, number>
       <div className="h-1.5 rounded-full bg-line" />
       <div className="mt-2 flex justify-between gap-3">
         {levels.map((l) => (
-          <span key={l} className="flex-1 text-center text-[18px] font-extrabold">
+          <span key={l} className="flex-1 text-center text-[1.125rem] font-extrabold">
             {l}
           </span>
         ))}
@@ -128,7 +128,7 @@ export function TodayPage() {
           <HelpButton topic="today" label="Giải thích các con số trên trang này" />
           <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 shadow-[0_3px_0_0_var(--app-line-shadow)]" aria-label={`Chuỗi ${activity.streak} ngày`}>
             <Flame aria-hidden className={`h-6 w-6 ${activity.streak > 0 ? 'text-[#e0714a]' : 'text-subtle'}`} fill={activity.streak > 0 ? '#f6c344' : 'none'} />
-            <AnimatedNumber value={activity.streak} className="text-[20px] font-extrabold tabular-nums" />
+            <AnimatedNumber value={activity.streak} className="text-[1.25rem] font-extrabold tabular-nums" />
           </span>
         </span>
       }
@@ -151,7 +151,7 @@ export function TodayPage() {
             {!online && (
               <Link to="/me/offline" className="flex items-start gap-3 rounded-2xl bg-surface-2 px-4 py-3">
                 <WifiOff aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-warning" />
-                <span className="text-[13px] leading-snug text-muted">
+                <span className="text-[0.8125rem] leading-snug text-muted">
                   <b className="text-text">Đang ngoại tuyến.</b> Vẫn học và ôn bình thường; kết quả lưu trên máy và tự đồng bộ khi có mạng lại.
                 </span>
               </Link>
@@ -177,26 +177,26 @@ export function TodayPage() {
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface shadow-[0_3px_0_0_var(--app-line-shadow)]">
                   <NotebookPen aria-hidden className="h-5 w-5 text-[#e0714a]" />
                 </span>
-                <span className="text-[16px] text-muted">
-                  Sổ tay đã có <b className="text-[18px] text-text">{live.length}</b> từ
+                <span className="text-[1rem] text-muted">
+                  Sổ tay đã có <b className="text-[1.125rem] text-text">{live.length}</b> từ
                 </span>
               </Link>
             </motion.div>
 
             <motion.div variants={riseIn} className="pt-2">
               <LevelBars counts={counts} />
-              {notLearned > 0 && <p className="mt-2 text-center text-[13px] text-muted">{notLearned} từ chưa học</p>}
+              {notLearned > 0 && <p className="mt-2 text-center text-[0.8125rem] text-muted">{notLearned} từ chưa học</p>}
             </motion.div>
 
             <motion.div variants={riseIn} className="flex flex-col items-center gap-3 pt-2">
               {due > 0 ? (
-                <p className="text-[18px] font-bold">
-                  Đến giờ ôn tập: <AnimatedNumber value={due} className="text-[22px] font-extrabold text-sun" /> từ
+                <p className="text-[1.125rem] font-bold">
+                  Đến giờ ôn tập: <AnimatedNumber value={due} className="text-[1.375rem] font-extrabold text-sun" /> từ
                 </p>
               ) : (
                 <div className="flex items-center gap-3">
                   <Buddy mood="happy" size={44} />
-                  <p className="text-[15px] font-semibold text-muted">{nextDue ? `Lượt ôn tiếp theo: ${formatDueIn(nextDue, now)}` : 'Học vài từ mới để bắt đầu ôn tập nhé'}</p>
+                  <p className="text-[0.9375rem] font-semibold text-muted">{nextDue ? `Lượt ôn tiếp theo: ${formatDueIn(nextDue, now)}` : 'Học vài từ mới để bắt đầu ôn tập nhé'}</p>
                 </div>
               )}
               <PillButton disabled={due === 0} onClick={() => navigate('/review')}>
@@ -225,7 +225,7 @@ export function TodayPage() {
                 </Button>
               </div>
               {advice && newAvailable > 0 && (advice.reason === 'reduced' || advice.reason === 'review-first') && (
-                <p className="mt-3 flex gap-2 text-[13px] leading-snug text-muted">
+                <p className="mt-3 flex gap-2 text-[0.8125rem] leading-snug text-muted">
                   <Lightbulb aria-hidden className="mt-px h-4 w-4 shrink-0 text-sun" />
                   <span>{workloadText(advice)}</span>
                 </p>

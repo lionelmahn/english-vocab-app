@@ -29,7 +29,7 @@ function Inline({ text }: { text: string }) {
 }
 
 function Block({ block }: { block: GuideBlock }) {
-  if ('h' in block) return <h3 className="pt-2 text-[15px] font-bold text-text">{block.h}</h3>
+  if ('h' in block) return <h3 className="pt-2 text-[0.9375rem] font-bold text-text">{block.h}</h3>
   if ('p' in block)
     return (
       <p>
@@ -50,7 +50,7 @@ function Block({ block }: { block: GuideBlock }) {
       <ol className="flex flex-col gap-2">
         {block.steps.map((s, i) => (
           <li key={i} className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[13px] font-bold text-accent">{i + 1}</span>
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[0.8125rem] font-bold text-accent">{i + 1}</span>
             <span className="pt-0.5">
               <Inline text={s} />
             </span>
@@ -89,7 +89,7 @@ function Block({ block }: { block: GuideBlock }) {
 
 export function GuideBody({ blocks }: { blocks: readonly GuideBlock[] }) {
   return (
-    <div className="flex flex-col gap-3 text-[15px] leading-relaxed text-muted">
+    <div className="flex flex-col gap-3 text-[0.9375rem] leading-relaxed text-muted">
       {blocks.map((b, i) => (
         <Block key={i} block={b} />
       ))}
