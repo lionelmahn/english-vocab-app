@@ -1,6 +1,7 @@
 import { liveQuery } from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { LEARNING_DEFAULTS, LEARNING_KEYS, profileDefaults, type LearningSettings, type ProfileData } from '../core/profile'
+import { sanitizeReminders } from '../core/reminders'
 import { db } from '../db/db'
 import { repo } from '../db/repo'
 import { PROFILE_ID, type Profile } from '../db/types'
@@ -11,9 +12,10 @@ import { applyLearningSettings, currentLearningSettings, setLearningWriter } fro
  * sửa cài đặt học thì ghi vào hồ sơ (rồi đồng bộ); hồ sơ đổi (kể cả từ máy khác) thì cài đặt đổi theo.
  */
 
-function dataOf(row: Profile): ProfileData {
+export function dataOf(row: Profile): ProfileData {
   const { id: _id, createdAt: _c, updatedAt: _u, deletedAt: _d, ...data } = row
-  return data
+  // Hồ sơ lưu từ bản cũ có thể thiếu mục mới (ví dụ tùy chọn nhắc nhở từ 0.12.0): điền giá trị mặc định.
+  return { ...profileDefaults(data.timeZone), ...data, reminders: sanitizeReminders(data.reminders) }
 }
 
 function learningOf(row: ProfileData): LearningSettings {

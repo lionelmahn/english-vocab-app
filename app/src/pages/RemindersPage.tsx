@@ -5,7 +5,7 @@ import { HelpButton } from '../components/Guide'
 import { BackButton, Select } from '../components/kit'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { weekdaysLabel } from '../core/profile'
-import { DUE_MIN_OPTIONS, DUE_PER_DAY_OPTIONS, type ReminderPrefs } from '../core/reminders'
+import { DUE_MIN_OPTIONS, DUE_PER_DAY_OPTIONS, sanitizeReminders, type ReminderPrefs } from '../core/reminders'
 import { formatDate } from '../lib/format'
 import { showToast } from '../lib/toast'
 import { useAuth } from '../services/auth'
@@ -33,7 +33,7 @@ export function RemindersPage() {
   }, [auth.status, version])
 
   if (!profile) return null
-  const prefs = profile.reminders
+  const prefs = sanitizeReminders(profile.reminders)
   const setPrefs = (patch: Partial<ReminderPrefs>) => void updateProfile({ reminders: { ...prefs, ...patch } })
 
   async function run(action: () => Promise<string | null>, done: string) {

@@ -9,6 +9,7 @@ import { isFocusMode, tabIndexOf } from './lib/tabs'
 import { BackupPage } from './pages/BackupPage'
 import { StarterDecksPage, WelcomePage } from './pages/StarterPages'
 import { DeckAddWordsPage, DeckDetailPage, DeckFormPage } from './pages/DeckPages'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { HelpPage, HelpTopicPage } from './pages/HelpPage'
 import { ImportPage } from './pages/ImportPage'
 import { RemindersPage } from './pages/RemindersPage'
@@ -109,37 +110,39 @@ export default function App() {
               transition={pageTransition}
               className="w-full"
             >
-              <Routes location={location}>
-                <Route path="/" element={<TodayPage />} />
-                <Route path="/notebook" element={<NotebookPage view="words" />} />
-                <Route path="/notebook/decks" element={<NotebookPage view="decks" />} />
-                <Route path="/words/new" element={<WordFormPage />} />
-                <Route path="/words/:id" element={<WordDetailPage />} />
-                <Route path="/words/:id/edit" element={<WordFormPage />} />
-                <Route path="/decks/new" element={<DeckFormPage />} />
-                <Route path="/decks/starter" element={<StarterDecksPage />} />
-                <Route path="/decks/:id" element={<DeckDetailPage />} />
-                <Route path="/decks/:id/edit" element={<DeckFormPage />} />
-                <Route path="/decks/:id/add" element={<DeckAddWordsPage />} />
-                <Route path="/import" element={<ImportPage />} />
-                <Route path="/backup" element={<BackupPage />} />
-                <Route path="/learn" element={<StudyPage mode="learn" />} />
-                <Route path="/review" element={<StudyPage mode="review" />} />
-                <Route path="/study" element={<StudyPage mode="resume" />} />
-                <Route path="/lookup" element={<LookupPage />} />
-                <Route path="/stats" element={<StatsPage />} />
-                <Route path="/me" element={<ProfilePage />} />
-                <Route path="/me/profile" element={<ProfileEditPage />} />
-                <Route path="/me/goals" element={<GoalsPage />} />
-                <Route path="/me/reminders" element={<RemindersPage />} />
-                <Route path="/voice" element={<VoiceClipsPage />} />
-                <Route path="/help" element={<HelpPage />} />
-                <Route path="/help/:topic" element={<HelpTopicPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/welcome" element={<WelcomePage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
-                <Route path="*" element={<TodayPage />} />
-              </Routes>
+              <ErrorBoundary>
+                <Routes location={location}>
+                  <Route path="/" element={<TodayPage />} />
+                  <Route path="/notebook" element={<NotebookPage view="words" />} />
+                  <Route path="/notebook/decks" element={<NotebookPage view="decks" />} />
+                  <Route path="/words/new" element={<WordFormPage />} />
+                  <Route path="/words/:id" element={<WordDetailPage />} />
+                  <Route path="/words/:id/edit" element={<WordFormPage />} />
+                  <Route path="/decks/new" element={<DeckFormPage />} />
+                  <Route path="/decks/starter" element={<StarterDecksPage />} />
+                  <Route path="/decks/:id" element={<DeckDetailPage />} />
+                  <Route path="/decks/:id/edit" element={<DeckFormPage />} />
+                  <Route path="/decks/:id/add" element={<DeckAddWordsPage />} />
+                  <Route path="/import" element={<ImportPage />} />
+                  <Route path="/backup" element={<BackupPage />} />
+                  <Route path="/learn" element={<StudyPage mode="learn" />} />
+                  <Route path="/review" element={<StudyPage mode="review" />} />
+                  <Route path="/study" element={<StudyPage mode="resume" />} />
+                  <Route path="/lookup" element={<LookupPage />} />
+                  <Route path="/stats" element={<StatsPage />} />
+                  <Route path="/me" element={<ProfilePage />} />
+                  <Route path="/me/profile" element={<ProfileEditPage />} />
+                  <Route path="/me/goals" element={<GoalsPage />} />
+                  <Route path="/me/reminders" element={<RemindersPage />} />
+                  <Route path="/voice" element={<VoiceClipsPage />} />
+                  <Route path="/help" element={<HelpPage />} />
+                  <Route path="/help/:topic" element={<HelpTopicPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/welcome" element={<WelcomePage />} />
+                  <Route path="/reset-password" element={<ResetPasswordPage />} />
+                  <Route path="*" element={<TodayPage />} />
+                </Routes>
+              </ErrorBoundary>
             </motion.div>
           </AnimatePresence>
         </main>

@@ -332,6 +332,8 @@ Nguyên tắc:
 > - **App:** Cá nhân → Nhắc nhở: bật/tắt trên từng máy (xin quyền, đăng ký, lưu lên máy chủ), gửi thử, danh sách các máy đang nhận, tùy chọn nhắc (lưu trong hồ sơ nên dùng chung mọi máy). Trên iPhone chưa cài app lên màn hình chính thì hướng dẫn cài. Service worker nhận thông báo và mở đúng trang khi chạm. Mỗi lần mở app, đăng ký của máy được gửi lại lên máy chủ. Khóa tạo bằng `npm run push-keys` (khóa riêng nằm trong app/push-keys.local, không lên git). Hướng dẫn thêm mục Nhắc nhở.
 > - **Kiểm thử:** 250 test (thêm mã hóa và VAPID theo RFC, quyết định nhắc, xử lý yêu cầu của Edge Function, hàm SQL và quyền trên Postgres, tùy chọn nhắc qua đồng bộ). Đã thử trang Nhắc nhở trên bản dựng thật ở khung điện thoại; chưa thử nhận thông báo thật (cần cài trên Supabase trước).
 > - **Còn lại của giai đoạn 3:** R9.5 (đề xuất lượng từ mới theo lượng ôn tồn đọng), R11.6 + R11.8 (học ngoại tuyến, quản lý dữ liệu tải xuống), R14.1 (sáng/tối, cỡ chữ), R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so). R10.5 (chuỗi ngày) đã có từ trước.
+
+> **Cập nhật 26/10/2026 (bản 0.12.1): Sửa màn hình trắng ở trang Nhắc nhở.** Hồ sơ lưu trên máy từ trước bản 0.12.0 chưa có mục tùy chọn nhắc nên trang bị lỗi; giờ khi đọc hồ sơ cũ, app tự điền giá trị mặc định cho mục mới (có test). Thêm lớp bắt lỗi chung: trang nào lỗi khi hiển thị sẽ báo “Trang này gặp lỗi” kèm nút tải lại, thay vì màn hình trắng. 251 test.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản
