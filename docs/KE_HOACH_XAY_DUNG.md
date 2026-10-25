@@ -341,6 +341,13 @@ Nguyên tắc:
 > - **Từ đã có trong sổ tay:** mỗi máy tự điền một lần (sau lần đồng bộ đầu) phiên âm còn trống cho từ của bộ 1.000 từ hoặc từ trùng hẳn nghĩa; không sửa phiên âm người học đã ghi, rồi đồng bộ sang máy khác. Thêm lại bộ cũng điền phần còn trống.
 > - **Sửa lỗi đồng bộ Giọng iPhone:** tạo lại một Giọng iPhone ngay sau lần tải lên trước có thể không sang máy kia (dòng mới chỉ khác thời điểm sửa nên bị coi là không đổi); giờ bản tạo lại là dòng mới, file cũ bị xóa khỏi kho. Lỗi lộ ra vì test dùng đồng hồ giả đã lùi về trước giờ thật của máy chủ.
 > - **Kiểm thử:** 261 test (thêm test bộ đọc với các đoạn thật của Wiktionary, định dạng phiên âm của cả 1.000 từ, tự điền phiên âm). Đã thử trên trình duyệt: sổ tay cũ chưa có phiên âm được tự điền đúng, trang chi tiết từ và Tra từ hiện phiên âm mới, thêm cả bộ thì 1.000/1.000 từ có đủ hai giọng.
+
+> **Cập nhật 25/10/2026 (bản 0.13.0): Gợi ý số từ mới theo lượng ôn còn tồn (R9.5).** App lấy số phút cần để ôn hết các từ còn đến hạn hôm nay (tới 4:00 sáng mai), trừ vào “Thời gian học mỗi ngày”, phần còn lại chia cho thời gian học một từ mới; tối đa bằng phần mục tiêu từ mới còn thiếu hôm nay. Tốc độ ôn và học mới tính từ lịch sử 30 ngày của chính người học (chưa đủ dữ liệu thì 12 giây/từ ôn, 45 giây/từ mới). Mục tiêu số phút ngắn hơn thời gian học đủ từ mới thì lấy thời gian học đủ từ mới làm mức, để chỉ lượng ôn mới làm giảm gợi ý; đặt 0 phút thì không gợi ý giảm.
+> - **Trang Hôm nay:** thẻ “Học từ mới” có thêm dòng gợi ý khi nên học ít hơn hoặc nên ôn trước.
+> - **Chuẩn bị buổi học:** chọn sẵn số từ gợi ý (chip có chữ gợi ý) hoặc phần còn thiếu của mục tiêu hôm nay; ôn đã kín thời gian thì có thẻ khuyên ôn trước và nút “Ôn tập trước”. Vẫn chọn học bao nhiêu từ cũng được.
+> - **Hướng dẫn:** thêm phần “Gợi ý số từ mới khi còn nhiều từ cần ôn” (bài Học từ mới), cập nhật bài Hôm nay, Mục tiêu; sửa câu cũ ở Bắt đầu nhanh (“App chưa gửi thông báo nhắc”) vì đã có nhắc nhở từ 0.12.0.
+> - **Kiểm thử:** 271 test (tốc độ học, gợi ý số từ, hết ngày học). Đã thử trên trình duyệt ở khung điện thoại, sáng và tối: 60 từ đến hạn → gợi ý 4 từ; 80 từ → khuyên ôn trước, nút chuyển sang trang Ôn tập.
+> - **Còn lại của giai đoạn 3:** R11.6 + R11.8 (học ngoại tuyến, quản lý dữ liệu tải xuống), R14.1 (sáng/tối, cỡ chữ), R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so). Việc nhỏ đang chờ: thêm nút “Đổi giờ học” ở trang Nhắc nhở (bạn hẹn để sau).
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { BookOpenCheck, FileUp, Flame, GraduationCap, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
+import { BookOpenCheck, FileUp, Flame, GraduationCap, Lightbulb, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
@@ -19,6 +19,7 @@ import { useLibrary, useNow } from '../lib/hooks'
 import { riseIn } from '../lib/motion'
 import { useSettings } from '../lib/settings'
 import { useProfile } from '../services/profile'
+import { useNewWordAdvice, workloadText } from '../services/workload'
 import { PillButton } from '../study/ui'
 
 function greeting(hour: number): string {
@@ -112,6 +113,7 @@ export function TodayPage() {
   const newAvailable = lib ? learnCandidates(lib).length : 0
   const nextDue = lib ? nextDueAt(lib, now) : null
   const goal = Math.max(1, settings.dailyNewWords)
+  const advice = useNewWordAdvice(lib, now)
   const activeProgress = active ? progress(active.plan) : null
   const restDay = !!profile && !isStudyDay(profile.studyWeekdays, new Date(now), tz)
 
@@ -212,6 +214,12 @@ export function TodayPage() {
                   Học
                 </Button>
               </div>
+              {advice && newAvailable > 0 && (advice.reason === 'reduced' || advice.reason === 'review-first') && (
+                <p className="mt-3 flex gap-2 text-[13px] leading-snug text-muted">
+                  <Lightbulb aria-hidden className="mt-px h-4 w-4 shrink-0 text-sun" />
+                  <span>{workloadText(advice)}</span>
+                </p>
+              )}
             </Card>
           </>
         )

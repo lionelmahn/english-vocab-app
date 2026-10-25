@@ -1,4 +1,4 @@
-import { GraduationCap, Pause, Repeat, Sparkles, X } from 'lucide-react'
+import { GraduationCap, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -24,6 +24,7 @@ import { getSettings, useSettings } from '../lib/settings'
 import { playComplete } from '../lib/sfx'
 import { prefetchWordAudio } from '../services/audio'
 import { speechAvailable } from '../services/speech'
+import { useNewWordAdvice, workloadText, type TodayWorkload } from '../services/workload'
 import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
 import { AudioChoiceStep, DictationStep, FlashcardStep, IntroStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
 import { StudyProgress } from '../study/ui'
@@ -110,7 +111,11 @@ function Setup({
   const [params] = useSearchParams()
   const presetDeck = params.get('deck')
   const [deckId, setDeckId] = useState<string>(presetDeck && lib.deckById.has(presetDeck) ? presetDeck : '')
-  const [count, setCount] = useState(settings.dailyNewWords)
+  const advice = useNewWordAdvice(lib, now)
+  // Chọn sẵn số từ gợi ý (R9.5): phần còn thiếu của mục tiêu hôm nay, ít hơn nếu còn nhiều từ cần ôn.
+  const suggested = mode === 'learn' && advice && advice.suggested > 0 ? advice.suggested : null
+  const [picked, setPicked] = useState<number | null>(null)
+  const count = picked ?? suggested ?? settings.dailyNewWords
   const [starting, setStarting] = useState(false)
   const scope = deckId ? [deckId] : undefined
   const decks = lib.decks.filter((d) => !d.archived && (d.active || d.id === deckId))
@@ -119,7 +124,7 @@ function Setup({
   const sessionSize = mode === 'learn' ? Math.min(count, available) : Math.min(settings.reviewLimit, available)
   const nextDue = nextDueAt(lib, now)
   const resumeProgress = resumable ? progress(resumable.plan) : null
-  const counts = [...new Set([5, 10, 15, 20, 30, settings.dailyNewWords])].sort((a, b) => a - b)
+  const counts = [...new Set([5, 10, 15, 20, 30, settings.dailyNewWords, ...(suggested ? [suggested] : [])])].sort((a, b) => a - b)
 
   async function start() {
     if (starting) return
@@ -187,19 +192,33 @@ function Setup({
       ) : (
         <>
           {mode === 'learn' ? (
-            <Card>
-              <SectionTitle>Số từ mới buổi này</SectionTitle>
-              <div className="flex flex-wrap gap-2">
-                {counts.map((n) => (
-                  <Chip key={n} active={count === n} onClick={() => setCount(n)}>
-                    {n} từ
-                  </Chip>
-                ))}
-              </div>
-              <p className="mt-3 text-sm text-muted">
-                Còn {available} từ chưa học. Mỗi từ: xem thẻ giới thiệu, rồi điền từ ngay.
-              </p>
-            </Card>
+            <>
+              {advice?.reason === 'review-first' && (
+                <Card className="border-sun">
+                  <p className="flex gap-2 text-sm leading-snug">
+                    <Lightbulb aria-hidden className="mt-px h-5 w-5 shrink-0 text-sun" />
+                    <span>{workloadText(advice)}</span>
+                  </p>
+                  <Button icon={Repeat} className="mt-3 w-full" onClick={() => navigate('/review')}>
+                    Ôn tập trước
+                  </Button>
+                </Card>
+              )}
+              <Card>
+                <SectionTitle>Số từ mới buổi này</SectionTitle>
+                <div className="flex flex-wrap gap-2">
+                  {counts.map((n) => (
+                    <Chip key={n} active={count === n} onClick={() => setPicked(n)}>
+                      {n} từ{n === suggested && advice?.reason === 'reduced' ? ' · gợi ý' : ''}
+                    </Chip>
+                  ))}
+                </div>
+                {advice && <SetupAdvice advice={advice} />}
+                <p className="mt-3 text-sm text-muted">
+                  Còn {available} từ chưa học. Mỗi từ: xem thẻ giới thiệu, rồi điền từ ngay.
+                </p>
+              </Card>
+            </>
           ) : (
             <Card>
               <p className="text-[40px] leading-none font-bold text-warning">
@@ -221,6 +240,25 @@ function Setup({
         </>
       )}
     </Page>
+  )
+}
+
+/** Vì sao chọn sẵn số từ này (R9.5). Ôn trước được báo ở thẻ riêng phía trên. */
+function SetupAdvice({ advice }: { advice: TodayWorkload }) {
+  const text =
+    advice.reason === 'reduced'
+      ? workloadText(advice)
+      : advice.reason === 'goal-done'
+        ? `Hôm nay bạn đã học đủ ${advice.goalNew} từ mới. Muốn học thêm vẫn được.`
+        : (advice.reason === 'full' || advice.reason === 'no-time-goal') && advice.learnedToday > 0
+          ? `Chọn sẵn ${advice.suggested} từ còn thiếu để đủ ${advice.goalNew} từ mới hôm nay.`
+          : null
+  if (!text) return null
+  return (
+    <p className="mt-3 flex gap-2 text-sm leading-snug text-muted">
+      <Lightbulb aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-sun" />
+      <span>{text}</span>
+    </p>
   )
 }
 

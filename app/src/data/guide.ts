@@ -3,6 +3,7 @@ import { LEARNING_DEFAULTS, profileDefaults } from '../core/profile'
 import { foldText } from '../core/vocab'
 import { REMINDER_DEFAULTS } from '../core/reminders'
 import { CLIP_BATCH } from '../core/voiceClips'
+import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/workload'
 
 /**
  * Hướng dẫn sử dụng (R14.3): thêm từ, học, ôn và ý nghĩa các con số.
@@ -41,7 +42,7 @@ export const GUIDE: GuideTopic[] = [
     summary: 'Vòng học mỗi ngày, năm tab và cách cài app lên điện thoại',
     keywords: ['cài đặt app', 'màn hình chính', 'iphone', 'android', 'tab'],
     blocks: [
-      { p: 'App giúp bạn nhớ từ vựng thật lâu bằng cách tự hẹn lần ôn cho mỗi từ vào đúng lúc bạn sắp quên nó. Mỗi ngày chỉ cần hai việc: học vài từ mới và ôn các từ đến hạn. App chưa gửi thông báo nhắc, nên mỗi ngày bạn hãy tự mở app.' },
+      { p: 'App giúp bạn nhớ từ vựng thật lâu bằng cách tự hẹn lần ôn cho mỗi từ vào đúng lúc bạn sắp quên nó. Mỗi ngày chỉ cần hai việc: học vài từ mới và ôn các từ đến hạn. Muốn được nhắc học và nhắc ôn, bật “Nhắc nhở” ở tab “Cá nhân”.' },
       {
         steps: [
           'Thêm từ vào sổ tay: tự gõ, tra từ, nhập file hoặc chọn bộ “1.000 từ thông dụng nhất”.',
@@ -165,15 +166,27 @@ export const GUIDE: GuideTopic[] = [
     id: 'learn',
     title: 'Học từ mới',
     summary: 'Một buổi học từ mới diễn ra thế nào',
-    keywords: ['điền từ', 'thẻ giới thiệu', 'gợi ý', 'gần đúng', 'đã biết', 'tạm dừng', 'telex', 'bàn phím', 'thứ tự'],
+    keywords: ['điền từ', 'thẻ giới thiệu', 'gợi ý', 'gần đúng', 'đã biết', 'tạm dừng', 'telex', 'bàn phím', 'thứ tự', 'số từ mới', 'tồn đọng', 'quá tải', 'ôn trước'],
     blocks: [
       { p: 'Vào “Hôm nay” → thẻ “Học từ mới” → “Học”. Muốn chỉ học một bộ thì mở bộ đó trong Sổ tay và bấm “Học mới”.' },
       { h: 'Chuẩn bị buổi học' },
       {
         list: [
           '“Phạm vi”: “Tất cả bộ đang học” (gồm cả từ không thuộc bộ nào) hoặc một bộ.',
-          `“Số từ mới buổi này”: chọn 5, 10, 15, 20 hoặc 30 từ; app chọn sẵn bằng mục tiêu từ mới mỗi ngày (mặc định ${NEW_PER_DAY}). Mục tiêu không chặn bạn học thêm: xong buổi, bấm “Học thêm từ mới” để học tiếp.`,
+          `“Số từ mới buổi này”: chọn 5, 10, 15, 20 hoặc 30 từ. App chọn sẵn số từ còn thiếu để đủ mục tiêu từ mới hôm nay (mặc định ${NEW_PER_DAY} từ mỗi ngày), hoặc ít hơn nếu hôm nay còn nhiều từ cần ôn (xem phần gợi ý bên dưới). Mục tiêu không chặn bạn học thêm: xong buổi, bấm “Học thêm từ mới” để học tiếp.`,
           'Bấm “Bắt đầu học”.',
+        ],
+      },
+      { h: 'Gợi ý số từ mới khi còn nhiều từ cần ôn' },
+      {
+        p: `Mỗi từ mới hôm nay sẽ thành từ cần ôn những ngày sau, nên khi lượng ôn dồn lại, học thêm nhiều từ mới chỉ làm dồn thêm. App lấy số phút cần để ôn hết các từ còn đến hạn hôm nay (tính tới 4:00 sáng mai, gồm cả từ chưa tới giờ ôn), trừ vào “Thời gian học mỗi ngày”; phần còn lại chia cho thời gian học một từ mới, ra số từ gợi ý.`,
+      },
+      {
+        list: [
+          `Thời gian ôn một từ và học một từ mới được tính từ chính lịch sử học của bạn trong ${PACE_WINDOW_DAYS} ngày gần nhất. Khi chưa đủ dữ liệu, app tạm tính ${DEFAULT_REVIEW_SEC} giây cho mỗi từ ôn và ${DEFAULT_NEW_SEC} giây cho mỗi từ mới.`,
+          'Còn chỗ cho ít từ hơn mục tiêu: số từ đó được chọn sẵn (có chữ gợi ý cạnh số từ), kèm một dòng giải thích có hình bóng đèn.',
+          'Từ cần ôn đã chiếm hết thời gian mục tiêu: trang hiện lời khuyên ôn trước và nút “Ôn tập trước”. Ôn xong, gợi ý tự tăng lại.',
+          'Đây chỉ là gợi ý: bạn vẫn chọn học bao nhiêu từ cũng được. Đặt thời gian học mỗi ngày là 0 thì app không gợi ý giảm.',
         ],
       },
       { h: 'Từ nào được học trước' },
@@ -389,7 +402,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Học từ mới”',
-            text: 'Dòng Hôm nay x/y từ cho biết tiến độ từ mới: ví dụ Hôm nay 3/10 từ nghĩa là hôm nay bạn đã học 3 từ mới, mục tiêu là 10 từ mỗi ngày; muốn học thêm lúc nào cũng được. Con số trong dòng còn … từ chưa học chỉ đếm từ trong kế hoạch học, không tính từ chỉ nằm trong bộ đã tắt “Đưa vào kế hoạch học”.',
+            text: 'Dòng Hôm nay x/y từ cho biết tiến độ từ mới: ví dụ Hôm nay 3/10 từ nghĩa là hôm nay bạn đã học 3 từ mới, mục tiêu là 10 từ mỗi ngày; muốn học thêm lúc nào cũng được. Con số trong dòng còn … từ chưa học chỉ đếm từ trong kế hoạch học, không tính từ chỉ nằm trong bộ đã tắt “Đưa vào kế hoạch học”. Khi hôm nay còn nhiều từ cần ôn so với thời gian học mỗi ngày, thẻ có thêm một dòng gợi ý học ít từ mới hơn hoặc ôn trước (xem bài Học từ mới). Số từ cần ôn trong dòng đó tính cả các từ đến hạn muộn hơn trong ngày, nên có thể lớn hơn số ở dòng Đến giờ ôn tập.',
           },
           {
             term: 'Buổi học hoặc buổi ôn đang dở',
@@ -410,7 +423,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['mục tiêu', 'chuỗi', 'streak', 'tuần này', 'phút', 'múi giờ', 'lịch học', 'ngày nghỉ'],
     blocks: [
       {
-        p: `Đặt mục tiêu ở “Cá nhân” → “Đổi mục tiêu và lịch học”: “Từ mới mỗi ngày” (mặc định ${NEW_PER_DAY}), “Thời gian học mỗi ngày” (mặc định ${MINUTES_PER_DAY} phút, gồm cả ôn tập) và “Ngày học trong tuần”. Mỗi lựa chọn được lưu ngay và dùng chung trên mọi máy đã đăng nhập.`,
+        p: `Đặt mục tiêu ở “Cá nhân” → “Đổi mục tiêu và lịch học”: “Từ mới mỗi ngày” (mặc định ${NEW_PER_DAY}), “Thời gian học mỗi ngày” (mặc định ${MINUTES_PER_DAY} phút, gồm cả ôn tập) và “Ngày học trong tuần”. Mỗi lựa chọn được lưu ngay và dùng chung trên mọi máy đã đăng nhập. Thời gian học mỗi ngày còn dùng để gợi ý học ít từ mới hơn khi còn nhiều từ cần ôn (xem bài Học từ mới).`,
       },
       { h: '“Mục tiêu hôm nay” ở tab Thống kê' },
       {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { currentStreak, studyDay } from './day'
+import { currentStreak, studyDay, studyDayEnd } from './day'
 
 const VN = 'Asia/Ho_Chi_Minh'
 
@@ -16,6 +16,21 @@ describe('studyDay — ngày học bắt đầu lúc 4:00 sáng giờ địa ph�
   it('tôn trọng múi giờ khác', () => {
     expect(studyDay(new Date('2026-10-23T20:30:00Z'), 'Europe/London')).toBe('2026-10-23')
     expect(studyDay(new Date('2026-10-24T03:30:00Z'), 'Europe/London')).toBe('2026-10-24')
+  })
+})
+
+describe('studyDayEnd — hết ngày học lúc 4:00 sáng kế tiếp', () => {
+  it('buổi tối và lúc khuya trước 4:00 đều hết vào 4:00 sáng gần nhất', () => {
+    // 20:15 ngày 24/10 giờ Việt Nam → 4:00 ngày 25/10 (= 2026-10-24T21:00Z)
+    expect(studyDayEnd(new Date('2026-10-24T13:15:00Z'), VN)).toBe(Date.parse('2026-10-24T21:00:00Z'))
+    // 3:30 sáng 25/10 (vẫn là ngày học 24/10) → 4:00 cùng sáng đó
+    expect(studyDayEnd(new Date('2026-10-24T20:30:00Z'), VN)).toBe(Date.parse('2026-10-24T21:00:00Z'))
+    // Đúng 4:00 là ngày mới, hết vào 4:00 hôm sau
+    expect(studyDayEnd(new Date('2026-10-24T21:00:00Z'), VN)).toBe(Date.parse('2026-10-25T21:00:00Z'))
+  })
+
+  it('tôn trọng múi giờ', () => {
+    expect(studyDayEnd(new Date('2026-10-20T12:00:00Z'), 'Europe/London')).toBe(Date.parse('2026-10-21T03:00:00Z'))
   })
 })
 

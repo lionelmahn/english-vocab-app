@@ -21,6 +21,15 @@ export function studyDay(at: Date, timeZone: string, dayStartHour = DAY_START_HO
   return `${get('year')}-${get('month')}-${get('day')}`
 }
 
+/** Thời điểm kết thúc ngày học đang diễn ra: 4:00 sáng kế tiếp theo múi giờ (không xét đổi giờ mùa hè). */
+export function studyDayEnd(at: Date, timeZone: string, dayStartHour = DAY_START_HOUR): number {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, hourCycle: 'h23', hour: '2-digit', minute: '2-digit', second: '2-digit' }).formatToParts(at)
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value ?? 0)
+  let left = dayStartHour * 3600 - ((get('hour') * 60 + get('minute')) * 60 + get('second'))
+  if (left <= 0) left += 24 * 3600
+  return Math.floor(at.getTime() / 1000) * 1000 + left * 1000
+}
+
 function dayIndex(day: string): number {
   const [y, m, d] = day.split('-').map(Number)
   return Math.round(Date.UTC(y, m - 1, d) / DAY_MS)
