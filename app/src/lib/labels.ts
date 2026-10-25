@@ -23,7 +23,7 @@ export const MODE_LABEL: Record<SessionMode, string> = {
   learn: 'Học từ mới',
   review: 'Ôn tập',
   retry: 'Luyện lại',
-  practice: 'Luyện tự do',
+  practice: 'Ôn chủ động',
   test: 'Kiểm tra',
 }
 
@@ -32,6 +32,6 @@ export const SESSION_NOUN: Record<SessionMode, string> = {
   learn: 'học',
   review: 'ôn',
   retry: 'luyện lại',
-  practice: 'luyện',
+  practice: 'ôn chủ động',
   test: 'kiểm tra',
 }

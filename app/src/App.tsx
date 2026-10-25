@@ -17,6 +17,7 @@ import { RemindersPage } from './pages/RemindersPage'
 import { OfflinePage } from './pages/OfflinePage'
 import { AccountPage } from './pages/AccountPage'
 import { TestPage } from './pages/TestPage'
+import { PracticePage } from './pages/PracticePage'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -157,6 +158,7 @@ export default function App() {
                   <Route path="/me/offline" element={<OfflinePage />} />
                   <Route path="/me/account" element={<AccountPage />} />
                   <Route path="/test" element={<TestPage />} />
+                  <Route path="/practice" element={<PracticePage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

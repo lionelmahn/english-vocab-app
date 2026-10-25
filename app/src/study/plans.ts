@@ -44,14 +44,22 @@ export function buildReviewPlan(
 /** Phạm vi bài kiểm tra: mọi từ đã học, từ hay quên, hoặc một bộ. */
 export type TestScope = { kind: 'all' } | { kind: 'hard' } | { kind: 'deck'; deckId: ID }
 
+/** Từ đã học, trừ từ đang tạm dừng ôn (R5.8). */
+function activeStudied(lib: Library): VocabItem[] {
+  return studiedItems(lib).filter((i) => !lib.cards.get(i.id)?.suspended)
+}
+
+/** Từ hay quên: đã quên ít nhất một lần, quên nhiều xếp trước. */
+function hardFirst(lib: Library, items: VocabItem[]): VocabItem[] {
+  const lapses = (i: VocabItem) => lib.cards.get(i.id)?.lapses ?? 0
+  return items.filter((i) => lapses(i) > 0).sort((a, b) => lapses(b) - lapses(a))
+}
+
 /** Từ đã học thuộc phạm vi (từ hay quên: đã quên ít nhất một lần, quên nhiều xếp trước). */
 export function testCandidates(lib: Library, scope: TestScope): VocabItem[] {
-  const studied = studiedItems(lib)
+  const studied = activeStudied(lib)
   if (scope.kind === 'deck') return studied.filter((i) => lib.members.get(i.id)?.has(scope.deckId))
-  if (scope.kind === 'hard') {
-    const lapses = (i: VocabItem) => lib.cards.get(i.id)?.lapses ?? 0
-    return studied.filter((i) => lapses(i) > 0).sort((a, b) => lapses(b) - lapses(a))
-  }
+  if (scope.kind === 'hard') return hardFirst(lib, studied)
   return studied
 }
 
@@ -70,6 +78,54 @@ export function buildTestPlan(
     picked.map((i) => ({ id: i.id, exercise: pickTestExercise(opts.kinds, { hasContext: !!contextSentence(i), canMultipleChoice: mcq, audio: opts.audioAvailable }, rand) })),
     opts.now,
     opts.timeLimitMs,
+  )
+}
+
+/**
+ * Phạm vi ôn chủ động (R5.7): từ sắp đến hạn (chưa tới hạn, gần hạn nhất trước), từ hay quên, mọi từ đã học,
+ * một bộ, hoặc các từ đã chọn sẵn (kể cả từ đang tạm dừng).
+ */
+export type PracticeScope = { kind: 'soon' } | { kind: 'hard' } | { kind: 'all' } | { kind: 'deck'; deckId: ID } | { kind: 'picked'; itemIds: ID[] }
+
+export function practiceCandidates(lib: Library, scope: PracticeScope, now: number): VocabItem[] {
+  if (scope.kind === 'picked') {
+    const studied = new Set(studiedItems(lib).map((i) => i.id))
+    return [...new Set(scope.itemIds)].filter((id) => studied.has(id)).map((id) => lib.itemById.get(id)!)
+  }
+  const pool = activeStudied(lib)
+  if (scope.kind === 'deck') return pool.filter((i) => lib.members.get(i.id)?.has(scope.deckId))
+  if (scope.kind === 'hard') return hardFirst(lib, pool)
+  if (scope.kind === 'soon') {
+    const due = (i: VocabItem) => lib.cards.get(i.id)!.due
+    return pool.filter((i) => due(i) > now).sort((a, b) => due(a) - due(b))
+  }
+  return pool
+}
+
+/**
+ * Buổi ôn chủ động (R5.7): luyện các từ đã học ngoài lịch, không đổi lịch ôn. Dạng bài theo cấp ghi nhớ như ôn tập,
+ * nhưng đổi ngẫu nhiên giữa các lần luyện. Sắp đến hạn và hay quên lấy theo thứ tự ưu tiên; phạm vi khác lấy ngẫu nhiên.
+ */
+export function buildPracticePlan(
+  lib: Library,
+  opts: { scope: PracticeScope; count: number; now: number; style: ReviewStyle; audioAvailable: boolean; rand?: () => number },
+): SessionPlan | null {
+  const rand = opts.rand ?? Math.random
+  const pool = practiceCandidates(lib, opts.scope, opts.now)
+  const ordered = opts.scope.kind === 'soon' || opts.scope.kind === 'hard' ? pool : shuffle(pool, rand)
+  const picked = shuffle(ordered.slice(0, opts.count), rand)
+  if (picked.length === 0) return null
+  const mcq = canMultipleChoice(lib)
+  return planReview(
+    picked.map((i) => i.id),
+    (id) => {
+      const card = lib.cards.get(id)
+      const item = lib.itemById.get(id)
+      const turn = (card?.reps ?? 0) + Math.floor(rand() * 6)
+      return chooseExercise(itemLevel(card), turn, { audioOff: !opts.audioAvailable, canMultipleChoice: mcq, style: opts.style, hasContext: !!item && !!contextSentence(item) })
+    },
+    opts.now,
+    'practice',
   )
 }
 

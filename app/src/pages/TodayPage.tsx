@@ -13,7 +13,7 @@ import type { MemoryLevel } from '../core/levels'
 import { deviceTimeZone, isStudyDay } from '../core/profile'
 import { progress } from '../core/session'
 import { db } from '../db/db'
-import { dueCount, learnCandidates, nextDueAt } from '../db/library'
+import { dueCount, learnCandidates, nextDueAt, studiedItems } from '../db/library'
 import { formatDueIn } from '../lib/format'
 import { SESSION_NOUN } from '../lib/labels'
 import { useLibrary, useNow } from '../lib/hooks'
@@ -22,7 +22,7 @@ import { useSettings } from '../lib/settings'
 import { useProfile } from '../services/profile'
 import { useOnline } from '../services/storage'
 import { useNewWordAdvice, workloadText } from '../services/workload'
-import { PillButton } from '../study/ui'
+import { PillButton, TextLink } from '../study/ui'
 
 function greeting(hour: number): string {
   if (hour < 11) return 'Chào buổi sáng'
@@ -203,6 +203,7 @@ export function TodayPage() {
               <PillButton disabled={due === 0} onClick={() => navigate('/review')}>
                 Ôn tập ngay
               </PillButton>
+              {due === 0 && studiedItems(lib).length > 0 && <TextLink onClick={() => navigate('/practice')}>Ôn chủ động trước hạn</TextLink>}
             </motion.div>
 
             <Card className="mt-2">

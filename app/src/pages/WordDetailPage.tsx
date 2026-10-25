@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Archive, ArchiveRestore, ChevronDown, Flame, Languages, Lightbulb, Mic, Pencil, StickyNote, Star, Trash } from 'lucide-react'
+import { Archive, ArchiveRestore, ChevronDown, Flame, Languages, Lightbulb, Mic, Pause, Pencil, Play, RotateCcw, StickyNote, Star, Trash } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -30,6 +30,7 @@ export function WordDetailPage() {
   const settings = useSettings()
   const [showVi, setShowVi] = useState(settings.showTranslations)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [confirmReset, setConfirmReset] = useState(false)
   const [practice, setPractice] = useState(false)
   const logs = useLiveQuery(async () => (await db.reviewLogs.where('itemId').equals(id).toArray()).sort((a, b) => b.reviewedAt - a.reviewedAt).slice(0, 10), [id], [])
 
@@ -156,11 +157,11 @@ export function WordDetailPage() {
                   Cấp {level} · {LEVEL_LABELS[level]}
                 </span>
               </span>
-              <Badge tone={status === 'due' ? 'warning' : 'accent'}>{STATUS_LABEL[status]}</Badge>
+              <Badge tone={status === 'due' ? 'warning' : status === 'suspended' ? undefined : 'accent'}>{STATUS_LABEL[status]}</Badge>
             </div>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
               <dt className="text-muted">Ôn tiếp theo</dt>
-              <dd className="text-right font-medium">{card.due <= now ? 'Có thể ôn ngay' : formatDueIn(card.due, now)}</dd>
+              <dd className="text-right font-medium">{card.suspended ? 'Đang tạm dừng' : card.due <= now ? 'Có thể ôn ngay' : formatDueIn(card.due, now)}</dd>
               <dt className="text-muted">Số lần ôn</dt>
               <dd className="text-right font-medium">{card.reps}</dd>
               <dt className="text-muted">Số lần quên</dt>
@@ -172,6 +173,23 @@ export function WordDetailPage() {
                 </>
               )}
             </dl>
+            {/* R5.8 — tạm dừng ôn hoặc học lại từ đầu */}
+            <div className="grid grid-cols-2 gap-2 border-t border-line pt-3">
+              <Button
+                icon={card.suspended ? Play : Pause}
+                className="h-11 px-2! text-sm"
+                onClick={async () => {
+                  await repo.setSuspended([item.id], !card.suspended)
+                  showToast(card.suspended ? 'Đã bỏ tạm dừng — từ lại được ôn theo lịch' : 'Đã tạm dừng ôn từ này')
+                }}
+              >
+                {card.suspended ? 'Bỏ tạm dừng' : 'Tạm dừng ôn'}
+              </Button>
+              <Button icon={RotateCcw} className="h-11 px-2! text-sm" onClick={() => setConfirmReset(true)}>
+                Học lại từ đầu
+              </Button>
+            </div>
+            {card.suspended && <p className="text-[0.8125rem] leading-snug text-muted">Từ đang tạm dừng: không đến hạn, không vào buổi ôn hay ôn chủ động, cho tới khi bạn bỏ tạm dừng.</p>}
           </div>
         ) : (
           <p className="text-sm leading-relaxed text-muted">
@@ -232,6 +250,25 @@ export function WordDetailPage() {
           Xóa
         </Button>
       </div>
+
+      <Sheet open={confirmReset} onClose={() => setConfirmReset(false)} title={`Học lại “${item.term}” từ đầu?`}>
+        <div className="flex flex-col gap-3">
+          <p className="text-sm leading-relaxed text-muted">
+            Lịch ôn và cấp ghi nhớ của từ này bị xóa; từ trở về chưa học và sẽ xuất hiện trong buổi “Học từ mới”. Lịch sử trả lời vẫn được giữ.
+          </p>
+          <Button
+            variant="primary"
+            onClick={async () => {
+              await repo.resetProgress([item.id])
+              setConfirmReset(false)
+              showToast('Đã đặt lại — từ trở về chưa học')
+            }}
+          >
+            Học lại từ đầu
+          </Button>
+          <Button onClick={() => setConfirmReset(false)}>Hủy</Button>
+        </div>
+      </Sheet>
 
       <Sheet open={confirmDelete} onClose={() => setConfirmDelete(false)} title={`Xóa “${item.term}”?`}>
         <div className="flex flex-col gap-3">

@@ -22,6 +22,7 @@ const STATUS_CHIPS: { value: StatusFilter; label: string }[] = [
   { value: 'due', label: 'Đến hạn' },
   { value: 'learning', label: 'Đang học' },
   { value: 'review', label: 'Đã học' },
+  { value: 'suspended', label: 'Tạm dừng' },
   { value: 'archived', label: 'Lưu trữ' },
 ]
 
@@ -202,7 +203,7 @@ function WordsView({ lib }: { lib: Library }) {
                       <p className="truncate text-sm text-muted">{item.meaningVi}</p>
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1.5">
-                      {st === 'due' ? <Badge tone="warning">Đến hạn</Badge> : st === 'new' ? <Badge>Chưa học</Badge> : st === 'archived' ? <Badge>Lưu trữ</Badge> : null}
+                      {st === 'due' ? <Badge tone="warning">Đến hạn</Badge> : st === 'new' ? <Badge>Chưa học</Badge> : st === 'archived' ? <Badge>Lưu trữ</Badge> : st === 'suspended' ? <Badge>Tạm dừng</Badge> : null}
                       {st !== 'new' && st !== 'archived' && <LevelDots level={itemLevel(card)} />}
                     </div>
                   </Link>

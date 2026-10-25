@@ -138,7 +138,8 @@ export const GUIDE: GuideTopic[] = [
           'Một từ có thể nằm trong nhiều bộ mà vẫn dùng chung một tiến độ.',
           'Từ không thuộc bộ nào vẫn được học và ôn bình thường; khi học từ mới, chúng được xen kẽ với từ của các bộ.',
           'Nếu tắt “Đưa vào kế hoạch học” ở trang của một bộ, các từ chỉ thuộc bộ đó không còn được đưa vào buổi học và ôn chung từ trang Hôm nay. Từ còn nằm trong bộ khác đang bật thì vẫn học bình thường.',
-          'Nút “Học mới” và “Ôn tập” ở trang của một bộ chỉ học và ôn từ trong bộ đó, kể cả khi bộ đang tắt.',
+          'Nút “Học mới” và “Ôn tập” ở trang của một bộ chỉ học và ôn từ trong bộ đó, kể cả khi bộ đang tắt. Nút “Ôn chủ động” luyện thêm các từ đã học của bộ mà không đổi lịch ôn.',
+          'Bấm “Chọn” ở danh sách từ trong bộ để chọn nhiều từ, rồi “Gỡ khỏi bộ”, “Chuyển / thêm…”, “Ôn chủ động” (chỉ luyện các từ đã chọn) hoặc “Tạm dừng ôn”.',
           'Xóa bộ không xóa từ: từ và tiến độ vẫn còn trong sổ tay.',
         ],
       },
@@ -156,6 +157,20 @@ export const GUIDE: GuideTopic[] = [
           {
             term: '“Xóa”',
             text: 'Xóa từ khỏi sổ tay, mọi bộ và lịch ôn; lịch sử trả lời vẫn được giữ cho thống kê. Thêm lại từ đó sau này sẽ học từ đầu.',
+          },
+        ],
+      },
+      { h: 'Tạm dừng ôn hoặc học lại một từ đã học' },
+      { p: 'Ở trang một từ đã học, mục “Tiến độ” có hai nút:' },
+      {
+        terms: [
+          {
+            term: '“Tạm dừng ôn”',
+            text: 'Từ vẫn nằm trong sổ tay và bộ từ, giữ nguyên cấp, nhưng không đến hạn và không vào buổi ôn, ôn chủ động hay bài kiểm tra. Bấm “Bỏ tạm dừng” để ôn tiếp; nếu đã qua ngày hẹn thì từ đến hạn ngay. Khác “Lưu trữ”: từ tạm dừng vẫn được đếm trong sổ tay và vẫn hiện trong danh sách (nhãn “Tạm dừng”).',
+          },
+          {
+            term: '“Học lại từ đầu”',
+            text: 'Xóa lịch ôn và cấp của từ; từ trở về “Chưa học” và sẽ xuất hiện trong buổi “Học từ mới”. Các câu trả lời cũ vẫn còn trong lịch sử nhưng không còn tính vào lịch ôn.',
           },
         ],
       },
@@ -242,7 +257,7 @@ export const GUIDE: GuideTopic[] = [
     id: 'review',
     title: 'Ôn tập',
     summary: 'Khi nào cần ôn, các dạng bài, cách chấm và màn tổng kết',
-    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố', 'kiểm tra', 'bài thi', 'lịch sử', 'đồng hồ', 'ghép từ', 'điền từ vào câu', 'gợi ý', 'chấm sai', 'đáp án khác'],
+    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố', 'kiểm tra', 'bài thi', 'lịch sử', 'đồng hồ', 'ghép từ', 'điền từ vào câu', 'gợi ý', 'chấm sai', 'đáp án khác', 'ôn chủ động', 'ôn trước hạn', 'luyện thêm'],
     blocks: [
       { p: 'Mỗi từ đã học có một thời điểm đến hạn ôn riêng. Khi có từ đến hạn, trang “Hôm nay” hiện “Đến giờ ôn tập:” và nút “Ôn tập ngay”; bấm vào rồi bấm “Bắt đầu ôn”.' },
       {
@@ -258,7 +273,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Thẻ tự đánh giá”',
-            text: 'Lật thẻ rồi tự chọn “Quên”, “Khó”, “Nhớ” hoặc “Dễ”. Dưới mỗi nút có ghi bao lâu nữa bạn sẽ ôn lại nếu chọn nút đó; riêng thẻ có nhãn “Luyện lại” thì chọn nút nào cũng không đổi lịch. Vuốt phải là Nhớ, vuốt trái là Quên. Muốn đổi mặt trước thẻ, vào “Cá nhân” → “Mặt trước thẻ khi ôn”.',
+            text: 'Lật thẻ rồi tự chọn “Quên”, “Khó”, “Nhớ” hoặc “Dễ”. Dưới mỗi nút có ghi bao lâu nữa bạn sẽ ôn lại nếu chọn nút đó; thẻ có nhãn “Luyện lại” và thẻ trong buổi ôn chủ động không đổi lịch nên không ghi thời gian. Vuốt phải là Nhớ, vuốt trái là Quên. Muốn đổi mặt trước thẻ, vào “Cá nhân” → “Mặt trước thẻ khi ôn”.',
           },
         ],
       },
@@ -303,6 +318,25 @@ export const GUIDE: GuideTopic[] = [
       { p: 'Như khi học mới, chỉ câu trả lời đầu tiên của mỗi từ trong buổi được tính. Trả lời sai thì từ quay lại ở bước “Luyện lại” để bạn luyện thêm, nhưng kết quả của từ vẫn là Quên.' },
       {
         p: 'Bị chấm sai ở bài gõ dù câu bạn gõ cũng đúng (ví dụ big cho nghĩa “lớn” khi từ chính là large)? Ở bảng “Chưa đúng”, bấm “Đáp án của mình cũng đúng” thay vì “Tiếp tục”: câu bạn gõ được thêm vào “Đáp án chấp nhận thêm” của từ, lần trả lời này tính là Nhớ (hoặc Khó nếu đã dùng gợi ý), và lần sau gõ như vậy sẽ được chấm đúng. Phải chọn trước khi đi tiếp, vì câu trả lời đã lưu thì không sửa lại được. Muốn bỏ đáp án đã thêm, sửa ở trang sửa từ.',
+      },
+      { h: 'Ôn chủ động' },
+      {
+        p: 'Muốn luyện thêm ngoài lịch (ví dụ trước một bài thi), dùng “Ôn chủ động”: trên trang Hôm nay bấm “Ôn chủ động trước hạn” (hiện khi không còn từ đến hạn), hoặc vào tab “Thống kê” → “Ôn chủ động”, hoặc bấm “Ôn chủ động” ở trang của một bộ. Chọn “Phạm vi” và số từ rồi bấm nút bắt đầu ôn.',
+      },
+      {
+        terms: [
+          { term: '“Sắp đến hạn”', text: 'Các từ chưa đến hạn, từ gần đến hạn nhất trước.' },
+          { term: '“Từ hay quên”', text: 'Các từ đã quên ít nhất một lần, quên nhiều trước.' },
+          { term: '“Mọi từ đã học”', text: 'Lấy ngẫu nhiên trong mọi từ đã học. Chọn tên một bộ để chỉ lấy từ của bộ đó.' },
+          { term: '“Từ đã chọn”', text: 'Có khi bạn chọn sẵn vài từ ở trang một bộ (nút “Chọn” rồi “Ôn chủ động”).' },
+        ],
+      },
+      {
+        list: [
+          'Ôn chủ động không làm đổi lịch ôn: kết quả chỉ ghi vào lịch sử bài làm. Vì vậy các từ đã đến hạn vẫn cần ôn theo lịch; nếu còn từ đến hạn, trang ôn chủ động nhắc và có nút “Ôn tập theo lịch”.',
+          'Dạng bài chọn theo cấp ghi nhớ như khi ôn, nhưng đổi ngẫu nhiên giữa các lần luyện. Trả lời sai thì từ quay lại để luyện thêm.',
+          'Từ đang tạm dừng ôn không được lấy, trừ khi bạn tự chọn từ đó.',
+        ],
       },
       { h: 'Bài kiểm tra tự chọn' },
       {
@@ -356,7 +390,7 @@ export const GUIDE: GuideTopic[] = [
         ],
       },
       {
-        p: 'Mỗi buổi, chỉ câu trả lời đầu tiên của mỗi từ làm đổi lịch. Lượt luyện lại trong buổi và nút “Luyện lại” ở màn tổng kết không đổi lịch. Từ chưa đến hạn thì chưa ôn được.',
+        p: 'Mỗi buổi, chỉ câu trả lời đầu tiên của mỗi từ làm đổi lịch. Lượt luyện lại trong buổi, nút “Luyện lại” ở màn tổng kết, “Ôn chủ động” và bài kiểm tra không đổi lịch. Từ chưa đến hạn thì chưa vào buổi ôn; muốn luyện trước thì dùng “Ôn chủ động” (xem bài Ôn tập).',
       },
       { h: 'Ví dụ' },
       {
@@ -368,7 +402,7 @@ export const GUIDE: GuideTopic[] = [
           'Hạn ôn tính theo giờ chứ không theo ngày: hẹn 2 ngày nghĩa là khoảng 48 giờ sau lần trả lời.',
           'Ôn trễ hạn không bị phạt; nếu vẫn nhớ, lần sau thường còn được hẹn xa hơn.',
           'Mỗi từ có lịch riêng; một từ nằm trong nhiều bộ vẫn chỉ có một lịch.',
-          'Lưu trữ từ thì app không đổi lịch của từ, nhưng thời gian vẫn trôi: khôi phục sau ngày hẹn thì từ đến hạn ôn ngay.',
+          'Lưu trữ hoặc tạm dừng ôn một từ thì app không đổi lịch của từ, nhưng thời gian vẫn trôi: khôi phục hoặc bỏ tạm dừng sau ngày hẹn thì từ đến hạn ôn ngay.',
         ],
       },
       { tip: 'Chỉ cần mở app mỗi ngày và ôn hết các từ đến hạn. Bỏ vài ngày cũng không mất gì: từ đến hạn chờ sẵn, và app ôn từ dễ quên nhất trước.' },
@@ -406,17 +440,18 @@ export const GUIDE: GuideTopic[] = [
           { term: '“Đang học”', text: 'Đang trong các lượt củng cố ngắn sau khi học mới hoặc sau khi quên.' },
           { term: '“Đã học”', text: 'Đã qua các lượt củng cố ngắn, đang chờ tới hạn ôn lần sau.' },
           { term: '“Đến hạn ôn”', text: 'Đã tới lúc ôn.' },
+          { term: '“Tạm dừng”', text: 'Đã học nhưng bạn đang tạm dừng ôn: không đến hạn cho tới khi bỏ tạm dừng.' },
           { term: '“Đã lưu trữ”', text: 'Đang cất, không học và ôn.' },
         ],
       },
       {
-        p: 'Ở trang một từ, trạng thái ghi đầy đủ như trên. Trong Sổ tay, nút lọc và nhãn cạnh từ ghi gọn là “Đến hạn” và “Lưu trữ”.',
+        p: 'Ở trang một từ, trạng thái ghi đầy đủ như trên. Trong Sổ tay, nút lọc và nhãn cạnh từ ghi gọn là “Đến hạn”, “Tạm dừng” và “Lưu trữ”.',
       },
       { tip: 'Ô “Đang học” ở tab Thống kê đếm mọi từ đã có lịch ôn, nên thường lớn hơn số từ ở nút lọc “Đang học” trong Sổ tay (nút lọc này chỉ gồm từ đang trong lượt củng cố ngắn).' },
       { h: 'Mục “Tiến độ” ở trang một từ' },
       {
         terms: [
-          { term: '“Ôn tiếp theo”', text: 'Thời gian còn lại tới hạn ôn, hoặc “Có thể ôn ngay”.' },
+          { term: '“Ôn tiếp theo”', text: 'Thời gian còn lại tới hạn ôn, “Có thể ôn ngay”, hoặc “Đang tạm dừng”.' },
           { term: '“Số lần ôn”', text: 'Số lần câu trả lời được tính vào lịch ôn; mỗi buổi tối đa một lần cho mỗi từ.' },
           { term: '“Số lần quên”', text: 'Số lần bạn trả lời Quên khi từ đã qua các lượt củng cố ngắn (không tính những lần sai lúc mới học).' },
           { term: '“Lần ôn gần nhất”', text: 'Lúc câu trả lời gần nhất được tính vào lịch.' },

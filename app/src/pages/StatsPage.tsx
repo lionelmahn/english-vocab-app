@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Check, ClipboardCheck, History, Table2 } from 'lucide-react'
+import { Check, ClipboardCheck, Dumbbell, History, Table2 } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -113,11 +113,14 @@ export function StatsPage() {
         <p className="mt-4 text-xs leading-relaxed text-subtle">Cấp được tính từ độ bền trí nhớ của thuật toán ôn tập, không phải khoảng ôn cố định.</p>
       </Card>
 
-      {/* R6.6, R6.8 — kiểm tra và lịch sử bài làm */}
+      {/* R5.7, R6.6, R6.8 — ôn chủ động, kiểm tra và lịch sử bài làm */}
       <Card>
-        <SectionTitle className="mb-1">Kiểm tra và lịch sử</SectionTitle>
-        <p className="mb-3 text-xs text-subtle">Tự kiểm tra các từ đã học (không đổi lịch ôn), và xem lại kết quả từng buổi.</p>
+        <SectionTitle className="mb-1">Luyện thêm và lịch sử</SectionTitle>
+        <p className="mb-3 text-xs text-subtle">Ôn chủ động hoặc tự kiểm tra các từ đã học (không đổi lịch ôn), và xem lại kết quả từng buổi.</p>
         <div className="grid grid-cols-2 gap-2">
+          <Button icon={Dumbbell} className="col-span-2 h-11 text-sm" onClick={() => navigate('/practice')}>
+            Ôn chủ động
+          </Button>
           <Button icon={ClipboardCheck} className="h-11 text-sm" onClick={() => navigate('/test')}>
             Bài kiểm tra
           </Button>

@@ -1,4 +1,4 @@
-import { ClipboardCheck, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
+import { ClipboardCheck, Dumbbell, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -16,7 +16,7 @@ import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { liveCard } from '../core/library'
 import { newCard } from '../core/scheduler'
 import { addActiveTime, applyAction, currentStep, progress, summarize, timeLeft, type SessionAction, type SessionPlan, type Step } from '../core/session'
-import { dueCount, learnCandidates, nextDueAt, type Library } from '../db/library'
+import { dueCount, learnCandidates, nextDueAt, studiedItems, type Library } from '../db/library'
 import { rowToCard } from '../db/cards'
 import { appScheduler, repo } from '../db/repo'
 import type { StudySessionRow } from '../db/types'
@@ -190,6 +190,11 @@ function Setup({
             <Button variant="primary" onClick={() => navigate('/learn')}>
               Học từ mới
             </Button>
+            {studiedItems(lib).length > 0 && (
+              <Button icon={Dumbbell} onClick={() => navigate(deckId ? `/practice?deck=${deckId}` : '/practice')}>
+                Ôn chủ động trước hạn
+              </Button>
+            )}
           </EmptyState>
         )
       ) : (
@@ -322,6 +327,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
 
   const step = view.step
   const item = step ? lib.itemById.get(step.itemId) : undefined
+  const schedules = plan.mode === 'learn' || plan.mode === 'review'
 
   // Tra trước bản ghi phát âm của các từ trong buổi, để bấm loa là phát ngay.
   useEffect(() => {
@@ -353,8 +359,9 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
     return buildMatchingPairs(item, pool, seededRandom(view.key * 15485863 + item.term.length), 4)
   }, [item, step, pool, view.key])
 
+  // Thời gian ôn lại dưới mỗi nút chỉ có nghĩa khi lượt này được tính lịch (không phải luyện lại, ôn chủ động…).
   const preview = useMemo(() => {
-    if (!item || step?.exercise !== 'flashcard' || step.kind === 'intro') return null
+    if (!item || step?.exercise !== 'flashcard' || step.kind !== 'exercise' || !schedules) return null
     const row = liveCard(lib.cards.get(item.id))
     const base = row ? rowToCard(row) : newCard(new Date())
     const r = appScheduler.repeat(base, new Date())
@@ -445,6 +452,11 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
               <Badge>Kiểm tra · không đổi lịch ôn</Badge>
             </motion.span>
           )}
+          {plan.mode === 'practice' && step?.kind !== 'retry' && (
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <Badge>Ôn chủ động · không đổi lịch ôn</Badge>
+            </motion.span>
+          )}
         </AnimatePresence>
       </div>
 
@@ -475,7 +487,15 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 px-8">
             <motion.div initial={{ scale: 0.9, y: 10 }} animate={{ scale: 1, y: 0 }} className="w-full max-w-xs rounded-3xl bg-surface px-6 py-7 text-center">
               <p className="text-[1.125rem] font-bold">
-                Đang cập nhật <span className="text-sun">lịch ôn</span>
+                {schedules ? (
+                  <>
+                    Đang cập nhật <span className="text-sun">lịch ôn</span>
+                  </>
+                ) : (
+                  <>
+                    Đang <span className="text-sun">tổng kết</span>
+                  </>
+                )}
               </p>
               <div className="mt-5 flex justify-center gap-3" aria-hidden>
                 {[0, 1, 2].map((i) => (
@@ -546,7 +566,8 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
 
   const test = plan.mode === 'test'
   const unanswered = test ? new Set(plan.steps.map((st) => st.itemId)).size - s.items : 0
-  const title = plan.mode === 'learn' ? 'Hoàn thành buổi học!' : plan.mode === 'retry' ? 'Đã luyện xong!' : test ? 'Kết quả kiểm tra' : 'Hoàn thành buổi ôn!'
+  const title =
+    plan.mode === 'learn' ? 'Hoàn thành buổi học!' : plan.mode === 'retry' ? 'Đã luyện xong!' : plan.mode === 'practice' ? 'Đã ôn chủ động xong!' : test ? 'Kết quả kiểm tra' : 'Hoàn thành buổi ôn!'
 
   return (
     <>
@@ -616,6 +637,11 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
           {test && (
             <Button icon={ClipboardCheck} onClick={() => navigate('/test')}>
               Làm bài kiểm tra khác
+            </Button>
+          )}
+          {plan.mode === 'practice' && (
+            <Button icon={Dumbbell} onClick={() => navigate('/practice')}>
+              Ôn chủ động tiếp
             </Button>
           )}
           {s.items > 0 && (

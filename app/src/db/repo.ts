@@ -210,16 +210,21 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       )
     },
 
-    async resetProgress(id: ID, now = Date.now()) {
-      const card = await database.cardStates.get(id)
-      if (!card || card.deletedAt !== null) return
-      await save([{ table: 'cardStates', rows: [{ ...card, deletedAt: now, updatedAt: now }] }], now)
+    /**
+     * Học lại từ đầu (R5.8): bỏ lịch ôn hiện tại, từ trở về chưa học. Lượt trả lời cũ vẫn giữ trong lịch sử nhưng
+     * không còn tính vào lịch ôn mới (thẻ mới có ngày tạo sau các lượt đó).
+     */
+    async resetProgress(ids: ID[], now = Date.now()): Promise<number> {
+      const cards = (await database.cardStates.bulkGet(ids)).filter((c): c is CardStateRow => !!c && c.deletedAt === null)
+      if (cards.length > 0) await save([{ table: 'cardStates', rows: cards.map((c) => ({ ...c, deletedAt: now, updatedAt: now })) }], now)
+      return cards.length
     },
 
-    async setSuspended(id: ID, suspended: boolean, now = Date.now()) {
-      const card = await database.cardStates.get(id)
-      if (!card || card.deletedAt !== null) return
-      await save([{ table: 'cardStates', rows: [{ ...card, suspended, updatedAt: now }] }], now)
+    /** Tạm dừng ôn (R5.8): từ không đến hạn, không vào buổi ôn hay ôn chủ động cho tới khi bỏ tạm dừng. */
+    async setSuspended(ids: ID[], suspended: boolean, now = Date.now()): Promise<number> {
+      const cards = (await database.cardStates.bulkGet(ids)).filter((c): c is CardStateRow => !!c && c.deletedAt === null && c.suspended !== suspended)
+      if (cards.length > 0) await save([{ table: 'cardStates', rows: cards.map((c) => ({ ...c, suspended, updatedAt: now })) }], now)
+      return cards.length
     },
 
     /**

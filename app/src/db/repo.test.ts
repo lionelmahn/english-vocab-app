@@ -93,6 +93,29 @@ describe('repo — mục học và bộ từ', () => {
     expect(lib.cards.size).toBe(0)
   })
 
+  it('tạm dừng ôn và học lại từ đầu nhiều từ một lúc (R5.8)', async () => {
+    const a = await repo.createItem(input('alpha', 'a'))
+    const b = await repo.createItem(input('beta', 'b'))
+    const fresh = await repo.createItem(input('gamma', 'c'))
+    for (const id of [a, b]) await database.cardStates.put(await repo.scheduledCard(id, Rating.Good, T0 - 3 * 86_400_000))
+    expect(await repo.setSuspended([a, b, fresh], true, T0)).toBe(2)
+    expect(await repo.setSuspended([a], true, T0)).toBe(0)
+    let lib = await loadLibrary(database)
+    expect(dueQueue(lib, scheduler, T0 + 30 * 86_400_000)).toHaveLength(0)
+    await repo.setSuspended([b], false, T0)
+    lib = await loadLibrary(database)
+    expect(dueQueue(lib, scheduler, T0 + 30 * 86_400_000).map((c) => c.id)).toEqual([b])
+
+    expect(await repo.resetProgress([a, fresh], T0)).toBe(1)
+    lib = await loadLibrary(database)
+    expect(lib.cards.has(a)).toBe(false)
+    expect(learnCandidates(lib).map((i) => i.id)).toContain(a)
+    // Học lại: thẻ mới có ngày tạo mới, không tính các lượt cũ.
+    const again = await repo.scheduledCard(a, Rating.Good, T0 + 1000)
+    expect(again.createdAt).toBe(T0 + 1000)
+    expect(again.reps).toBe(1)
+  })
+
   it('báo đáp án của mình cũng đúng: thêm vào đáp án chấp nhận, không thêm trùng (R6.13)', async () => {
     const id = await repo.createItem(input('large', 'lớn', { acceptedAnswers: ['huge'] }))
     expect(await repo.addAcceptedAnswer(id, '  big  ', T0)).toBe(true)

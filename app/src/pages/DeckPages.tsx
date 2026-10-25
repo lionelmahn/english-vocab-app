@@ -1,4 +1,4 @@
-import { Archive, ArchiveRestore, Check, FolderInput, GraduationCap, Pencil, Plus, Repeat, Search, Trash, X } from 'lucide-react'
+import { Archive, ArchiveRestore, Check, Dumbbell, FolderInput, GraduationCap, Pause, Pencil, Play, Plus, Repeat, Search, Trash, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useMemo, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -109,6 +109,9 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
     return lib.items.filter((i) => pos.has(i.id)).sort((a, b) => (pos.get(a.id) ?? 0) - (pos.get(b.id) ?? 0))
   }, [lib, deck.id])
   const otherDecks = lib.decks.filter((d) => d.id !== deck.id && !d.archived)
+  // Từ đã học trong số đang chọn: để ôn chủ động hoặc tạm dừng ôn (R5.7, R5.8).
+  const selectedCards = [...selected].map((id) => lib.cards.get(id)).filter((c) => !!c)
+  const allPaused = selectedCards.length > 0 && selectedCards.every((c) => c.suspended)
 
   function toggle(id: string) {
     setSelected((s) => {
@@ -164,6 +167,11 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
           <Button icon={Repeat} disabled={stats.due === 0} className="disabled:opacity-50" onClick={() => navigate(`/review?deck=${deck.id}`)}>
             Ôn tập ({stats.due})
           </Button>
+          {stats.learned > 0 && (
+            <Button icon={Dumbbell} className="col-span-2" onClick={() => navigate(`/practice?deck=${deck.id}`)}>
+              Ôn chủ động
+            </Button>
+          )}
         </motion.div>
       )}
 
@@ -206,7 +214,7 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
                     </p>
                     <p className="truncate text-sm text-muted">{item.meaningVi}</p>
                   </div>
-                  {st === 'due' ? <Badge tone="warning">Đến hạn</Badge> : st === 'new' ? <Badge>Chưa học</Badge> : st === 'archived' ? <Badge>Lưu trữ</Badge> : <LevelDots level={itemLevel(card)} />}
+                  {st === 'due' ? <Badge tone="warning">Đến hạn</Badge> : st === 'new' ? <Badge>Chưa học</Badge> : st === 'archived' ? <Badge>Lưu trữ</Badge> : st === 'suspended' ? <Badge>Tạm dừng</Badge> : <LevelDots level={itemLevel(card)} />}
                 </>
               )
               return (
@@ -233,7 +241,7 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
             <Button
               icon={X}
               disabled={selected.size === 0}
-              className="disabled:opacity-50"
+              className="px-2! disabled:opacity-50"
               onClick={async () => {
                 await repo.removeFromDeck(deck.id, [...selected])
                 showToast(`Đã gỡ ${selected.size} từ khỏi bộ (vẫn còn trong sổ tay)`)
@@ -242,8 +250,26 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
             >
               Gỡ khỏi bộ
             </Button>
-            <Button icon={FolderInput} disabled={selected.size === 0 || otherDecks.length === 0} className="disabled:opacity-50" onClick={() => setMoveOpen(true)}>
+            <Button icon={FolderInput} disabled={selected.size === 0 || otherDecks.length === 0} className="px-2! disabled:opacity-50" onClick={() => setMoveOpen(true)}>
               Chuyển / thêm…
+            </Button>
+            <Button icon={Dumbbell} disabled={selectedCards.length === 0} className="px-2! disabled:opacity-50" onClick={() => navigate('/practice', { state: { itemIds: [...selected] } })}>
+              Ôn chủ động
+            </Button>
+            <Button
+              icon={allPaused ? Play : Pause}
+              disabled={selectedCards.length === 0}
+              className="px-2! disabled:opacity-50"
+              onClick={async () => {
+                const n = await repo.setSuspended(
+                  selectedCards.map((c) => c.id),
+                  !allPaused,
+                )
+                showToast(allPaused ? `Đã bỏ tạm dừng ${n} từ` : `Đã tạm dừng ôn ${n} từ`)
+                exitSelect()
+              }}
+            >
+              {allPaused ? 'Bỏ tạm dừng' : 'Tạm dừng ôn'}
             </Button>
           </motion.div>
         ) : (
