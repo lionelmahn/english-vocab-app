@@ -4,6 +4,7 @@ import { db, onLocalChange } from '../db/db'
 import { appScheduler } from '../db/repo'
 import { getAuth, subscribeAuth } from './auth'
 import { getSupabase } from './supabase'
+import { flushReports } from './feedback'
 import { getSettings } from '../lib/settings'
 import { syncAudio } from './audioStore'
 import { bindAccount, forgetCursors, syncOnce, type SyncRemote, type SyncResult } from './syncEngine'
@@ -100,6 +101,8 @@ export async function syncNow(): Promise<void> {
     }
     const ctx = { scheduler: appScheduler, now: Date.now, userId: auth.userId }
     let last = await syncOnce(db, remote, ctx)
+    // Báo lỗi chờ gửi (R14.4) đi cùng lượt đồng bộ; lỗi ở đây không làm hỏng đồng bộ.
+    await flushReports(await client)
     let audio: SyncStatus['audio'] = 'ready'
     let audioError: string | null = null
     if (last.skipped.includes('audioAssets')) audio = 'not_ready'

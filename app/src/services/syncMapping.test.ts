@@ -2,7 +2,7 @@ import { default_w } from 'ts-fsrs'
 import type { PGlite } from '@electric-sql/pglite'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Profile, type ReviewLogRow, type VocabItem } from '../db/types'
-import { cardStateToRemote, deckItemToRemote, deckToRemote, fromRemote, profileToRemote, reviewLogToRemote, toMs, vocabItemToRemote } from './syncMapping'
+import { cardStateToRemote, deckItemToRemote, deckToRemote, fromRemote, lookupToRemote, profileToRemote, reviewLogToRemote, toMs, vocabItemToRemote } from './syncMapping'
 import { addUser, startTestServer, upsertAs } from './testServer'
 
 /**
@@ -170,6 +170,16 @@ describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', ()
     await addUser(pg, other)
     const row = (await pg.query<{ row: Record<string, unknown> }>(`select to_jsonb(t) as row from public.profiles t where user_id = $1`, [other])).rows[0].row
     expect(fromRemote('profiles', row)).toMatchObject({ displayName: '', dailyNewWords: 10, dailyMinutes: 15, studyWeekdays: [0, 1, 2, 3, 4, 5, 6], accent: 'us', reviewLimit: 50 })
+  })
+
+  it('lịch sử tra: giữ nguyên sau một vòng lên rồi về, updatedAt suy ra từ thời điểm tra hoặc xóa (R15.4)', async () => {
+    const entries = [
+      { id: '00000000-0000-0000-0000-00000000aa01', query: 'give up', lookedUpAt: T, updatedAt: T, deletedAt: null },
+      { id: '00000000-0000-0000-0000-00000000aa02', query: 'resilient', lookedUpAt: T, updatedAt: T + 5000, deletedAt: T + 5000 },
+    ]
+    await upsertAs(pg, USER, 'lookup_history', entries.map(lookupToRemote))
+    const rows = (await pg.query<{ row: Record<string, unknown> }>(`select to_jsonb(t) as row from public.lookup_history t where user_id = $1 order by query`, [USER])).rows
+    expect(rows.map((r) => fromRemote('lookupHistory', r.row))).toEqual(entries)
   })
 
   it('đọc được mốc thời gian có micro giây của máy chủ', () => {

@@ -7,6 +7,8 @@ import type {
   Deck,
   DeckItem,
   DictionaryCacheEntry,
+  FeedbackReport,
+  LookupEntry,
   MetaEntry,
   OfflineAudioFile,
   OutboxEntry,
@@ -40,6 +42,8 @@ export class VocabDatabase extends Dexie {
   audioAssets!: EntityTable<AudioAsset, 'id'>
   audioBlobs!: EntityTable<AudioBlob, 'id'>
   offlineAudio!: EntityTable<OfflineAudioFile, 'url'>
+  lookupHistory!: EntityTable<LookupEntry, 'id'>
+  feedback!: EntityTable<FeedbackReport, 'id'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -68,6 +72,8 @@ export class VocabDatabase extends Dexie {
     // Phiên bản 8: file phát âm Wiktionary tải về để nghe khi không có mạng (R11.8).
     // Chỉ mục size để cộng dung lượng mà không phải đọc dữ liệu âm thanh.
     this.version(8).stores({ offlineAudio: 'url, savedAt, size' })
+    // Phiên bản 9: lịch sử tra từ (R15.4), đồng bộ giữa các máy; báo lỗi chờ gửi (R14.4).
+    this.version(9).stores({ lookupHistory: 'id, query, lookedUpAt', feedback: 'id, createdAt' })
   }
 }
 
@@ -81,6 +87,7 @@ interface TableRows {
   cardStates: CardStateRow
   reviewLogs: ReviewLogRow
   audioAssets: AudioAsset
+  lookupHistory: LookupEntry
 }
 
 /** Một nhóm dòng cùng bảng cần ghi; kiểu dòng khớp với bảng. */

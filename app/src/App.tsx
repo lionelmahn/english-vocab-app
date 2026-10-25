@@ -21,6 +21,7 @@ import { PracticePage } from './pages/PracticePage'
 import { MemoryPage } from './pages/MemoryPage'
 import { InsightsPage } from './pages/InsightsPage'
 import { AchievementsPage } from './pages/AchievementsPage'
+import { FeedbackPage } from './pages/FeedbackPage'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -165,6 +166,7 @@ export default function App() {
                   <Route path="/me/memory" element={<MemoryPage />} />
                   <Route path="/insights" element={<InsightsPage />} />
                   <Route path="/achievements" element={<AchievementsPage />} />
+                  <Route path="/me/feedback" element={<FeedbackPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

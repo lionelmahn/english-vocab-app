@@ -1,4 +1,4 @@
-import { ClipboardCheck, Dumbbell, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, Trophy, X, Zap } from 'lucide-react'
+import { ClipboardCheck, Dumbbell, Flag, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, Trophy, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -31,6 +31,7 @@ import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
 import { AudioChoiceStep, ClozeChoiceStep, DictationStep, FlashcardStep, IntroStep, MatchingStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
 import { StudyProgress } from '../study/ui'
 import { Buddy } from '../components/Buddy'
+import { ReportSheet } from '../components/ReportSheet'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { badgeStates, milestones, sumXp } from '../core/achievements'
 import { deviceTimeZone } from '../core/profile'
@@ -284,6 +285,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
   const [view, setView] = useState<{ step: Step | undefined; key: number }>(() => ({ step: currentStep(session.plan), key: 0 }))
   const [exitDir, setExitDir] = useState(0)
   const [pauseOpen, setPauseOpen] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
   const [finishing, setFinishing] = useState(false)
   const finishingRef = useRef(false)
   const shownAt = useRef(Date.now())
@@ -533,8 +535,29 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
           >
             Kết thúc và xem kết quả
           </Button>
+          {step && item && (
+            <button
+              type="button"
+              onClick={() => {
+                setPauseOpen(false)
+                setReportOpen(true)
+              }}
+              className="mx-auto flex items-center gap-1.5 py-1 text-sm font-semibold text-muted"
+            >
+              <Flag aria-hidden className="h-4 w-4" /> Báo lỗi câu này
+            </button>
+          )}
         </div>
       </Sheet>
+      {step && item && (
+        <ReportSheet
+          open={reportOpen}
+          onClose={() => setReportOpen(false)}
+          kind={step.kind === 'intro' ? 'content' : 'answer'}
+          context={{ itemId: item.id, term: item.term, meaningVi: item.meaningVi, acceptedAnswers: item.acceptedAnswers, exercise: step.exercise, stepKind: step.kind, mode: plan.mode, sessionId: session.id }}
+          about={`câu đang làm (từ “${item.term}”)`}
+        />
+      )}
     </div>
   )
 }

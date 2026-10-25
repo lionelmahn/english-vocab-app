@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Archive, ArchiveRestore, ChevronDown, Flame, Languages, Lightbulb, Mic, Pause, Pencil, Play, RotateCcw, StickyNote, Star, Trash } from 'lucide-react'
+import { Archive, ArchiveRestore, ChevronDown, Flag, Flame, Languages, Lightbulb, Mic, Pause, Pencil, Play, RotateCcw, StickyNote, Star, Trash } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -20,6 +20,7 @@ import { speak } from '../services/speech'
 import { VoiceClipPrompt } from '../components/VoiceClip'
 import { WordAudioCard } from '../components/WordAudio'
 import { SpeakPractice } from '../components/SpeakPractice'
+import { ReportSheet } from '../components/ReportSheet'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -31,6 +32,7 @@ export function WordDetailPage() {
   const [showVi, setShowVi] = useState(settings.showTranslations)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [report, setReport] = useState(false)
   const [practice, setPractice] = useState(false)
   const logs = useLiveQuery(async () => (await db.reviewLogs.where('itemId').equals(id).toArray()).sort((a, b) => b.reviewedAt - a.reviewedAt).slice(0, 10), [id], [])
 
@@ -250,6 +252,16 @@ export function WordDetailPage() {
           Xóa
         </Button>
       </div>
+      <button type="button" onClick={() => setReport(true)} className="mx-auto flex items-center gap-1.5 py-1 text-sm font-semibold text-muted">
+        <Flag aria-hidden className="h-4 w-4" /> Báo lỗi nội dung từ này
+      </button>
+      <ReportSheet
+        open={report}
+        onClose={() => setReport(false)}
+        kind="content"
+        context={{ itemId: item.id, term: item.term, meaningVi: item.meaningVi, partOfSpeech: item.partOfSpeech, source: item.source }}
+        about={`từ “${item.term}”`}
+      />
 
       <Sheet open={confirmReset} onClose={() => setConfirmReset(false)} title={`Học lại “${item.term}” từ đầu?`}>
         <div className="flex flex-col gap-3">

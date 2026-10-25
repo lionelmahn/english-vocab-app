@@ -1,5 +1,5 @@
 import { PROFILE_EXTRA_KEYS, profileDefaults, sanitizeProfile } from '../core/profile'
-import { PROFILE_ID, type AudioAsset, type CardStateRow, type Deck, type DeckItem, type Example, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
+import { PROFILE_ID, type AudioAsset, type CardStateRow, type Deck, type DeckItem, type Example, type LookupEntry, type Profile, type ReviewLogRow, type SyncedTableName, type VocabItem } from '../db/types'
 
 /** Đổi dòng trên thiết bị (camelCase, mili-giây) sang dòng trên máy chủ (snake_case, ISO) và ngược lại. */
 
@@ -15,13 +15,14 @@ export const REMOTE_TABLE: Record<SyncedTableName, string> = {
   cardStates: 'card_states',
   reviewLogs: 'review_logs',
   audioAssets: 'audio_assets',
+  lookupHistory: 'lookup_history',
 }
 
 /**
  * Thứ tự gửi và kéo: từ và bộ trước, liên kết sau (khóa ngoại).
  * Lượt trả lời đi trước lịch ôn, để máy chủ không bao giờ có lịch ôn mà thiếu lượt trả lời tạo ra nó.
  */
-export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates', 'audioAssets'] as const
+export const PUSH_ORDER = ['profiles', 'vocabItems', 'decks', 'deckItems', 'reviewLogs', 'cardStates', 'audioAssets', 'lookupHistory'] as const
 
 /**
  * Bảng cần chạy thêm SQL trên Supabase (âm thanh, 20261025000000_audio_storage.sql). Chưa chạy thì bảng này
@@ -166,6 +167,10 @@ export function audioAssetToRemote(r: AudioAsset, userId: string) {
   }
 }
 
+export function lookupToRemote(r: LookupEntry) {
+  return { id: r.id, query: r.query.slice(0, 200), looked_up_at: iso(r.lookedUpAt), deleted_at: iso(r.deletedAt) }
+}
+
 /** `userId` cần cho hồ sơ và âm thanh (cột user_id / owner_id trên máy chủ). */
 export function toRemote(table: PushTable, row: unknown, userId = ''): Record<string, unknown> {
   switch (table) {
@@ -183,6 +188,8 @@ export function toRemote(table: PushTable, row: unknown, userId = ''): Record<st
       return cardStateToRemote(row as CardStateRow)
     case 'reviewLogs':
       return reviewLogToRemote(row as ReviewLogRow)
+    case 'lookupHistory':
+      return lookupToRemote(row as LookupEntry)
   }
 }
 
@@ -337,6 +344,13 @@ export interface PushRows {
   deckItems: DeckItem
   cardStates: CardStateRow
   reviewLogs: ReviewLogRow
+  lookupHistory: LookupEntry
+}
+
+export function lookupFromRemote(r: RemoteRow): LookupEntry {
+  const lookedUpAt = ms(r.looked_up_at)
+  const deletedAt = msOrNull(r.deleted_at)
+  return { id: r.id as string, query: r.query as string, lookedUpAt, updatedAt: Math.max(lookedUpAt, deletedAt ?? 0), deletedAt }
 }
 
 export function fromRemote<K extends PushTable>(table: K, row: RemoteRow): PushRows[K]
@@ -356,5 +370,7 @@ export function fromRemote(table: PushTable, row: RemoteRow): PushRows[PushTable
       return cardStateFromRemote(row)
     case 'reviewLogs':
       return reviewLogFromRemote(row)
+    case 'lookupHistory':
+      return lookupFromRemote(row)
   }
 }

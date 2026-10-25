@@ -14,7 +14,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback'
 
 export type GuideBlock =
   | { h: string }
@@ -95,7 +95,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Tra từ”',
-            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó.',
+            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó. Khi ô tra đang trống, trang hiện “Đã tra gần đây”: chạm một từ để tra lại, bấm dấu × để bỏ từ đó, hoặc “Xóa lịch sử” để xóa hết (trên mọi máy đã đăng nhập).',
           },
           {
             term: '“Nhập từ file”',
@@ -144,6 +144,7 @@ export const GUIDE: GuideTopic[] = [
           'Nút “Học mới” và “Ôn tập” ở trang của một bộ chỉ học và ôn từ trong bộ đó, kể cả khi bộ đang tắt. Nút “Ôn chủ động” luyện thêm các từ đã học của bộ mà không đổi lịch ôn.',
           'Bấm “Chọn” ở danh sách từ trong bộ để chọn nhiều từ, rồi “Gỡ khỏi bộ”, “Chuyển / thêm…”, “Ôn chủ động” (chỉ luyện các từ đã chọn) hoặc “Tạm dừng ôn”.',
           'Xóa bộ không xóa từ: từ và tiến độ vẫn còn trong sổ tay.',
+          '“Sao chép bộ từ” (cuối trang của một bộ) tạo bộ mới cùng tên, thêm chữ (bản sao), gồm các từ của bộ gốc theo đúng thứ tự, để bạn thêm bớt từ hay đổi tên mà bộ gốc giữ nguyên. Hai bộ dùng chung các từ, nên tiến độ là một và sửa nội dung một từ thì đổi ở cả hai bộ.',
         ],
       },
       { h: 'Sửa, lưu trữ, xóa' },
@@ -870,13 +871,36 @@ export const GUIDE: GuideTopic[] = [
       { tip: 'Cả hai thao tác đều phải gõ chữ XÓA để xác nhận và không hoàn tác được. Hãy tạo bản sao lưu trước.' },
     ],
   },
+  {
+    id: 'feedback',
+    title: 'Báo lỗi và góp ý',
+    summary: 'Báo lỗi ngay tại từ hoặc câu đang học, xem báo lỗi đã gửi',
+    keywords: ['báo lỗi', 'góp ý', 'phản hồi', 'sai nghĩa', 'chấm sai', 'lỗi ứng dụng'],
+    blocks: [
+      { p: 'Báo lỗi ngay tại chỗ để app tự kèm đúng từ, đúng câu bạn đang xem:' },
+      {
+        terms: [
+          { term: '“Báo lỗi nội dung từ này”', text: 'Cuối trang của một từ: nghĩa, phiên âm hay câu ví dụ bị sai.' },
+          { term: '“Báo lỗi câu này”', text: 'Trong bảng “Tạm dừng buổi học?” (nút X khi đang học): câu đang làm bị chấm sai hoặc hiển thị lỗi. Báo xong bấm X lần nữa để học tiếp.' },
+          { term: '“Báo lỗi và góp ý”', text: 'Ở “Cá nhân”: gửi lỗi khác hoặc góp ý chung, và xem các báo lỗi đã ghi trên máy này.' },
+        ],
+      },
+      {
+        list: [
+          'Chọn loại (“Lỗi ứng dụng”, “Nội dung sai”, “Chấm sai”, “Góp ý khác”), ghi vài dòng rồi bấm “Gửi báo lỗi”. App kèm theo phiên bản, trang đang mở và loại thiết bị.',
+          'Báo lỗi được lưu trên máy trước, rồi gửi lên tài khoản của bạn trên máy chủ khi có mạng và đã đăng nhập. Danh sách ở trang “Báo lỗi và góp ý” ghi “Đã gửi” hoặc “Chờ gửi”.',
+          'Nếu bị chấm sai ở bài gõ mà câu bạn gõ cũng đúng, bấm “Đáp án của mình cũng đúng” ngay ở bảng kết quả để được tính đúng (xem bài Ôn tập); báo lỗi chỉ để ghi lại cho lần sửa app sau.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
   { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
-  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account'] },
+  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account', 'feedback'] },
 ]
 
 export function guideTopic(id: GuideTopicId): GuideTopic {

@@ -8,7 +8,7 @@ import { duplicateGroups, findDuplicates, meaningKey, termKey, type DuplicateCan
 import { getDeviceId } from '../lib/device'
 import { cardToRow, rowToCard } from './cards'
 import { commit, db, notifyChange, type Change, type VocabDatabase } from './db'
-import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Example, type ID, type PartOfSpeech, type Profile, type ReviewLogRow, type StudySessionRow, type VocabItem } from './types'
+import { PROFILE_ID, type CardStateRow, type Deck, type DeckItem, type Example, type ID, type LookupEntry, type PartOfSpeech, type Profile, type ReviewLogRow, type StudySessionRow, type VocabItem } from './types'
 
 /** Nội dung người dùng nhập cho một mục học (R2.2, R2.3). */
 export interface ItemInput {
@@ -405,6 +405,52 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
         }
       }
       return rows
+    },
+
+    /**
+     * Sao chép bộ từ (R3.5): bộ mới cùng tên (thêm "bản sao"), mô tả, chủ đề và các từ theo đúng thứ tự.
+     * Bộ mới dùng chung các từ (nội dung và tiến độ) với bộ gốc; thêm bớt từ ở bộ nào chỉ ảnh hưởng bộ đó.
+     */
+    async copyDeck(id: ID, now = Date.now()): Promise<ID | null> {
+      const source = await database.decks.get(id)
+      if (!source || source.deletedAt !== null) return null
+      const links = (await database.deckItems.where('deckId').equals(id).toArray()).filter((d) => d.deletedAt === null).sort((a, b) => a.position - b.position)
+      const live = new Set((await database.vocabItems.bulkGet(links.map((d) => d.itemId))).filter((i) => !!i && i.deletedAt === null).map((i) => i!.id))
+      const copy: Deck = { ...source, id: crypto.randomUUID(), name: `${source.name} (bản sao)`.slice(0, 100), active: true, archived: false, createdAt: now, updatedAt: now, deletedAt: null }
+      const rows: DeckItem[] = links
+        .filter((d) => live.has(d.itemId))
+        .map((d, position) => ({ id: crypto.randomUUID(), deckId: copy.id, itemId: d.itemId, position, createdAt: now, updatedAt: now, deletedAt: null }))
+      await save(
+        [
+          { table: 'decks', rows: [copy] },
+          { table: 'deckItems', rows },
+        ],
+        now,
+      )
+      return copy.id
+    },
+
+    // ---- Lịch sử tra từ (R15.4) ----------------------------------------------------------------
+
+    /** Ghi một lần tra: từ đã có trong lịch sử thì cập nhật thời điểm, chưa có thì thêm. */
+    async recordLookup(query: string, now = Date.now()): Promise<void> {
+      const q = query.trim().replace(/\s+/g, ' ').slice(0, 200)
+      if (!q) return
+      const same = (await database.lookupHistory.where('query').equals(q).toArray()).filter((e) => e.deletedAt === null)
+      const [keep, ...extra] = same.sort((a, b) => b.lookedUpAt - a.lookedUpAt)
+      const rows: LookupEntry[] = [
+        keep ? { ...keep, lookedUpAt: now, updatedAt: now } : { id: crypto.randomUUID(), query: q, lookedUpAt: now, updatedAt: now, deletedAt: null },
+        // Hai máy cùng tra một từ khi chưa đồng bộ: giữ một dòng.
+        ...extra.map((e) => ({ ...e, deletedAt: now, updatedAt: now })),
+      ]
+      await save([{ table: 'lookupHistory', rows }], now)
+    },
+
+    /** Xóa vài từ khỏi lịch sử tra, hoặc xóa hết khi không truyền `ids`. */
+    async clearLookups(ids?: ID[], now = Date.now()): Promise<number> {
+      const rows = (ids ? await database.lookupHistory.bulkGet(ids) : await database.lookupHistory.toArray()).filter((e): e is LookupEntry => !!e && e.deletedAt === null)
+      if (rows.length > 0) await save([{ table: 'lookupHistory', rows: rows.map((e) => ({ ...e, deletedAt: now, updatedAt: now })) }], now)
+      return rows.length
     },
 
     async addToDeck(deckId: ID, itemIds: ID[], now = Date.now()) {

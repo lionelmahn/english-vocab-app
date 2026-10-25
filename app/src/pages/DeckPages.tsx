@@ -1,4 +1,4 @@
-import { Archive, ArchiveRestore, Check, Dumbbell, FolderInput, GraduationCap, Pause, Pencil, Play, Plus, Repeat, Search, Trash, X } from 'lucide-react'
+import { Archive, ArchiveRestore, Check, Copy, Dumbbell, FolderInput, GraduationCap, Pause, Pencil, Play, Plus, Repeat, Search, Trash, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useMemo, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -102,6 +102,7 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [moveOpen, setMoveOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
+  const [copyOpen, setCopyOpen] = useState(false)
 
   const stats = deckStats(deck.id, lib.itemById, lib.members, lib.cards, now)
   const items = useMemo(() => {
@@ -299,6 +300,34 @@ function DeckDetail({ lib, deck }: { lib: Library; deck: Deck }) {
           Xóa bộ
         </Button>
       </div>
+      {stats.total > 0 && (
+        <Button icon={Copy} className="w-full" onClick={() => setCopyOpen(true)}>
+          Sao chép bộ từ
+        </Button>
+      )}
+
+      <Sheet open={copyOpen} onClose={() => setCopyOpen(false)} title={`Sao chép “${deck.name}”?`}>
+        <div className="flex flex-col gap-3">
+          <p className="text-sm leading-relaxed text-muted">
+            Tạo bộ mới “{deck.name} (bản sao)” gồm {stats.total} từ theo đúng thứ tự, để bạn thêm, bớt từ hay đổi tên mà không ảnh hưởng bộ gốc. Hai bộ dùng chung các từ, nên tiến độ học là một và sửa nội dung một từ thì đổi ở cả hai bộ.
+          </p>
+          <Button
+            variant="primary"
+            icon={Copy}
+            onClick={async () => {
+              const id = await repo.copyDeck(deck.id)
+              setCopyOpen(false)
+              if (id) {
+                showToast('Đã tạo bản sao')
+                navigate(`/decks/${id}`)
+              }
+            }}
+          >
+            Tạo bản sao
+          </Button>
+          <Button onClick={() => setCopyOpen(false)}>Hủy</Button>
+        </div>
+      </Sheet>
 
       <Sheet open={moveOpen} onClose={() => setMoveOpen(false)} title={`${selected.size} từ đã chọn`}>
         <p className="mb-3 text-sm text-muted">Chọn bộ đích. Từ dùng chung tiến độ dù nằm trong nhiều bộ.</p>

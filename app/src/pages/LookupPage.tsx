@@ -1,6 +1,7 @@
-import { BookmarkPlus, Check, ChevronDown, CloudOff, ExternalLink, LoaderCircle, Plus, RotateCcw, Search, SearchX, Volume2 } from 'lucide-react'
+import { BookmarkPlus, Check, ChevronDown, CloudOff, ExternalLink, History, LoaderCircle, Plus, RotateCcw, Search, SearchX, Trash2, Volume2, X } from 'lucide-react'
+import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion, type Variants } from 'motion/react'
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { Badge, Chip, IpaPill, Sheet, SpeakButtons } from '../components/kit'
 import { Button, Card, EmptyState, Page, SectionTitle, TextField } from '../components/ui'
@@ -8,6 +9,7 @@ import type { DictEntry, DictGroup, DictSense, Ipa, VietnameseHint } from '../co
 import { POS_LABEL } from '../core/pos'
 import { termKey } from '../core/vocab'
 import type { Library } from '../db/library'
+import { db } from '../db/db'
 import { repo, type ItemInput } from '../db/repo'
 import { useLibrary } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
@@ -42,7 +44,10 @@ export function LookupPage() {
     if (!q) return
     let cancelled = false
     void dictionary.lookup(q).then((result) => {
-      if (!cancelled) setDone({ q, attempt, result })
+      if (cancelled) return
+      setDone({ q, attempt, result })
+      // Lịch sử tra (R15.4): ghi khi tra xong, kể cả không tìm thấy; mất mạng hay lỗi thì không ghi.
+      if (result.status === 'found' || result.status === 'not_found') void repo.recordLookup(q)
     })
     return () => {
       cancelled = true
@@ -91,11 +96,13 @@ export function LookupPage() {
       <AnimatePresence mode="popLayout" initial={false}>
         {view === 'idle' && (
           <motion.div key="idle" {...fade}>
-            <EmptyState
-              icon={Volume2}
-              title="Tra từ và lưu nhanh"
-              body="Xem nghĩa theo loại từ, phiên âm Anh–Mỹ/Anh–Anh, nghe phát âm và câu ví dụ, rồi chọn nghĩa để lưu vào sổ tay."
-            />
+            <RecentLookups onLookup={go}>
+              <EmptyState
+                icon={Volume2}
+                title="Tra từ và lưu nhanh"
+                body="Xem nghĩa theo loại từ, phiên âm Anh–Mỹ/Anh–Anh, nghe phát âm và câu ví dụ, rồi chọn nghĩa để lưu vào sổ tay."
+              />
+            </RecentLookups>
           </motion.div>
         )}
         {view === 'loading' && (
@@ -130,6 +137,62 @@ export function LookupPage() {
         )}
       </AnimatePresence>
     </Page>
+  )
+}
+
+// ---- Lịch sử tra (R15.4) ---------------------------------------------------------------------
+
+const RECENT = 30
+
+/** Từ đã tra gần đây (đồng bộ giữa các máy): chạm để tra lại, bỏ từng từ hoặc xóa hết. Chưa tra gì thì hiện `children`. */
+function RecentLookups({ onLookup, children }: { onLookup: (term: string) => void; children: ReactNode }) {
+  const entries = useLiveQuery(async () => (await db.lookupHistory.orderBy('lookedUpAt').reverse().toArray()).filter((e) => e.deletedAt === null), [])
+  const [confirm, setConfirm] = useState(false)
+  if (!entries) return null
+  if (entries.length === 0) return <>{children}</>
+  // Cùng một từ tra trên hai máy trước khi đồng bộ: chỉ hiện một lần.
+  const seen = new Set<string>()
+  const list = entries.filter((e) => !seen.has(e.query.toLowerCase()) && seen.add(e.query.toLowerCase())).slice(0, RECENT)
+  return (
+    <Card className="p-2">
+      <div className="flex items-center justify-between px-2 pt-1 pb-1">
+        <SectionTitle className="flex items-center gap-2">
+          <History aria-hidden className="h-4 w-4 text-subtle" /> Đã tra gần đây
+        </SectionTitle>
+        <button type="button" onClick={() => setConfirm(true)} className="flex items-center gap-1 text-sm font-semibold text-muted">
+          <Trash2 aria-hidden className="h-4 w-4" /> Xóa lịch sử
+        </button>
+      </div>
+      <ul>
+        {list.map((e) => (
+          <li key={e.id} className="flex items-center gap-1">
+            <button type="button" onClick={() => onLookup(e.query)} className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl px-3 py-2.5 text-left active:bg-surface-2">
+              <Search aria-hidden className="h-4 w-4 shrink-0 text-subtle" />
+              <span className="truncate font-medium">{e.query}</span>
+            </button>
+            <button type="button" aria-label={`Bỏ “${e.query}” khỏi lịch sử`} onClick={() => void repo.clearLookups([e.id])} className="flex h-10 w-10 shrink-0 items-center justify-center text-subtle">
+              <X aria-hidden className="h-4 w-4" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Sheet open={confirm} onClose={() => setConfirm(false)} title="Xóa lịch sử tra?">
+        <div className="flex flex-col gap-3">
+          <p className="text-sm leading-relaxed text-muted">Danh sách từ đã tra bị xóa trên mọi máy đã đăng nhập. Từ đã lưu vào sổ tay và kết quả tra đã lưu để xem khi mất mạng vẫn giữ nguyên.</p>
+          <Button
+            variant="danger"
+            onClick={async () => {
+              await repo.clearLookups()
+              setConfirm(false)
+              showToast('Đã xóa lịch sử tra')
+            }}
+          >
+            Xóa lịch sử
+          </Button>
+          <Button onClick={() => setConfirm(false)}>Hủy</Button>
+        </div>
+      </Sheet>
+    </Card>
   )
 }
 

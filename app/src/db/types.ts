@@ -121,7 +121,33 @@ export interface StudySessionRow {
   updatedAt: number
 }
 
-export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs' | 'audioAssets'
+export type SyncedTableName = 'profiles' | 'vocabItems' | 'decks' | 'deckItems' | 'cardStates' | 'reviewLogs' | 'audioAssets' | 'lookupHistory'
+
+/** Loại báo lỗi (R14.4), khớp ràng buộc của bảng `feedback_reports`. */
+export type FeedbackKind = 'bug' | 'content' | 'answer' | 'other'
+
+/** Báo lỗi hoặc góp ý (R14.4): lưu trên máy trước, gửi lên máy chủ khi có mạng và đã đăng nhập. */
+export interface FeedbackReport {
+  id: ID
+  kind: FeedbackKind
+  message: string
+  /** Thông tin kèm theo: phiên bản, trang, từ đang học… */
+  context: Record<string, unknown>
+  createdAt: number
+  sentAt: number | null
+}
+
+/**
+ * Một từ đã tra (R15.4), đồng bộ qua bảng `lookup_history`. Mỗi từ tra một dòng; tra lại thì cập nhật thời điểm.
+ * Máy chủ không có cột updated_at: `updatedAt` luôn bằng thời điểm tra hoặc xóa, mới hơn thì lấy.
+ */
+export interface LookupEntry {
+  id: ID
+  query: string
+  lookedUpAt: number
+  updatedAt: number
+  deletedAt: number | null
+}
 
 /**
  * Âm thanh của người học (R7.8, R13.8), đồng bộ giữa các máy; file nằm ở kho "audio" trên Supabase.

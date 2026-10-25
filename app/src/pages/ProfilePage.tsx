@@ -1,4 +1,4 @@
-import { AudioLines, Bell, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, Flag, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -368,6 +368,16 @@ export function ProfilePage() {
           <span className="min-w-0 flex-1">
             <span className="block text-[0.9375rem] font-semibold">Hướng dẫn sử dụng</span>
             <span className="block text-[0.8125rem] leading-snug text-muted">Thêm từ, học, ôn và ý nghĩa các con số</span>
+          </span>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+        </button>
+        <button type="button" onClick={() => navigate('/me/feedback')} className="mt-4 flex w-full items-center gap-3 border-t border-line pt-4 text-left">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+            <Flag aria-hidden className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[0.9375rem] font-semibold">Báo lỗi và góp ý</span>
+            <span className="block text-[0.8125rem] leading-snug text-muted">Gửi báo lỗi, xem các báo lỗi đã gửi</span>
           </span>
           <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
         </button>

@@ -116,6 +116,42 @@ describe('repo — mục học và bộ từ', () => {
     expect(again.reps).toBe(1)
   })
 
+  it('sao chép bộ từ: bộ mới cùng các từ theo thứ tự, bỏ từ đã xóa; thêm bớt ở bản sao không ảnh hưởng bộ gốc (R3.5)', async () => {
+    const deck = await repo.createDeck({ name: 'IELTS', description: 'mô tả', topic: 'thi' }, T0)
+    const a = await repo.createItem(input('alpha', 'a'), [deck], T0)
+    const b = await repo.createItem(input('beta', 'b'), [deck], T0)
+    const c = await repo.createItem(input('gamma', 'c'), [deck], T0)
+    await repo.deleteItems([b], T0)
+    const copy = (await repo.copyDeck(deck, T0 + 1))!
+    let lib = await loadLibrary(database)
+    expect(lib.deckById.get(copy)).toMatchObject({ name: 'IELTS (bản sao)', description: 'mô tả', topic: 'thi', active: true, archived: false })
+    const order = (id: string) => lib.deckItems.filter((d) => d.deckId === id).sort((x, y) => x.position - y.position).map((d) => d.itemId)
+    expect(order(copy)).toEqual([a, c])
+    await repo.removeFromDeck(copy, [a], T0 + 2)
+    lib = await loadLibrary(database)
+    expect(order(copy)).toEqual([c])
+    expect(order(deck)).toEqual([a, c])
+    expect(await repo.copyDeck('khong-co')).toBeNull()
+  })
+
+  it('lịch sử tra: mỗi từ một dòng, tra lại thì cập nhật thời điểm; xóa từng từ hoặc xóa hết (R15.4)', async () => {
+    await repo.recordLookup('  give   up ', T0)
+    await repo.recordLookup('resilient', T0 + 1)
+    await repo.recordLookup('give up', T0 + 2)
+    await repo.recordLookup('   ', T0 + 3)
+    let live = (await database.lookupHistory.toArray()).filter((e) => e.deletedAt === null).sort((x, y) => y.lookedUpAt - x.lookedUpAt)
+    expect(live.map((e) => [e.query, e.lookedUpAt, e.updatedAt])).toEqual([
+      ['give up', T0 + 2, T0 + 2],
+      ['resilient', T0 + 1, T0 + 1],
+    ])
+    expect((await database.outbox.toArray()).filter((q) => q.table === 'lookupHistory')).not.toHaveLength(0)
+    expect(await repo.clearLookups([live[1].id], T0 + 4)).toBe(1)
+    live = (await database.lookupHistory.toArray()).filter((e) => e.deletedAt === null)
+    expect(live.map((e) => e.query)).toEqual(['give up'])
+    expect(await repo.clearLookups(undefined, T0 + 5)).toBe(1)
+    expect((await database.lookupHistory.toArray()).every((e) => e.deletedAt !== null && e.updatedAt >= e.lookedUpAt)).toBe(true)
+  })
+
   it('báo đáp án của mình cũng đúng: thêm vào đáp án chấp nhận, không thêm trùng (R6.13)', async () => {
     const id = await repo.createItem(input('large', 'lớn', { acceptedAnswers: ['huge'] }))
     expect(await repo.addAcceptedAnswer(id, '  big  ', T0)).toBe(true)
