@@ -196,7 +196,7 @@ export const GUIDE: GuideTopic[] = [
       { h: 'Mỗi từ có hai bước' },
       {
         steps: [
-          'Thẻ giới thiệu: mặt trước là từ tiếng Anh và câu ví dụ có gạch chân từ đó. Chạm thẻ để lật xem phiên âm và nghĩa, rồi bấm “Tiếp tục” (hoặc vuốt thẻ sang bên). Bấm nút hình loa để nghe, nút hình ốc sên để nghe chậm.',
+          'Thẻ giới thiệu: mặt trước là từ tiếng Anh và câu ví dụ có gạch chân từ đó. Chạm thẻ để lật xem phiên âm và nghĩa, rồi bấm “Tiếp tục” (hoặc vuốt thẻ sang bên). Bấm nút hình loa để nghe, nút hình ốc sên để nghe chậm, nút micro để luyện đọc (ghi giọng bạn rồi so với mẫu).',
           '“Điền từ”: nhìn nghĩa tiếng Việt và câu ví dụ có chỗ trống, gõ từng chữ cái của từ rồi bấm “Kiểm tra”. Vài chữ cái mờ hiện sẵn làm điểm tựa nhưng vẫn phải gõ đủ; dấu cách, gạch nối, dấu nháy được điền sẵn.',
         ],
       },
@@ -553,8 +553,8 @@ export const GUIDE: GuideTopic[] = [
   {
     id: 'audio',
     title: 'Phát âm và âm thanh',
-    summary: 'Nguồn phát âm, ghi âm, tải file, báo đọc sai và Giọng iPhone',
-    keywords: ['giọng', 'loa', 'ghi âm', 'micro', 'wiktionary', 'giọng iphone', 'phím tắt', 'đọc sai', 'nghe chậm'],
+    summary: 'Nguồn phát âm, ghi âm, luyện đọc, tải file, báo đọc sai và Giọng iPhone',
+    keywords: ['giọng', 'loa', 'ghi âm', 'micro', 'wiktionary', 'giọng iphone', 'phím tắt', 'đọc sai', 'nghe chậm', 'luyện đọc', 'luyện nói', 'phát âm của mình'],
     blocks: [
       { p: 'Bấm nút hình loa để nghe, nút hình ốc sên để nghe chậm. Với mỗi từ, app tìm âm thanh theo thứ tự:' },
       {
@@ -580,6 +580,10 @@ export const GUIDE: GuideTopic[] = [
       },
       {
         p: 'Muốn quay về nguồn mặc định thì bấm “Xóa bản của tôi” (với bản Wiktionary đã chọn thì nút có tên “Bỏ chọn bản này”). Nút xóa đúng bản đang ghi ở dòng trên cùng, kể cả khi đó là bản của giọng kia.',
+      },
+      { h: 'Luyện đọc: tự so giọng mình với mẫu' },
+      {
+        p: 'Mở “Luyện đọc” ở trang một từ, hoặc bấm nút micro (cạnh hai nút loa) trên thẻ giới thiệu từ mới. Nghe mẫu, bấm micro và đọc to từ đó (tối đa 8 giây), rồi dùng “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” để so. Bấm micro lần nữa để ghi lại. Bản ghi này chỉ để bạn tự nghe: không được lưu, không gửi đi đâu, đóng lại là mất. Muốn dùng giọng mình làm phát âm của từ thì dùng “Ghi âm” ở thẻ Phát âm.',
       },
       { h: '“Giọng iPhone”' },
       {
@@ -711,7 +715,7 @@ export const GUIDE: GuideTopic[] = [
       { p: 'Máy chủ không cho app xem danh sách các máy đang đăng nhập; danh sách các máy đang nhận nhắc nhở có ở trang Nhắc nhở.' },
       { h: 'Quyền trên máy này' },
       {
-        p: 'Thẻ “Quyền trên máy này” cho biết app đã được phép gửi thông báo và dùng micro chưa. Thông báo dùng để nhắc học, nhắc ôn; micro chỉ dùng khi bạn tự ghi âm cách đọc của một từ. Đã chặn thì mở lại trong Cài đặt của máy hoặc của trình duyệt.',
+        p: 'Thẻ “Quyền trên máy này” cho biết app đã được phép gửi thông báo và dùng micro chưa. Thông báo dùng để nhắc học, nhắc ôn; micro chỉ dùng khi bạn tự ghi âm cách đọc của một từ hoặc luyện đọc. Đã chặn thì mở lại trong Cài đặt của máy hoặc của trình duyệt.',
       },
       { h: 'Dữ liệu của bạn đi đâu' },
       {

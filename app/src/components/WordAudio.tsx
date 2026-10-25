@@ -6,6 +6,7 @@ import { POS_LABEL } from '../core/pos'
 import { clipKey } from '../core/voiceClips'
 import { chooseUrl, isShortTerm, withoutFlagged } from '../core/wordAudio'
 import type { Accent, AudioAsset, WordAudio } from '../db/types'
+import { recordingSupported, useRecorder } from '../lib/recorder'
 import { useSettings } from '../lib/settings'
 import { showToast } from '../lib/toast'
 import { listWordRecordings, resolveWordAudio, type WiktionaryRecording } from '../services/audio'
@@ -246,75 +247,11 @@ function LinkButton({ icon: Icon, onClick, children }: { icon: LucideIcon; onCli
 
 // ---- Ghi âm ------------------------------------------------------------------------------------
 
-/** Loại file ghi âm: iPhone ghi được m4a (phát được ở mọi máy), máy khác thường là webm. */
-function recorderType(): string | undefined {
-  if (typeof MediaRecorder === 'undefined') return undefined
-  return ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'].find((t) => MediaRecorder.isTypeSupported?.(t))
-}
-
-function micError(e: unknown): string {
-  const name = (e as { name?: string })?.name
-  if (name === 'NotAllowedError' || name === 'SecurityError')
-    return 'App chưa được dùng micro. Trên iPhone: Cài đặt → Safari → Micro → Hỏi hoặc Cho phép, rồi thử lại.'
-  if (name === 'NotFoundError') return 'Không tìm thấy micro trên máy này.'
-  return 'Không mở được micro. Thử lại, hoặc dùng “Tải file lên”.'
-}
-
 function Recorder({ accent, onRecorded }: { accent: Accent; onRecorded: (blob: Blob) => void }) {
-  const [phase, setPhase] = useState<'idle' | 'asking' | 'recording'>('idle')
-  const [error, setError] = useState<string | null>(null)
-  const [elapsed, setElapsed] = useState(0)
-  const recorder = useRef<MediaRecorder | null>(null)
-  const cleanup = useRef<() => void>(() => undefined)
+  // Đóng bảng giữa chừng: hook tắt micro, bỏ bản đang ghi.
+  const { phase, error, elapsed, start, stop } = useRecorder(MAX_SECONDS, onRecorded, 'Không mở được micro. Thử lại, hoặc dùng “Tải file lên”.')
 
-  // Đóng bảng giữa chừng: tắt micro, bỏ bản đang ghi.
-  useEffect(() => () => cleanup.current(), [])
-
-  const supported = typeof MediaRecorder !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
-  if (!supported) return <p className="text-sm leading-relaxed text-muted">Trình duyệt này không ghi âm được. Hãy ghi bằng app Ghi âm của máy rồi dùng “Tải file lên”.</p>
-
-  async function start() {
-    setError(null)
-    setPhase('asking')
-    let stream: MediaStream
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } })
-    } catch (e) {
-      setPhase('idle')
-      setError(micError(e))
-      return
-    }
-    const type = recorderType()
-    const rec = new MediaRecorder(stream, type ? { mimeType: type } : undefined)
-    const chunks: Blob[] = []
-    const startedAt = Date.now()
-    let keep = true
-    const tick = setInterval(() => {
-      const s = (Date.now() - startedAt) / 1000
-      setElapsed(s)
-      if (s >= MAX_SECONDS && rec.state === 'recording') rec.stop()
-    }, 200)
-    cleanup.current = () => {
-      keep = false
-      clearInterval(tick)
-      if (rec.state !== 'inactive') rec.stop()
-      stream.getTracks().forEach((t) => t.stop())
-    }
-    rec.ondataavailable = (e) => {
-      if (e.data.size > 0) chunks.push(e.data)
-    }
-    rec.onstop = () => {
-      clearInterval(tick)
-      stream.getTracks().forEach((t) => t.stop())
-      setPhase('idle')
-      const blob = new Blob(chunks, { type: rec.mimeType || type || 'audio/mp4' })
-      if (keep && blob.size > 0) onRecorded(blob)
-    }
-    recorder.current = rec
-    setElapsed(0)
-    rec.start()
-    setPhase('recording')
-  }
+  if (!recordingSupported()) return <p className="text-sm leading-relaxed text-muted">Trình duyệt này không ghi âm được. Hãy ghi bằng app Ghi âm của máy rồi dùng “Tải file lên”.</p>
 
   return (
     <div className="flex flex-col items-center gap-4 pt-2">
@@ -326,7 +263,7 @@ function Recorder({ accent, onRecorded }: { accent: Accent; onRecorded: (blob: B
         whileTap={{ scale: 0.92 }}
         disabled={phase === 'asking'}
         aria-label={phase === 'recording' ? 'Dừng ghi âm' : 'Bắt đầu ghi âm'}
-        onClick={() => (phase === 'recording' ? recorder.current?.stop() : void start())}
+        onClick={() => (phase === 'recording' ? stop() : void start())}
         className={`relative flex h-20 w-20 items-center justify-center rounded-full ${phase === 'recording' ? 'bg-danger text-on-danger' : 'bg-accent text-on-accent'}`}
       >
         {phase === 'recording' && (

@@ -99,7 +99,7 @@ export function AccountPage() {
             icon={<Mic aria-hidden className="h-5 w-5" />}
             title="Micro"
             state={permissions ? MIC_TEXT[permissions.microphone] : 'Đang kiểm tra…'}
-            note="Chỉ dùng khi bạn tự ghi âm cách đọc của một từ (trang chi tiết từ → Phát âm → Ghi âm). Đổi quyền trong cài đặt của trình duyệt (iPhone: Cài đặt → Safari → Micro)."
+            note="Chỉ dùng khi bạn tự ghi âm cách đọc của một từ (trang chi tiết từ → Phát âm → Ghi âm) hoặc luyện đọc. Đổi quyền trong cài đặt của trình duyệt (iPhone: Cài đặt → Safari → Micro)."
           />
         </div>
       </Card>

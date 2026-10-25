@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Archive, ArchiveRestore, Flame, Languages, Lightbulb, Pencil, StickyNote, Star, Trash } from 'lucide-react'
+import { Archive, ArchiveRestore, ChevronDown, Flame, Languages, Lightbulb, Mic, Pencil, StickyNote, Star, Trash } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -19,6 +19,7 @@ import { useSettings } from '../lib/settings'
 import { speak } from '../services/speech'
 import { VoiceClipPrompt } from '../components/VoiceClip'
 import { WordAudioCard } from '../components/WordAudio'
+import { SpeakPractice } from '../components/SpeakPractice'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -29,6 +30,7 @@ export function WordDetailPage() {
   const settings = useSettings()
   const [showVi, setShowVi] = useState(settings.showTranslations)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [practice, setPractice] = useState(false)
   const logs = useLiveQuery(async () => (await db.reviewLogs.where('itemId').equals(id).toArray()).sort((a, b) => b.reviewedAt - a.reviewedAt).slice(0, 10), [id], [])
 
   if (!lib) return null
@@ -124,6 +126,24 @@ export function WordDetailPage() {
       )}
 
       <WordAudioCard item={item} />
+
+      <Card>
+        <button type="button" onClick={() => setPractice((p) => !p)} className="flex w-full items-center gap-3 text-left" aria-expanded={practice}>
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+            <Mic aria-hidden className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-[0.9375rem] font-semibold">Luyện đọc</span>
+            <span className="block text-[0.8125rem] leading-snug text-muted">Ghi giọng bạn rồi nghe lại xen với bản mẫu để tự so</span>
+          </span>
+          <ChevronDown aria-hidden className={`h-5 w-5 shrink-0 text-subtle transition-transform ${practice ? 'rotate-180' : ''}`} />
+        </button>
+        {practice && (
+          <div className="mt-4">
+            <SpeakPractice text={item.term} />
+          </div>
+        )}
+      </Card>
 
       <Card>
         <HelpTitle topic="levels">Tiến độ</HelpTitle>

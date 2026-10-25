@@ -14,7 +14,9 @@ import { useSettings } from '../lib/settings'
 import { playCorrect, playWrong } from '../lib/sfx'
 import { speak } from '../services/speech'
 import { KeyboardHint, LetterSlots, type SlotsState } from './LetterSlots'
-import { ChoiceCard, FeedbackSheet, PillButton, RoundSpeak, Sentence, SheetButton, StepFrame, TextLink, type ChoiceState, type SheetTone } from './ui'
+import { ChoiceCard, FeedbackSheet, PillButton, RoundMic, RoundSpeak, Sentence, SheetButton, StepFrame, TextLink, type ChoiceState, type SheetTone } from './ui'
+import { Sheet } from '../components/kit'
+import { SpeakPractice } from '../components/SpeakPractice'
 
 /** Kết quả trả về sau khi ghi một lượt: lịch ôn mới (nếu có) để hiện "ôn lại sau…" (R5.11). */
 export interface AnswerOutcome {
@@ -147,9 +149,10 @@ function TermBack({ item }: { item: VocabItem }) {
  */
 export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: (dir: -1 | 1) => void; onKnown: () => void }) {
   const [flipped, setFlipped] = useState(false)
+  const [practice, setPractice] = useState(false)
   const sentence = contextSentence(item)
   useAutoPlay(item.term)
-  useEnter(() => (flipped ? onNext(1) : setFlipped(true)))
+  useEnter(() => (practice ? undefined : flipped ? onNext(1) : setFlipped(true)))
 
   // Mặt trước: từ cần học in đậm ở trên, câu ví dụ (gạch chân từ) ngay bên dưới.
   const contextFront = (
@@ -170,6 +173,7 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
         <div className="absolute -top-8 left-1/2 z-10 flex -translate-x-1/2 gap-4">
           <RoundSpeak text={item.term} />
           <RoundSpeak text={item.term} slow />
+          <RoundMic onClick={() => setPractice(true)} />
         </div>
         <FlipCard
           flipped={flipped}
@@ -186,6 +190,9 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
         </PillButton>
         <TextLink onClick={onKnown}>Mình đã biết từ này</TextLink>
       </div>
+      <Sheet open={practice} onClose={() => setPractice(false)} title="Luyện đọc">
+        {practice && <SpeakPractice text={item.term} />}
+      </Sheet>
     </div>
   )
 }

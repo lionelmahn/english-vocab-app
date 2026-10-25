@@ -1,4 +1,4 @@
-import { Check, ChevronDown, Languages, Snail, Volume2, X } from 'lucide-react'
+import { Check, ChevronDown, Languages, Mic, Snail, Volume2, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
@@ -58,6 +58,23 @@ export function RoundSpeak({ text, slow = false, size = 'md' }: { text: string; 
         />
       )}
       <Icon aria-hidden className={`relative ${icon} ${slow ? 'text-[#c47a3a]' : 'text-sun'}`} strokeWidth={2.4} />
+    </button>
+  )
+}
+
+/** Nút tròn mở phần luyện đọc (R7.2), cùng kiểu với nút nghe. */
+export function RoundMic({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label="Luyện đọc: ghi giọng bạn để so với mẫu"
+      onClick={(e) => {
+        e.stopPropagation()
+        onClick()
+      }}
+      className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-line bg-surface shadow-[0_5px_0_0_var(--app-line-shadow)] transition-[transform,box-shadow] duration-100 active:translate-y-[4px] active:shadow-[0_1px_0_0_var(--app-line-shadow)]"
+    >
+      <Mic aria-hidden className="h-7 w-7 text-accent" strokeWidth={2.4} />
     </button>
   )
 }

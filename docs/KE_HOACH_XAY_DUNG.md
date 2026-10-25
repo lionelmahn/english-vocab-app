@@ -372,6 +372,14 @@ Nguyên tắc:
 > - **Quyền riêng tư:** trạng thái quyền thông báo và micro trên máy, cách đổi; mục “Dữ liệu của bạn đi đâu” (máy này, Supabase, Wiktionary/Wikimedia; không quảng cáo, không theo dõi).
 > - Hướng dẫn: bài mới “Tài khoản và quyền riêng tư”. 282 test.
 > - **Còn lại của giai đoạn 3:** R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
+
+> **Cập nhật 25/10/2026 (bản 0.17.0): Luyện đọc, tự so giọng mình với mẫu (R7.2) — xong giai đoạn 3.**
+> - Trang một từ có thẻ “Luyện đọc” (bấm để mở); thẻ giới thiệu từ mới có thêm nút micro cạnh hai nút loa, mở bảng “Luyện đọc”.
+> - Bấm micro, đọc to (tối đa 8 giây), rồi “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” (phát bản mẫu theo đúng nguồn phát âm của app, rồi bản vừa ghi). Bản ghi chỉ nằm trong bộ nhớ, không lưu, không gửi đi.
+> - Phần ghi âm tách thành hook dùng chung (`lib/recorder.ts`) cho cả “Ghi âm” ở thẻ Phát âm và luyện đọc.
+> - Đã thử trên trình duyệt với micro giả lập (trình duyệt thử chặn micro thật): ghi, dừng, ghi lại, phát mẫu rồi bản ghi đúng thứ tự; báo lỗi đúng khi micro bị chặn. Chưa thử với micro thật trên iPhone.
+> - Hướng dẫn: thêm phần Luyện đọc (bài Phát âm), nút micro (bài Học từ mới). 282 test.
+> - **Giai đoạn 3 xong** (nhắc nhở, ngoại tuyến, giao diện, tài khoản, quyền riêng tư, luyện đọc). Việc nhỏ còn hẹn: nút “Đổi giờ học” ở trang Nhắc nhở. Tiếp theo: giai đoạn 4 (luyện tập nâng cao).
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản
