@@ -13,12 +13,14 @@ const migration = (name: string) => fileURLToPath(new URL(`../../../supabase/mig
 const INIT = migration('20261023000000_init.sql')
 const AUDIO = migration('20261025000000_audio_storage.sql')
 const REMINDERS = migration('20261026000000_reminders.sql')
+const ACCOUNT = migration('20261027000000_account.sql')
 
 /**
  * `audio: false` = máy chủ chưa chạy file SQL âm thanh (để thử đồng bộ vẫn chạy).
  * `reminders: true` = chạy thêm file SQL nhắc nhở (phần bảng và hàm; phần lịch chạy cần pg_cron của Supabase nên bỏ qua).
+ * `account: true` = chạy thêm file SQL xóa tài khoản.
  */
-export async function startTestServer({ audio = true, reminders = false }: { audio?: boolean; reminders?: boolean } = {}): Promise<PGlite> {
+export async function startTestServer({ audio = true, reminders = false, account = false }: { audio?: boolean; reminders?: boolean; account?: boolean } = {}): Promise<PGlite> {
   const pg = new PGlite()
   await pg.exec(`
     create schema auth;
@@ -47,6 +49,7 @@ export async function startTestServer({ audio = true, reminders = false }: { aud
     await pg.exec('create role service_role;')
     await pg.exec(readFileSync(REMINDERS, 'utf8').split('-- ==== LỊCH CHẠY')[0])
   }
+  if (account) await pg.exec(readFileSync(ACCOUNT, 'utf8'))
   return pg
 }
 

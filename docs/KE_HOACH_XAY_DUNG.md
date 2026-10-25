@@ -364,6 +364,14 @@ Nguyên tắc:
 > - Ngôn ngữ giao diện (phần còn lại của R14.1): giữ tiếng Việt, chưa làm bản tiếng Anh vì app dành cho người học Việt.
 > - 280 test. Hướng dẫn cập nhật (bài Bắt đầu nhanh, Đồng bộ: cài đặt riêng từng máy).
 > - **Còn lại của giai đoạn 3:** R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
+
+> **Cập nhật 25/10/2026 (bản 0.16.0): Tài khoản và quyền riêng tư (R1.6, R14.5).** Trang mới Cá nhân → “Tài khoản và quyền riêng tư”.
+> - **Tài khoản:** email, lần đăng nhập gần nhất, ngày tạo; “Đổi mật khẩu”; “Đăng xuất mọi máy khác” (thu hồi phiên các máy kia và xóa đăng ký nhắc nhở của chúng). Supabase không cho app xem danh sách phiên đăng nhập, nên app chỉ ghi chú điều này; danh sách máy nhận nhắc nhở có ở trang Nhắc nhở.
+> - **Xóa tài khoản:** xóa file âm thanh của tài khoản trong kho, rồi gọi hàm `delete_my_account()` (xóa người dùng; mọi dòng dữ liệu tự xóa theo khóa ngoại). **Cần chạy file supabase/migrations/20261027000000_account.sql trong SQL Editor**; chưa chạy thì app báo rõ. Dữ liệu trên máy đang dùng vẫn giữ. Hàm đã thử trên Postgres giả (xóa đúng người gọi cùng mọi dữ liệu, khách không gọi được); chưa thử với máy chủ thật.
+> - **Xóa dữ liệu trên máy này:** xóa cơ sở dữ liệu trên máy, cài đặt và phiên đăng nhập, tắt nhắc nhở của máy này, rồi mở lại app như mới; cảnh báo nếu còn thay đổi chưa gửi. Cả hai thao tác xóa phải gõ chữ XÓA để xác nhận.
+> - **Quyền riêng tư:** trạng thái quyền thông báo và micro trên máy, cách đổi; mục “Dữ liệu của bạn đi đâu” (máy này, Supabase, Wiktionary/Wikimedia; không quảng cáo, không theo dõi).
+> - Hướng dẫn: bài mới “Tài khoản và quyền riêng tư”. 282 test.
+> - **Còn lại của giai đoạn 3:** R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

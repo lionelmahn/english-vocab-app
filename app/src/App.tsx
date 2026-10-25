@@ -15,6 +15,7 @@ import { HelpPage, HelpTopicPage } from './pages/HelpPage'
 import { ImportPage } from './pages/ImportPage'
 import { RemindersPage } from './pages/RemindersPage'
 import { OfflinePage } from './pages/OfflinePage'
+import { AccountPage } from './pages/AccountPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
 import { NotebookPage } from './pages/NotebookPage'
@@ -152,6 +153,7 @@ export default function App() {
                   <Route path="/me/goals" element={<GoalsPage />} />
                   <Route path="/me/reminders" element={<RemindersPage />} />
                   <Route path="/me/offline" element={<OfflinePage />} />
+                  <Route path="/me/account" element={<AccountPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />
                   <Route path="/help" element={<HelpPage />} />
                   <Route path="/help/:topic" element={<HelpTopicPage />} />

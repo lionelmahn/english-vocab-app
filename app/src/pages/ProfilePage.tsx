@@ -1,4 +1,4 @@
-import { AudioLines, Bell, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, FileUp, HardDriveDownload, LogIn, LogOut, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -189,6 +189,9 @@ export function ProfilePage() {
             Đăng nhập
           </Button>
         )}
+        <Button icon={ShieldCheck} className="mt-2 w-full" onClick={() => navigate('/me/account')}>
+          Tài khoản và quyền riêng tư
+        </Button>
         {signedIn && (
           <Button
             icon={LogOut}

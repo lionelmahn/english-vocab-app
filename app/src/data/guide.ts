@@ -11,7 +11,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account'
 
 export type GuideBlock =
   | { h: string }
@@ -691,13 +691,60 @@ export const GUIDE: GuideTopic[] = [
       },
     ],
   },
+  {
+    id: 'account',
+    title: 'Tài khoản và quyền riêng tư',
+    summary: 'Đổi mật khẩu, đăng xuất máy khác, quyền thông báo và micro, xóa dữ liệu',
+    keywords: ['mật khẩu', 'đăng xuất', 'mất máy', 'xóa tài khoản', 'quyền riêng tư', 'micro', 'thông báo', 'dữ liệu cá nhân'],
+    blocks: [
+      { p: 'Mở “Cá nhân” → “Tài khoản và quyền riêng tư”.' },
+      { h: 'Tài khoản' },
+      {
+        terms: [
+          { term: '“Đổi mật khẩu”', text: `Nhập mật khẩu mới (ít nhất 8 ký tự) hai lần rồi bấm “Lưu mật khẩu”. Các máy đang đăng nhập vẫn dùng tiếp được.` },
+          {
+            term: '“Đăng xuất mọi máy khác”',
+            text: 'Giữ máy đang dùng, đăng xuất các máy còn lại: trong vòng khoảng 1 tiếng các máy kia thôi đồng bộ, và thôi nhận nhắc nhở ngay. Dữ liệu đã có trên các máy đó vẫn nằm trên máy đó. Dùng khi mất máy hoặc lỡ đăng nhập trên máy lạ.',
+          },
+        ],
+      },
+      { p: 'Máy chủ không cho app xem danh sách các máy đang đăng nhập; danh sách các máy đang nhận nhắc nhở có ở trang Nhắc nhở.' },
+      { h: 'Quyền trên máy này' },
+      {
+        p: 'Thẻ “Quyền trên máy này” cho biết app đã được phép gửi thông báo và dùng micro chưa. Thông báo dùng để nhắc học, nhắc ôn; micro chỉ dùng khi bạn tự ghi âm cách đọc của một từ. Đã chặn thì mở lại trong Cài đặt của máy hoặc của trình duyệt.',
+      },
+      { h: 'Dữ liệu của bạn đi đâu' },
+      {
+        list: [
+          'Mọi dữ liệu nằm trên máy này.',
+          'Khi đăng nhập, từ vựng, tiến độ, lịch sử học, hồ sơ, bản ghi âm và đăng ký nhắc nhở được lưu trên máy chủ Supabase để đồng bộ; chỉ tài khoản của bạn đọc được.',
+          'Khi tra từ hoặc nghe bản ghi giọng người thật, app gửi từ cần tra tới Wiktionary, Wikimedia, không kèm thông tin của bạn.',
+          'App không có quảng cáo, không theo dõi, không gửi dữ liệu cho ai khác.',
+        ],
+      },
+      { h: 'Xóa dữ liệu' },
+      {
+        terms: [
+          {
+            term: '“Xóa dữ liệu trên máy này”',
+            text: 'Xóa sổ tay, lịch sử, âm thanh, cài đặt và phiên đăng nhập trên máy đang dùng, rồi mở lại app như mới. Đã đăng nhập thì dữ liệu trên máy chủ vẫn còn, đăng nhập lại là tải về; nếu còn thay đổi chưa gửi, app nhắc bạn đồng bộ trước. Chưa đăng nhập thì dữ liệu mất hẳn.',
+          },
+          {
+            term: '“Xóa tài khoản”',
+            text: 'Xóa tài khoản cùng mọi dữ liệu trên máy chủ (gồm cả file âm thanh). Các máy khác bị đăng xuất. Dữ liệu trên máy đang dùng vẫn giữ để dùng tiếp không cần tài khoản. Cần chạy file SQL xóa tài khoản trên Supabase một lần; nếu chưa chạy, app sẽ báo.',
+          },
+        ],
+      },
+      { tip: 'Cả hai thao tác đều phải gõ chữ XÓA để xác nhận và không hoàn tác được. Hãy tạo bản sao lưu trước.' },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
   { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
-  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline'] },
+  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account'] },
 ]
 
 export function guideTopic(id: GuideTopicId): GuideTopic {
