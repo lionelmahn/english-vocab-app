@@ -84,3 +84,22 @@ export function nextHintSlot(template: readonly Slot[], hinted: ReadonlySet<numb
   for (let i = from; i < template.length; i++) if (template[i].kind === 'letter' && !hinted.has(i)) return i
   return -1
 }
+
+/**
+ * Khung chữ cho gợi ý bài nghe viết (R6.9): lộ chữ đầu mỗi từ, các chữ còn lại thành "_",
+ * giữ nguyên khoảng trắng và dấu. Ví dụ "well-known" → "w___-k____".
+ */
+export function letterMask(term: string): string {
+  let start = true
+  return slotTemplate(term)
+    .map((s) => {
+      if (s.kind === 'fixed') {
+        start = s.char === ' ' || s.char === '-'
+        return s.char
+      }
+      const out = start ? s.char : '_'
+      start = false
+      return out
+    })
+    .join('')
+}

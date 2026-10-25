@@ -92,6 +92,18 @@ describe('repo — mục học và bộ từ', () => {
     expect(lib.deckItems).toHaveLength(0)
     expect(lib.cards.size).toBe(0)
   })
+
+  it('báo đáp án của mình cũng đúng: thêm vào đáp án chấp nhận, không thêm trùng (R6.13)', async () => {
+    const id = await repo.createItem(input('large', 'lớn', { acceptedAnswers: ['huge'] }))
+    expect(await repo.addAcceptedAnswer(id, '  big  ', T0)).toBe(true)
+    expect(await repo.addAcceptedAnswer(id, 'BIG', T0)).toBe(false)
+    expect(await repo.addAcceptedAnswer(id, 'Large', T0)).toBe(false)
+    expect(await repo.addAcceptedAnswer(id, ' ', T0)).toBe(false)
+    const item = (await database.vocabItems.get(id))!
+    expect(item.acceptedAnswers).toEqual(['huge', 'big'])
+    expect(item.updatedAt).toBe(T0)
+    expect((await database.outbox.toArray()).filter((q) => q.table === 'vocabItems')).not.toHaveLength(0)
+  })
 })
 
 describe('repo — lưu từ từ nguồn có sẵn (R2.8)', () => {

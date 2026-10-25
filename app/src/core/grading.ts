@@ -36,6 +36,7 @@ export type AttemptResult =
       exercise: ExerciseKind
       correct: boolean
       hintUsed?: boolean // R6.9
+      hintLevel?: number // R6.9 số lần dùng gợi ý (lưu vào lịch sử)
       nearMatchAccepted?: boolean // sai 1 ký tự, người học chấp nhận
       upgradeToEasy?: boolean // người học tự nâng lên Dễ (chỉ dạng nhớ lại)
     }

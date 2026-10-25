@@ -5,9 +5,10 @@ import { Rating, type Card as FsrsCard, type Grade } from 'ts-fsrs'
 import { checkAnswer } from '../core/answers'
 import { shuffle, type ChoiceSource, type TermSource } from '../core/exercises'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
-import { composeAnswer, letterCount, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from '../core/letters'
+import { composeAnswer, letterCount, letterMask, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from '../core/letters'
 import { POS_SHORT } from '../core/pos'
 import { contextSentence } from '../core/vocab'
+import { repo } from '../db/repo'
 import type { CardStateRow, VocabItem } from '../db/types'
 import { formatDueIn } from '../lib/format'
 import { useSettings } from '../lib/settings'
@@ -203,11 +204,11 @@ function useAnswer(onAnswer: AnswerFn) {
   const [shown, setShown] = useState<Shown | null>(null)
   const busy = useRef(false)
   const submit = useCallback(
-    async (result: AttemptResult, tone: SheetTone, title: string, note?: ReactNode) => {
+    async (result: AttemptResult, tone: SheetTone, title: string, note?: ReactNode, sound = true) => {
       if (busy.current) return
       busy.current = true
-      if (tone === 'correct') playCorrect()
-      else playWrong()
+      // sound = false: âm báo đã phát lúc hiện kết quả chờ xác nhận.
+      if (sound) (tone === 'correct' ? playCorrect : playWrong)()
       const { card } = await onAnswer(result)
       setShown({ tone, title, card, note })
       busy.current = false
@@ -219,10 +220,49 @@ function useAnswer(onAnswer: AnswerFn) {
 
 const DONT_KNOW: AttemptResult = { kind: 'dont_know' }
 
-function stateFor(id: string, targetId: string, selected: string | null, answered: boolean): ChoiceState {
+function stateFor(id: string, targetId: string, selected: string | null, answered: boolean, removed: readonly string[] = []): ChoiceState {
+  if (removed.includes(id)) return 'removed'
   if (!answered) return selected === id ? 'selected' : 'idle'
   if (id === targetId) return 'right'
   return id === selected ? 'wrong' : 'dim'
+}
+
+// ---- Gợi ý (R6.9) -----------------------------------------------------------------------------
+
+/** Dùng gợi ý thì câu đúng chỉ được tính mức Khó; số lần dùng được lưu vào lịch sử bài làm. */
+function HintLink({ onClick }: { onClick: () => void }) {
+  return (
+    <TextLink onClick={onClick}>
+      <span className="inline-flex items-center gap-1">
+        <Lightbulb aria-hidden className="h-4 w-4" /> Gợi ý
+      </span>
+    </TextLink>
+  )
+}
+
+function HintNote() {
+  return <p className="-mt-2 text-center text-[0.8125rem] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>
+}
+
+function FooterLinks({ children }: { children: ReactNode }) {
+  return <div className="flex flex-wrap justify-center gap-x-5">{children}</div>
+}
+
+/**
+ * Gợi ý cho bài chọn: mỗi lần bấm bỏ đi một phương án sai, luôn còn ít nhất hai phương án.
+ * Phương án đang chọn mà bị bỏ thì coi như chưa chọn.
+ */
+function useEliminate(ids: readonly string[], targetId: string, selected: string | null) {
+  const [removed, setRemoved] = useState<string[]>([])
+  const left = ids.filter((id) => id !== targetId && !removed.includes(id))
+  return {
+    removed,
+    selected: selected && !removed.includes(selected) ? selected : null,
+    canHint: left.length > 1,
+    hint: () => {
+      if (left.length > 1) setRemoved((r) => [...r, left[Math.floor(Math.random() * left.length)]])
+    },
+  }
 }
 
 // ---- Chọn nghĩa: trong câu (R6.1) hoặc nghe rồi chọn (R6.10) --------------------------------
@@ -242,7 +282,12 @@ export function MeaningChoiceStep({
   onContinue: () => void
   onNoAudio?: () => void
 }) {
-  const [selected, setSelected] = useState<string | null>(null)
+  const [picked, setPicked] = useState<string | null>(null)
+  const { removed, selected, canHint, hint } = useEliminate(
+    choices.map((c) => c.id),
+    item.id,
+    picked,
+  )
   const { shown, submit } = useAnswer(onAnswer)
   const sentence = listen ? null : contextSentence(item)
   const exercise: ExerciseKind = listen ? 'listen_choose' : 'mcq_meaning'
@@ -251,7 +296,7 @@ export function MeaningChoiceStep({
   function check() {
     if (!selected || shown) return
     const ok = selected === item.id
-    void submit({ kind: 'answer', exercise, correct: ok }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
+    void submit({ kind: 'answer', exercise, correct: ok, hintUsed: removed.length > 0, hintLevel: removed.length }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
   }
   useEnter(() => (shown ? onContinue() : check()))
 
@@ -263,8 +308,13 @@ export function MeaningChoiceStep({
           <PillButton disabled={!selected || !!shown} onClick={check}>
             Kiểm tra
           </PillButton>
-          {!shown && <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>}
-          {!shown && listen && onNoAudio && <TextLink onClick={onNoAudio}>Tạm thời không nghe được</TextLink>}
+          {!shown && (
+            <FooterLinks>
+              {canHint && <HintLink onClick={hint} />}
+              <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>
+              {listen && onNoAudio && <TextLink onClick={onNoAudio}>Tạm thời không nghe được</TextLink>}
+            </FooterLinks>
+          )}
         </>
       }
     >
@@ -281,11 +331,12 @@ export function MeaningChoiceStep({
       )}
       <div className="flex flex-col gap-3">
         {choices.map((c) => (
-          <ChoiceCard key={c.id} state={stateFor(c.id, item.id, selected, !!shown)} onClick={() => !shown && setSelected(c.id)}>
+          <ChoiceCard key={c.id} state={stateFor(c.id, item.id, selected, !!shown, removed)} onClick={() => !shown && setPicked(c.id)}>
             {c.meaningVi}
           </ChoiceCard>
         ))}
       </div>
+      {removed.length > 0 && !shown && <HintNote />}
       <AnimatePresence>
         {shown && (
           <FeedbackSheet key="sheet" tone={shown.tone} item={item} title={shown.title} nextDue={shown.card?.due} actions={<SheetButton onClick={onContinue}>Tiếp tục</SheetButton>} />
@@ -311,14 +362,19 @@ export function AudioChoiceStep({
   onNoAudio: () => void
 }) {
   const { accent } = useSettings()
-  const [selected, setSelected] = useState<string | null>(null)
+  const [picked, setPicked] = useState<string | null>(null)
+  const { removed, selected, canHint, hint } = useEliminate(
+    choices.map((c) => c.id),
+    item.id,
+    picked,
+  )
   const { shown, submit } = useAnswer(onAnswer)
   const sentence = contextSentence(item)
 
   function check() {
     if (!selected || shown) return
     const ok = selected === item.id
-    void submit({ kind: 'answer', exercise: 'audio_choice', correct: ok }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
+    void submit({ kind: 'answer', exercise: 'audio_choice', correct: ok, hintUsed: removed.length > 0, hintLevel: removed.length }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
   }
   useEnter(() => (shown ? onContinue() : check()))
 
@@ -330,8 +386,13 @@ export function AudioChoiceStep({
           <PillButton disabled={!selected || !!shown} onClick={check}>
             Kiểm tra
           </PillButton>
-          {!shown && <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>}
-          {!shown && <TextLink onClick={onNoAudio}>Tạm thời không nghe được</TextLink>}
+          {!shown && (
+            <FooterLinks>
+              {canHint && <HintLink onClick={hint} />}
+              <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>
+              <TextLink onClick={onNoAudio}>Tạm thời không nghe được</TextLink>
+            </FooterLinks>
+          )}
         </>
       }
     >
@@ -346,23 +407,24 @@ export function AudioChoiceStep({
       )}
       <div className="flex flex-col gap-3">
         {choices.map((c) => {
-          const state = stateFor(c.id, item.id, selected, !!shown)
+          const state = stateFor(c.id, item.id, selected, !!shown, removed)
           return (
             <ChoiceCard
               key={c.id}
               state={state}
-              label={shown ? c.term : 'Nghe phương án'}
+              label={shown ? c.term : state === 'removed' ? 'Phương án đã bỏ' : 'Nghe phương án'}
               onClick={() => {
                 void speak(c.term, { accent })
-                if (!shown) setSelected(c.id)
+                if (!shown) setPicked(c.id)
               }}
             >
               <Volume2 aria-hidden className={`h-7 w-7 ${state === 'selected' ? 'text-sun' : state === 'idle' || state === 'dim' ? 'text-muted' : ''}`} strokeWidth={2.4} />
-              {shown && <span className="text-[1.0625rem] font-bold">{c.term}</span>}
+              {(shown || state === 'removed') && <span className="text-[1.0625rem] font-bold">{c.term}</span>}
             </ChoiceCard>
           )
         })}
       </div>
+      {removed.length > 0 && !shown && <HintNote />}
       <AnimatePresence>
         {shown && (
           <FeedbackSheet key="sheet" tone={shown.tone} item={item} title={shown.title} nextDue={shown.card?.due} actions={<SheetButton onClick={onContinue}>Tiếp tục</SheetButton>} />
@@ -375,14 +437,19 @@ export function AudioChoiceStep({
 // ---- Chọn từ hợp với chỗ trống trong câu (R6.4) -----------------------------------------------
 
 export function ClozeChoiceStep({ item, choices, onAnswer, onContinue }: { item: VocabItem; choices: TermSource[]; onAnswer: AnswerFn; onContinue: () => void }) {
-  const [selected, setSelected] = useState<string | null>(null)
+  const [picked, setPicked] = useState<string | null>(null)
+  const { removed, selected, canHint, hint } = useEliminate(
+    choices.map((c) => c.id),
+    item.id,
+    picked,
+  )
   const { shown, submit } = useAnswer(onAnswer)
   const sentence = contextSentence(item) ?? ''
 
   function check() {
     if (!selected || shown) return
     const ok = selected === item.id
-    void submit({ kind: 'answer', exercise: 'cloze_choice', correct: ok }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
+    void submit({ kind: 'answer', exercise: 'cloze_choice', correct: ok, hintUsed: removed.length > 0, hintLevel: removed.length }, ok ? 'correct' : 'wrong', ok ? 'Chính xác!' : 'Chưa đúng')
   }
   useEnter(() => (shown ? onContinue() : check()))
 
@@ -394,7 +461,12 @@ export function ClozeChoiceStep({ item, choices, onAnswer, onContinue }: { item:
           <PillButton disabled={!selected || !!shown} onClick={check}>
             Kiểm tra
           </PillButton>
-          {!shown && <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>}
+          {!shown && (
+            <FooterLinks>
+              {canHint && <HintLink onClick={hint} />}
+              <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>
+            </FooterLinks>
+          )}
         </>
       }
     >
@@ -403,11 +475,12 @@ export function ClozeChoiceStep({ item, choices, onAnswer, onContinue }: { item:
       </div>
       <div className="grid grid-cols-2 gap-3">
         {choices.map((c) => (
-          <ChoiceCard key={c.id} state={stateFor(c.id, item.id, selected, !!shown)} onClick={() => !shown && setSelected(c.id)}>
+          <ChoiceCard key={c.id} state={stateFor(c.id, item.id, selected, !!shown, removed)} onClick={() => !shown && setPicked(c.id)}>
             <span className="break-words">{c.term}</span>
           </ChoiceCard>
         ))}
       </div>
+      {removed.length > 0 && !shown && <HintNote />}
       <AnimatePresence>
         {shown && (
           <FeedbackSheet key="sheet" tone={shown.tone} item={item} title={shown.title} nextDue={shown.card?.due} actions={<SheetButton onClick={onContinue}>Tiếp tục</SheetButton>} />
@@ -508,32 +581,60 @@ function gradeTyped(item: VocabItem, candidates: string[]): TypedVerdict {
   return best
 }
 
-/** Phần dùng chung của bài gõ: kiểm tra, gần đúng, sai, và bảng kết quả. */
+interface Pending {
+  verdict: 'near' | 'wrong'
+  typed: string
+  hintLevel: number
+}
+
+/**
+ * Phần dùng chung của bài gõ: kiểm tra, gần đúng, sai, và bảng kết quả.
+ * Câu gần đúng hoặc sai chưa được ghi ngay mà chờ người học xác nhận, vì lượt đã ghi thì không sửa được nữa.
+ * Câu sai có thể báo "Đáp án của mình cũng đúng" (R6.13): câu trả lời được thêm vào đáp án chấp nhận của từ
+ * và lượt này tính là đúng.
+ */
 function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: AnswerFn, onContinue: () => void) {
   const { shown, submit } = useAnswer(onAnswer)
-  const [near, setNear] = useState<string | null>(null)
+  const [pending, setPending] = useState<Pending | null>(null)
 
-  function check(candidates: string[], display: string, hintUsed: boolean) {
-    if (shown || near) return
+  function check(candidates: string[], typed: string, hintLevel: number) {
+    if (shown || pending) return
     const v = gradeTyped(item, candidates)
-    if (v === 'correct') void submit({ kind: 'answer', exercise, correct: true, hintUsed }, 'correct', 'Chính xác!')
-    else if (v === 'near') setNear(display)
-    else
-      void submit(
-        { kind: 'answer', exercise, correct: false },
-        'wrong',
-        'Chưa đúng',
-        display ? (
-          <>
-            Bạn gõ: <s>{display}</s>
-          </>
-        ) : undefined,
-      )
+    if (v === 'correct') void submit({ kind: 'answer', exercise, correct: true, hintUsed: hintLevel > 0, hintLevel }, 'correct', 'Chính xác!')
+    else {
+      if (v === 'wrong') playWrong()
+      setPending({ verdict: v, typed, hintLevel })
+    }
+  }
+
+  async function commit(p: Pending, correct: boolean, extra: Partial<Extract<AttemptResult, { kind: 'answer' }>> = {}) {
+    const result: AttemptResult = { kind: 'answer', exercise, correct, hintUsed: correct && p.hintLevel > 0, hintLevel: p.hintLevel, ...extra }
+    await submit(result, correct ? 'correct' : 'wrong', correct ? 'Chính xác!' : 'Chưa đúng', undefined, p.verdict === 'near')
+    onContinue()
+  }
+
+  /** Câu trả lời của mình cũng đúng: lưu thành đáp án chấp nhận rồi chấm lại là đúng (R6.13). */
+  async function claimCorrect(p: Pending) {
+    await repo.addAcceptedAnswer(item.id, p.typed)
+    await submit(
+      { kind: 'answer', exercise, correct: true, hintUsed: p.hintLevel > 0, hintLevel: p.hintLevel },
+      'correct',
+      'Đã tính là đúng',
+      <>
+        Đã thêm “{p.typed}” vào đáp án chấp nhận của từ này. Có thể sửa trong trang sửa từ.
+      </>,
+    )
+  }
+
+  /** Enter khi đã có kết quả: đi tiếp, hoặc giữ kết quả sai đang chờ. */
+  function proceed() {
+    if (shown) onContinue()
+    else if (pending?.verdict === 'wrong') void commit(pending, false)
   }
 
   const sheet = (
     <AnimatePresence>
-      {near && !shown && (
+      {pending?.verdict === 'near' && !shown && (
         <FeedbackSheet
           key="near"
           tone="near"
@@ -541,27 +642,35 @@ function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: Answe
           title="Gần đúng"
           note={
             <>
-              Bạn gõ: <s>{near}</s>. Nếu chỉ là lỗi gõ, chọn “Tính là đúng” (được tính mức Khó).
+              Bạn gõ: <s>{pending.typed}</s>. Nếu chỉ là lỗi gõ, chọn “Tính là đúng” (được tính mức Khó).
             </>
           }
           actions={
             <>
-              <SheetButton
-                onClick={async () => {
-                  await submit({ kind: 'answer', exercise, correct: true, nearMatchAccepted: true }, 'correct', 'Chính xác!')
-                  onContinue()
-                }}
-              >
-                Tính là đúng
-              </SheetButton>
-              <SheetButton
-                subtle
-                onClick={async () => {
-                  await submit({ kind: 'answer', exercise, correct: false }, 'wrong', 'Chưa đúng')
-                  onContinue()
-                }}
-              >
+              <SheetButton onClick={() => void commit(pending, true, { nearMatchAccepted: true })}>Tính là đúng</SheetButton>
+              <SheetButton subtle onClick={() => void commit(pending, false)}>
                 Tính là sai
+              </SheetButton>
+            </>
+          }
+        />
+      )}
+      {pending?.verdict === 'wrong' && !shown && (
+        <FeedbackSheet
+          key="wrong"
+          tone="wrong"
+          item={item}
+          title="Chưa đúng"
+          note={
+            <>
+              Bạn gõ: <s>{pending.typed}</s>
+            </>
+          }
+          actions={
+            <>
+              <SheetButton onClick={() => void commit(pending, false)}>Tiếp tục</SheetButton>
+              <SheetButton subtle onClick={() => void claimCorrect(pending)}>
+                Đáp án của mình cũng đúng
               </SheetButton>
             </>
           }
@@ -572,8 +681,8 @@ function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: Answe
       )}
     </AnimatePresence>
   )
-  const state: SlotsState = shown ? (shown.tone === 'correct' ? 'right' : 'wrong') : near ? 'near' : 'typing'
-  return { check, sheet, state, shown, submit, done: !!shown || !!near }
+  const state: SlotsState = shown ? (shown.tone === 'correct' ? 'right' : 'wrong') : pending ? (pending.verdict === 'near' ? 'near' : 'wrong') : 'typing'
+  return { check, proceed, sheet, state, submit, done: !!shown || !!pending }
 }
 
 // ---- Điền từ theo ô chữ (R6.2) và kiểm tra nhanh từ đã biết (R4.8) ----------------------------
@@ -588,31 +697,28 @@ export function SlotsStep({ item, knownCheck, cloze = false, onAnswer, onContinu
   const total = letterCount(template)
   // Vài chữ gợi ý mờ ở vị trí ngẫu nhiên, mỗi lần làm bài một kiểu (không tính là dùng gợi ý); vẫn phải gõ đủ.
   const [revealed, setRevealed] = useState<Set<number>>(() => new Set(pickReveals(template, scaffoldCount(total))))
-  const [hintUsed, setHintUsed] = useState(false)
+  const [hints, setHints] = useState(0)
   const exercise: ExerciseKind = cloze ? 'cloze_typing' : 'recall_typing'
-  const { check, sheet, state, shown, submit, done } = useTypedAnswer(item, exercise, onAnswer, onContinue)
+  const { check, proceed, sheet, state, submit, done } = useTypedAnswer(item, exercise, onAnswer, onContinue)
   const typedLetters = [...value].filter((c) => /[\p{L}\p{N}]/u.test(c)).length
   const nextHint = nextHintSlot(template, revealed, value)
   const sentence = contextSentence(item)
   const sentenceVi = sentence ? item.examples.find((e) => e.en === sentence)?.vi : undefined
 
   function doCheck() {
-    if (done) {
-      if (shown) onContinue()
-      return
-    }
+    if (done) return proceed()
     if (typedLetters === 0) return
     const composed = composeAnswer(template, value)
-    check([composed, value], composed, hintUsed)
+    check([composed, value], composed, hints)
   }
   useEnter(doCheck)
 
-  /** Gợi ý: hiện mờ thêm một chữ từ ô đang gõ trở đi; dùng gợi ý thì được tính mức Khó (R6.9). */
+  /** Gợi ý: hiện mờ thêm một chữ từ ô đang gõ trở đi; mức hỗ trợ là số chữ đã mở thêm (R6.9). */
   function hint() {
     const idx = nextHint
     if (idx < 0) return
     setRevealed((r) => new Set(r).add(idx))
-    setHintUsed(true)
+    setHints((n) => n + 1)
   }
 
   return (
@@ -624,18 +730,12 @@ export function SlotsStep({ item, knownCheck, cloze = false, onAnswer, onContinu
             Kiểm tra
           </PillButton>
           {!done && (
-            <div className="flex flex-wrap justify-center gap-x-5">
-              {nextHint >= 0 && total - typedLetters > 1 && (
-                <TextLink onClick={hint}>
-                  <span className="inline-flex items-center gap-1">
-                    <Lightbulb aria-hidden className="h-4 w-4" /> Gợi ý
-                  </span>
-                </TextLink>
-              )}
+            <FooterLinks>
+              {nextHint >= 0 && total - typedLetters > 1 && <HintLink onClick={hint} />}
               <TextLink onClick={() => void submit(knownCheck ? { kind: 'answer', exercise: 'recall_typing', correct: false } : DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>
                 {knownCheck ? 'Không nhớ ra' : 'Mình không thuộc từ này'}
               </TextLink>
-            </div>
+            </FooterLinks>
           )}
         </>
       }
@@ -660,7 +760,7 @@ export function SlotsStep({ item, knownCheck, cloze = false, onAnswer, onContinu
         </div>
       )}
       <LetterSlots term={item.term} value={value} onChange={setValue} onEnter={doCheck} revealed={revealed} state={state} />
-      {hintUsed && !done && <p className="-mt-2 text-center text-[0.8125rem] text-muted">Dùng gợi ý sẽ được tính mức “Khó”.</p>}
+      {hints > 0 && !done && <HintNote />}
       {sheet}
     </StepFrame>
   )
@@ -670,8 +770,10 @@ export function SlotsStep({ item, knownCheck, cloze = false, onAnswer, onContinu
 
 export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item: VocabItem; onAnswer: AnswerFn; onContinue: () => void; onNoAudio: () => void }) {
   const [value, setValue] = useState('')
+  // Gợi ý (R6.9): lần 1 hiện nghĩa, lần 2 hiện thêm chữ đầu và số chữ cái.
+  const [hints, setHints] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
-  const { check, sheet, state, shown, submit, done } = useTypedAnswer(item, 'dictation', onAnswer, onContinue)
+  const { check, proceed, sheet, state, submit, done } = useTypedAnswer(item, 'dictation', onAnswer, onContinue)
   useAutoPlay(item.term)
 
   useEffect(() => {
@@ -681,12 +783,9 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
 
   function doCheck(e?: FormEvent) {
     e?.preventDefault()
-    if (done) {
-      if (shown) onContinue()
-      return
-    }
+    if (done) return proceed()
     if (!value.trim()) return
-    check([value], value.trim(), false)
+    check([value], value.trim(), hints)
   }
   useEnter(() => doCheck())
 
@@ -700,10 +799,11 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
             Kiểm tra
           </PillButton>
           {!done && (
-            <div className="flex flex-wrap justify-center gap-x-5">
+            <FooterLinks>
+              {hints < 2 && <HintLink onClick={() => setHints((n) => n + 1)} />}
               <TextLink onClick={() => void submit(DONT_KNOW, 'wrong', 'Ghi nhớ lại nhé')}>Mình không thuộc từ này</TextLink>
               <TextLink onClick={onNoAudio}>Tạm thời không nghe được</TextLink>
-            </div>
+            </FooterLinks>
           )}
         </>
       }
@@ -712,6 +812,16 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
         <RoundSpeak text={item.term} size="lg" />
         <RoundSpeak text={item.term} slow />
       </div>
+      {hints > 0 && (
+        <div className="flex flex-col items-center gap-1 text-center">
+          <p className="text-[1.25rem] leading-snug font-bold">
+            <TermLabel item={item} />
+          </p>
+          {hints > 1 && (
+            <p className="font-mono text-[1.25rem] tracking-[0.3em] break-all text-muted">{letterMask(item.term)}</p>
+          )}
+        </div>
+      )}
       <form onSubmit={doCheck}>
         <motion.label
           animate={state === 'wrong' ? { x: [0, -8, 8, -5, 5, 0] } : {}}
@@ -735,6 +845,7 @@ export function DictationStep({ item, onAnswer, onContinue, onNoAudio }: { item:
         </motion.label>
         {!done && <KeyboardHint typed={value} term={item.term} />}
       </form>
+      {hints > 0 && !done && <HintNote />}
       {sheet}
     </StepFrame>
   )

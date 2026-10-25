@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { checkAnswer } from './answers'
-import { activeSlot, composeAnswer, fillSlots, letterCount, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from './letters'
+import { activeSlot, composeAnswer, fillSlots, letterCount, letterMask, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from './letters'
 import { seededRandom } from './exercises'
 
 describe('ô chữ "Điền từ"', () => {
@@ -67,5 +67,14 @@ describe('chữ gợi ý mờ ở vị trí ngẫu nhiên', () => {
     expect(nextHintSlot(t, hinted, 'ex')).toBe(3) // đang gõ ô 2 (đã có chữ mờ) → gợi ý ô 3
     expect(nextHintSlot(t, hinted, 'e')).toBe(1)
     expect(nextHintSlot(t, hinted, 'examination')).toBe(-1)
+  })
+})
+
+describe('khung chữ gợi ý bài nghe viết (R6.9)', () => {
+  it('lộ chữ đầu mỗi từ, giữ khoảng trắng và dấu', () => {
+    expect(letterMask('house')).toBe('h____')
+    expect(letterMask('look after')).toBe('l___ a____')
+    expect(letterMask('well-known')).toBe('w___-k____')
+    expect(letterMask("o'clock")).toBe("o'_____")
   })
 })

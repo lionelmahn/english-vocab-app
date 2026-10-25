@@ -206,6 +206,10 @@ export const GUIDE: GuideTopic[] = [
           { term: '“Gợi ý”', text: 'Hiện thêm một chữ cái. Nếu dùng gợi ý, lần trả lời đó được tính mức “Khó”.' },
           { term: '“Mình không thuộc từ này”', text: 'Xem đáp án ngay; lần trả lời đó được tính là Quên.' },
           {
+            term: '“Đáp án của mình cũng đúng”',
+            text: 'Có ở bảng “Chưa đúng” khi bạn gõ một từ khác mà vẫn đúng nghĩa (ví dụ từ đồng nghĩa). Câu bạn gõ được thêm vào “Đáp án chấp nhận thêm” của từ và lần trả lời đó được tính là đúng; lần sau gõ như vậy sẽ được chấm đúng ngay.',
+          },
+          {
             term: '“Gần đúng”',
             text: 'Với từ dài từ 5 chữ cái trở lên, nếu bạn gõ lệch đúng một chữ cái (thừa, thiếu, sai một chữ hoặc đảo chỗ hai chữ cạnh nhau), app hỏi bạn muốn “Tính là đúng” (tính mức Khó) hay “Tính là sai”. Với từ ngắn hơn, sai một chữ cái là sai.',
           },
@@ -216,7 +220,7 @@ export const GUIDE: GuideTopic[] = [
         p: 'Chỉ câu trả lời đầu tiên của mỗi từ trong buổi mới quyết định lịch ôn; dù lúc luyện lại bạn làm đúng, lần sai đầu tiên vẫn được tính. Đáp án không phân biệt chữ hoa hay chữ thường.',
       },
       {
-        p: 'Ô chữ có đúng số chữ cái của từ chính và không nhận thêm chữ, nên hãy gõ cách viết chính. Cách viết khác (ví dụ colour và color) chỉ được chấm đúng khi đã ghi trong “Đáp án chấp nhận thêm” của từ, và ở bài “Điền từ” chỉ gõ được nếu không dài hơn từ chính.',
+        p: 'Ô chữ có đúng số chữ cái của từ chính và không nhận thêm chữ, nên hãy gõ cách viết chính. Cách viết khác (ví dụ colour và color) chỉ được chấm đúng khi đã ghi trong “Đáp án chấp nhận thêm” của từ (sửa ở trang sửa từ, hoặc bấm “Đáp án của mình cũng đúng” khi bị chấm sai), và ở bài “Điền từ” chỉ gõ được nếu không dài hơn từ chính.',
       },
       { h: 'Từ bạn đã biết' },
       {
@@ -238,7 +242,7 @@ export const GUIDE: GuideTopic[] = [
     id: 'review',
     title: 'Ôn tập',
     summary: 'Khi nào cần ôn, các dạng bài, cách chấm và màn tổng kết',
-    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố', 'kiểm tra', 'bài thi', 'lịch sử', 'đồng hồ', 'ghép từ', 'điền từ vào câu'],
+    keywords: ['dạng bài', 'trắc nghiệm', 'nghe viết', 'tự đánh giá', 'chấm điểm', 'tổng kết', 'tỷ lệ nhớ', 'củng cố', 'kiểm tra', 'bài thi', 'lịch sử', 'đồng hồ', 'ghép từ', 'điền từ vào câu', 'gợi ý', 'chấm sai', 'đáp án khác'],
     blocks: [
       { p: 'Mỗi từ đã học có một thời điểm đến hạn ôn riêng. Khi có từ đến hạn, trang “Hôm nay” hiện “Đến giờ ôn tập:” và nút “Ôn tập ngay”; bấm vào rồi bấm “Bắt đầu ôn”.' },
       {
@@ -277,6 +281,16 @@ export const GUIDE: GuideTopic[] = [
           },
         ],
       },
+      { h: 'Gợi ý trong bài luyện' },
+      {
+        list: [
+          'Bài chọn đáp án: mỗi lần bấm “Gợi ý”, một phương án sai bị gạch bỏ; luôn còn ít nhất 2 phương án.',
+          '“Điền từ” và “Điền từ hợp với câu”: mỗi lần bấm hiện mờ thêm một chữ cái ở ô đang gõ.',
+          '“Nghe và viết lại”: lần đầu hiện nghĩa tiếng Việt, lần thứ hai hiện thêm chữ cái đầu và số chữ cái của từ.',
+          '“Ghép từ với nghĩa” không có gợi ý.',
+          'Dùng gợi ý thì câu đúng chỉ được tính mức “Khó”. Số lần dùng gợi ý được ghi vào lịch sử bài làm.',
+        ],
+      },
       { h: 'Cách chấm' },
       {
         terms: [
@@ -287,6 +301,9 @@ export const GUIDE: GuideTopic[] = [
         ],
       },
       { p: 'Như khi học mới, chỉ câu trả lời đầu tiên của mỗi từ trong buổi được tính. Trả lời sai thì từ quay lại ở bước “Luyện lại” để bạn luyện thêm, nhưng kết quả của từ vẫn là Quên.' },
+      {
+        p: 'Bị chấm sai ở bài gõ dù câu bạn gõ cũng đúng (ví dụ big cho nghĩa “lớn” khi từ chính là large)? Ở bảng “Chưa đúng”, bấm “Đáp án của mình cũng đúng” thay vì “Tiếp tục”: câu bạn gõ được thêm vào “Đáp án chấp nhận thêm” của từ, lần trả lời này tính là Nhớ (hoặc Khó nếu đã dùng gợi ý), và lần sau gõ như vậy sẽ được chấm đúng. Phải chọn trước khi đi tiếp, vì câu trả lời đã lưu thì không sửa lại được. Muốn bỏ đáp án đã thêm, sửa ở trang sửa từ.',
+      },
       { h: 'Bài kiểm tra tự chọn' },
       {
         p: 'Tab “Thống kê” → “Bài kiểm tra”. Chọn “Phạm vi” (“Mọi từ đã học”, “Từ hay quên” là các từ đã quên ít nhất một lần, quên nhiều xếp trước, hoặc một bộ), các dạng bài (mỗi câu lấy ngẫu nhiên một dạng mà từ đó làm được), số câu và thời gian, rồi bấm “Bắt đầu kiểm tra”.',
@@ -300,7 +317,7 @@ export const GUIDE: GuideTopic[] = [
       },
       { h: 'Lịch sử bài làm' },
       {
-        p: 'Tab “Thống kê” → “Lịch sử bài làm”: mọi buổi học, ôn, luyện và kiểm tra, mới nhất trước, kèm số từ, tỷ lệ đúng và thời gian. Chạm một buổi để xem từng câu: từ, dạng bài, đúng hay sai, thời gian trả lời, có dùng gợi ý không, và lượt luyện lại. Tỷ lệ đúng tính theo câu trả lời đầu tiên của mỗi từ. Lịch sử được dựng từ các câu trả lời đã lưu nên có cả các buổi làm trên máy khác.',
+        p: 'Tab “Thống kê” → “Lịch sử bài làm”: mọi buổi học, ôn, luyện và kiểm tra, mới nhất trước, kèm số từ, tỷ lệ đúng và thời gian. Chạm một buổi để xem từng câu: từ, dạng bài, đúng hay sai, thời gian trả lời, số lần dùng gợi ý, và lượt luyện lại. Tỷ lệ đúng tính theo câu trả lời đầu tiên của mỗi từ. Lịch sử được dựng từ các câu trả lời đã lưu nên có cả các buổi làm trên máy khác.',
       },
       { h: 'Đang ở nơi không bật tiếng được' },
       {

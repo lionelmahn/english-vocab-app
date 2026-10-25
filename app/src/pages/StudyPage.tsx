@@ -285,12 +285,12 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
 
   /** Áp dụng hành động, ghi lượt trả lời và lịch ôn, lưu tiến trình. */
   const act = useCallback(
-    async (step: Step, action: SessionAction, exercise?: ExerciseKind): Promise<AnswerOutcome> => {
+    async (step: Step, action: SessionAction, exercise?: ExerciseKind, hintLevel?: number): Promise<AnswerOutcome> => {
       const at = Date.now()
       const { plan: applied, effect } = applyAction(planRef.current, action)
       const next = addActiveTime(applied, at - shownAt.current)
       commitPlan(next)
-      const { card } = await repo.recordStep(session, step, effect, next, { at, responseMs: at - shownAt.current, exercise })
+      const { card } = await repo.recordStep(session, step, effect, next, { at, responseMs: at - shownAt.current, exercise, hintLevel })
       return { card }
     },
     [session],
@@ -367,7 +367,7 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
       if (!step || busy.current) return { card: null }
       busy.current = true
       try {
-        return await act(step, { type: 'answer', result }, result.kind === 'answer' ? result.exercise : undefined)
+        return await act(step, { type: 'answer', result }, result.kind === 'answer' ? result.exercise : undefined, result.kind === 'answer' ? result.hintLevel : undefined)
       } finally {
         busy.current = false
       }

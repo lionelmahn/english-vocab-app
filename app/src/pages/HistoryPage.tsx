@@ -117,7 +117,7 @@ export function SessionDetailPage() {
                 </div>
                 {!!log.hintLevel && (
                   <span className="flex items-center gap-1 text-[0.75rem] text-warning">
-                    <Lightbulb aria-hidden className="h-4 w-4" /> gợi ý
+                    <Lightbulb aria-hidden className="h-4 w-4" /> {log.hintLevel > 1 ? `${log.hintLevel} gợi ý` : 'gợi ý'}
                   </span>
                 )}
               </li>

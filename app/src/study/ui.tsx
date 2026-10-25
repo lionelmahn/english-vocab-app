@@ -99,7 +99,8 @@ export function Sentence({ text, term, mode }: { text: string; term: string; mod
 
 // ---- Phương án chọn ------------------------------------------------------------------------
 
-export type ChoiceState = 'idle' | 'selected' | 'right' | 'wrong' | 'dim'
+/** `removed`: phương án sai đã bị gợi ý bỏ đi (R6.9). */
+export type ChoiceState = 'idle' | 'selected' | 'right' | 'wrong' | 'dim' | 'removed'
 
 export function ChoiceCard({ state, onClick, children, label }: { state: ChoiceState; onClick: () => void; children: ReactNode; label?: string }) {
   const cls = {
@@ -108,12 +109,14 @@ export function ChoiceCard({ state, onClick, children, label }: { state: ChoiceS
     right: 'border-accent bg-accent text-on-accent shadow-[0_4px_0_0_var(--app-accent-shadow)]',
     wrong: 'border-danger bg-danger text-on-danger shadow-[0_4px_0_0_var(--app-danger-shadow)]',
     dim: 'border-line bg-surface opacity-50 shadow-[0_4px_0_0_var(--app-line-shadow)]',
+    removed: 'border-dashed border-line bg-transparent text-subtle line-through opacity-60',
   }[state]
   return (
     <motion.button
       type="button"
       aria-label={label}
       aria-pressed={state === 'selected'}
+      disabled={state === 'removed'}
       onClick={onClick}
       animate={state === 'wrong' ? { x: [0, -8, 8, -5, 5, 0] } : state === 'right' ? { scale: [1, 1.03, 1] } : {}}
       transition={{ duration: 0.35 }}

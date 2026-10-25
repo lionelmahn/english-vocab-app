@@ -177,6 +177,17 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       await save(changes, now)
     },
 
+    /** Thêm một đáp án chấp nhận cho mục học (R6.13); bỏ qua nếu đã có (không phân biệt hoa thường). */
+    async addAcceptedAnswer(id: ID, answer: string, now = Date.now()): Promise<boolean> {
+      const current = await database.vocabItems.get(id)
+      const text = answer.trim().replace(/\s+/g, ' ')
+      if (!current || !text) return false
+      const known = [current.term, ...current.acceptedAnswers].map((a) => a.toLowerCase())
+      if (known.includes(text.toLowerCase())) return false
+      await save([{ table: 'vocabItems', rows: [{ ...current, acceptedAnswers: [...current.acceptedAnswers, text], updatedAt: now }] }], now)
+      return true
+    },
+
     async setItemFlags(id: ID, patch: Partial<Pick<VocabItem, 'favorite' | 'difficult' | 'archived' | 'tags'>>, now = Date.now()) {
       const current = await database.vocabItems.get(id)
       if (!current) return
