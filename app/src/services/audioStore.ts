@@ -114,7 +114,7 @@ async function currentStorage(): Promise<{ storage: AudioStorage; userId: string
 }
 
 /** Tải file của bản ghi từ kho về máy (một lần cho mỗi bản). */
-function fetchBlob(asset: AudioAsset): Promise<boolean> {
+export function fetchBlob(asset: AudioAsset): Promise<boolean> {
   const running = downloading.get(asset.id)
   if (running) return running
   const p = (async () => {

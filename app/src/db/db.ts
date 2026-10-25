@@ -8,6 +8,7 @@ import type {
   DeckItem,
   DictionaryCacheEntry,
   MetaEntry,
+  OfflineAudioFile,
   OutboxEntry,
   Profile,
   ReviewLogRow,
@@ -38,6 +39,7 @@ export class VocabDatabase extends Dexie {
   dictionary!: EntityTable<DictionaryCacheEntry, 'key'>
   audioAssets!: EntityTable<AudioAsset, 'id'>
   audioBlobs!: EntityTable<AudioBlob, 'id'>
+  offlineAudio!: EntityTable<OfflineAudioFile, 'url'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -63,6 +65,9 @@ export class VocabDatabase extends Dexie {
     this.version(6).stores({ audioAssets: 'id, key, updatedAt', audioBlobs: 'id' })
     // Phiên bản 7: chỉ mục thời điểm tạo Giọng iPhone, để so với bản trên máy chủ mà không đọc file.
     this.version(7).stores({ voiceClips: 'key, createdAt' })
+    // Phiên bản 8: file phát âm Wiktionary tải về để nghe khi không có mạng (R11.8).
+    // Chỉ mục size để cộng dung lượng mà không phải đọc dữ liệu âm thanh.
+    this.version(8).stores({ offlineAudio: 'url, savedAt, size' })
   }
 }
 

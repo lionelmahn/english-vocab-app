@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { BookOpenCheck, FileUp, Flame, GraduationCap, Lightbulb, NotebookPen, Play, Plus, Sparkles } from 'lucide-react'
+import { BookOpenCheck, FileUp, Flame, GraduationCap, Lightbulb, NotebookPen, Play, Plus, Sparkles, WifiOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
@@ -19,6 +19,7 @@ import { useLibrary, useNow } from '../lib/hooks'
 import { riseIn } from '../lib/motion'
 import { useSettings } from '../lib/settings'
 import { useProfile } from '../services/profile'
+import { useOnline } from '../services/storage'
 import { useNewWordAdvice, workloadText } from '../services/workload'
 import { PillButton } from '../study/ui'
 
@@ -114,6 +115,7 @@ export function TodayPage() {
   const nextDue = lib ? nextDueAt(lib, now) : null
   const goal = Math.max(1, settings.dailyNewWords)
   const advice = useNewWordAdvice(lib, now)
+  const online = useOnline()
   const activeProgress = active ? progress(active.plan) : null
   const restDay = !!profile && !isStudyDay(profile.studyWeekdays, new Date(now), tz)
 
@@ -146,6 +148,14 @@ export function TodayPage() {
       ) : (
         lib && (
           <>
+            {!online && (
+              <Link to="/me/offline" className="flex items-start gap-3 rounded-2xl bg-surface-2 px-4 py-3">
+                <WifiOff aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-warning" />
+                <span className="text-[13px] leading-snug text-muted">
+                  <b className="text-text">Đang ngoại tuyến.</b> Vẫn học và ôn bình thường; kết quả lưu trên máy và tự đồng bộ khi có mạng lại.
+                </span>
+              </Link>
+            )}
             {active && activeProgress && (
               <Card className="border-sun">
                 <div className="flex items-center gap-3">

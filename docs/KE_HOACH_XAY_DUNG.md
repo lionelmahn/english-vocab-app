@@ -348,6 +348,14 @@ Nguyên tắc:
 > - **Hướng dẫn:** thêm phần “Gợi ý số từ mới khi còn nhiều từ cần ôn” (bài Học từ mới), cập nhật bài Hôm nay, Mục tiêu; sửa câu cũ ở Bắt đầu nhanh (“App chưa gửi thông báo nhắc”) vì đã có nhắc nhở từ 0.12.0.
 > - **Kiểm thử:** 271 test (tốc độ học, gợi ý số từ, hết ngày học). Đã thử trên trình duyệt ở khung điện thoại, sáng và tối: 60 từ đến hạn → gợi ý 4 từ; 80 từ → khuyên ôn trước, nút chuyển sang trang Ôn tập.
 > - **Còn lại của giai đoạn 3:** R11.6 + R11.8 (học ngoại tuyến, quản lý dữ liệu tải xuống), R14.1 (sáng/tối, cỡ chữ), R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so). Việc nhỏ đang chờ: thêm nút “Đổi giờ học” ở trang Nhắc nhở (bạn hẹn để sau).
+
+> **Cập nhật 25/10/2026 (bản 0.14.0): Dùng khi không có mạng (R11.6) và quản lý dữ liệu tải về (R11.8).** Trang mới Cá nhân → “Dùng khi không có mạng”.
+> - **Học ngoại tuyến:** app vốn lưu mọi thứ trên máy nên học, ôn được khi mất mạng; nay trang Hôm nay có dòng “Đang ngoại tuyến.”, trang mới cho xem trạng thái mạng và đồng bộ (số thay đổi chờ gửi, đồng bộ ngay). Khi mất mạng, từ chưa tải bản ghi được đọc ngay bằng giọng máy thay vì chờ lỗi mạng.
+> - **Âm thanh ngoại tuyến:** tải file bản ghi Wiktionary về máy theo từng bộ hoặc mọi từ (của giọng đang chọn), kèm bản ghi âm của người học đang nằm trên kho máy chủ; dừng giữa chừng được, rời trang vẫn tải tiếp; xóa theo bộ hoặc xóa hết. Bản đã tải được phát từ máy. Tra bản ghi gộp 20 từ mỗi lần gọi Wiktionary và 50 file mỗi lần gọi Commons. Mỗi từ khoảng 15 KB. Bảng mới trên máy: `offlineAudio` (phiên bản cơ sở dữ liệu 8), không đồng bộ.
+> - **Dung lượng:** tổng dung lượng app dùng và giới hạn của trình duyệt; số mục theo loại (sổ tay, âm thanh đã tải, Giọng iPhone, bản ghi âm, kết quả tra từ) kèm nút xóa âm thanh đã tải và kết quả tra từ; nút xin trình duyệt giữ dữ liệu lâu dài.
+> - **Hướng dẫn:** bài mới “Dùng khi không có mạng”, thêm dòng về trang Hôm nay. Thẻ “Máy chủ và đồng bộ” tách thành thành phần dùng chung.
+> - **Kiểm thử:** 280 test (kế hoạch âm thanh từng từ, tải/phát/xóa file với mạng giả lập, tra gộp). Đã thử trên trình duyệt: tải thật 5 file (77 KB) từ Wikimedia; giả lập mất mạng thì từ đã tải phát từ máy, từ chưa tải đọc bằng giọng máy; sáng và tối ở khung điện thoại.
+> - **Còn lại của giai đoạn 3:** R14.1 (sáng/tối, cỡ chữ), R14.5 (quyền riêng tư: phần còn lại), R1.6 (phiên đăng nhập, xóa tài khoản), R7.2 (ghi âm để tự so); việc nhỏ: nút “Đổi giờ học” ở trang Nhắc nhở.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

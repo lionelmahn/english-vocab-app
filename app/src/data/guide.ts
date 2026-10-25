@@ -11,7 +11,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline'
 
 export type GuideBlock =
   | { h: string }
@@ -414,6 +414,7 @@ export const GUIDE: GuideTopic[] = [
         p: 'Một ngày học bắt đầu lúc 4:00 sáng theo “Múi giờ” đặt ở “Mục tiêu và lịch học”, nên học lúc 1 giờ đêm vẫn được tính cho hôm trước. Nếu hôm nay không phải ngày học trong lịch, dòng ngày tháng dưới lời chào có thêm chữ “ngày nghỉ theo lịch học”; muốn học thì vẫn học bình thường.',
       },
       { p: 'Sổ tay còn trống thì trang hiện “Bắt đầu với từ đầu tiên” với các nút thêm từ, chọn bộ 1.000 từ hoặc nhập file.' },
+      { p: 'Khi máy mất mạng, đầu trang có dòng “Đang ngoại tuyến.”: vẫn học và ôn bình thường. Chạm vào dòng đó để mở trang Dùng khi không có mạng.' },
     ],
   },
   {
@@ -651,13 +652,52 @@ export const GUIDE: GuideTopic[] = [
       { tip: 'Máy này thiếu dữ liệu? Ở trang “Sao lưu, khôi phục, xuất file”, bấm “Tải lại toàn bộ từ máy chủ” để tải lại và gộp với dữ liệu đang có (không xóa gì).' },
     ],
   },
+  {
+    id: 'offline',
+    title: 'Dùng khi không có mạng',
+    summary: 'Học ngoại tuyến, tải âm thanh về máy và xem dung lượng',
+    keywords: ['ngoại tuyến', 'offline', 'mất mạng', 'máy bay', 'tải âm thanh', 'dung lượng', 'bộ nhớ', 'xóa dữ liệu'],
+    blocks: [
+      {
+        p: 'Từ vựng, lịch ôn và kết quả học đều nằm trên máy, nên mở app, học và ôn được cả khi mất mạng (kể cả chế độ máy bay), miễn là app đã được mở ít nhất một lần khi có mạng. Có mạng lại, kết quả tự đồng bộ. Khi mất mạng, trang “Hôm nay” có dòng báo đang ngoại tuyến.',
+      },
+      { p: 'Mở “Cá nhân” → “Dùng khi không có mạng” để xem trạng thái và quản lý dữ liệu tải về.' },
+      { h: 'Việc cần mạng' },
+      {
+        list: [
+          'Tra từ chưa tra bao giờ. Từ đã tra trước đây vẫn xem lại được.',
+          'Nghe bản ghi giọng người thật (Wiktionary) chưa tải về. Khi mất mạng, app đọc các từ đó bằng giọng máy.',
+          'Nhận nhắc nhở và đồng bộ với các máy khác.',
+        ],
+      },
+      { h: 'Âm thanh ngoại tuyến' },
+      {
+        p: 'Trong thẻ “Âm thanh ngoại tuyến”, mỗi dòng là “Mọi từ trong sổ tay” hoặc một bộ từ, ghi số từ nghe được giọng thật khi mất mạng, số từ chưa tải và số từ đọc bằng giọng máy (không có bản ghi, hoặc là câu dài). Bấm “Tải” để tải bản ghi về máy, “Dừng” để ngừng giữa chừng (phần đã tải vẫn giữ), “Xóa” để xóa bản đã tải của nhóm đó. Rời trang trong lúc tải thì việc tải vẫn chạy.',
+      },
+      {
+        list: [
+          'App tải bản của giọng đang chọn (Anh–Mỹ hoặc Anh–Anh). Đổi giọng thì tải lại.',
+          'Mỗi từ khoảng 15 KB, 1.000 từ khoảng 15 MB.',
+          'Giọng máy, Giọng iPhone và bản bạn tự ghi âm vốn đã nằm trên máy, không cần tải. Bản ghi âm bạn làm ở máy khác được tải về cùng lúc.',
+          'Tắt “Ưu tiên giọng người thật” thì app luôn đọc bằng giọng máy, không cần tải gì.',
+        ],
+      },
+      { h: 'Dung lượng trên máy' },
+      {
+        p: 'Thẻ “Dung lượng trên máy” cho biết app đang dùng bao nhiêu bộ nhớ và chia theo loại: sổ tay, âm thanh đã tải, Giọng iPhone, bản ghi âm của bạn, kết quả tra từ đã lưu. Xóa âm thanh đã tải hoặc kết quả tra từ không ảnh hưởng tới sổ tay; có mạng thì tải lại được.',
+      },
+      {
+        p: 'Nếu thấy nút “Giữ dữ liệu lâu dài”, bấm để xin trình duyệt không tự xóa dữ liệu của app khi máy hết bộ nhớ. Trình duyệt có thể từ chối mà không hỏi; cài app lên màn hình chính thường giúp được cho phép. Dù vậy, hãy đăng nhập để đồng bộ hoặc tạo bản sao lưu thường xuyên.',
+      },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
   { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
-  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync'] },
+  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline'] },
 ]
 
 export function guideTopic(id: GuideTopicId): GuideTopic {

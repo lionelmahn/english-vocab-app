@@ -4,6 +4,7 @@ import { chooseUrl, isShortTerm, withoutFlagged } from '../core/wordAudio'
 import { getSettings, SPEECH_RATE } from '../lib/settings'
 import { cachedWordAudio, resolveWordAudio } from './audio'
 import { learnerAudio } from './audioStore'
+import { offlineAudioUrl } from './offlineAudio'
 import { clipUrl } from './voiceClips'
 
 /**
@@ -60,8 +61,12 @@ if (typeof document !== 'undefined') {
   document.addEventListener('keydown', unlock, true)
 }
 
-function playUrl(url: string, text: string, slow: boolean): Promise<boolean> {
-  if (!player) return Promise.resolve(false)
+async function playUrl(url: string, text: string, slow: boolean): Promise<boolean> {
+  if (!player) return false
+  // File bản ghi đã tải về máy (R11.8) thì phát từ máy; chưa tải mà đang mất mạng thì để giọng máy đọc ngay.
+  const local = await offlineAudioUrl(url).catch(() => null)
+  if (!local && /^https?:/.test(url) && typeof navigator !== 'undefined' && navigator.onLine === false) return false
+  const src = local ?? url
   synth?.cancel()
   player.pause()
   return new Promise((resolve) => {
@@ -75,7 +80,7 @@ function playUrl(url: string, text: string, slow: boolean): Promise<boolean> {
       emit()
       resolve(ok)
     }
-    player.src = url
+    player.src = src
     player.playbackRate = slow ? 0.7 : 1
     ;(player as HTMLAudioElement & { preservesPitch?: boolean }).preservesPitch = true
     player.onended = () => done(true)

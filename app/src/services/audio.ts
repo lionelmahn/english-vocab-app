@@ -138,6 +138,69 @@ export function cachedWordAudio(term: string): WordAudio | null | undefined {
   return memory.has(key) ? memory.get(key) : undefined
 }
 
+/** Số trang Wiktionary và số file Commons mỗi lần gọi khi tra nhiều từ. */
+const PAGE_BATCH = 20
+const FILE_BATCH = 50
+
+/** Các file trên trang Wiktionary của nhiều từ một lượt (tiêu đề trang là từ viết thường). */
+async function pagesFiles(titles: readonly string[]): Promise<Map<string, string[]>> {
+  const out = new Map<string, string[]>(titles.map((t) => [t, []]))
+  let cont = ''
+  for (let round = 0; round < 10; round++) {
+    const json = (await getJson(`${WIKTIONARY}?action=query&titles=${encodeURIComponent(titles.join('|'))}&prop=images&imlimit=max&format=json&formatversion=2&origin=*${cont}`, 10000)) as {
+      continue?: Record<string, string>
+      query?: { normalized?: { from: string; to: string }[]; pages?: { title: string; images?: { title: string }[] }[] }
+    }
+    const back = new Map((json.query?.normalized ?? []).map((n) => [n.to, n.from]))
+    for (const p of json.query?.pages ?? []) {
+      const list = out.get(back.get(p.title) ?? p.title)
+      list?.push(...(p.images ?? []).map((i) => i.title))
+    }
+    if (!json.continue) break
+    cont = Object.entries(json.continue)
+      .map(([k, v]) => `&${k}=${encodeURIComponent(v)}`)
+      .join('')
+  }
+  return out
+}
+
+/**
+ * Tra bản ghi cho nhiều từ (tải âm thanh để dùng ngoại tuyến): gộp 20 trang Wiktionary và 50 file Commons mỗi
+ * lần gọi, thay vì hai lần gọi cho mỗi từ. Từ đã tra rồi thì bỏ qua. Kết quả lưu trên máy như khi tra từng từ.
+ */
+export async function resolveManyWordAudio(terms: readonly string[], signal?: AbortSignal): Promise<void> {
+  const byTitle = new Map<string, string>()
+  for (const term of terms) {
+    const key = termKey(term)
+    if (!key || memory.has(key) || byTitle.has(term.trim().toLowerCase())) continue
+    const cached = await db.audioCache.get(key)
+    if (cached && (cached.audio || Date.now() - cached.fetchedAt < RETRY_MISSING_MS)) {
+      memory.set(key, cached.audio)
+      continue
+    }
+    byTitle.set(term.trim().toLowerCase(), term)
+  }
+  const titles = [...byTitle.keys()]
+  for (let i = 0; i < titles.length; i += PAGE_BATCH) {
+    if (signal?.aborted) return
+    const batch = titles.slice(i, i + PAGE_BATCH)
+    const files = await pagesFiles(batch)
+    const picked = new Map(batch.map((t) => [t, Object.entries(pickAudioFiles(byTitle.get(t)!, files.get(t) ?? [])) as [AccentTag, string][]]))
+    const all = [...new Set([...picked.values()].flatMap((e) => e.map(([, f]) => f)))]
+    const urls = new Map<string, string>()
+    for (let j = 0; j < all.length; j += FILE_BATCH) for (const [f, u] of await playableUrls(all.slice(j, j + FILE_BATCH))) urls.set(f, u)
+    const rows = batch.map((t) => {
+      const audio: WordAudio = {}
+      for (const [accent, file] of picked.get(t)!) if (urls.has(file)) audio[accent] = urls.get(file)
+      const key = termKey(byTitle.get(t)!)
+      const value = Object.keys(audio).length > 0 ? audio : null
+      memory.set(key, value)
+      return { key, audio: value, fetchedAt: Date.now() }
+    })
+    await db.audioCache.bulkPut(rows)
+  }
+}
+
 /** Tra trước bản ghi cho các từ sắp học, để bấm loa là phát ngay. */
 export async function prefetchWordAudio(terms: readonly string[]): Promise<void> {
   const queue = [...new Set(terms)]

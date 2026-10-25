@@ -202,6 +202,16 @@ export interface AudioCacheEntry {
   fetchedAt: number
 }
 
+/** File phát âm giọng người thật (Wiktionary) tải về để nghe khi không có mạng (R11.8). Chỉ ở máy này. */
+export interface OfflineAudioFile {
+  /** Đường dẫn gốc của file trên Wikimedia. */
+  url: string
+  data: ArrayBuffer
+  mime: string
+  size: number
+  savedAt: number
+}
+
 /** Âm thanh "Giọng iPhone" do app Phím tắt tạo (chỉ lưu trên máy này, không đồng bộ). */
 export interface VoiceClip {
   /** Văn bản đã chuẩn hóa (clipKey). */
