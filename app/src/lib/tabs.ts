@@ -27,6 +27,11 @@ const BELONGS_TO: [prefix: string, tab: string][] = [
   ['/learn', '/'],
   ['/review', '/'],
   ['/study', '/'],
+  ['/practice', '/'],
+  ['/test', '/stats'],
+  ['/history', '/stats'],
+  ['/insights', '/stats'],
+  ['/achievements', '/stats'],
 ]
 
 export function tabIndexOf(pathname: string): number {

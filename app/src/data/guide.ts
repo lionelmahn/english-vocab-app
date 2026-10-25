@@ -1,4 +1,6 @@
+import { XP_RULES } from '../core/achievements'
 import { MIN_REVIEWS } from '../core/fsrsOptimizer'
+import { MIN_EXERCISE_SAMPLES } from '../core/insights'
 import { LEVEL_LABELS, LEVEL_THRESHOLDS_DAYS } from '../core/levels'
 import { LEARNING_DEFAULTS, profileDefaults } from '../core/profile'
 import { foldText } from '../core/vocab'
@@ -562,8 +564,8 @@ export const GUIDE: GuideTopic[] = [
   {
     id: 'stats',
     title: 'Tab Thống kê',
-    summary: 'Bốn ô tổng quan, hoạt động theo ngày và cấp ghi nhớ',
-    keywords: ['thống kê', 'biểu đồ', 'lượt trả lời', 'tỷ lệ đúng', 'tổng quan', 'hoạt động'],
+    summary: 'Bốn ô tổng quan, hoạt động theo ngày, cấp ghi nhớ, điểm yếu, điểm kinh nghiệm và huy hiệu',
+    keywords: ['thống kê', 'biểu đồ', 'lượt trả lời', 'tỷ lệ đúng', 'tổng quan', 'hoạt động', 'điểm yếu', 'hay sai', 'tiến bộ', 'xp', 'kinh nghiệm', 'huy hiệu', 'thành tích'],
     blocks: [
       { p: 'Các con số được tính lại mỗi lần mở trang, từ sổ tay, lịch ôn và lịch sử câu trả lời, không cộng dồn. Vì vậy học trên nhiều máy cũng không bị đếm trùng.' },
       { h: 'Bốn ô đầu trang' },
@@ -599,6 +601,38 @@ export const GUIDE: GuideTopic[] = [
       },
       { h: '“Cấp ghi nhớ”' },
       { p: 'Số từ ở mỗi cấp, từ cấp 0 đến cấp 5, kèm một thanh dài ngắn theo tỷ lệ so với tổng số từ. Ý nghĩa từng cấp xem ở bài hướng dẫn về năm cấp ghi nhớ.' },
+      { h: '“Điểm yếu và tiến bộ”' },
+      {
+        p: 'Thẻ trên trang Thống kê tóm tắt 30 ngày qua; bấm “Xem phân tích” để xem đầy đủ và chọn “30 ngày”, “90 ngày” hoặc “Toàn bộ”. Mọi con số ở đây chỉ tính lần trả lời đầu của mỗi từ trong mỗi buổi, để lượt luyện lại ngay sau khi sai không bị đếm thêm lỗi.',
+      },
+      {
+        terms: [
+          {
+            term: '“Từ hay sai”',
+            text: 'Từ sai từ 2 lần trở lên và chiếm ít nhất một phần tư số lần, hoặc sai ít nhất một nửa số lần; sai nhiều xếp trước. Bấm “Ôn chủ động các từ này” để luyện riêng các từ đó (không đổi lịch ôn).',
+          },
+          {
+            term: '“Theo dạng bài”',
+            text: `Tỷ lệ đúng của từng dạng bài. Dạng có từ ${MIN_EXERCISE_SAMPLES} lượt trở lên mà đúng dưới 70%, hoặc thấp hơn tỷ lệ chung từ 10 điểm, có nhãn “Cần luyện”; nút “Kiểm tra riêng dạng bài cần luyện” mở bài kiểm tra đã chọn sẵn các dạng đó.`,
+          },
+          {
+            term: '“Mức tiến bộ”',
+            text: 'Tỷ lệ đúng từng tuần trong 8 tuần gần nhất (chạm một cột để xem số), và so 4 tuần gần đây với 4 tuần trước đó.',
+          },
+        ],
+      },
+      { h: '“Thành tích”' },
+      {
+        p: `Thẻ “Thành tích” ghi tổng điểm kinh nghiệm (XP), điểm hôm nay, số huy hiệu và mốc mới nhất; bấm “Xem thành tích” để xem hết. Mỗi câu đúng +${XP_RULES.correct} XP, đúng nhờ gợi ý +${XP_RULES.hinted}, sai vẫn +${XP_RULES.wrong}; mỗi từ mới học xong thêm +${XP_RULES.newWord}. Màn tổng kết mỗi buổi ghi số XP của buổi đó và huy hiệu vừa đạt.`,
+      },
+      {
+        list: [
+          'Huy hiệu có nhiều mốc: chuỗi ngày học, tổng số ngày học, số từ mới đã học, số câu trả lời, buổi hoàn hảo (từ 10 từ trở lên, đúng hết ngay lần đầu), điểm kinh nghiệm và bài kiểm tra xuất sắc (từ 20 câu, đúng từ 90%).',
+          'Mỗi huy hiệu ghi mốc đã đạt và thanh tiến độ tới mốc tiếp theo; “Mốc học” liệt kê các mốc đã đạt kèm ngày đạt, mới nhất trước.',
+          'Huy hiệu chuỗi ngày tính theo chuỗi dài nhất từng có, nên không mất khi chuỗi hiện tại bị đứt.',
+          'Như các thống kê khác, điểm và huy hiệu tính lại từ lịch sử trả lời, nên học trên nhiều máy không bị cộng trùng.',
+        ],
+      },
       { tip: 'Từ đã lưu trữ hoặc đã xóa không còn được đếm ở bốn ô đầu và ở Cấp ghi nhớ, nhưng các câu trả lời trước đây của chúng vẫn nằm trong phần hoạt động.' },
     ],
   },

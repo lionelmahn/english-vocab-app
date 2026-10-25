@@ -1,4 +1,4 @@
-import { ClipboardCheck, Dumbbell, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, X } from 'lucide-react'
+import { ClipboardCheck, Dumbbell, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, Trophy, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -31,6 +31,12 @@ import { buildLearnPlan, buildRetryPlan, buildReviewPlan } from '../study/plans'
 import { AudioChoiceStep, ClozeChoiceStep, DictationStep, FlashcardStep, IntroStep, MatchingStep, MeaningChoiceStep, SlotsStep, type AnswerOutcome } from '../study/steps'
 import { StudyProgress } from '../study/ui'
 import { Buddy } from '../components/Buddy'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { badgeStates, milestones, sumXp } from '../core/achievements'
+import { deviceTimeZone } from '../core/profile'
+import { db } from '../db/db'
+import { BADGE_ICON } from '../lib/badgeIcons'
+import { useProfile } from '../services/profile'
 
 type Mode = 'learn' | 'review' | 'resume'
 type Phase = { kind: 'setup' } | { kind: 'running'; session: StudySessionRow } | { kind: 'summary'; plan: SessionPlan; endedAt: number; sessionId: string }
@@ -564,6 +570,15 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
     playComplete()
   }, [])
 
+  // Điểm kinh nghiệm của buổi và huy hiệu vừa đạt (R10.6), tính từ lượt trả lời đã lưu.
+  const profile = useProfile()
+  const tz = profile?.timeZone ?? deviceTimeZone()
+  const reward = useLiveQuery(async () => {
+    const all = await db.reviewLogs.toArray()
+    const mine = all.filter((l) => l.sessionId === sessionId)
+    return { xp: sumXp(mine), badges: milestones(badgeStates(all, tz)).filter((m) => m.earnedAt >= plan.startedAt && m.earnedAt <= endedAt + 1000) }
+  }, [sessionId, tz, plan.startedAt, endedAt])
+
   const test = plan.mode === 'test'
   const unanswered = test ? new Set(plan.steps.map((st) => st.itemId)).size - s.items : 0
   const title =
@@ -589,7 +604,42 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
             </p>
           )}
           {unanswered > 0 && <p className="mt-1 text-sm text-warning">Hết giờ hoặc dừng sớm: {unanswered} câu chưa làm.</p>}
+          {!!reward?.xp && (
+            <motion.p
+              initial={{ opacity: 0, y: 14, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.5, type: 'spring', stiffness: 300, damping: 18 }}
+              className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-[1rem] font-extrabold text-warning"
+            >
+              <Zap aria-hidden className="h-4 w-4" fill="currentColor" />+{reward.xp} XP
+            </motion.p>
+          )}
         </Card>
+
+        {reward && reward.badges.length > 0 && (
+          <Card className="border-sun">
+            <SectionTitle>Huy hiệu mới</SectionTitle>
+            <ul className="flex flex-col gap-2.5">
+              {reward.badges.map((m) => {
+                const Icon = BADGE_ICON[m.group]
+                return (
+                  <li key={`${m.group}-${m.text}`} className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft text-warning">
+                      <Icon aria-hidden className="h-5 w-5" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold">{m.title}</span>
+                      <span className="block text-[0.8125rem] text-muted">{m.text}</span>
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
+            <Button icon={Trophy} className="mt-3 h-11 w-full text-sm" onClick={() => navigate('/achievements')}>
+              Xem thành tích
+            </Button>
+          </Card>
+        )}
 
         {s.needWork.length > 0 && (
           <Card>

@@ -1,8 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Check, ClipboardCheck, Dumbbell, History, Table2 } from 'lucide-react'
+import { Check, ClipboardCheck, Dumbbell, History, Table2, TrendingDown, TrendingUp, Trophy, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Segmented } from '../components/kit'
 import { HelpButton, HelpTitle } from '../components/Guide'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
@@ -11,7 +11,13 @@ import { itemLevel, itemStatus } from '../core/library'
 import { LEVEL_LABELS, type MemoryLevel } from '../core/levels'
 import { deviceTimeZone, WEEKDAY_SHORT } from '../core/profile'
 import { accuracy, buckets, dailyActivity, lastDays, totals, weekdayOf, weekGoal, type Bucket, type DayActivity, type DayGoalState } from '../core/stats'
+import { badgeStates, milestones, xpTotals } from '../core/achievements'
+import { exerciseStats, progressDelta, troubleWords, weakExercises, weeklyAccuracy } from '../core/insights'
 import { db } from '../db/db'
+import type { Library } from '../db/library'
+import type { ReviewLogRow } from '../db/types'
+import { BADGE_ICON } from '../lib/badgeIcons'
+import { EXERCISE_LABEL } from '../lib/labels'
 import { useLibrary, useNow } from '../lib/hooks'
 import { duration, ease } from '../lib/motion'
 import { useProfile } from '../services/profile'
@@ -113,6 +119,10 @@ export function StatsPage() {
         <p className="mt-4 text-xs leading-relaxed text-subtle">Cấp được tính từ độ bền trí nhớ của thuật toán ôn tập, không phải khoảng ôn cố định.</p>
       </Card>
 
+      {/* R10.3 — điểm yếu; R10.6 — thành tích */}
+      {logs && lib && <WeakCard logs={logs} lib={lib} now={now} timeZone={tz} />}
+      {logs && <AchievementsCard logs={logs} now={now} timeZone={tz} />}
+
       {/* R5.7, R6.6, R6.8 — ôn chủ động, kiểm tra và lịch sử bài làm */}
       <Card>
         <SectionTitle className="mb-1">Luyện thêm và lịch sử</SectionTitle>
@@ -121,15 +131,103 @@ export function StatsPage() {
           <Button icon={Dumbbell} className="col-span-2 h-11 text-sm" onClick={() => navigate('/practice')}>
             Ôn chủ động
           </Button>
-          <Button icon={ClipboardCheck} className="h-11 text-sm" onClick={() => navigate('/test')}>
+          <Button icon={ClipboardCheck} className="h-11 px-2! text-sm" onClick={() => navigate('/test')}>
             Bài kiểm tra
           </Button>
-          <Button icon={History} className="h-11 text-sm" onClick={() => navigate('/history')}>
+          <Button icon={History} className="h-11 px-2! text-sm" onClick={() => navigate('/history')}>
             Lịch sử bài làm
           </Button>
         </div>
       </Card>
     </Page>
+  )
+}
+
+const MONTH_MS = 30 * 86_400_000
+
+/** Tóm tắt điểm yếu 30 ngày qua (R10.3); chi tiết ở trang Điểm yếu và tiến bộ. */
+function WeakCard({ logs, lib, now, timeZone }: { logs: ReviewLogRow[]; lib: Library; now: number; timeZone: string }) {
+  const navigate = useNavigate()
+  const words = troubleWords(logs, now - MONTH_MS).filter((w) => lib.itemById.has(w.itemId))
+  const weak = weakExercises(exerciseStats(logs, now - MONTH_MS))
+  const p = progressDelta(weeklyAccuracy(logs, studyDay(new Date(now), timeZone), timeZone, 8))
+  return (
+    <Card>
+      <SectionTitle className="mb-1">Điểm yếu và tiến bộ</SectionTitle>
+      <p className="mb-3 text-xs text-subtle">30 ngày qua, tính theo lần trả lời đầu của mỗi từ trong mỗi buổi.</p>
+      <ul className="flex flex-col gap-2 text-sm leading-snug">
+        <li>
+          <span className="text-muted">Từ hay sai: </span>
+          {words.length === 0 ? (
+            'không có'
+          ) : (
+            <>
+              {words.slice(0, 3).map((w, i) => (
+                <span key={w.itemId}>
+                  {i > 0 && ', '}
+                  <Link to={`/words/${w.itemId}`} className="font-semibold text-accent">
+                    {lib.itemById.get(w.itemId)!.term}
+                  </Link>
+                </span>
+              ))}
+              {words.length > 3 && <span className="text-muted"> và {words.length - 3} từ khác</span>}
+            </>
+          )}
+        </li>
+        <li>
+          <span className="text-muted">Dạng bài cần luyện: </span>
+          {weak.length === 0 ? 'không có' : weak.map((s) => `${EXERCISE_LABEL[s.exercise]} (${Math.round(s.accuracy * 100)}%)`).join(', ')}
+        </li>
+        {p.change !== null && (
+          <li className="flex items-start gap-1.5">
+            {p.change >= 0 ? <TrendingUp aria-hidden className="mt-px h-4 w-4 shrink-0 text-accent" /> : <TrendingDown aria-hidden className="mt-px h-4 w-4 shrink-0 text-danger" />}
+            <span>
+              4 tuần gần đây đúng {Math.round(p.recent! * 100)}%, {p.change >= 0 ? 'tăng' : 'giảm'} {Math.abs(Math.round(p.change * 100))} điểm so với 4 tuần trước.
+            </span>
+          </li>
+        )}
+      </ul>
+      <Button icon={TrendingUp} className="mt-3 h-11 w-full text-sm" onClick={() => navigate('/insights')}>
+        Xem phân tích
+      </Button>
+    </Card>
+  )
+}
+
+/** Điểm kinh nghiệm và mốc mới nhất (R10.6); chi tiết ở trang Thành tích. */
+function AchievementsCard({ logs, now, timeZone }: { logs: ReviewLogRow[]; now: number; timeZone: string }) {
+  const navigate = useNavigate()
+  const xp = xpTotals(logs, now, timeZone)
+  const states = badgeStates(logs, timeZone)
+  const earned = states.reduce((n, s) => n + s.tiers.filter((t) => t.earnedAt !== null).length, 0)
+  const latest = milestones(states)[0]
+  const Icon = latest ? BADGE_ICON[latest.group] : Trophy
+  return (
+    <Card>
+      <SectionTitle>Thành tích</SectionTitle>
+      <div className="flex items-center gap-4">
+        <p className="flex items-center gap-1.5 text-[1.75rem] leading-none font-extrabold text-warning tabular-nums">
+          <Zap aria-hidden className="h-6 w-6" fill="currentColor" />
+          {num.format(xp.total)}
+        </p>
+        <p className="text-sm leading-snug text-muted">
+          XP · hôm nay +{num.format(xp.today)}
+          <br />
+          {earned} huy hiệu
+        </p>
+      </div>
+      {latest && (
+        <p className="mt-3 flex items-center gap-2 text-sm">
+          <Icon aria-hidden className="h-4 w-4 shrink-0 text-warning" />
+          <span>
+            Mốc mới nhất: <b>{latest.text}</b>
+          </span>
+        </p>
+      )}
+      <Button icon={Trophy} className="mt-3 h-11 w-full text-sm" onClick={() => navigate('/achievements')}>
+        Xem thành tích
+      </Button>
+    </Card>
   )
 }
 

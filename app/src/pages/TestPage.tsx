@@ -1,6 +1,6 @@
 import { ClipboardCheck } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { HelpButton } from '../components/Guide'
 import { BackButton, Chip } from '../components/kit'
 import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
@@ -21,7 +21,9 @@ export function TestPage() {
   const lib = useLibrary()
   const navigate = useNavigate()
   const [scope, setScope] = useState<TestScope>({ kind: 'all' })
-  const [kinds, setKinds] = useState<ExerciseKind[]>(DEFAULT_KINDS)
+  // Mở từ trang Điểm yếu thì chọn sẵn các dạng bài cần luyện.
+  const preset = (useLocation().state as { kinds?: ExerciseKind[] } | null)?.kinds?.filter((k) => TEST_EXERCISES.includes(k))
+  const [kinds, setKinds] = useState<ExerciseKind[]>(preset?.length ? preset : DEFAULT_KINDS)
   const [count, setCount] = useState(20)
   const [minutes, setMinutes] = useState(0)
   const [starting, setStarting] = useState(false)
