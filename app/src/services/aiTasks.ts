@@ -14,6 +14,8 @@ import {
   mnemonicPrompt,
   PRACTICE_SYSTEM,
   practicePrompt,
+  PRONOUNCE_TIP_SYSTEM,
+  pronounceTipPrompt,
   SENSE_MEANINGS_SYSTEM,
   senseMeaningsPrompt,
   toChatSummary,
@@ -25,6 +27,7 @@ import {
   toExamples,
   toMnemonics,
   toPracticeSentences,
+  toPronounceTip,
   toSenseMeanings,
   toWordInfo,
   WORD_INFO_SCHEMA,
@@ -130,4 +133,9 @@ export function chatTurn(o: { scenario: string; words: string[]; level: string }
 /** R8.7: nhận xét cuối buổi hội thoại: từ đã dùng đúng, sai, chưa dùng và lời khuyên. */
 export function summarizeChat(words: readonly string[], turns: readonly ChatTurn[]) {
   return askJson({ task: 'chat_summary', system: CHAT_SUMMARY_SYSTEM, prompt: chatSummaryPrompt(words, turns), maxTokens: 1500, useCache: false }, (raw) => toChatSummary(raw, words))
+}
+
+/** R7.3: đoán âm có thể đọc sai khi máy nghe thành chữ khác, và cách sửa ngắn gọn. */
+export function pronounceTip(target: string, heard: string, ipa?: string) {
+  return askJson({ task: 'pronounce_tip', system: PRONOUNCE_TIP_SYSTEM, prompt: pronounceTipPrompt(target, heard, ipa), maxTokens: 1000 }, toPronounceTip)
 }

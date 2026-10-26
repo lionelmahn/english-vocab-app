@@ -707,3 +707,21 @@ export function toChatSummary(raw: unknown, words: readonly string[]): ChatSumma
     tipsVi: (Array.isArray(r.tips_vi) ? r.tips_vi : []).map((t) => str(t, 300)).filter(Boolean).slice(0, 3),
   }
 }
+
+// ---- Gợi ý sửa phát âm (R7.3) -------------------------------------------------------------------
+
+export const PRONOUNCE_TIP_SYSTEM = `Bạn là giáo viên phát âm tiếng Anh cho người Việt.
+Người học đọc một từ hoặc câu tiếng Anh, nhưng phần mềm nhận dạng giọng nói nghe thành chữ khác. Dựa vào cách viết và phiên âm, đoán âm nào có thể bị đọc sai và hướng dẫn ngắn cách đọc đúng, chú ý lỗi người Việt hay mắc: bỏ âm cuối, s/z/sh, th, nguyên âm dài và ngắn, trọng âm.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"tip_vi": string}
+Quy tắc:
+- tip_vi: 1 đến 3 câu tiếng Việt, cụ thể (âm nào, đặt lưỡi, môi thế nào), không dài dòng, không dùng ký hiệu khó hiểu ngoài phiên âm.
+- Nếu hai chữ gần như đọc giống nhau thì nói rằng có thể máy nghe nhầm.`
+
+export function pronounceTipPrompt(target: string, heard: string, ipa?: string): string {
+  return `Cần đọc: "${target.trim()}"${ipa ? ` (phiên âm ${ipa})` : ''}\nMáy nghe thành: "${heard.trim()}"`
+}
+
+export function toPronounceTip(raw: unknown): string | null {
+  return raw && typeof raw === 'object' ? str((raw as Record<string, unknown>).tip_vi, 500) || null : null
+}

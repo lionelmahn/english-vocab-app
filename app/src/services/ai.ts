@@ -145,6 +145,46 @@ export async function askJson<T>(opts: AskOptions, parse: (raw: unknown) => T | 
   return { data, cached: res.cached, neurons: res.neurons, ms: res.ms }
 }
 
+export interface SpeechResult {
+  text: string
+  /** Xác suất cao nhất là không có tiếng nói (0–1). */
+  noSpeech: number
+  duration: number
+}
+
+/**
+ * Nhận dạng giọng nói để chấm phát âm (R7.3): gửi bản ghi WAV (base64) tới /api/stt (Whisper trên Workers AI, khoảng
+ * 47 neuron mỗi phút âm thanh). Cùng điều kiện như hỏi AI: bật trợ lý, có mạng, đăng nhập, chưa quá giới hạn ngày.
+ */
+export async function transcribe(audio: string, deps: Partial<AiDeps> = {}): Promise<SpeechResult> {
+  const d = { ...defaults, ...deps }
+  const settings = await d.settings()
+  if (!settings.enabled) throw new AiError('disabled')
+  if (!d.online()) throw new AiError('offline')
+  const start = d.now()
+  const used = await d.database.aiUsage.where('at').aboveOrEqual(utcDayStart(start)).filter((r) => !r.cached && !r.error).count()
+  if (used >= settings.dailyLimit) throw new AiError('limit')
+  const token = await d.token()
+  if (!token) throw new AiError('signed_out')
+  let res: Response
+  try {
+    res = await d.fetch('/api/stt', { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` }, body: JSON.stringify({ audio }) })
+  } catch {
+    throw new AiError(d.online() ? 'unavailable' : 'offline')
+  }
+  const row = { task: 'pronounce', model: 'whisper-large-v3-turbo', inputTokens: 0, outputTokens: 0, cached: false }
+  const fail = async (code: AiErrorCode) => {
+    await record(d, { ...row, neurons: 0, error: code }, start)
+    return new AiError(code)
+  }
+  if (res.status === 401) throw await fail('signed_out')
+  if (res.status === 429) throw await fail('quota')
+  if (!res.ok) throw await fail('unavailable')
+  const body = (await res.json()) as Partial<SpeechResult> & { neurons?: number }
+  await record(d, { ...row, neurons: body.neurons ?? 0 }, start)
+  return { text: typeof body.text === 'string' ? body.text : '', noSpeech: body.noSpeech ?? 0, duration: body.duration ?? 0 }
+}
+
 /**
  * Kết quả đã lưu trên máy của một câu hỏi, không gọi AI và không tính lượt: để mở lại trang là thấy ngay kết quả lần
  * trước. Chưa hỏi bao giờ, AI đang tắt hoặc kết quả không đọc được thì null.

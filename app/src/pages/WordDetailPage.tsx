@@ -28,6 +28,7 @@ import { UseButton } from '../components/AiWordSuggest'
 import { CollocationsCard, ConfusablesCard } from '../components/WordReference'
 import { WritingCard } from '../components/WritingPractice'
 import { sameSense } from '../core/reference'
+import { contextSentence } from '../core/vocab'
 import { useAiOn } from '../lib/useAi'
 import { useWordReference } from '../lib/useReference'
 
@@ -198,13 +199,13 @@ export function WordDetailPage() {
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-[0.9375rem] font-semibold">Luyện đọc</span>
-            <span className="block text-[0.8125rem] leading-snug text-muted">Ghi giọng bạn rồi nghe lại xen với bản mẫu để tự so</span>
+            <span className="block text-[0.8125rem] leading-snug text-muted">{aiOn ? 'Ghi giọng bạn rồi so với bản mẫu, hoặc nhờ máy chấm phát âm' : 'Ghi giọng bạn rồi nghe lại xen với bản mẫu để tự so'}</span>
           </span>
           <ChevronDown aria-hidden className={`h-5 w-5 shrink-0 text-subtle transition-transform ${practice ? 'rotate-180' : ''}`} />
         </button>
         {practice && (
           <div className="mt-4">
-            <SpeakPractice text={item.term} />
+            <SpeakPractice text={item.term} sentence={contextSentence(item) ?? item.examples[0]?.en} ipa={item.ipaUs ?? item.ipaUk} />
           </div>
         )}
       </Card>

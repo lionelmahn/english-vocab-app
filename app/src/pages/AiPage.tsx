@@ -30,7 +30,7 @@ export function AiPage() {
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-[0.9375rem] font-semibold">Bật trợ lý AI</p>
-            <p className="text-[0.8125rem] leading-snug text-muted">Gợi ý nghĩa, câu ví dụ, mẹo nhớ, kết hợp từ, giải thích từ trong câu và sửa câu bạn viết.</p>
+            <p className="text-[0.8125rem] leading-snug text-muted">Gợi ý nghĩa, câu ví dụ, mẹo nhớ, kết hợp từ, giải thích từ trong câu, sửa câu, bài luyện, hội thoại và chấm phát âm.</p>
           </div>
           <Switch label="Bật trợ lý AI" checked={ai.enabled} onChange={(v) => set({ enabled: v })} />
         </div>

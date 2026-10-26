@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { verifySupabaseJwt, type Jwk } from './auth'
 import { AI_MODELS } from '../src/core/ai'
-import { handleAi, MODELS, parseRequest, textOf, usageOf, type Env } from './index'
+import { handleAi, handleStt, MODELS, parseRequest, parseSttRequest, STT_MAX_CHARS, STT_MODEL, sttResult, textOf, usageOf, type Env } from './index'
 
 const URL_ = 'https://demo.supabase.co'
 const ISS = `${URL_}/auth/v1`
@@ -117,5 +117,49 @@ describe('handleAi', () => {
       throw new Error('boom')
     })
     expect((await down.post({ model: 'gpt-oss-120b', system: 'S', prompt: 'x' })).status).toBe(502)
+  })
+})
+
+describe('nhận dạng giọng nói /api/stt (R7.3)', () => {
+  const AUDIO = 'UklGR'.padEnd(400, 'A')
+
+  it('chỉ nhận base64 có độ dài hợp lý; đọc chữ, từng chữ, xác suất im lặng, neuron theo thời lượng', () => {
+    expect(parseSttRequest({ audio: AUDIO })).toEqual({ audio: AUDIO })
+    expect(parseSttRequest({ audio: 'abc' })).toBe('audio')
+    expect(parseSttRequest({ audio: 'A'.repeat(STT_MAX_CHARS + 4) })).toBe('audio')
+    expect(parseSttRequest({ audio: `${AUDIO}<script>` })).toBe('audio')
+    expect(parseSttRequest(null)).toBe('body')
+    const r = sttResult({
+      text: ' Rice. ',
+      transcription_info: { duration: 1.2 },
+      segments: [{ no_speech_prob: 0.02, words: [{ word: ' Rice.', start: 0.1, end: 0.6 }] }],
+    })
+    expect(r).toEqual({ text: 'Rice.', words: [{ word: 'Rice.', start: 0.1, end: 0.6 }], noSpeech: 0.02, duration: 1.2, neurons: 0.93 })
+    expect(sttResult({ text: '', segments: [] })).toMatchObject({ text: '', noSpeech: 1, words: [] })
+  })
+
+  it('cần đăng nhập; gọi Whisper ép tiếng Anh, có lọc giọng nói, không gợi ý từ mục tiêu', async () => {
+    const { pair, jwk, kid } = await keyPair(crypto.randomUUID())
+    const calls: { model: string; input: Record<string, unknown> }[] = []
+    const env: Env = {
+      SUPABASE_URL: URL_,
+      ASSETS: { fetch: async () => new Response('asset') },
+      AI: {
+        run: async (model, input) => {
+          calls.push({ model, input })
+          return { text: 'Rise.', transcription_info: { duration: 1 }, segments: [{ no_speech_prob: 0, words: [] }] }
+        },
+      },
+    }
+    const jwks = (async () => new Response(JSON.stringify({ keys: [jwk] }))) as unknown as typeof fetch
+    const token = await sign(pair, kid, { ...good, exp: Date.now() / 1000 + 3600 })
+    const post = (body: unknown, auth = `Bearer ${token}`) =>
+      handleStt(new Request('https://app.test/api/stt', { method: 'POST', headers: { authorization: auth, 'content-type': 'application/json' }, body: JSON.stringify(body) }), env, jwks)
+    const res = await post({ audio: AUDIO })
+    expect(res.status).toBe(200)
+    expect(await res.json()).toMatchObject({ text: 'Rise.', duration: 1 })
+    expect(calls[0]).toEqual({ model: STT_MODEL, input: { audio: AUDIO, language: 'en', task: 'transcribe', vad_filter: true, condition_on_previous_text: false } })
+    expect((await post({ audio: AUDIO }, '')).status).toBe(401)
+    expect((await post({ audio: 'x' })).status).toBe(400)
   })
 })

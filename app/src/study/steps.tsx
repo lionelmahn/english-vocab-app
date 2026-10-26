@@ -206,7 +206,7 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
         <TextLink onClick={onKnown}>Mình đã biết từ này</TextLink>
       </div>
       <Sheet open={practice} onClose={() => setPractice(false)} title="Luyện đọc">
-        {practice && <SpeakPractice text={item.term} />}
+        {practice && <SpeakPractice text={item.term} sentence={sentence ?? undefined} ipa={item.ipaUs ?? item.ipaUk} />}
       </Sheet>
     </div>
   )

@@ -1,7 +1,8 @@
 import { projectKeys, verifySupabaseJwt } from './auth'
 
 /**
- * Worker của app: phục vụ file tĩnh (qua ASSETS) và một cửa duy nhất cho trợ lý AI (R8): POST /api/ai.
+ * Worker của app: phục vụ file tĩnh (qua ASSETS), cửa cho trợ lý AI (R8): POST /api/ai, và nhận dạng giọng nói để chấm
+ * phát âm (R7.3): POST /api/stt.
  * Mặc định dùng Cloudflare Workers AI theo gói miễn phí (10.000 neuron/ngày cho cả tài khoản); tài khoản miễn phí
  * vượt hạn mức thì yêu cầu báo lỗi, không phát sinh tiền. Chỉ người đã đăng nhập vào app (phiên Supabase) gọi được.
  */
@@ -106,8 +107,8 @@ export function usageOf(raw: unknown): AiUsage {
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } })
 
-export async function handleAi(request: Request, env: Env, fetcher: typeof fetch = fetch): Promise<Response> {
-  if (request.method !== 'POST') return json({ error: 'method' }, 405)
+/** Kiểm tra phiên đăng nhập Supabase; trả về câu trả lời lỗi, hoặc null nếu hợp lệ. */
+async function authorize(request: Request, env: Env, fetcher: typeof fetch): Promise<Response | null> {
   const token = request.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1]
   if (!token) return json({ error: 'unauthorized' }, 401)
   let auth
@@ -119,7 +120,21 @@ export async function handleAi(request: Request, env: Env, fetcher: typeof fetch
   } catch {
     return json({ error: 'auth_unavailable' }, 503)
   }
-  if (!auth.ok) return json({ error: 'unauthorized', reason: auth.reason }, 401)
+  return auth.ok ? null : json({ error: 'unauthorized', reason: auth.reason }, 401)
+}
+
+/** Lỗi khi gọi Workers AI: hết hạn mức miễn phí (4006) → 429; model không được phép → 502. */
+function upstreamError(e: unknown): Response {
+  const message = String((e as Error)?.message ?? e)
+  if (/4006|free allocation|neurons/i.test(message)) return json({ error: 'quota' }, 429)
+  if (/5018|not allowed/i.test(message)) return json({ error: 'model_unavailable' }, 502)
+  return json({ error: 'upstream', detail: message.slice(0, 300) }, 502)
+}
+
+export async function handleAi(request: Request, env: Env, fetcher: typeof fetch = fetch): Promise<Response> {
+  if (request.method !== 'POST') return json({ error: 'method' }, 405)
+  const denied = await authorize(request, env, fetcher)
+  if (denied) return denied
 
   let body: unknown
   try {
@@ -143,20 +158,83 @@ export async function handleAi(request: Request, env: Env, fetcher: typeof fetch
   try {
     raw = await env.AI.run(model.id, input)
   } catch (e) {
-    const message = String((e as Error)?.message ?? e)
-    if (/4006|free allocation|neurons/i.test(message)) return json({ error: 'quota' }, 429)
-    if (/5018|not allowed/i.test(message)) return json({ error: 'model_unavailable' }, 502)
-    return json({ error: 'upstream', detail: message.slice(0, 300) }, 502)
+    return upstreamError(e)
   }
   const text = textOf(raw)
   if (!text) return json({ error: 'empty' }, 502)
   return json({ text, model: req.model, usage: usageOf(raw) })
 }
 
+// ---- Nhận dạng giọng nói để chấm phát âm (R7.3) ---------------------------------------------------
+
+/** Whisper large-v3-turbo trên Workers AI: khoảng 47 neuron mỗi phút âm thanh (0,000513 USD/phút). */
+export const STT_MODEL = '@cf/openai/whisper-large-v3-turbo'
+const NEURONS_PER_MINUTE = 46.63
+/** App gửi WAV 16 kHz một kênh (32 KB/giây), mã hóa base64: khoảng 15 giây là tối đa. */
+export const STT_MAX_CHARS = 700_000
+
+export interface SttResult {
+  text: string
+  words: { word: string; start: number; end: number }[]
+  /** Xác suất cao nhất trong các đoạn là không có tiếng nói (0–1). */
+  noSpeech: number
+  duration: number
+  neurons: number
+}
+
+export function parseSttRequest(body: unknown): { audio: string } | string {
+  if (!body || typeof body !== 'object') return 'body'
+  const audio = (body as Record<string, unknown>).audio
+  if (typeof audio !== 'string' || audio.length < 100 || audio.length > STT_MAX_CHARS || !/^[A-Za-z0-9+/]+={0,2}$/.test(audio)) return 'audio'
+  return { audio }
+}
+
+export function sttResult(raw: unknown): SttResult {
+  const r = (raw ?? {}) as Record<string, unknown>
+  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0)
+  const segments = (Array.isArray(r.segments) ? r.segments : []) as Record<string, unknown>[]
+  const words = segments
+    .flatMap((s) => (Array.isArray(s.words) ? (s.words as Record<string, unknown>[]) : []))
+    .map((w) => ({ word: String(w.word ?? '').trim(), start: num(w.start), end: num(w.end) }))
+    .filter((w) => w.word)
+  const duration = num((r.transcription_info as Record<string, unknown> | undefined)?.duration)
+  return {
+    text: typeof r.text === 'string' ? r.text.trim() : '',
+    words,
+    noSpeech: segments.length ? Math.max(...segments.map((s) => num(s.no_speech_prob))) : 1,
+    duration,
+    neurons: Math.round((duration / 60) * NEURONS_PER_MINUTE * 100) / 100,
+  }
+}
+
+export async function handleStt(request: Request, env: Env, fetcher: typeof fetch = fetch): Promise<Response> {
+  if (request.method !== 'POST') return json({ error: 'method' }, 405)
+  const denied = await authorize(request, env, fetcher)
+  if (denied) return denied
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return json({ error: 'bad_request', field: 'body' }, 400)
+  }
+  const req = parseSttRequest(body)
+  if (typeof req === 'string') return json({ error: 'bad_request', field: req }, 400)
+  let raw: unknown
+  try {
+    // Ép tiếng Anh: không để model đoán ngôn ngữ khi người học đọc chưa chuẩn. Không gợi ý từ mục tiêu để không "nghe hộ".
+    // Lọc giọng nói (VAD): không có lọc thì đoạn im lặng bị nghe thành "Thank you." (lỗi quen thuộc của Whisper).
+    raw = await env.AI.run(STT_MODEL, { audio: req.audio, language: 'en', task: 'transcribe', vad_filter: true, condition_on_previous_text: false })
+  } catch (e) {
+    return upstreamError(e)
+  }
+  return json(sttResult(raw))
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
     if (pathname === '/api/ai') return handleAi(request, env)
+    if (pathname === '/api/stt') return handleStt(request, env)
     if (pathname.startsWith('/api/')) return json({ error: 'not_found' }, 404)
     return env.ASSETS.fetch(request)
   },

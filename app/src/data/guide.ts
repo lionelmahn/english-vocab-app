@@ -726,7 +726,16 @@ export const GUIDE: GuideTopic[] = [
       },
       { h: 'Luyện đọc: tự so giọng mình với mẫu' },
       {
-        p: 'Mở “Luyện đọc” ở trang một từ, hoặc bấm nút micro (cạnh hai nút loa) trên thẻ giới thiệu từ mới. Nghe mẫu, bấm micro và đọc to từ đó (tối đa 8 giây), rồi dùng “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” để so. Bấm micro lần nữa để ghi lại. Bản ghi này chỉ để bạn tự nghe: không được lưu, không gửi đi đâu, đóng lại là mất. Muốn dùng giọng mình làm phát âm của từ thì dùng “Ghi âm” ở thẻ Phát âm.',
+        p: 'Mở “Luyện đọc” ở trang một từ, hoặc bấm nút micro (cạnh hai nút loa) trên thẻ giới thiệu từ mới. Từ có câu ví dụ thì chọn “Đọc từ” hoặc “Đọc câu ví dụ”. Nghe mẫu, bấm micro và đọc to (tối đa 8 giây), rồi dùng “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” để so. Bấm micro lần nữa để ghi lại. Bản ghi không được lưu, đóng lại là mất. Muốn dùng giọng mình làm phát âm của từ thì dùng “Ghi âm” ở thẻ Phát âm.',
+      },
+      { h: 'Chấm phát âm' },
+      {
+        list: [
+          'Nếu bật Trợ lý AI, sau khi ghi giọng bấm “Chấm phát âm”. App gửi bản ghi (đổi thành file WAV nhỏ ngay trên máy) tới Cloudflare để máy nhận dạng giọng nói (Whisper) nghe xem bạn nói chữ gì, rồi so với từ hoặc câu cần đọc. Chỉ gửi khi bạn bấm; bản ghi gần như im lặng thì app báo luôn, không gửi.',
+          'Kết quả: “Máy nghe đúng!”; “Gần đúng” khi máy nghe ra chữ gần giống (ví dụ rice thay vì rise); “Máy nghe thành chữ khác”; hoặc “Không nghe thấy tiếng nói”. Từ đọc giống hệt nhau (right và write, week và weak) vẫn tính là đúng. Với câu, chữ máy chưa nghe ra được gạch sóng đỏ.',
+          'Khi chưa đúng, bấm “Gợi ý cách đọc” để AI đoán âm có thể đọc sai và cách sửa (ví dụ âm /z/ cuối của rise, /ɪ/ ngắn của ship, /θ/ của think).',
+          'Máy chỉ cho biết nghe ra chữ gì, không chấm từng âm; người bản xứ đôi khi cũng bị nghe nhầm. Mỗi lần chấm tốn khoảng 1–3 neuron (khoảng 47 neuron mỗi phút âm thanh), gợi ý cách đọc khoảng 25 neuron, và tính vào giới hạn lượt mỗi ngày.',
+        ],
       },
       { h: '“Giọng iPhone”' },
       {
@@ -915,7 +924,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ', 'ngữ cảnh', 'giải thích', 'sửa câu', 'luyện viết', 'hội thoại', 'luyện nói', 'bài luyện'],
     blocks: [
       {
-        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm), giải thích từ trong câu, luyện viết câu, bài luyện câu mới và hội thoại luyện từ (các phần dưới). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm), giải thích từ trong câu, luyện viết câu, bài luyện câu mới và hội thoại luyện từ (các phần dưới), chấm phát âm khi luyện đọc (xem bài về âm thanh). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
       },
       {
         terms: [

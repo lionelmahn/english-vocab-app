@@ -29,7 +29,7 @@ import {
   type AiUsageRow,
 } from '../core/ai'
 import { VocabDatabase } from '../db/db'
-import { AiError, askAI, askJson, peekJson, type AiDeps } from './ai'
+import { AiError, askAI, askJson, peekJson, transcribe, type AiDeps } from './ai'
 
 const opened: VocabDatabase[] = []
 afterEach(async () => {
@@ -332,5 +332,19 @@ describe('bài luyện câu mới và hội thoại (R8.5, R8.7)', () => {
     ])
     expect(s.tipsVi).toEqual(['a', 'b', 'c'])
     expect(chatSummaryPrompt(['bill'], [{ role: 'user', content: CHAT_START }, { role: 'assistant', content: 'Hi!' }, { role: 'user', content: 'The bill, please.' }])).toBe('Từ mục tiêu: "bill"\nHội thoại:\nBạn luyện nói: Hi!\nNgười học: The bill, please.')
+  })
+})
+
+describe('gửi bản ghi đi nhận dạng giọng nói (R7.3)', () => {
+  it('gửi tới /api/stt kèm phiên đăng nhập, ghi một lượt dùng; lỗi hạn mức và chưa đăng nhập báo rõ', async () => {
+    const { deps, calls, database } = setup({ reply: () => new Response(JSON.stringify({ text: 'Rice.', noSpeech: 0.01, duration: 1.3, neurons: 1.01 })) })
+    expect(await transcribe('UklGR', deps)).toEqual({ text: 'Rice.', noSpeech: 0.01, duration: 1.3 })
+    expect(calls[0]).toMatchObject({ url: '/api/stt', auth: 'Bearer tok', body: { audio: 'UklGR' } })
+    const rows = await database.aiUsage.toArray()
+    expect(rows).toMatchObject([{ task: 'pronounce', neurons: 1.01, cached: false }])
+    const quota = setup({ reply: () => new Response('{}', { status: 429 }) })
+    await expect(transcribe('UklGR', quota.deps)).rejects.toMatchObject({ code: 'quota' })
+    await expect(transcribe('UklGR', { ...deps, token: async () => null })).rejects.toMatchObject({ code: 'signed_out' })
+    await expect(transcribe('UklGR', { ...deps, settings: async () => ({ ...AI_DEFAULTS, enabled: false }) })).rejects.toMatchObject({ code: 'disabled' })
   })
 })
