@@ -13,6 +13,10 @@ export interface PronounceResult {
   words?: { text: string; ok: boolean }[]
   /** Máy nghe ra một từ đồng âm (đọc giống hệt): vẫn tính là đúng. */
   homophone?: string
+  /** Từ: phần khác chỉ nằm ở cuối (máy nghe thêm "s", hoặc không nghe thấy âm cuối). */
+  ending?: { kind: 'extra' | 'missing'; text: string }
+  /** Từ: máy nghe thành nhiều chữ rời (thường do đọc tách từng âm tiết). */
+  split?: boolean
 }
 
 /** Từ đọc giống hệt nhau: máy chọn cách viết nào cũng là đọc đúng. */
@@ -38,6 +42,28 @@ function numberWords(n: number): string[] {
   return [String(n)]
 }
 
+/** Cách viết Anh–Anh riêng lẻ, không theo quy tắc chung bên dưới. */
+const UK_WORDS: Record<string, string> = {
+  programme: 'program', grey: 'gray', defence: 'defense', offence: 'offense', licence: 'license', practise: 'practice', cheque: 'check',
+  tyre: 'tire', plough: 'plow', aeroplane: 'airplane', jewellery: 'jewelry', catalogue: 'catalog', dialogue: 'dialog', analogue: 'analog',
+  travelled: 'traveled', travelling: 'traveling', traveller: 'traveler', cancelled: 'canceled', cancelling: 'canceling', labelled: 'labeled',
+  modelling: 'modeling', fulfil: 'fulfill', enrol: 'enroll', skilful: 'skillful', mum: 'mom', pyjamas: 'pajamas', moustache: 'mustache',
+}
+
+/**
+ * Đưa cách viết Anh–Anh về Anh–Mỹ (favourite → favorite, centre → center, realise → realize): hai cách viết đọc như
+ * nhau, mà máy nghe hay viết kiểu Anh. Áp dụng cho cả từ cần đọc lẫn chữ máy nghe, nên đổi nhầm vài từ cũng không sao.
+ */
+export function usSpelling(w: string): string {
+  if (UK_WORDS[w]) return UK_WORDS[w]
+  let out = w
+  // -our → -or ở từ dài (colour, favourite); bỏ qua từ ngắn như four, hour, your, tour.
+  if (out.length >= 6) out = out.replace(/([^aeiou])our(s|ite|ites|ed|ing|able|ful|er|ers)?$/, '$1or$2')
+  out = out.replace(/^(.{3,})is(e|es|ed|ing|ation|ations)$/, '$1iz$2')
+  out = out.replace(/^(.{2,}[^aeiou])re(s?)$/, '$1er$2')
+  return out
+}
+
 /** Tách thành từng chữ thường: bỏ dấu câu, giữ dấu nháy trong chữ (it's), tách gạch nối, đổi số thành chữ. */
 export function speechTokens(text: string): string[] {
   return text
@@ -47,7 +73,7 @@ export function speechTokens(text: string): string[] {
     .split(/[\s-]+/)
     .map((t) => t.replace(/^'+|'+$/g, ''))
     .filter(Boolean)
-    .flatMap((t) => (/^\d+$/.test(t) ? numberWords(Number(t)) : [t]))
+    .flatMap((t) => (/^\d+$/.test(t) ? numberWords(Number(t)) : [usSpelling(t)]))
 }
 
 function sameWord(a: string, b: string): boolean {
@@ -106,9 +132,19 @@ export function judgePronunciation(target: string, heardText: string): Pronounce
   // Gần đúng: đoạn chữ nghe được (cùng số chữ) giống cách viết ít nhất 60%.
   const goal = t.join(' ')
   let best = 0
+  let bestGot = ''
   for (let k = 0; k + t.length <= h.length; k++) {
     const got = h.slice(k, k + t.length).join(' ')
-    best = Math.max(best, 1 - editDistance(goal, got) / Math.max(goal.length, got.length))
+    const score = 1 - editDistance(goal, got) / Math.max(goal.length, got.length)
+    if (score > best) [best, bestGot] = [score, got]
   }
-  return { verdict: best >= 0.6 ? 'close' : 'miss', heard: raw }
+  const result: PronounceResult = { verdict: best >= 0.6 ? 'close' : 'miss', heard: raw }
+  // Chỉ khác ở cuối (favorites so với favorite): chỉ rõ để người học biết sửa chỗ nào. Riêng chữ "e" câm thì bỏ qua.
+  const extra = bestGot.startsWith(goal) ? bestGot.slice(goal.length) : ''
+  const missing = goal.startsWith(bestGot) && bestGot ? goal.slice(bestGot.length) : ''
+  if (result.verdict === 'close' && extra && extra !== 'e') result.ending = { kind: 'extra', text: extra }
+  else if (result.verdict === 'close' && missing && missing !== 'e') result.ending = { kind: 'missing', text: missing }
+  // Một từ mà máy nghe thành nhiều chữ rời (favorite → "for you Boris"): thường do đọc tách từng âm tiết.
+  if (t.length === 1 && h.length >= 2) result.split = true
+  return result
 }

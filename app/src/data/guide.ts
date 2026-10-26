@@ -732,7 +732,7 @@ export const GUIDE: GuideTopic[] = [
       {
         list: [
           'Nếu bật Trợ lý AI, sau khi ghi giọng bấm “Chấm phát âm”. App gửi bản ghi (đổi thành file WAV nhỏ ngay trên máy) tới Cloudflare để máy nhận dạng giọng nói (Whisper) nghe xem bạn nói chữ gì, rồi so với từ hoặc câu cần đọc. Chỉ gửi khi bạn bấm; bản ghi gần như im lặng thì app báo luôn, không gửi.',
-          'Kết quả: “Máy nghe đúng!”; “Gần đúng” khi máy nghe ra chữ gần giống (ví dụ rice thay vì rise); “Máy nghe thành chữ khác”; hoặc “Không nghe thấy tiếng nói”. Từ đọc giống hệt nhau (right và write, week và weak) vẫn tính là đúng. Với câu, chữ máy chưa nghe ra được gạch sóng đỏ.',
+          'Kết quả: “Máy nghe đúng!”; “Gần đúng” khi máy nghe ra chữ gần giống (ví dụ rice thay vì rise); “Máy nghe thành chữ khác”; hoặc “Không nghe thấy tiếng nói”. Từ đọc giống hệt nhau (right và write, week và weak) và cách viết Anh–Anh, Anh–Mỹ (favourite và favorite) vẫn tính là đúng. Chỉ khác ở cuối thì app nói rõ máy nghe thêm hay thiếu phần cuối (ví dụ thêm “s”); máy nghe một từ thành nhiều chữ rời thì có thể bạn đang ngắt giữa các âm tiết. Với câu, chữ máy chưa nghe ra được gạch sóng đỏ.',
           'Khi chưa đúng, bấm “Gợi ý cách đọc” để AI đoán âm có thể đọc sai và cách sửa (ví dụ âm /z/ cuối của rise, /ɪ/ ngắn của ship, /θ/ của think).',
           'Máy chỉ cho biết nghe ra chữ gì, không chấm từng âm; người bản xứ đôi khi cũng bị nghe nhầm. Mỗi lần chấm tốn khoảng 1–3 neuron (khoảng 47 neuron mỗi phút âm thanh), gợi ý cách đọc khoảng 25 neuron, và tính vào giới hạn lượt mỗi ngày.',
         ],

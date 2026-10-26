@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { editDistance, judgePronunciation, speechTokens } from './pronounce'
+import { editDistance, judgePronunciation, speechTokens, usSpelling } from './pronounce'
 
 /** Kết quả thật của Whisper large-v3-turbo với giọng máy (bản 0.31.0) dùng làm dữ liệu thử. */
 describe('chấm phát âm (R7.3)', () => {
@@ -29,5 +29,24 @@ describe('chấm phát âm (R7.3)', () => {
     expect(r.verdict).toBe('close')
     expect(r.words!.filter((w) => !w.ok).map((w) => w.text)).toEqual(['lost'])
     expect(judgePronunciation(target, 'We need it.').verdict).toBe('miss')
+  })
+})
+
+describe('chấm phát âm: kết quả thật khi thử trên iPhone (bản 0.31.1)', () => {
+  it('cách viết Anh–Anh và Anh–Mỹ đọc như nhau; từ ngắn như four, hour, your không bị đổi', () => {
+    expect(['favourite', 'colour', 'centre', 'realise', 'programme', 'four', 'hour', 'your', 'here', 'rise'].map(usSpelling)).toEqual([
+      'favorite', 'color', 'center', 'realize', 'program', 'four', 'hour', 'your', 'here', 'rise',
+    ])
+    expect(judgePronunciation('favorite', 'Favourite.').verdict).toBe('match')
+    expect(judgePronunciation('center', 'Centre').verdict).toBe('match')
+  })
+
+  it('"favorite" nghe thành "Favourites": gần đúng, chỉ rõ thêm "s" ở cuối; thiếu âm cuối cũng được chỉ ra', () => {
+    expect(judgePronunciation('favorite', 'Favourites')).toEqual({ verdict: 'close', heard: 'Favourites', ending: { kind: 'extra', text: 's' } })
+    expect(judgePronunciation('walked', 'Walk.')).toMatchObject({ verdict: 'close', ending: { kind: 'missing', text: 'ed' } })
+  })
+
+  it('"favorite" nghe thành "for you Boris": khác hẳn, báo là bị tách thành nhiều chữ rời', () => {
+    expect(judgePronunciation('favorite', 'for you Boris')).toEqual({ verdict: 'miss', heard: 'for you Boris', split: true })
   })
 })

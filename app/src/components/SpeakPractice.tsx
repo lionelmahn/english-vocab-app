@@ -163,6 +163,7 @@ export function SpeakPractice({ text, sentence, ipa }: { text: string; sentence?
       {score.result && score.result.target === target && (
         <ScoreCard
           target={target}
+          ipa={mode === 'word' ? ipa : undefined}
           result={score.result.result}
           tip={tip}
           onTip={() => void tip.run(async () => (await pronounceTip(target, score.result!.result.heard, mode === 'word' ? ipa : undefined)).data)}
@@ -185,9 +186,12 @@ function displayWords(target: string, words: { text: string; ok: boolean }[]): {
   return orig.length === words.length && orig.every((w) => speechTokens(w).length === 1) ? orig.map((text, i) => ({ text, ok: words[i].ok })) : words
 }
 
-function ScoreCard({ target, result, tip, onTip }: { target: string; result: PronounceResult; tip: { busy: boolean; result: string | null; error: string | null }; onTip: () => void }) {
+function ScoreCard({ target, ipa, result, tip, onTip }: { target: string; ipa?: string; result: PronounceResult; tip: { busy: boolean; result: string | null; error: string | null }; onTip: () => void }) {
   const v = VERDICT[result.verdict]
   const Icon = v.icon
+  // Đúng nhưng máy viết khác (kiểu Anh–Anh favourite, chữ số "3" cho three): nói rõ để khỏi tưởng sai.
+  const plain = (x: string) => x.toLowerCase().replace(/[^a-z0-9' ]+/g, '').trim()
+  const spelledDifferently = result.verdict === 'match' && !result.homophone && !result.words && plain(result.heard) !== plain(target)
   return (
     <div className="flex w-full flex-col gap-2 rounded-2xl bg-surface-2 p-3 text-sm leading-relaxed">
       <p className={`flex items-center gap-1.5 font-semibold ${v.tone}`}>
@@ -211,6 +215,14 @@ function ScoreCard({ target, result, tip, onTip }: { target: string; result: Pro
             <span className="text-muted">Máy nghe được:</span> “{result.heard}”
           </p>
           {result.homophone && <p className="text-muted">Máy viết là “{result.homophone}”, đọc giống hệt “{target}”, nên vẫn tính là đúng.</p>}
+          {spelledDifferently && <p className="text-muted">Máy viết khác (ví dụ kiểu Anh–Anh hoặc bằng chữ số) nhưng cùng cách đọc với “{target}”.</p>}
+          {result.ending?.kind === 'extra' && <p>Máy nghe thêm “{result.ending.text}” ở cuối. Đọc gọn, dừng đúng ở âm cuối của từ.</p>}
+          {result.ending?.kind === 'missing' && <p>Máy không nghe thấy phần “{result.ending.text}” ở cuối. Người Việt hay nuốt âm cuối, hãy đọc rõ phần này.</p>}
+          {result.split && (
+            <p>
+              Máy nghe thành nhiều chữ rời: có thể bạn đang ngắt giữa các âm tiết. Đọc liền một hơi{ipa ? `, nhấn mạnh âm tiết có dấu ˈ trong phiên âm ${ipa}` : ''}.
+            </p>
+          )}
           {result.words && result.words.some((w) => !w.ok) && <p className="text-muted">Chữ gạch sóng là chữ máy chưa nghe ra.</p>}
           {(result.verdict === 'close' || result.verdict === 'miss') && (
             <div className="flex flex-col gap-1">
