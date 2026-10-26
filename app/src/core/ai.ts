@@ -414,3 +414,166 @@ export function toConfusables(raw: unknown, term: string): ConfusableGroup[] | n
   }
   return out.length > 0 || list.length === 0 ? out : null
 }
+
+// ---- Giải thích theo ngữ cảnh (R8.2) ------------------------------------------------------------
+
+export interface ContextExplanation {
+  /** Chữ hoặc cụm như trong câu (mở rộng thành cả cụm động từ, thành ngữ nếu có). */
+  expression: string
+  /** Dạng gốc để tra, lưu vào sổ tay. */
+  lemma: string
+  pos: PartOfSpeech
+  meaningVi: string
+  explanationVi: string
+  sentence: string
+  sentenceVi: string
+  otherMeaningsVi: string
+}
+
+export const CONTEXT_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt.
+Bạn nhận một đoạn tiếng Anh, câu chứa chữ người học chọn và chữ được chọn. Giải thích nghĩa của chữ đó ĐÚNG TRONG NGỮ CẢNH này.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"expression": string, "lemma": string, "pos": "noun"|"verb"|"adjective"|"adverb"|"phrasal_verb"|"idiom"|"phrase"|"preposition"|"conjunction"|"pronoun"|"other", "meaning_vi": string, "explanation_vi": string, "sentence_vi": string, "other_meanings_vi": string}
+Quy tắc:
+- expression: chữ được chọn như trong câu; nếu chữ đó thuộc một cụm động từ, thành ngữ hay cụm cố định trong câu (give up, put up with, by the way) thì ghi cả cụm như trong câu.
+- lemma: dạng gốc của expression để tra từ điển (ran → run, gave up → give up).
+- pos: loại từ của expression trong câu này.
+- meaning_vi: nghĩa tiếng Việt ngắn gọn (tối đa 8 chữ), đúng với ngữ cảnh.
+- explanation_vi: 1 hoặc 2 câu tiếng Việt giải thích vì sao ở đây nó mang nghĩa đó, dựa vào các chữ xung quanh.
+- sentence_vi: bản dịch tiếng Việt tự nhiên của câu chứa chữ được chọn.
+- other_meanings_vi: vài nghĩa thông dụng khác của lemma, ngắn gọn; không có thì chuỗi rỗng.`
+
+export function contextPrompt(passage: string, sentence: string, selection: string): string {
+  return [passage.trim() !== sentence.trim() ? `Đoạn văn:\n"""\n${passage.trim()}\n"""` : '', `Câu: "${sentence.trim()}"`, `Chữ được chọn: "${selection.trim()}"`].filter(Boolean).join('\n')
+}
+
+export function toContextExplanation(raw: unknown, selection: string, sentence: string): ContextExplanation | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  const meaningVi = str(r.meaning_vi, 120)
+  if (!meaningVi) return null
+  const expression = str(r.expression, 80) || selection.trim()
+  return {
+    expression,
+    lemma: str(r.lemma, 80) || expression,
+    pos: POS_MAP[String(r.pos ?? '').toLowerCase().trim()] ?? 'other',
+    meaningVi,
+    explanationVi: str(r.explanation_vi, 500),
+    sentence: sentence.trim(),
+    sentenceVi: str(r.sentence_vi, 500),
+    otherMeaningsVi: str(r.other_meanings_vi, 300),
+  }
+}
+
+// ---- Sửa câu người học viết (R8.6) --------------------------------------------------------------
+
+export type CorrectionIssueType = 'grammar' | 'spelling' | 'word_choice' | 'punctuation' | 'target'
+
+export const CORRECTION_TYPE_LABEL: Record<CorrectionIssueType, string> = {
+  grammar: 'Ngữ pháp',
+  spelling: 'Chính tả',
+  word_choice: 'Dùng từ',
+  punctuation: 'Dấu câu',
+  target: 'Từ đang học',
+}
+
+export interface CorrectionIssue {
+  type: CorrectionIssueType
+  original: string
+  fix: string
+  explainVi: string
+}
+
+export interface Correction {
+  correct: boolean
+  corrected: string
+  issues: CorrectionIssue[]
+  targetOk: boolean
+  targetNoteVi: string
+  natural: string
+  translationVi: string
+  praiseVi: string
+}
+
+export const CORRECTION_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt, chấm câu người học tự viết.
+Người học viết một câu tiếng Anh có dùng từ mục tiêu (kèm nghĩa họ đang học). Kiểm ngữ pháp, chính tả, dấu câu, cách dùng từ, và từ mục tiêu có được dùng đúng nghĩa, đúng cách không.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"correct": boolean, "corrected": string, "issues": [{"type": "grammar"|"spelling"|"word_choice"|"punctuation"|"target", "original": string, "fix": string, "explain_vi": string}], "target_ok": boolean, "target_note_vi": string, "natural": string, "translation_vi": string, "praise_vi": string}
+Quy tắc:
+- Chỉ báo lỗi thật. Câu đúng ngữ pháp và tự nhiên thì correct = true, issues = [] và corrected chép y nguyên câu gốc. Không sửa chỉ vì có cách nói hay hơn.
+- corrected: câu đã sửa, thay đổi ít nhất có thể, giữ ý của người học.
+- issues: mỗi lỗi một mục. original là đoạn sai trong câu gốc, fix là đoạn đã sửa, explain_vi giải thích ngắn bằng tiếng Việt, dễ hiểu với trình độ người học. type "target" khi lỗi nằm ở cách dùng từ mục tiêu.
+- target_ok: từ mục tiêu có mặt trong câu và được dùng đúng nghĩa, đúng cách. target_note_vi: một câu nhận xét về cách dùng từ đó.
+- natural: một cách nói tự nhiên hơn nếu có; không có thì chép corrected.
+- translation_vi: bản dịch tiếng Việt của câu đã sửa.
+- praise_vi: một câu ngắn khen điều người học làm tốt, hoặc chuỗi rỗng.`
+
+export function correctionPrompt(o: { term: string; partOfSpeech: PartOfSpeech; meaningVi: string; level: string; sentence: string }): string {
+  return `Từ mục tiêu: "${o.term}" (${o.partOfSpeech}), nghĩa: ${o.meaningVi}\nTrình độ người học: ${o.level}\nCâu người học viết: "${o.sentence.trim()}"`
+}
+
+const ISSUE_TYPES: readonly CorrectionIssueType[] = ['grammar', 'spelling', 'word_choice', 'punctuation', 'target']
+const sameText = (a: string, b: string) => a.replace(/\s+/g, ' ').trim().toLowerCase() === b.replace(/\s+/g, ' ').trim().toLowerCase()
+
+/** Kiểm câu trả lời chấm câu: có lỗi thì không thể "đúng"; câu sửa trùng câu gốc và không lỗi thì là đúng. */
+export function toCorrection(raw: unknown, original: string): Correction | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  if (typeof r.correct !== 'boolean' && !Array.isArray(r.issues)) return null
+  const issues: CorrectionIssue[] = []
+  for (const i of Array.isArray(r.issues) ? r.issues.slice(0, 8) : []) {
+    const x = (i ?? {}) as Record<string, unknown>
+    const explainVi = str(x.explain_vi, 400)
+    const fix = str(x.fix, 200)
+    const orig = str(x.original, 200)
+    if (!explainVi || (orig && fix && sameText(orig, fix))) continue
+    issues.push({ type: ISSUE_TYPES.includes(x.type as CorrectionIssueType) ? (x.type as CorrectionIssueType) : 'grammar', original: orig, fix, explainVi })
+  }
+  // Một lỗi bị báo hai lần (ngữ pháp và từ đang học): giữ mục bao trùm hơn.
+  const has = (big: string, small: string) => big.toLowerCase().includes(small.toLowerCase())
+  const unique = issues.filter((i, n) => !i.original || !issues.some((j, m) => m !== n && (j.original.length > i.original.length || (j.original.length === i.original.length && m < n)) && has(j.original, i.original) && has(j.fix, i.fix)))
+  issues.splice(0, issues.length, ...unique)
+  const corrected = str(r.corrected, 500) || original.trim()
+  const correct = issues.length === 0 && sameText(corrected, original)
+  return {
+    correct,
+    corrected: correct ? original.trim() : corrected,
+    issues,
+    targetOk: r.target_ok !== false,
+    targetNoteVi: str(r.target_note_vi, 400),
+    natural: str(r.natural, 500),
+    translationVi: str(r.translation_vi, 500),
+    praiseVi: str(r.praise_vi, 300),
+  }
+}
+
+/** So từng chữ hai câu (dãy con chung dài nhất): để tô phần bỏ đi và phần thêm vào khi sửa câu. */
+export function wordDiff(a: string, b: string): { type: 'same' | 'del' | 'add'; text: string }[] {
+  const tok = (s: string) => s.match(/[\p{L}\p{N}]+(?:['’][\p{L}]+)*|[^\s\p{L}\p{N}]/gu) ?? []
+  const x = tok(a)
+  const y = tok(b)
+  const key = (t: string) => t.toLowerCase().replace(/’/g, "'")
+  const dp = Array.from({ length: x.length + 1 }, () => new Array<number>(y.length + 1).fill(0))
+  for (let i = x.length - 1; i >= 0; i--) for (let j = y.length - 1; j >= 0; j--) dp[i][j] = key(x[i]) === key(y[j]) ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1])
+  const out: { type: 'same' | 'del' | 'add'; text: string }[] = []
+  // Dấu câu dính vào chữ đứng trước.
+  const glue = (t: string) => /^[^\p{L}\p{N}("“]$/u.test(t)
+  const push = (type: 'same' | 'del' | 'add', text: string) => {
+    const last = out.at(-1)
+    if (last && last.type === type) last.text += glue(text) ? text : ` ${text}`
+    else out.push({ type, text })
+  }
+  let i = 0
+  let j = 0
+  while (i < x.length && j < y.length) {
+    if (key(x[i]) === key(y[j])) {
+      push('same', y[j])
+      i++
+      j++
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) push('del', x[i++])
+    else push('add', y[j++])
+  }
+  while (i < x.length) push('del', x[i++])
+  while (j < y.length) push('add', y[j++])
+  return out
+}

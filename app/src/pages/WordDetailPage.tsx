@@ -26,6 +26,7 @@ import { AiLink } from '../components/AiAssist'
 import { AiMnemonicSheet, ExamplesSheet } from '../components/AiWordExtras'
 import { UseButton } from '../components/AiWordSuggest'
 import { CollocationsCard, ConfusablesCard } from '../components/WordReference'
+import { WritingCard } from '../components/WritingPractice'
 import { sameSense } from '../core/reference'
 import { useAiOn } from '../lib/useAi'
 import { useWordReference } from '../lib/useReference'
@@ -183,6 +184,8 @@ export function WordDetailPage() {
       <CollocationsCard item={item} />
 
       <ConfusablesCard item={item} />
+
+      <WritingCard item={item} />
 
       <WordImageCard item={item} />
 

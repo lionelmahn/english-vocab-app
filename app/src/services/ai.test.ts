@@ -1,6 +1,27 @@
 import 'fake-indexeddb/auto'
 import { afterEach, describe, expect, it } from 'vitest'
-import { AI_DEFAULTS, cefrOf, defaultTopic, examplesPrompt, extractJson, sanitizeAi, toCollocations, toConfusables, toExamples, toMnemonics, toSenseMeanings, toWordInfo, usageSummary, usesTerm, type AiSettings, type AiUsageRow } from '../core/ai'
+import {
+  AI_DEFAULTS,
+  cefrOf,
+  contextPrompt,
+  defaultTopic,
+  examplesPrompt,
+  extractJson,
+  sanitizeAi,
+  toCollocations,
+  toConfusables,
+  toContextExplanation,
+  toCorrection,
+  toExamples,
+  toMnemonics,
+  toSenseMeanings,
+  toWordInfo,
+  usageSummary,
+  usesTerm,
+  wordDiff,
+  type AiSettings,
+  type AiUsageRow,
+} from '../core/ai'
 import { VocabDatabase } from '../db/db'
 import { AiError, askAI, askJson, peekJson, type AiDeps } from './ai'
 
@@ -218,5 +239,57 @@ describe('kiểm kết quả AI cho kết hợp từ và từ dễ nhầm (R7.4,
     expect(toConfusables({ groups: [] }, 'lend')).toEqual([])
     expect(toConfusables({ groups: [{ words: ['say', 'tell'], summary: 'x', items: [] }] }, 'lend')).toBeNull()
     expect(toConfusables({ groups: [{ words: ['lend', 'loan'], summary: 'x', items: [{ word: 'lend', meaning: 'cho mượn' }] }] }, 'lend')).toBeNull()
+  })
+})
+
+describe('giải thích theo ngữ cảnh và sửa câu (R8.2, R8.6)', () => {
+  it('lời nhắc có đoạn văn (khi dài hơn câu), câu và chữ được chọn', () => {
+    expect(contextPrompt('A. We need to make up for it.', 'We need to make up for it.', 'make')).toBe('Đoạn văn:\n"""\nA. We need to make up for it.\n"""\nCâu: "We need to make up for it."\nChữ được chọn: "make"')
+    expect(contextPrompt('He ran fast.', 'He ran fast.', 'ran')).toBe('Câu: "He ran fast."\nChữ được chọn: "ran"')
+  })
+
+  it('giải thích: thiếu nghĩa thì null; loại từ lạ thành "other"; thiếu cụm, dạng gốc thì lấy chữ đã chọn', () => {
+    const r = toContextExplanation({ expression: 'make up for', lemma: 'make up for', pos: 'phrasal_verb', meaning_vi: 'bù đắp', explanation_vi: 'Cụm động từ.', sentence_vi: 'Cần bù lại.' }, 'make', 'We need to make up for it.')!
+    expect(r).toMatchObject({ expression: 'make up for', pos: 'phrasal_verb', meaningVi: 'bù đắp', sentence: 'We need to make up for it.', otherMeaningsVi: '' })
+    expect(toContextExplanation({ meaning_vi: 'chạy', pos: 'verbish' }, 'ran', 'He ran.')).toMatchObject({ expression: 'ran', lemma: 'ran', pos: 'other' })
+    expect(toContextExplanation({ expression: 'ran' }, 'ran', 'He ran.')).toBeNull()
+  })
+
+  it('sửa câu: có lỗi thì không "đúng"; câu đúng giữ nguyên; bỏ lỗi trùng và lỗi không đổi gì', () => {
+    const bad = toCorrection(
+      {
+        correct: true,
+        corrected: 'I enjoy reading books.',
+        issues: [
+          { type: 'grammar', original: 'to read', fix: 'reading', explain_vi: 'Sau enjoy dùng V-ing.' },
+          { type: 'target', original: 'enjoy to read', fix: 'enjoy reading', explain_vi: 'enjoy + V-ing.' },
+          { type: 'style', original: 'books', fix: 'books', explain_vi: 'không đổi' },
+        ],
+        target_ok: false,
+        translation_vi: 'Tôi thích đọc sách.',
+      },
+      'I enjoy to read books.',
+    )!
+    expect(bad.correct).toBe(false)
+    expect(bad.issues).toEqual([{ type: 'target', original: 'enjoy to read', fix: 'enjoy reading', explainVi: 'enjoy + V-ing.' }])
+    expect(bad.targetOk).toBe(false)
+    const ok = toCorrection({ correct: false, corrected: 'can you lend me your pen? ', issues: [], target_ok: true }, 'Can you lend me your pen?')!
+    expect(ok).toMatchObject({ correct: true, corrected: 'Can you lend me your pen?', issues: [] })
+    expect(toCorrection({ nothing: 1 }, 'x')).toBeNull()
+  })
+
+  it('so chữ hai câu: phần bỏ, phần thêm; dấu câu dính vào chữ trước', () => {
+    expect(wordDiff('I enjoy to read books.', 'I enjoy reading books.')).toEqual([
+      { type: 'same', text: 'I enjoy' },
+      { type: 'del', text: 'to read' },
+      { type: 'add', text: 'reading' },
+      { type: 'same', text: 'books.' },
+    ])
+    expect(wordDiff("It's fine, ok", "it's fine, ok")).toEqual([{ type: 'same', text: "it's fine, ok" }])
+    expect(wordDiff('We deal the problem', 'We deal with the problem')).toEqual([
+      { type: 'same', text: 'We deal' },
+      { type: 'add', text: 'with' },
+      { type: 'same', text: 'the problem' },
+    ])
   })
 })

@@ -1,6 +1,10 @@
 import {
   COLLOCATIONS_SYSTEM,
   CONFUSABLES_SYSTEM,
+  CONTEXT_SYSTEM,
+  contextPrompt,
+  CORRECTION_SYSTEM,
+  correctionPrompt,
   EXAMPLES_SYSTEM,
   examplesPrompt,
   MNEMONIC_SYSTEM,
@@ -9,6 +13,8 @@ import {
   senseMeaningsPrompt,
   toCollocations,
   toConfusables,
+  toContextExplanation,
+  toCorrection,
   toExamples,
   toMnemonics,
   toSenseMeanings,
@@ -22,7 +28,7 @@ import type { PartOfSpeech } from '../core/pos'
 import type { VocabItem } from '../db/types'
 import { askJson, peekJson, type AskOptions } from './ai'
 
-/** Các tác vụ AI của app (R8.1, R8.3, R8.4, R7.4, R7.5). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
+/** Các tác vụ AI của app (R8.1, R8.2, R8.3, R8.4, R8.6, R7.4, R7.5). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
 
 /** R8.1: nghĩa, loại từ, câu ví dụ và mẹo nhớ cho một từ (form thêm từ, ô "Thử trợ lý"). */
 export function suggestWordInfo(term: string) {
@@ -82,4 +88,17 @@ export function suggestConfusables(w: WordRef) {
 
 export function cachedConfusables(w: WordRef) {
   return peekJson(confusablesAsk(w), (raw) => toConfusables(raw, w.term))
+}
+
+/** R8.2: nghĩa của chữ (hoặc cụm) người học chọn, đúng trong câu đang đọc. */
+export function explainInContext(passage: string, sentence: string, selection: string) {
+  return askJson({ task: 'context', system: CONTEXT_SYSTEM, prompt: contextPrompt(passage, sentence, selection), maxTokens: 1500 }, (raw) => toContextExplanation(raw, selection, sentence))
+}
+
+/** R8.6: chấm câu người học viết với từ đang học: lỗi, câu sửa, cách dùng từ. */
+export function correctSentence(w: WordRef, sentence: string, level: string) {
+  return askJson(
+    { task: 'correct', system: CORRECTION_SYSTEM, prompt: correctionPrompt({ term: w.term, partOfSpeech: w.partOfSpeech, meaningVi: w.meaningVi, level, sentence }), maxTokens: 2000 },
+    (raw) => toCorrection(raw, sentence),
+  )
 }

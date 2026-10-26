@@ -911,10 +911,10 @@ export const GUIDE: GuideTopic[] = [
     id: 'ai',
     title: 'Trợ lý AI',
     summary: 'Các chức năng AI, bật/tắt, chọn model, giới hạn lượt và hạn mức miễn phí',
-    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ'],
+    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ', 'ngữ cảnh', 'giải thích', 'sửa câu', 'luyện viết'],
     blocks: [
       {
-        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm), giải thích từ trong câu và luyện viết câu (hai phần dưới). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
       },
       {
         terms: [
@@ -930,6 +930,23 @@ export const GUIDE: GuideTopic[] = [
           'Mỗi câu trả lời được lưu trên máy: hỏi lại đúng câu đó thì app dùng kết quả đã lưu, không gọi AI và không tốn neuron. Bấm “Xóa kết quả đã lưu” để buộc hỏi lại.',
           'Cần đăng nhập và có mạng. Từ hoặc câu bạn hỏi được gửi tới Cloudflare để xử lý; đừng gửi thông tin riêng tư.',
           'AI có thể sai, nhất là mẹo nhớ. App không tự lưu gì AI gợi ý: bạn xem trước rồi mới chạm “Dùng” hoặc “Thêm”, và vẫn sửa được sau.',
+        ],
+      },
+      { h: 'Giải thích từ trong câu' },
+      {
+        list: [
+          'Ở “Tra từ”, khi ô tra đang trống, chạm thẻ “Giải thích từ trong câu”. Dán câu hoặc đoạn văn tiếng Anh đang đọc (tối đa 1.500 ký tự), bấm “Chọn từ cần giải thích”, rồi chạm vào từ chưa hiểu.',
+          'Muốn chọn một cụm (give up, take care of), chạm chữ đầu rồi chạm chữ cuối của cụm trong cùng câu. Chạm lại chữ đã chọn để bỏ chọn. Chỉ chọn một chữ thuộc cụm động từ hay thành ngữ thì AI cũng nhận ra cả cụm.',
+          'Bấm “Giải thích bằng AI” để xem nghĩa đúng trong câu đó, loại từ, vì sao mang nghĩa đó, bản dịch câu và các nghĩa khác. “Lưu vào sổ tay” mở form thêm từ đã điền sẵn dạng gốc, nghĩa và câu đang đọc làm câu ví dụ (xem lại rồi mới lưu); từ đã có trong sổ tay thì nút mở từ đó. “Tra từ điển” tra dạng gốc trên Wiktionary.',
+          'Gõ cả một câu vào ô tra từ mà không tìm thấy thì trang cũng gợi ý mở phần giải thích này. Đoạn văn được giữ lại trong lúc app đang mở; bấm “Sửa đoạn văn” để đổi.',
+        ],
+      },
+      { h: 'Luyện viết câu' },
+      {
+        list: [
+          'Ở trang một từ có thẻ “Luyện viết câu”: viết một câu có từ đó rồi bấm “Nhờ AI sửa câu”. AI kiểm ngữ pháp, chính tả, dấu câu và từ có được dùng đúng nghĩa không.',
+          'Câu có lỗi: app hiện câu của bạn (phần sai gạch đỏ) và câu đã sửa (phần thêm tô xanh), từng lỗi kèm loại lỗi và giải thích bằng tiếng Việt, nhận xét về cách dùng từ, cách nói tự nhiên hơn nếu có, và bản dịch. Câu đúng thì báo “Câu đúng rồi!”.',
+          'Bấm “Thêm vào câu ví dụ” để lưu câu đã sửa (kèm bản dịch) vào câu ví dụ của từ, hoặc “Viết câu khác” để viết tiếp. Khi thử 12 câu mẫu, AI chấm đúng cả 12 và không báo lỗi bừa ở câu đúng, nhưng vẫn có thể sai: xem lời giải thích như gợi ý.',
         ],
       },
     ],

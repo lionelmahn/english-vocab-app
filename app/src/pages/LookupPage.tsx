@@ -1,4 +1,4 @@
-import { BookmarkPlus, Check, ChevronDown, ChevronRight, CloudOff, ExternalLink, History, LoaderCircle, Plus, RotateCcw, Search, SearchX, Shuffle, Trash2, Volume2, X } from 'lucide-react'
+import { BookmarkPlus, Check, ChevronDown, ChevronRight, CloudOff, ExternalLink, History, LoaderCircle, MessageSquareText, Plus, RotateCcw, Search, SearchX, Shuffle, Trash2, Volume2, X } from 'lucide-react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion, type Variants } from 'motion/react'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
@@ -43,6 +43,7 @@ export function LookupPage() {
   const [done, setDone] = useState<{ q: string; attempt: number; result: LookupResult } | null>(null)
   const [attempt, setAttempt] = useState(0)
   const lib = useLibrary()
+  const aiOn = useAiOn()
 
   useEffect(() => {
     if (!q) return
@@ -118,6 +119,18 @@ export function LookupPage() {
                 </span>
                 <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
               </Link>
+              {aiOn && (
+                <Link to="/explain" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                    <MessageSquareText aria-hidden className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[0.9375rem] font-semibold">Giải thích từ trong câu</span>
+                    <span className="block text-[0.8125rem] leading-snug text-muted">Dán câu đang đọc, chạm từ chưa hiểu, AI giải thích đúng nghĩa trong câu đó</span>
+                  </span>
+                  <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
@@ -592,8 +605,22 @@ function SaveSheet({
 
 function NotFound({ q, suggestions, onLookup }: { q: string; suggestions: string[]; onLookup: (term: string) => void }) {
   const navigate = useNavigate()
+  const aiOn = useAiOn()
+  // Gõ (hoặc dán) cả một câu: gợi ý giải thích từng từ trong câu đó (R8.2).
+  const sentence = q.split(' ').length >= 4
   return (
     <Card>
+      {aiOn && sentence && (
+        <button
+          type="button"
+          onClick={() => navigate('/explain', { state: { text: q } })}
+          className="mb-4 flex w-full items-center gap-3 rounded-2xl bg-accent-soft px-3 py-3 text-left text-accent"
+        >
+          <MessageSquareText aria-hidden className="h-5 w-5 shrink-0" />
+          <span className="min-w-0 flex-1 text-sm font-semibold">Đây là một câu? Mở “Giải thích từ trong câu” để chạm từng từ.</span>
+          <ChevronRight aria-hidden className="h-5 w-5 shrink-0" />
+        </button>
+      )}
       <div className="flex flex-col items-center gap-2 pt-2 text-center">
         <SearchX aria-hidden className="h-8 w-8 text-subtle" />
         <p className="text-[0.9375rem] font-semibold">Không tìm thấy “{q}” trong từ điển</p>

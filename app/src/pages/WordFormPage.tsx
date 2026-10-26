@@ -1,7 +1,7 @@
 import { ChevronDown, Flame, Plus, Star, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useState, type FormEvent } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router'
 import { BackButton, Chip, Sheet, SpeakButtons, TextArea } from '../components/kit'
 import { VoiceClipFormNote } from '../components/VoiceClip'
 import { useAiOn } from '../lib/useAi'
@@ -18,10 +18,19 @@ import type { Example, VocabItem } from '../db/types'
 import { useLibrary } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
 
+/** Điền sẵn form thêm từ khi mở từ trang khác (giải thích theo ngữ cảnh, R8.2): truyền qua `state.prefill` của router. */
+export interface WordPrefill {
+  term: string
+  partOfSpeech?: PartOfSpeech
+  meaningVi?: string
+  example?: Example
+}
+
 /** Thêm từ (R2.2) và sửa từ (R2.3). */
 export function WordFormPage() {
   const { id } = useParams()
   const [params] = useSearchParams()
+  const prefill = (useLocation().state as { prefill?: WordPrefill } | null)?.prefill
   const lib = useLibrary()
   if (!lib) return null
   const editing = id ? lib.itemById.get(id) : undefined
@@ -34,7 +43,7 @@ export function WordFormPage() {
   }
   const presetDeck = params.get('deck')
   // ?term=… khi mở từ trang Tra từ (R15.5: tự thêm từ không tìm thấy).
-  return <WordForm key={editing?.id ?? 'new'} lib={lib} editing={editing} presetDeckIds={presetDeck ? [presetDeck] : []} presetTerm={params.get('term') ?? ''} />
+  return <WordForm key={editing?.id ?? 'new'} lib={lib} editing={editing} presetDeckIds={presetDeck ? [presetDeck] : []} preset={prefill ?? { term: params.get('term') ?? '' }} />
 }
 
 interface FormState {
@@ -55,16 +64,16 @@ interface FormState {
   deckIds: string[]
 }
 
-function initialState(editing: VocabItem | undefined, lib: Library, presetDeckIds: string[], presetTerm = ''): FormState {
+function initialState(editing: VocabItem | undefined, lib: Library, presetDeckIds: string[], preset: WordPrefill = { term: '' }): FormState {
   if (!editing) {
     return {
-      term: presetTerm,
-      partOfSpeech: 'noun',
-      meaningVi: '',
+      term: preset.term,
+      partOfSpeech: preset.partOfSpeech ?? 'noun',
+      meaningVi: preset.meaningVi ?? '',
       meaningEn: '',
       ipaUs: '',
       ipaUk: '',
-      examples: [{ en: '', vi: '' }],
+      examples: [preset.example ? { en: preset.example.en, vi: preset.example.vi ?? '' } : { en: '', vi: '' }],
       note: '',
       mnemonic: '',
       source: '',
@@ -113,9 +122,9 @@ function toInput(f: FormState): ItemInput {
   }
 }
 
-function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; editing?: VocabItem; presetDeckIds: string[]; presetTerm: string }) {
+function WordForm({ lib, editing, presetDeckIds, preset }: { lib: Library; editing?: VocabItem; presetDeckIds: string[]; preset: WordPrefill }) {
   const navigate = useNavigate()
-  const [f, setF] = useState<FormState>(() => initialState(editing, lib, presetDeckIds, presetTerm))
+  const [f, setF] = useState<FormState>(() => initialState(editing, lib, presetDeckIds, preset))
   const [more, setMore] = useState(() => !!editing && !!(editing.meaningEn || editing.note || editing.mnemonic || editing.source || editing.acceptedAnswers.length))
   const [errors, setErrors] = useState<{ term?: string; meaningVi?: string }>({})
   const [sameTerm, setSameTerm] = useState<DuplicateMatch<VocabItem>[] | null>(null)
