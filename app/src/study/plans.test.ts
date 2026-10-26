@@ -7,7 +7,7 @@ import { applyAction } from '../core/session'
 import { VocabDatabase } from '../db/db'
 import { loadLibrary } from '../db/library'
 import { createRepo, type ItemInput } from '../db/repo'
-import { buildPracticePlan, practiceCandidates, testCandidates } from './plans'
+import { buildFreshPracticePlan, buildPracticePlan, practiceCandidates, testCandidates } from './plans'
 
 let database: VocabDatabase
 let repo: ReturnType<typeof createRepo>
@@ -85,5 +85,22 @@ describe('ôn chủ động (R5.7)', () => {
     expect(buildPracticePlan(lib, { scope: { kind: 'hard' }, count: 10, now: T0, style: 'exercises', audioAvailable: true })).toBeNull()
     const cards = buildPracticePlan(lib, { scope: { kind: 'soon' }, count: 10, now: T0, style: 'flashcard', audioAvailable: true })!
     expect(cards.steps.every((s) => s.exercise === 'flashcard')).toBe(true)
+  })
+})
+
+describe('bài luyện câu mới (R8.5)', () => {
+  it('từ có câu AI soạn làm bài điền từ trong câu đó (xen kẽ chọn và gõ); từ không có câu dùng dạng bài thường; không đổi lịch', async () => {
+    const ids = []
+    for (const t of ['alpha', 'bravo', 'charlie', 'delta', 'echo']) ids.push(await studied(t, [Rating.Good, Rating.Good]))
+    const lib = await loadLibrary(database)
+    const contexts = { [ids[0]]: { en: 'The alpha team won.', vi: 'Đội alpha thắng.' }, [ids[1]]: { en: 'Say bravo loudly.' } }
+    const plan = buildFreshPracticePlan(lib, [...ids, 'gone'], contexts, { now: T0, style: 'exercises', audioAvailable: false })!
+    expect(plan.mode).toBe('practice')
+    expect(plan.steps.map((s) => s.itemId)).toEqual(ids)
+    expect(plan.steps[0].exercise).toBe('cloze_choice')
+    expect(plan.steps[1].exercise).toBe('cloze_typing')
+    expect(plan.steps.slice(2).every((s) => s.exercise !== 'cloze_choice' && s.exercise !== 'cloze_typing')).toBe(true)
+    expect(plan.contexts).toEqual(contexts)
+    expect(buildFreshPracticePlan(lib, ['gone'], {}, { now: T0, style: 'exercises', audioAvailable: false })).toBeNull()
   })
 })

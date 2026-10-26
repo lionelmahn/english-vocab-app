@@ -1,17 +1,26 @@
-import { Dumbbell, Repeat } from 'lucide-react'
+import { Dumbbell, MessagesSquare, Repeat, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router'
 import { HelpButton } from '../components/Guide'
 import { BackButton, Chip } from '../components/kit'
-import { Button, Card, EmptyState, Page, SectionTitle } from '../components/ui'
+import { AiErrorText } from '../components/AiAssist'
+import { Button, Card, EmptyState, Page, SectionTitle, Switch } from '../components/ui'
+import { cefrOf } from '../core/ai'
+import type { SessionPlan } from '../core/session'
 import { dueCount, studiedItems } from '../db/library'
 import { repo } from '../db/repo'
 import { useLibrary, useNow } from '../lib/hooks'
 import { useSettings } from '../lib/settings'
+import { useAiOn } from '../lib/useAi'
+import { AI_ERROR_TEXT, AiError } from '../services/ai'
+import { freshSentences, wordRefOf } from '../services/aiTasks'
+import { useProfile } from '../services/profile'
 import { speechAvailable } from '../services/speech'
-import { buildPracticePlan, practiceCandidates, type PracticeScope } from '../study/plans'
+import { buildFreshPracticePlan, buildPracticePlan, pickPractice, practiceCandidates, type PracticeScope } from '../study/plans'
 
 const COUNTS = [10, 20, 30]
+/** Bài câu mới (R8.5): mỗi lần hỏi AI tối đa 10 từ. */
+const FRESH_COUNTS = [5, 10]
 
 /**
  * Ôn chủ động trước hạn (R5.7): luyện tự do các từ đã học theo phạm vi tự chọn. Khác ôn theo lịch: không làm đổi
@@ -30,18 +39,38 @@ export function PracticePage() {
   )
   const [count, setCount] = useState(20)
   const [starting, setStarting] = useState(false)
+  const aiOn = useAiOn()
+  const profile = useProfile()
+  const [freshOn, setFreshOn] = useState(false)
+  const [aiError, setAiError] = useState<string | null>(null)
+  const fresh = aiOn && freshOn
 
   const decks = useMemo(() => (lib ? lib.decks.filter((d) => !d.archived && d.deletedAt === null) : []), [lib])
   if (!lib) return null
   const available = practiceCandidates(lib, scope, now).length
-  const size = Math.min(count, available)
+  const size = Math.min(fresh ? Math.min(count, 10) : count, available)
   const due = dueCount(lib, now)
   const scopeKey = scope.kind === 'deck' ? scope.deckId : scope.kind
 
   async function start() {
     if (!lib || starting) return
     setStarting(true)
-    const plan = buildPracticePlan(lib, { scope, count, now: Date.now(), style: settings.reviewStyle, audioAvailable: speechAvailable() })
+    setAiError(null)
+    let plan: SessionPlan | null = null
+    if (fresh) {
+      // Bài câu mới (R8.5): AI soạn một câu cho mỗi từ; app chỉ dùng câu có đúng chữ cần điền.
+      const picked = pickPractice(lib, scope, Math.min(count, 10), Date.now())
+      try {
+        const { data } = await freshSentences(picked.map(wordRefOf), cefrOf(profile?.selfLevel))
+        const contexts = Object.fromEntries(picked.flatMap((it, i) => (data[i] ? [[it.id, data[i]]] : [])))
+        plan = buildFreshPracticePlan(lib, picked.map((i) => i.id), contexts, { now: Date.now(), style: settings.reviewStyle, audioAvailable: speechAvailable() })
+      } catch (e) {
+        setAiError(e instanceof AiError ? AI_ERROR_TEXT[e.code] : AI_ERROR_TEXT.unavailable)
+        return setStarting(false)
+      }
+    } else {
+      plan = buildPracticePlan(lib, { scope, count, now: Date.now(), style: settings.reviewStyle, audioAvailable: speechAvailable() })
+    }
     if (!plan) return setStarting(false)
     await repo.startSession(plan)
     navigate('/study', { replace: true })
@@ -112,7 +141,7 @@ export function PracticePage() {
           <Card>
             <SectionTitle>Số từ</SectionTitle>
             <div className="flex flex-wrap gap-2">
-              {COUNTS.map((n) => (
+              {(fresh ? FRESH_COUNTS : COUNTS).map((n) => (
                 <Chip key={n} active={count === n} onClick={() => setCount(n)}>
                   {n} từ
                 </Chip>
@@ -120,13 +149,50 @@ export function PracticePage() {
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted">
               Ôn chủ động không làm đổi lịch ôn: kết quả chỉ ghi vào lịch sử bài làm. Trả lời sai thì từ quay lại để bạn luyện thêm.{' '}
-              {settings.reviewStyle === 'flashcard' ? 'Kiểu ôn: thẻ tự đánh giá.' : 'Dạng bài chọn theo mức độ nhớ của từng từ.'}
+              {fresh ? 'Dạng bài: điền từ vào chỗ trống trong câu mới.' : settings.reviewStyle === 'flashcard' ? 'Kiểu ôn: thẻ tự đánh giá.' : 'Dạng bài chọn theo mức độ nhớ của từng từ.'}
             </p>
           </Card>
 
+          {aiOn && (
+            <Card>
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="flex items-center gap-1.5 text-[0.9375rem] font-semibold">
+                    <Sparkles aria-hidden className="h-4 w-4 text-accent" /> Câu mới do AI soạn
+                  </p>
+                  <p className="text-[0.8125rem] leading-snug text-muted">
+                    Mỗi từ có một câu mới hợp trình độ của bạn để điền từ vào chỗ trống (chọn từ hoặc gõ từ). App kiểm câu có đúng chữ cần điền trước khi dùng. Tối đa 10 từ một lần.
+                  </p>
+                </div>
+                <Switch
+                  label="Câu mới do AI soạn"
+                  checked={freshOn}
+                  onChange={(v) => {
+                    setFreshOn(v)
+                    setAiError(null)
+                    if (v && count > 10) setCount(10)
+                  }}
+                />
+              </div>
+              <AiErrorText message={aiError} />
+            </Card>
+          )}
+
           <Button variant="primary" icon={Dumbbell} className="w-full disabled:opacity-70" disabled={size === 0 || starting} onClick={() => void start()}>
-            {size > 0 ? `Bắt đầu ôn ${size} từ` : 'Chưa có từ để ôn'}
+            {starting && fresh ? 'AI đang soạn câu… (khoảng 20 giây)' : size > 0 ? `Bắt đầu ôn ${size} từ` : 'Chưa có từ để ôn'}
           </Button>
+
+          {aiOn && (
+            <Link to="/chat" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <MessagesSquare aria-hidden className="h-5 w-5" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[0.9375rem] font-semibold">Hội thoại luyện từ</span>
+                <span className="block text-[0.8125rem] leading-snug text-muted">Đóng vai một tình huống với AI và tập dùng các từ bạn chọn</span>
+              </span>
+            </Link>
+          )}
         </>
       )}
     </Page>

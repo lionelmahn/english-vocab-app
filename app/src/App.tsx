@@ -25,6 +25,7 @@ import { FeedbackPage } from './pages/FeedbackPage'
 import { AiPage } from './pages/AiPage'
 import { ConfusablesPage } from './pages/ConfusablesPage'
 import { ExplainPage } from './pages/ExplainPage'
+import { ChatPage } from './pages/ChatPage'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -173,6 +174,7 @@ export default function App() {
                   <Route path="/me/ai" element={<AiPage />} />
                   <Route path="/confusables" element={<ConfusablesPage />} />
                   <Route path="/explain" element={<ExplainPage />} />
+                  <Route path="/chat" element={<ChatPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

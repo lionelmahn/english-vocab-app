@@ -1,4 +1,7 @@
 import {
+  CHAT_SUMMARY_SYSTEM,
+  chatSummaryPrompt,
+  chatSystem,
   COLLOCATIONS_SYSTEM,
   CONFUSABLES_SYSTEM,
   CONTEXT_SYSTEM,
@@ -9,14 +12,19 @@ import {
   examplesPrompt,
   MNEMONIC_SYSTEM,
   mnemonicPrompt,
+  PRACTICE_SYSTEM,
+  practicePrompt,
   SENSE_MEANINGS_SYSTEM,
   senseMeaningsPrompt,
+  toChatSummary,
+  toChatTurn,
   toCollocations,
   toConfusables,
   toContextExplanation,
   toCorrection,
   toExamples,
   toMnemonics,
+  toPracticeSentences,
   toSenseMeanings,
   toWordInfo,
   WORD_INFO_SCHEMA,
@@ -28,7 +36,7 @@ import type { PartOfSpeech } from '../core/pos'
 import type { VocabItem } from '../db/types'
 import { askJson, peekJson, type AskOptions } from './ai'
 
-/** Các tác vụ AI của app (R8.1, R8.2, R8.3, R8.4, R8.6, R7.4, R7.5). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
+/** Các tác vụ AI của app (R8.1–R8.7, R7.4, R7.5). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
 
 /** R8.1: nghĩa, loại từ, câu ví dụ và mẹo nhớ cho một từ (form thêm từ, ô "Thử trợ lý"). */
 export function suggestWordInfo(term: string) {
@@ -101,4 +109,25 @@ export function correctSentence(w: WordRef, sentence: string, level: string) {
     { task: 'correct', system: CORRECTION_SYSTEM, prompt: correctionPrompt({ term: w.term, partOfSpeech: w.partOfSpeech, meaningVi: w.meaningVi, level, sentence }), maxTokens: 2000 },
     (raw) => toCorrection(raw, sentence),
   )
+}
+
+/** R8.5: một câu mới cho mỗi từ (tối đa 10 từ một lần hỏi); câu không chứa đúng chữ cần điền thì null. */
+export function freshSentences(words: readonly WordRef[], level: string) {
+  const list = words.slice(0, 10)
+  return askJson({ task: 'practice', system: PRACTICE_SYSTEM, prompt: practicePrompt(list, level), maxTokens: 2000 }, (raw) => toPracticeSentences(raw, list.map((w) => w.term)))
+}
+
+export interface ChatTurn {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+/** R8.7: lượt trả lời tiếp theo của bạn luyện nói. Không lưu kết quả (mỗi buổi một khác); gửi tối đa 20 lượt gần nhất. */
+export function chatTurn(o: { scenario: string; words: string[]; level: string }, turns: readonly ChatTurn[]) {
+  return askJson({ task: 'chat', system: chatSystem(o), messages: turns.slice(-20), maxTokens: 1200, useCache: false }, (raw) => toChatTurn(raw, o.words))
+}
+
+/** R8.7: nhận xét cuối buổi hội thoại: từ đã dùng đúng, sai, chưa dùng và lời khuyên. */
+export function summarizeChat(words: readonly string[], turns: readonly ChatTurn[]) {
+  return askJson({ task: 'chat_summary', system: CHAT_SUMMARY_SYSTEM, prompt: chatSummaryPrompt(words, turns), maxTokens: 1500, useCache: false }, (raw) => toChatSummary(raw, words))
 }

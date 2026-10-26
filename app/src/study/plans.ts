@@ -111,9 +111,7 @@ export function buildPracticePlan(
   opts: { scope: PracticeScope; count: number; now: number; style: ReviewStyle; audioAvailable: boolean; rand?: () => number },
 ): SessionPlan | null {
   const rand = opts.rand ?? Math.random
-  const pool = practiceCandidates(lib, opts.scope, opts.now)
-  const ordered = opts.scope.kind === 'soon' || opts.scope.kind === 'hard' ? pool : shuffle(pool, rand)
-  const picked = shuffle(ordered.slice(0, opts.count), rand)
+  const picked = pickPractice(lib, opts.scope, opts.count, opts.now, rand)
   if (picked.length === 0) return null
   const mcq = canMultipleChoice(lib)
   return planReview(
@@ -127,6 +125,40 @@ export function buildPracticePlan(
     opts.now,
     'practice',
   )
+}
+
+/** Các từ cho một buổi ôn chủ động: sắp đến hạn và hay quên theo thứ tự ưu tiên, phạm vi khác lấy ngẫu nhiên. */
+export function pickPractice(lib: Library, scope: PracticeScope, count: number, now: number, rand: () => number = Math.random): VocabItem[] {
+  const pool = practiceCandidates(lib, scope, now)
+  const ordered = scope.kind === 'soon' || scope.kind === 'hard' ? pool : shuffle(pool, rand)
+  return shuffle(ordered.slice(0, count), rand)
+}
+
+/**
+ * Bài luyện câu mới (R8.5): từ có câu do AI soạn thì làm bài điền từ trong câu đó, xen kẽ chọn từ và gõ từ; từ không có
+ * câu thì dạng bài như ôn chủ động. Không đổi lịch ôn.
+ */
+export function buildFreshPracticePlan(
+  lib: Library,
+  itemIds: readonly ID[],
+  contexts: Record<ID, { en: string; vi?: string }>,
+  opts: { now: number; style: ReviewStyle; audioAvailable: boolean },
+): SessionPlan | null {
+  const ids = itemIds.filter((id) => lib.itemById.has(id))
+  if (ids.length === 0) return null
+  const mcq = canMultipleChoice(lib)
+  let n = 0
+  const plan = planReview(
+    ids,
+    (id) => {
+      if (contexts[id]) return n++ % 2 === 0 && mcq ? 'cloze_choice' : 'cloze_typing'
+      const item = lib.itemById.get(id)
+      return chooseExercise(itemLevel(lib.cards.get(id)), lib.cards.get(id)?.reps ?? 0, { audioOff: !opts.audioAvailable, canMultipleChoice: mcq, style: opts.style, hasContext: !!item && !!contextSentence(item) })
+    },
+    opts.now,
+    'practice',
+  )
+  return { ...plan, contexts: Object.fromEntries(ids.filter((id) => contexts[id]).map((id) => [id, contexts[id]])) }
 }
 
 /** Buổi luyện lại riêng các từ hay sai (R5.5): không đổi lịch ôn. */

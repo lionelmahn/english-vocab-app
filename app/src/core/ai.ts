@@ -1,6 +1,6 @@
 import type { PartOfSpeech } from './pos'
 import { markWord, plainSentence, type Collocation, type CollocationKind, type ConfusableGroup, type ConfusableItem } from './reference'
-import { termKey } from './vocab'
+import { findTermSpan, termKey } from './vocab'
 
 /**
  * Trợ lý AI (R8) — phần thuần: model được chọn, cài đặt, đọc JSON từ câu trả lời, thống kê lượt dùng (R8.8) và lời
@@ -576,4 +576,134 @@ export function wordDiff(a: string, b: string): { type: 'same' | 'del' | 'add'; 
   while (i < x.length) push('del', x[i++])
   while (j < y.length) push('add', y[j++])
   return out
+}
+
+// ---- Bài luyện câu mới (R8.5) ------------------------------------------------------------------
+
+export const PRACTICE_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt. Bạn viết câu mới để người học luyện điền từ vào chỗ trống.
+Với mỗi từ trong danh sách (có số thứ tự, loại từ, nghĩa), viết đúng 1 câu tiếng Anh tự nhiên, 6 đến 16 từ, hợp trình độ người học, dùng từ đó với đúng nghĩa đã cho.
+Bắt buộc: câu chứa y nguyên chữ của từ như trong danh sách (không chia động từ, không thêm -s, -ed, -ing) để người học điền lại đúng chữ đó. Ngữ cảnh trong câu phải đủ rõ để đoán ra từ.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"items": [{"n": number, "sentence": string, "sentence_vi": string}]}
+Quy tắc:
+- Mỗi từ một phần tử, giữ đúng số thứ tự n.
+- sentence_vi: bản dịch tiếng Việt tự nhiên của câu.
+- Mỗi câu một tình huống khác nhau; không dùng tên riêng lạ.`
+
+export function practicePrompt(words: readonly { term: string; partOfSpeech: PartOfSpeech; meaningVi: string }[], level: string): string {
+  return [`Trình độ người học: ${level}`, ...words.map((w, i) => `${i + 1}. "${w.term}" (${w.partOfSpeech}): ${w.meaningVi}`)].join('\n')
+}
+
+/**
+ * Câu luyện theo đúng thứ tự từ đã gửi. App tự kiểm trước khi dùng: câu phải chứa y nguyên chữ của từ (để chỗ trống có
+ * đúng một đáp án là chữ đó) và dài vừa phải; câu không đạt thì để null.
+ */
+export function toPracticeSentences(raw: unknown, terms: readonly string[]): ({ en: string; vi: string } | null)[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).items) ? ((raw as Record<string, unknown>).items as unknown[]) : null
+  if (!list) return null
+  const out: ({ en: string; vi: string } | null)[] = terms.map(() => null)
+  list.forEach((x, i) => {
+    const r = (x ?? {}) as Record<string, unknown>
+    const n = typeof r.n === 'number' && r.n >= 1 && r.n <= terms.length ? r.n - 1 : i
+    const en = str(r.sentence, 300)
+    const words = en.split(' ').length
+    if (n >= terms.length || out[n] || !en || words < 5 || words > 24 || !findTermSpan(en, terms[n])) return
+    out[n] = { en, vi: str(r.sentence_vi, 300) }
+  })
+  return out.some(Boolean) ? out : null
+}
+
+// ---- Hội thoại luyện từ (R8.7) -----------------------------------------------------------------
+
+export const CHAT_SCENARIOS = [
+  { id: 'restaurant', label: 'Gọi món ở nhà hàng', en: 'The learner is a customer at a restaurant; you are the friendly waiter.' },
+  { id: 'directions', label: 'Hỏi đường khi du lịch', en: 'The learner is a tourist asking for directions; you are a helpful local.' },
+  { id: 'interview', label: 'Phỏng vấn xin việc', en: 'The learner is a job candidate; you are the interviewer.' },
+  { id: 'friend', label: 'Làm quen bạn mới', en: 'You and the learner just met at a party and are getting to know each other.' },
+  { id: 'shopping', label: 'Mua sắm', en: 'The learner is shopping for clothes; you are the shop assistant.' },
+  { id: 'doctor', label: 'Đi khám bệnh', en: 'The learner is a patient; you are the doctor.' },
+  { id: 'day', label: 'Kể về một ngày', en: 'You are a friend asking the learner about their day and plans.' },
+] as const
+
+export type ChatScenarioId = (typeof CHAT_SCENARIOS)[number]['id']
+
+/** Số lượt nói tối đa của người học trong một buổi (để buổi gọn và không vượt hạn mức). */
+export const CHAT_MAX_TURNS = 10
+
+export interface ChatTurnResult {
+  reply: string
+  replyVi: string
+  feedbackVi: string
+  corrected: string
+  usedOk: string[]
+  usedWrong: string[]
+}
+
+export function chatSystem(o: { scenario: string; words: readonly string[]; level: string }): string {
+  return `Bạn là bạn luyện nói tiếng Anh thân thiện của một người Việt (trình độ ${o.level}). Hai bên đóng vai trong tình huống: ${o.scenario}
+Mục tiêu: tạo cơ hội để người học tự dùng các từ: ${o.words.map((w) => `"${w}"`).join(', ')}. Đặt câu hỏi gợi mở để họ dùng các từ đó, nhưng đừng nói hộ và đừng liệt kê các từ.
+Mỗi lượt trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"reply": string, "reply_vi": string, "feedback_vi": string, "corrected": string, "used_ok": [string], "used_wrong": [string]}
+Quy tắc:
+- reply: lời của bạn bằng tiếng Anh, 1 đến 3 câu ngắn, hợp trình độ, kết thúc bằng một câu hỏi hoặc lời gợi ý để người học nói tiếp.
+- reply_vi: bản dịch tiếng Việt của reply.
+- feedback_vi: nếu câu vừa rồi của người học có lỗi ngữ pháp hoặc dùng từ đáng kể thì nhận xét ngắn bằng tiếng Việt; không có lỗi thì chuỗi rỗng.
+- corrected: câu vừa rồi của người học đã sửa nếu có lỗi; không có lỗi thì chuỗi rỗng.
+- used_ok, used_wrong: các từ mục tiêu người học vừa dùng đúng, dùng sai trong câu vừa rồi (viết đúng như danh sách); không có thì mảng rỗng.
+- Lượt mở đầu: chào và mở đầu tình huống; feedback_vi, corrected là chuỗi rỗng, used_ok, used_wrong là mảng rỗng.`
+}
+
+/** Lời nhắn ẩn để AI mở đầu buổi (yêu cầu gửi lên phải kết thúc bằng lượt của người học). */
+export const CHAT_START = '(Bắt đầu hội thoại)'
+
+export function toChatTurn(raw: unknown, words: readonly string[]): ChatTurnResult | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  const reply = str(r.reply, 600)
+  if (!reply) return null
+  const pick = (v: unknown) => [...new Set((Array.isArray(v) ? v : []).map((w) => words.find((x) => termKey(x) === termKey(String(w ?? '')))).filter((w): w is string => !!w))]
+  const usedWrong = pick(r.used_wrong)
+  return {
+    reply,
+    replyVi: str(r.reply_vi, 600),
+    feedbackVi: str(r.feedback_vi, 400),
+    corrected: str(r.corrected, 400),
+    usedOk: pick(r.used_ok).filter((w) => !usedWrong.includes(w)),
+    usedWrong,
+  }
+}
+
+export interface ChatSummary {
+  summaryVi: string
+  words: { word: string; status: 'ok' | 'wrong' | 'unused'; noteVi: string }[]
+  tipsVi: string[]
+}
+
+export const CHAT_SUMMARY_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt. Bạn nhận danh sách từ mục tiêu và đoạn hội thoại luyện nói giữa người học và bạn luyện nói.
+Nhận xét buổi luyện. Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"summary_vi": string, "words": [{"word": string, "status": "ok"|"wrong"|"unused", "note_vi": string}], "tips_vi": [string]}
+Quy tắc:
+- summary_vi: 2 đến 3 câu tiếng Việt nhận xét chung, khích lệ nhưng thật.
+- words: mỗi từ mục tiêu một mục, đúng thứ tự. status: "ok" nếu người học đã dùng đúng ít nhất một lần, "wrong" nếu chỉ dùng sai, "unused" nếu chưa dùng. note_vi: một câu nhận xét hoặc ví dụ cách dùng.
+- tips_vi: 1 đến 3 lời khuyên ngắn để lần sau nói tốt hơn.`
+
+export function chatSummaryPrompt(words: readonly string[], turns: readonly { role: 'user' | 'assistant'; content: string }[]): string {
+  return [`Từ mục tiêu: ${words.map((w) => `"${w}"`).join(', ')}`, 'Hội thoại:', ...turns.filter((t) => t.content !== CHAT_START).map((t) => `${t.role === 'user' ? 'Người học' : 'Bạn luyện nói'}: ${t.content}`)].join('\n')
+}
+
+export function toChatSummary(raw: unknown, words: readonly string[]): ChatSummary | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  const summaryVi = str(r.summary_vi, 800)
+  if (!summaryVi) return null
+  const got = (Array.isArray(r.words) ? r.words : []).map((x) => (x ?? {}) as Record<string, unknown>)
+  return {
+    summaryVi,
+    words: words.map((w) => {
+      const x = got.find((g) => termKey(String(g.word ?? '')) === termKey(w))
+      const status = x?.status === 'ok' || x?.status === 'wrong' ? x.status : 'unused'
+      return { word: w, status, noteVi: str(x?.note_vi, 300) }
+    }),
+    tipsVi: (Array.isArray(r.tips_vi) ? r.tips_vi : []).map((t) => str(t, 300)).filter(Boolean).slice(0, 3),
+  }
 }

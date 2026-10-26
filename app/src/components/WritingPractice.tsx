@@ -1,5 +1,6 @@
 import { Check, TriangleAlert } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { cefrOf, CORRECTION_TYPE_LABEL, usesTerm, wordDiff, type Correction } from '../core/ai'
 import { MAX_EXAMPLES, repo } from '../db/repo'
 import type { VocabItem } from '../db/types'
@@ -40,10 +41,13 @@ export function WritingCard({ item }: { item: VocabItem }) {
           onChange={(e) => setText(e.target.value)}
         />
         {sentence && !usesTerm(sentence, item.term) && <p className="text-xs text-warning">Câu chưa có từ “{item.term}”.</p>}
-        <div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <AiLink busy={ai.busy} disabled={!sentence} onClick={check}>
             Nhờ AI sửa câu
           </AiLink>
+          <Link to="/chat" state={{ terms: [item.term] }} className="text-sm font-semibold text-accent">
+            Luyện trong hội thoại
+          </Link>
         </div>
         <AiErrorText message={ai.error} />
         {ai.result && (

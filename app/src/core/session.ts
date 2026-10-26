@@ -39,6 +39,8 @@ export interface SessionPlan {
   activeMs?: number
   /** Bài kiểm tra có giới hạn thời gian (R6.6): hết giờ tính từ lúc bắt đầu thì kết thúc. */
   timeLimitMs?: number
+  /** Bài luyện câu mới (R8.5): câu do AI soạn cho từng từ, dùng thay câu ví dụ quen thuộc ở bài điền từ. */
+  contexts?: Record<string, { en: string; vi?: string }>
 }
 
 export type SessionAction =

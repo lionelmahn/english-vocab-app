@@ -353,6 +353,7 @@ export const GUIDE: GuideTopic[] = [
           'Ôn chủ động không làm đổi lịch ôn: kết quả chỉ ghi vào lịch sử bài làm. Vì vậy các từ đã đến hạn vẫn cần ôn theo lịch; nếu còn từ đến hạn, trang ôn chủ động nhắc và có nút “Ôn tập theo lịch”.',
           'Dạng bài chọn theo cấp ghi nhớ như khi ôn, nhưng đổi ngẫu nhiên giữa các lần luyện. Trả lời sai thì từ quay lại để luyện thêm.',
           'Từ đang tạm dừng ôn không được lấy, trừ khi bạn tự chọn từ đó.',
+          'Nếu bật Trợ lý AI, trang ôn chủ động có công tắc “Câu mới do AI soạn”: mỗi từ có một câu mới hợp trình độ của bạn và bài là điền từ vào chỗ trống (chọn từ hoặc gõ từ), tối đa 10 từ một lần. App chỉ dùng câu có đúng chữ cần điền; câu không đạt thì từ đó làm dạng bài thường. Xem thêm bài Trợ lý AI.',
         ],
       },
       { h: 'Bài kiểm tra tự chọn' },
@@ -911,10 +912,10 @@ export const GUIDE: GuideTopic[] = [
     id: 'ai',
     title: 'Trợ lý AI',
     summary: 'Các chức năng AI, bật/tắt, chọn model, giới hạn lượt và hạn mức miễn phí',
-    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ', 'ngữ cảnh', 'giải thích', 'sửa câu', 'luyện viết'],
+    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ', 'ngữ cảnh', 'giải thích', 'sửa câu', 'luyện viết', 'hội thoại', 'luyện nói', 'bài luyện'],
     blocks: [
       {
-        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm), giải thích từ trong câu và luyện viết câu (hai phần dưới). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm), giải thích từ trong câu, luyện viết câu, bài luyện câu mới và hội thoại luyện từ (các phần dưới). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
       },
       {
         terms: [
@@ -946,7 +947,23 @@ export const GUIDE: GuideTopic[] = [
         list: [
           'Ở trang một từ có thẻ “Luyện viết câu”: viết một câu có từ đó rồi bấm “Nhờ AI sửa câu”. AI kiểm ngữ pháp, chính tả, dấu câu và từ có được dùng đúng nghĩa không.',
           'Câu có lỗi: app hiện câu của bạn (phần sai gạch đỏ) và câu đã sửa (phần thêm tô xanh), từng lỗi kèm loại lỗi và giải thích bằng tiếng Việt, nhận xét về cách dùng từ, cách nói tự nhiên hơn nếu có, và bản dịch. Câu đúng thì báo “Câu đúng rồi!”.',
-          'Bấm “Thêm vào câu ví dụ” để lưu câu đã sửa (kèm bản dịch) vào câu ví dụ của từ, hoặc “Viết câu khác” để viết tiếp. Khi thử 12 câu mẫu, AI chấm đúng cả 12 và không báo lỗi bừa ở câu đúng, nhưng vẫn có thể sai: xem lời giải thích như gợi ý.',
+          'Bấm “Thêm vào câu ví dụ” để lưu câu đã sửa (kèm bản dịch) vào câu ví dụ của từ, hoặc “Viết câu khác” để viết tiếp. “Luyện trong hội thoại” mở hội thoại luyện từ với sẵn từ này. Khi thử 12 câu mẫu, AI chấm đúng cả 12 và không báo lỗi bừa ở câu đúng, nhưng vẫn có thể sai: xem lời giải thích như gợi ý.',
+        ],
+      },
+      { h: 'Bài luyện câu mới' },
+      {
+        list: [
+          'Ở “Ôn chủ động”, bật “Câu mới do AI soạn”, chọn phạm vi (có cả “Từ hay quên” và các từ hay sai từ trang Điểm yếu) và 5 hoặc 10 từ, rồi bấm bắt đầu. AI soạn mỗi từ một câu mới theo trình độ của bạn (khoảng 20 giây).',
+          'Bài là điền từ vào chỗ trống trong câu mới, xen kẽ chọn từ và gõ từ, có gợi ý như bài thường. Trước khi dùng, app kiểm câu có y nguyên chữ cần điền, nên đáp án luôn là đúng chữ đó. Kết quả chỉ ghi vào lịch sử, không đổi lịch ôn.',
+        ],
+      },
+      { h: 'Hội thoại luyện từ' },
+      {
+        list: [
+          'Ở cuối trang “Ôn chủ động” (hoặc “Luyện trong hội thoại” ở trang một từ), chạm “Hội thoại luyện từ”. Chọn tối đa 5 từ muốn luyện (app gợi ý từ hay quên và từ học gần đây), chọn tình huống (gọi món, hỏi đường, phỏng vấn xin việc, làm quen, mua sắm, đi khám bệnh, kể về một ngày) hoặc “Tự đặt tình huống”, rồi bấm “Bắt đầu hội thoại”.',
+          'AI đóng vai và đặt câu hỏi để bạn có dịp dùng các từ đã chọn. Viết câu trả lời bằng tiếng Anh rồi bấm “Gửi”; muốn nói thay vì gõ, chạm nút micro trên bàn phím điện thoại. Mỗi lời của AI có nút nghe và “Dịch”. Câu của bạn có lỗi thì hiện “Nên nói:” kèm giải thích ngắn.',
+          'Các từ đã chọn hiện ở đầu trang: dấu tích là đã dùng đúng, dấu chấm than là dùng chưa đúng. Mỗi buổi tối đa 10 lượt nói của bạn; bấm “Kết thúc và xem nhận xét” để xem từng từ đã dùng đúng, chưa đúng hay chưa dùng, cùng lời khuyên. “Luyện buổi mới” để bắt đầu lại; đang nói dở muốn đổi từ hay tình huống thì bấm “Bỏ buổi này”. Buổi đang dở được giữ trong lúc app còn mở.',
+          'Mỗi lượt nói tốn khoảng 30–50 neuron, cả buổi 10 lượt khoảng 500 neuron, vẫn trong hạn mức miễn phí.',
         ],
       },
     ],

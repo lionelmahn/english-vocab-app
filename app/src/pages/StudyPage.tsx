@@ -334,7 +334,10 @@ function SessionRunner({ lib, session, onEnd, onPause }: { lib: Library; session
   )
 
   const step = view.step
-  const item = step ? lib.itemById.get(step.itemId) : undefined
+  const baseItem = step ? lib.itemById.get(step.itemId) : undefined
+  // Bài luyện câu mới (R8.5): câu AI soạn đứng đầu danh sách câu ví dụ, nên bài điền từ dùng câu đó.
+  const fresh = step ? plan.contexts?.[step.itemId] : undefined
+  const item = useMemo(() => (baseItem && fresh ? { ...baseItem, examples: [fresh, ...baseItem.examples] } : baseItem), [baseItem, fresh])
   const schedules = plan.mode === 'learn' || plan.mode === 'review'
 
   // Tra trước bản ghi phát âm của các từ trong buổi, để bấm loa là phát ngay.

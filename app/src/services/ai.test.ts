@@ -3,17 +3,23 @@ import { afterEach, describe, expect, it } from 'vitest'
 import {
   AI_DEFAULTS,
   cefrOf,
+  CHAT_START,
+  chatSummaryPrompt,
   contextPrompt,
   defaultTopic,
   examplesPrompt,
+  practicePrompt,
   extractJson,
   sanitizeAi,
+  toChatSummary,
+  toChatTurn,
   toCollocations,
   toConfusables,
   toContextExplanation,
   toCorrection,
   toExamples,
   toMnemonics,
+  toPracticeSentences,
   toSenseMeanings,
   toWordInfo,
   usageSummary,
@@ -291,5 +297,40 @@ describe('giải thích theo ngữ cảnh và sửa câu (R8.2, R8.6)', () => {
       { type: 'add', text: 'with' },
       { type: 'same', text: 'the problem' },
     ])
+  })
+})
+
+describe('bài luyện câu mới và hội thoại (R8.5, R8.7)', () => {
+  it('câu luyện: theo số thứ tự; chỉ nhận câu có y nguyên chữ cần điền và dài vừa phải', () => {
+    expect(practicePrompt([{ term: 'take care of', partOfSpeech: 'phrasal_verb', meaningVi: 'chăm sóc' }], 'B1')).toBe('Trình độ người học: B1\n1. "take care of" (phrasal_verb): chăm sóc')
+    const out = toPracticeSentences(
+      {
+        items: [
+          { n: 2, sentence: 'She made a big decision about her future career.', sentence_vi: 'Cô ấy đưa ra quyết định lớn.' },
+          { n: 1, sentence: 'He improved his English a lot this year.', sentence_vi: 'Anh ấy tiến bộ.' },
+          { n: 3, sentence: 'Too short.', sentence_vi: 'Ngắn.' },
+        ],
+      },
+      ['improve', 'decision', 'weather'],
+    )
+    // "improved" không phải y nguyên "improve": bỏ, để chỗ trống có đúng một đáp án.
+    expect(out).toEqual([null, { en: 'She made a big decision about her future career.', vi: 'Cô ấy đưa ra quyết định lớn.' }, null])
+    expect(toPracticeSentences({ items: [] }, ['x'])).toBeNull()
+  })
+
+  it('lượt hội thoại: chỉ nhận từ mục tiêu, từ dùng sai không tính là đúng; thiếu lời đáp thì null', () => {
+    const r = toChatTurn({ reply: 'Sure! I recommend the soup.', reply_vi: 'Tôi gợi ý món súp.', feedback_vi: '', corrected: '', used_ok: ['Recommend', 'pizza', 'bill'], used_wrong: ['bill'] }, ['recommend', 'delicious', 'bill'])!
+    expect(r).toMatchObject({ reply: 'Sure! I recommend the soup.', usedOk: ['recommend'], usedWrong: ['bill'] })
+    expect(toChatTurn({ reply_vi: 'x' }, ['a'])).toBeNull()
+  })
+
+  it('nhận xét cuối buổi: đủ mọi từ theo thứ tự, thiếu thì "chưa dùng"; lời nhắc bỏ lượt mở đầu ẩn', () => {
+    const s = toChatSummary({ summary_vi: 'Tốt.', words: [{ word: 'BILL', status: 'ok', note_vi: 'Dùng đúng.' }, { word: 'soup', status: 'wrong' }], tips_vi: ['a', '', 'b', 'c', 'd'] }, ['recommend', 'bill'])!
+    expect(s.words).toEqual([
+      { word: 'recommend', status: 'unused', noteVi: '' },
+      { word: 'bill', status: 'ok', noteVi: 'Dùng đúng.' },
+    ])
+    expect(s.tipsVi).toEqual(['a', 'b', 'c'])
+    expect(chatSummaryPrompt(['bill'], [{ role: 'user', content: CHAT_START }, { role: 'assistant', content: 'Hi!' }, { role: 'user', content: 'The bill, please.' }])).toBe('Từ mục tiêu: "bill"\nHội thoại:\nBạn luyện nói: Hi!\nNgười học: The bill, please.')
   })
 })
