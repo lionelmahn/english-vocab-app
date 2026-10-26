@@ -1,0 +1,165 @@
+import { useLiveQuery } from 'dexie-react-hooks'
+import { cacheKey, extractJson, sanitizeAi, usageSummary, utcDayStart, type AiSettings, type AiUsageRow, type AiUsageSummary } from '../core/ai'
+import { db, type VocabDatabase } from '../db/db'
+import { repo } from '../db/repo'
+import { PROFILE_ID } from '../db/types'
+import { getAuth } from './auth'
+import { getSupabase } from './supabase'
+
+/**
+ * Gọi trợ lý AI (R8) qua /api/ai của Worker (Cloudflare Workers AI, gói miễn phí). Mỗi câu trả lời được lưu trên máy:
+ * cùng câu hỏi thì dùng lại, không gọi lại. Mỗi lượt ghi vào bảng lượt dùng (R8.8); quá giới hạn mỗi ngày thì dừng.
+ */
+
+export type AiErrorCode = 'disabled' | 'signed_out' | 'offline' | 'limit' | 'quota' | 'unavailable' | 'bad_output'
+
+export class AiError extends Error {
+  readonly code: AiErrorCode
+  constructor(code: AiErrorCode) {
+    super(code)
+    this.code = code
+  }
+}
+
+export const AI_ERROR_TEXT: Record<AiErrorCode, string> = {
+  disabled: 'Trợ lý AI đang tắt. Bật ở Cá nhân → Trợ lý AI.',
+  signed_out: 'Cần đăng nhập để dùng trợ lý AI.',
+  offline: 'Đang mất mạng. Trợ lý AI cần có mạng.',
+  limit: 'Đã đến giới hạn lượt hỏi AI hôm nay trên máy này. Đổi giới hạn ở Cá nhân → Trợ lý AI.',
+  quota: 'Đã dùng hết hạn mức miễn phí của Cloudflare hôm nay. Hạn mức đặt lại lúc 7:00 sáng.',
+  unavailable: 'Trợ lý AI đang trục trặc. Thử lại sau ít phút.',
+  bad_output: 'AI trả lời không đúng khuôn. Thử lại, hoặc chọn model khác.',
+}
+
+export interface AskOptions {
+  /** Tên tác vụ (ghi vào lượt dùng, phân biệt kết quả đã lưu). */
+  task: string
+  system: string
+  prompt?: string
+  messages?: { role: 'user' | 'assistant'; content: string }[]
+  schema?: Record<string, unknown>
+  maxTokens?: number
+  /** false: luôn hỏi lại (ví dụ hội thoại). */
+  useCache?: boolean
+}
+
+export interface AskResult {
+  text: string
+  cached: boolean
+  neurons: number
+  ms: number
+}
+
+export interface AiDeps {
+  database: VocabDatabase
+  fetch: typeof fetch
+  token: () => Promise<string | null>
+  settings: () => Promise<AiSettings>
+  online: () => boolean
+  now: () => number
+}
+
+async function profileAi(database: VocabDatabase): Promise<AiSettings> {
+  return sanitizeAi((await database.profiles.get(PROFILE_ID))?.ai)
+}
+
+const defaults: AiDeps = {
+  database: db,
+  fetch: (...args) => fetch(...args),
+  token: async () => {
+    if (getAuth().status !== 'signed_in') return null
+    const client = await getSupabase()
+    return (await client?.auth.getSession())?.data.session?.access_token ?? null
+  },
+  settings: () => profileAi(db),
+  online: () => typeof navigator === 'undefined' || navigator.onLine !== false,
+  now: Date.now,
+}
+
+async function record(d: AiDeps, row: Omit<AiUsageRow, 'id' | 'at'>, at: number) {
+  await d.database.aiUsage.put({ id: crypto.randomUUID(), at, ...row })
+}
+
+export async function askAI(opts: AskOptions, deps: Partial<AiDeps> = {}): Promise<AskResult> {
+  const d = { ...defaults, ...deps }
+  const settings = await d.settings()
+  if (!settings.enabled) throw new AiError('disabled')
+  const content = JSON.stringify([opts.system, opts.prompt ?? opts.messages, opts.schema ?? null])
+  const key = await cacheKey(opts.task, settings.model, content)
+  const start = d.now()
+  if (opts.useCache !== false) {
+    const hit = await d.database.aiCache.get(key)
+    if (hit) {
+      await record(d, { task: opts.task, model: settings.model, inputTokens: 0, outputTokens: 0, neurons: 0, cached: true }, start)
+      return { text: hit.text, cached: true, neurons: 0, ms: 0 }
+    }
+  }
+  if (!d.online()) throw new AiError('offline')
+  const used = await d.database.aiUsage.where('at').aboveOrEqual(utcDayStart(start)).filter((r) => !r.cached && !r.error).count()
+  if (used >= settings.dailyLimit) throw new AiError('limit')
+  const token = await d.token()
+  if (!token) throw new AiError('signed_out')
+
+  let res: Response
+  try {
+    res = await d.fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+      body: JSON.stringify({ model: settings.model, system: opts.system, prompt: opts.prompt, messages: opts.messages, schema: opts.schema, maxTokens: opts.maxTokens }),
+    })
+  } catch {
+    throw new AiError(d.online() ? 'unavailable' : 'offline')
+  }
+  const fail = async (code: AiErrorCode) => {
+    await record(d, { task: opts.task, model: settings.model, inputTokens: 0, outputTokens: 0, neurons: 0, cached: false, error: code }, start)
+    return new AiError(code)
+  }
+  if (res.status === 401) throw await fail('signed_out')
+  if (res.status === 429) throw await fail('quota')
+  if (!res.ok) throw await fail('unavailable')
+  const body = (await res.json()) as { text?: string; usage?: { inputTokens?: number; outputTokens?: number; neurons?: number } }
+  if (!body.text) throw await fail('unavailable')
+  const usage = body.usage ?? {}
+  await record(d, { task: opts.task, model: settings.model, inputTokens: usage.inputTokens ?? 0, outputTokens: usage.outputTokens ?? 0, neurons: usage.neurons ?? 0, cached: false }, start)
+  if (opts.useCache !== false) await d.database.aiCache.put({ key, task: opts.task, model: settings.model, text: body.text, createdAt: start })
+  return { text: body.text, cached: false, neurons: usage.neurons ?? 0, ms: d.now() - start }
+}
+
+/**
+ * Hỏi và đọc JSON theo khuôn: `parse` kiểm câu trả lời, không dùng được thì trả null. Câu trả lời hỏng không được
+ * giữ lại để lần sau hỏi lại được.
+ */
+export async function askJson<T>(opts: AskOptions, parse: (raw: unknown) => T | null, deps: Partial<AiDeps> = {}): Promise<{ data: T } & Omit<AskResult, 'text'>> {
+  const d = { ...defaults, ...deps }
+  const res = await askAI(opts, d)
+  const data = parse(extractJson(res.text))
+  if (data === null) {
+    const settings = await d.settings()
+    await d.database.aiCache.delete(await cacheKey(opts.task, settings.model, JSON.stringify([opts.system, opts.prompt ?? opts.messages, opts.schema ?? null])))
+    throw new AiError('bad_output')
+  }
+  return { data, cached: res.cached, neurons: res.neurons, ms: res.ms }
+}
+
+let settingsQueue: Promise<unknown> = Promise.resolve()
+
+/** Đổi cài đặt AI: các lần đổi chạy lần lượt, mỗi lần đọc bản mới nhất rồi gộp, nên bấm liền nhau không ghi đè nhau. */
+export function setAiSettings(patch: Partial<AiSettings>, database: VocabDatabase = db): Promise<void> {
+  const next = settingsQueue.then(async () => {
+    await repo.updateProfile({ ai: { ...(await profileAi(database)), ...patch } })
+  })
+  settingsQueue = next.catch(() => undefined)
+  return next
+}
+
+export function useAiUsage(): AiUsageSummary | undefined {
+  return useLiveQuery(async () => usageSummary(await db.aiUsage.where('at').aboveOrEqual(Date.now() - 31 * 86_400_000).toArray(), Date.now()), [])
+}
+
+export function useAiCacheCount(): number | undefined {
+  return useLiveQuery(() => db.aiCache.count(), [])
+}
+
+export async function clearAiCache(): Promise<void> {
+  await db.aiCache.clear()
+}

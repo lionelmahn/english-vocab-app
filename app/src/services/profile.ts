@@ -2,6 +2,7 @@ import { liveQuery } from 'dexie'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { LEARNING_DEFAULTS, LEARNING_KEYS, profileDefaults, sanitizeFsrs, type LearningSettings, type ProfileData } from '../core/profile'
 import { configureScheduler } from '../core/scheduler'
+import { sanitizeAi } from '../core/ai'
 import { sanitizeReminders } from '../core/reminders'
 import { db } from '../db/db'
 import { appScheduler, repo } from '../db/repo'
@@ -16,7 +17,7 @@ import { applyLearningSettings, currentLearningSettings, setLearningWriter } fro
 export function dataOf(row: Profile): ProfileData {
   const { id: _id, createdAt: _c, updatedAt: _u, deletedAt: _d, ...data } = row
   // Hồ sơ lưu từ bản cũ có thể thiếu mục mới (ví dụ tùy chọn nhắc nhở từ 0.12.0): điền giá trị mặc định.
-  return { ...profileDefaults(data.timeZone), ...data, reminders: sanitizeReminders(data.reminders), fsrs: sanitizeFsrs(data.fsrs) }
+  return { ...profileDefaults(data.timeZone), ...data, reminders: sanitizeReminders(data.reminders), fsrs: sanitizeFsrs(data.fsrs), ai: sanitizeAi(data.ai) }
 }
 
 function learningOf(row: ProfileData): LearningSettings {

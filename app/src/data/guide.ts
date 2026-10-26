@@ -1,6 +1,7 @@
 import { XP_RULES } from '../core/achievements'
 import { MIN_REVIEWS } from '../core/fsrsOptimizer'
 import { MIN_EXERCISE_SAMPLES } from '../core/insights'
+import { AI_DEFAULTS, FREE_NEURONS_PER_DAY } from '../core/ai'
 import { LEVEL_LABELS, LEVEL_THRESHOLDS_DAYS } from '../core/levels'
 import { LEARNING_DEFAULTS, profileDefaults } from '../core/profile'
 import { foldText } from '../core/vocab'
@@ -14,7 +15,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback' | 'ai'
 
 export type GuideBlock =
   | { h: string }
@@ -903,13 +904,40 @@ export const GUIDE: GuideTopic[] = [
       },
     ],
   },
+  {
+    id: 'ai',
+    title: 'Trợ lý AI',
+    summary: 'Bật/tắt, chọn model, giới hạn lượt và hạn mức miễn phí',
+    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn'],
+    blocks: [
+      {
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Các chức năng dùng AI (gợi ý nghĩa và ví dụ khi thêm từ, mẹo nhớ, giải thích theo ngữ cảnh, sửa câu, hội thoại…) sẽ có dần ở các bản sau; bản này có phần cài đặt và ô “Thử trợ lý”.',
+      },
+      {
+        terms: [
+          { term: '“Bật trợ lý AI”', text: 'Tắt thì app không gửi gì tới AI; việc học và ôn vẫn chạy bình thường. Cài đặt này dùng chung trên mọi máy đã đăng nhập.' },
+          { term: '“Model”', text: 'GPT-OSS 120B (đề xuất) cho nghĩa và ví dụ chuẩn nhất khi thử, nhưng chậm hơn; Llama 3.3 70B và Llama 4 Scout nhanh hơn, ít neuron hơn nhưng hay sai nghĩa hơn. Đổi model thì câu hỏi cũ được hỏi lại bằng model mới.' },
+          { term: '“Tối đa mỗi ngày trên máy này”', text: `Số lượt hỏi AI tối đa mỗi ngày trên máy đang dùng (mặc định ${AI_DEFAULTS.dailyLimit}). Lượt lấy lại kết quả đã lưu không tính.` },
+          { term: '“Thử trợ lý”', text: 'Gõ một từ tiếng Anh, bấm “Hỏi” để xem AI gợi ý nghĩa, câu ví dụ và mẹo nhớ. Chỉ để xem thử, không lưu vào sổ tay.' },
+        ],
+      },
+      {
+        list: [
+          `Hạn mức miễn phí của Cloudflare là ${new Intl.NumberFormat('vi-VN').format(FREE_NEURONS_PER_DAY)} neuron mỗi ngày cho cả tài khoản, đặt lại lúc 7:00 sáng. Mỗi lượt gợi ý một từ tốn khoảng 20–60 neuron, nên mỗi ngày hỏi được vài trăm lượt. Hết hạn mức thì AI tạm ngừng tới 7:00 sáng hôm sau, không bị tính phí.`,
+          'Mỗi câu trả lời được lưu trên máy: hỏi lại đúng câu đó thì app dùng kết quả đã lưu, không gọi AI và không tốn neuron. Bấm “Xóa kết quả đã lưu” để buộc hỏi lại.',
+          'Cần đăng nhập và có mạng. Từ hoặc câu bạn hỏi được gửi tới Cloudflare để xử lý; đừng gửi thông tin riêng tư.',
+          'AI có thể sai, nhất là mẹo nhớ. Khi các chức năng gợi ý có mặt, bạn luôn được xem và sửa trước khi lưu.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
   { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
-  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account', 'feedback'] },
+  { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account', 'feedback', 'ai'] },
 ]
 
 export function guideTopic(id: GuideTopicId): GuideTopic {

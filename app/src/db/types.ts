@@ -142,6 +142,15 @@ export interface ImageBlob {
   mime: string
 }
 
+/** Kết quả AI đã lưu (R8): hỏi một lần dùng lại mãi, chỉ trên máy này. */
+export interface AiCacheEntry {
+  key: string
+  task: string
+  model: string
+  text: string
+  createdAt: number
+}
+
 /** Loại báo lỗi (R14.4), khớp ràng buộc của bảng `feedback_reports`. */
 export type FeedbackKind = 'bug' | 'content' | 'answer' | 'other'
 

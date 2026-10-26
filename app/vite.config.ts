@@ -39,9 +39,11 @@ export default defineConfig({
   ],
   server: {
     host: true,
+    // Khi phát triển: /api/* (trợ lý AI) chuyển sang Worker chạy bằng `npm run dev:api` (wrangler dev, cổng 8787).
+    proxy: { '/api': 'http://localhost:8787' },
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'worker/**/*.test.ts'],
   },
 })

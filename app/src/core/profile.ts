@@ -1,4 +1,5 @@
 import { clipParameters } from 'ts-fsrs'
+import { AI_DEFAULTS, sanitizeAi, type AiSettings } from './ai'
 import { studyDay } from './day'
 import type { ReviewStyle } from './exercises'
 import { REMINDER_DEFAULTS, sanitizeReminders, type ReminderPrefs } from './reminders'
@@ -110,12 +111,14 @@ export interface ProfileFields {
   reminders: ReminderPrefs
   /** Mục tiêu ghi nhớ và tham số lịch ôn (R5.13). */
   fsrs: FsrsSettings
+  /** Trợ lý AI (R8.8): bật/tắt, model, giới hạn lượt mỗi ngày. */
+  ai: AiSettings
 }
 
 export type ProfileData = ProfileFields & LearningSettings
 
 /** Mục chỉ có trên máy chủ ở ô `settings` (không có cột riêng). */
-export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime', 'reminders'] as const
+export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime', 'reminders', 'ai'] as const
 
 export const ALL_WEEKDAYS = [0, 1, 2, 3, 4, 5, 6]
 
@@ -128,7 +131,7 @@ export function deviceTimeZone(): string {
 }
 
 export function profileDefaults(timeZone = deviceTimeZone()): ProfileData {
-  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, reminders: { ...REMINDER_DEFAULTS }, fsrs: { ...FSRS_DEFAULTS }, ...LEARNING_DEFAULTS }
+  return { displayName: '', dailyMinutes: 15, studyWeekdays: [...ALL_WEEKDAYS], timeZone, reminders: { ...REMINDER_DEFAULTS }, fsrs: { ...FSRS_DEFAULTS }, ai: { ...AI_DEFAULTS }, ...LEARNING_DEFAULTS }
 }
 
 export function isValidTimeZone(tz: string): boolean {
@@ -167,6 +170,7 @@ export function sanitizeProfile(raw: Partial<Record<keyof ProfileData, unknown>>
     timeZone: tz,
     reminders: sanitizeReminders(raw.reminders, base.reminders),
     fsrs: sanitizeFsrs(raw.fsrs, base.fsrs),
+    ai: sanitizeAi(raw.ai, base.ai),
     accent: oneOf(raw.accent, ['us', 'uk'], base.accent),
     dailyNewWords: clampInt(raw.dailyNewWords, 0, 200, base.dailyNewWords),
     reviewLimit: clampInt(raw.reviewLimit, 1, 1000, base.reviewLimit),

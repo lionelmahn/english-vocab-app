@@ -147,6 +147,7 @@ describe('dữ liệu kéo về đổi lại đúng như trên thiết bị', ()
       timeZone: 'Asia/Ho_Chi_Minh',
       reminders: { study: false, due: true, dueMin: 20, duePerDay: 1, quietStart: '23:00', quietEnd: '06:30' },
       fsrs: { retention: 0.85, weights: default_w.map((w, i) => (i === 8 ? 1.5 : w)), optimizedAt: T, optimizedReviews: 512, improvement: 0.061 },
+      ai: { enabled: false, model: 'llama-3.3-70b', dailyLimit: 30 },
       accent: 'uk',
       dailyNewWords: 15,
       reviewLimit: 100,

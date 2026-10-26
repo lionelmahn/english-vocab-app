@@ -1,10 +1,11 @@
 {
   "name": "english-vocab",
   "private": true,
-  "version": "0.25.0",
+  "version": "0.26.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "wrangler dev --port 8787",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "push-keys": "node scripts/push-keys.mjs",

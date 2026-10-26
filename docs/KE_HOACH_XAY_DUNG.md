@@ -426,7 +426,14 @@ Nguyên tắc:
 > **Cập nhật 26/10/2026 (bản 0.25.0): Hình minh họa cho từ (R2.6) → giai đoạn 4 hoàn tất (17/17).**
 > - Thẻ “Hình minh họa” ở trang một từ: “Thêm ảnh” (chọn ảnh hoặc chụp), “Đổi ảnh”, “Xóa ảnh”. Ảnh thu nhỏ trên máy (cạnh dài ≤ 1024 px, JPEG, ≤ 1 MB, vẽ lại qua canvas nên bỏ EXIF; chờ ảnh bằng `onload` vì `img.decode()` có thể treo khi trang chạy nền). Ảnh hiện cả ở mặt sau thẻ từ khi học. Ghi chú, mẹo nhớ, âm thanh đã có từ trước.
 > - Dữ liệu: Dexie v10 `itemImages` + `imageBlobs`; bảng tùy chọn `item_images` + kho riêng tư “images” (`images/<uid>/<id>.jpg`) trong **`supabase/migrations/20261028000000_item_images.sql` — người dùng cần chạy file này trong SQL Editor**; chưa chạy thì ảnh chỉ nằm trên máy, các bảng khác vẫn đồng bộ, mục Đồng bộ ở Cá nhân nhắc. Tải lên ở mỗi lượt đồng bộ (`syncImages`), máy khác tải về khi cần hiện; ảnh bỏ thì xóa file trên kho và trên máy. Xóa từ thì bỏ luôn ảnh; xóa tài khoản thì xóa cả file ảnh.
-> - Hướng dẫn: thêm phần “Hình minh họa, ghi chú và mẹo nhớ”. 322 test (thêm/đổi/xóa, tải lên và dọn file, hai máy qua máy chủ thử, máy chủ chưa chạy SQL). Đã thử trên trình duyệt (sáng và tối): ảnh 2400×1600 PNG 2,8 MB → JPEG 1024×683 12,6 KB, hiện ở trang từ và mặt sau thẻ giới thiệu, xóa ảnh. Đã thử trên trình duyệt (sáng và tối): ôn chủ động từ trang Hôm nay (lượt ghi `practice`, lịch ôn không đổi, từ sai được luyện lại, tổng kết “Đã ôn chủ động xong!”); tạm dừng rồi học lại một từ; chọn 4 từ trong bộ → tạm dừng 2 từ, ôn chủ động các từ đã chọn.
+> - Hướng dẫn: thêm phần “Hình minh họa, ghi chú và mẹo nhớ”. 322 test (thêm/đổi/xóa, tải lên và dọn file, hai máy qua máy chủ thử, máy chủ chưa chạy SQL). Đã thử trên trình duyệt (sáng và tối): ảnh 2400×1600 PNG 2,8 MB → JPEG 1024×683 12,6 KB, hiện ở trang từ và mặt sau thẻ giới thiệu, xóa ảnh.
+
+> **Cập nhật 26/10/2026 (bản 0.26.0): Bắt đầu giai đoạn 5 theo hướng 0đ — nền tảng trợ lý AI (R8.8).** Kế hoạch: [KE_HOACH_GIAI_DOAN_5.md](KE_HOACH_GIAI_DOAN_5.md).
+> - Worker của app có thêm `POST /api/ai` (`app/worker/`): kiểm tra phiên Supabase bằng khóa công khai ES256 của dự án (JWKS, WebCrypto, không cần khóa bí mật hay thư viện mới; khóa đổi thì tự tải lại), chỉ nhận model trong danh sách, giới hạn độ dài, gọi Cloudflare Workers AI qua binding `AI`. Hết hạn mức miễn phí (lỗi 4006) → 429. File tĩnh vẫn phục vụ thẳng (`run_worker_first` chỉ cho `/api/*`). Khi phát triển: `npm run dev:api` (wrangler dev, cổng 8787), Vite chuyển `/api` sang đó.
+> - Thử tiếng Việt 20 từ × 5 model (khoảng 3.000 neuron, 0đ): [THU_AI_TIENG_VIET.md](THU_AI_TIENG_VIET.md). GPT-OSS 120B đúng nghĩa ≈ 19/20 → mặc định; Llama 3.3 70B, Llama 4 Scout (≈ 15/20) để chọn khi cần nhanh; bỏ Mistral Small, Qwen3. Mẹo nhớ do AI tạo yếu ở mọi model.
+> - App: `core/ai.ts` (model, cài đặt, đọc JSON, thống kê lượt theo ngày UTC, lời nhắc gợi ý thông tin từ), `services/ai.ts` (gọi kèm phiên đăng nhập, lưu kết quả theo khóa SHA-256 — hỏi lại không tốn neuron, đếm lượt, giới hạn/ngày trên máy, lỗi rõ ràng). Dexie v11 `aiCache`, `aiUsage`. Cài đặt AI (bật/tắt, model, giới hạn) nằm trong hồ sơ (ô `settings`), đồng bộ mọi máy, không cần SQL.
+> - Trang `/me/ai` “Trợ lý AI” (Cá nhân → Học tập): bật/tắt, chọn model, giới hạn 30/100/200 lượt/ngày, lượt và neuron đã dùng, xóa kết quả đã lưu, ô “Thử trợ lý” (xem trước gợi ý nghĩa, ví dụ, mẹo nhớ cho một từ). Bài hướng dẫn mới “Trợ lý AI”.
+> - 334 test (xác thực JWT với khóa tự tạo, yêu cầu sai, lỗi hạn mức, lưu kết quả, giới hạn ngày, danh sách model app khớp Worker). Đã thử trên trình duyệt (sáng và tối) phần giao diện và báo cần đăng nhập; trên trang chính thức `/api/ai` trả 401 khi chưa đăng nhập. **Chưa thử lời gọi AI thật qua app** vì cần bạn đăng nhập: mở Cá nhân → Trợ lý AI → “Thử trợ lý” trên điện thoại. Đã thử trên trình duyệt (sáng và tối): ôn chủ động từ trang Hôm nay (lượt ghi `practice`, lịch ôn không đổi, từ sai được luyện lại, tổng kết “Đã ôn chủ động xong!”); tạm dừng rồi học lại một từ; chọn 4 từ trong bộ → tạm dừng 2 từ, ôn chủ động các từ đã chọn.
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản
@@ -456,6 +463,7 @@ Nguyên tắc:
 - R7.3 (chấm phát âm qua dịch vụ như Azure Speech), R7.4 (kết hợp từ), R7.5 (từ dễ nhầm)
 - R1.8 (kiểm tra trình độ đầu vào, dựa trên các dải tần suất của NGSL)
 - Nếu muốn tra từ có sẵn nghĩa tiếng Việt sớm hơn, có thể kéo riêng R8.1 lên giai đoạn 2.
+- **Kế hoạch chi tiết, chi phí từng chức năng và các lựa chọn 0đ: [KE_HOACH_GIAI_DOAN_5.md](KE_HOACH_GIAI_DOAN_5.md)** (lập 26/10/2026). Đề xuất: làm trước theo hướng 0đ (Cloudflare Workers AI gói miễn phí + nội dung soạn sẵn), bật Claude sau nếu cần.
 
 ### Giai đoạn 6 — Khóa học và lộ trình (2–3 tuần, 6 chức năng)
 - R16.1 → R16.6. Khóa học dùng lại luồng học R4 và lưu từ qua R2.8; nội dung khóa ban đầu soạn bằng file seed.
@@ -483,13 +491,14 @@ Nguyên tắc:
 
 ### 5.2 AI (tùy chọn) — giá tham khảo tháng 10/2026
 
-Giả định dùng cá nhân: khoảng 20 yêu cầu ngắn/ngày (gợi ý nghĩa, ví dụ, mẹo nhớ, sửa câu) và 10 buổi hội thoại/tháng.
+Giả định dùng cá nhân khá chăm: khoảng 1.100 yêu cầu/tháng cho mọi chức năng AI của giai đoạn 5 (gợi ý nghĩa, ví dụ, mẹo nhớ, sửa câu, bài luyện, 10 buổi hội thoại…). Chi tiết từng chức năng ở [KE_HOACH_GIAI_DOAN_5.md](KE_HOACH_GIAI_DOAN_5.md).
 
 | Model | Giá (USD / 1 triệu token vào – ra) | Ước tính / tháng |
 |---|---|---|
-| Claude Opus 5.5 | 4 – 20 | ~9–10 USD (~250 nghìn đồng) |
-| Claude Sonnet 5.5 | 2 – 10 | ~5 USD (~120 nghìn đồng) |
-| Claude Haiku 5.5 | 0,10 – 0,50 | ~0,25 USD (~6 nghìn đồng) |
+| Cloudflare Workers AI, gói miễn phí | 10.000 neuron/ngày miễn phí | **0đ** (dùng khoảng 2.000–4.600 neuron/ngày) |
+| Claude Haiku 5.5 | 0,10 – 0,50 | ~0,35 USD (~9 nghìn đồng) |
+| Claude Sonnet 5.5 | 2 – 10 | ~7 USD (~190 nghìn đồng) |
+| Claude Opus 5.5 | 4 – 20 | ~14 USD (~375 nghìn đồng) |
 
 Chi phí một lần: sinh nghĩa tiếng Việt cho ~2.800 từ NGSL bằng Batch API (giảm 50%) tốn khoảng 13 USD với Opus 5.5, hoặc khoảng 0,3 USD với Haiku 5.5. Mọi con số trên chỉ là ước lượng; lượng token thực tế còn tùy độ dài câu trả lời và mức suy luận.
 

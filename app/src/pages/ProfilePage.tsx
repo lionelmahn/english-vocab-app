@@ -1,4 +1,4 @@
-import { AudioLines, Bell, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, Flag, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, Bot, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, Flag, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -297,6 +297,9 @@ export function ProfilePage() {
           </div>
           <Button icon={Brain} className="w-full" onClick={() => navigate('/me/memory')}>
             Mục tiêu ghi nhớ{profile ? ` · ${Math.round(profile.fsrs.retention * 100)}%` : ''}
+          </Button>
+          <Button icon={Bot} className="-mt-2 w-full" onClick={() => navigate('/me/ai')}>
+            Trợ lý AI{profile ? (profile.ai.enabled ? ' · đang bật' : ' · đang tắt') : ''}
           </Button>
         </div>
       </Card>

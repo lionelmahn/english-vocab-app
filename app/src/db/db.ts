@@ -1,5 +1,7 @@
 import Dexie, { type EntityTable } from 'dexie'
+import type { AiUsageRow } from '../core/ai'
 import type {
+  AiCacheEntry,
   AudioAsset,
   AudioBlob,
   AudioCacheEntry,
@@ -48,6 +50,8 @@ export class VocabDatabase extends Dexie {
   feedback!: EntityTable<FeedbackReport, 'id'>
   itemImages!: EntityTable<ItemImage, 'id'>
   imageBlobs!: EntityTable<ImageBlob, 'id'>
+  aiCache!: EntityTable<AiCacheEntry, 'key'>
+  aiUsage!: EntityTable<AiUsageRow, 'id'>
 
   constructor(name = 'english-vocab') {
     super(name)
@@ -80,6 +84,8 @@ export class VocabDatabase extends Dexie {
     this.version(9).stores({ lookupHistory: 'id, query, lookedUpAt', feedback: 'id, createdAt' })
     // Phiên bản 10: hình minh họa của từ (R2.6) và file ảnh trên máy.
     this.version(10).stores({ itemImages: 'id, itemId, updatedAt', imageBlobs: 'id' })
+    // Phiên bản 11: trợ lý AI (R8) — kết quả đã lưu và lượt dùng (R8.8), chỉ trên máy này.
+    this.version(11).stores({ aiCache: 'key, createdAt', aiUsage: 'id, at' })
   }
 }
 
