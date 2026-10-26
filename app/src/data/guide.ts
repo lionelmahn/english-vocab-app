@@ -43,8 +43,8 @@ export const GUIDE: GuideTopic[] = [
   {
     id: 'start',
     title: 'Bắt đầu nhanh',
-    summary: 'Vòng học mỗi ngày, năm tab và cách cài app lên điện thoại',
-    keywords: ['cài đặt app', 'màn hình chính', 'iphone', 'android', 'tab'],
+    summary: 'Vòng học mỗi ngày, năm tab, kiểm tra trình độ và cách cài app lên điện thoại',
+    keywords: ['cài đặt app', 'màn hình chính', 'iphone', 'android', 'tab', 'kiểm tra trình độ', 'vốn từ', 'đã biết'],
     blocks: [
       { p: 'App giúp bạn nhớ từ vựng thật lâu bằng cách tự hẹn lần ôn cho mỗi từ vào đúng lúc bạn sắp quên nó. Mỗi ngày chỉ cần hai việc: học vài từ mới và ôn các từ đến hạn. Muốn được nhắc học và nhắc ôn, bật “Nhắc nhở” ở tab “Cá nhân”.' },
       {
@@ -63,6 +63,14 @@ export const GUIDE: GuideTopic[] = [
           { term: '“Tra từ”', text: 'Tra nghĩa và phiên âm trên Wiktionary (một từ điển miễn phí trên mạng) rồi lưu nhanh vào sổ tay.' },
           { term: '“Thống kê”', text: 'Tiến độ, mục tiêu, hoạt động theo ngày và cấp ghi nhớ.' },
           { term: '“Cá nhân”', text: 'Hồ sơ, mục tiêu, cài đặt (giọng đọc, giao diện sáng/tối, cỡ chữ), đồng bộ, sao lưu và trang hướng dẫn này.' },
+        ],
+      },
+      { h: 'Kiểm tra trình độ' },
+      {
+        list: [
+          'Chưa chắc trình độ? Ở bước “Trình độ và mục đích” khi thiết lập lần đầu, hoặc ở “Cá nhân” → “Kiểm tra trình độ”, làm bài khoảng 5 phút: chọn nghĩa đúng của từ, từ dễ đến khó. Năm dải đầu là bộ 1.000 từ thông dụng (mỗi dải 200 từ), ba dải sau là từ khó hơn (khoảng B1, B2, C1); mỗi dải 6 câu. Dải nào đúng từ 2 câu trở xuống thì bài dừng sớm. Không biết thì chọn “Không biết”, đừng đoán.',
+          'Xong bài, app cho vốn từ ước lượng, trình độ gợi ý (bấm “Dùng trình độ này” để lưu vào hồ sơ) và số từ mới mỗi ngày vừa với trình độ và thời gian học bạn đặt. Ước lượng chỉ dựa trên vài câu mỗi dải nên chỉ để tham khảo.',
+          'Dải nào trong bộ 1.000 từ bạn đúng gần hết (từ 5/6) thì có thể đánh dấu cả dải là đã biết: các từ chưa học trong dải không vào buổi học từ mới nữa và được hẹn ôn lại sau vài ngày, như khi chọn “Mình đã biết từ này” lúc học. Chưa có bộ từ thì nút sẽ thêm bộ rồi đánh dấu. Việc này không tính vào lịch sử và thống kê; bấm “Hoàn tác” ngay sau đó, hoặc “Học lại từ đầu” ở trang một từ, để học lại.',
         ],
       },
       { h: 'Cài app lên điện thoại' },

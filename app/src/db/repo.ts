@@ -1,4 +1,4 @@
-import type { FSRS, Grade } from 'ts-fsrs'
+import { Rating, type FSRS, type Grade } from 'ts-fsrs'
 import type { ExerciseKind } from '../core/grading'
 import { applyReview, createScheduler, newCard } from '../core/scheduler'
 import type { AnswerEffect, SessionPlan, Step } from '../core/session'
@@ -252,6 +252,20 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       const cards = (await database.cardStates.bulkGet(ids)).filter((c): c is CardStateRow => !!c && c.deletedAt === null)
       if (cards.length > 0) await save([{ table: 'cardStates', rows: cards.map((c) => ({ ...c, deletedAt: now, updatedAt: now })) }], now)
       return cards.length
+    },
+
+    /**
+     * Đánh dấu đã biết sau bài kiểm tra trình độ (R1.8): từ chưa học được lên lịch như trả lời "Dễ" (giống "Mình đã
+     * biết từ này" khi học), nên không vào buổi học từ mới và vài ngày sau mới ôn lại. Không ghi lượt trả lời, để lịch
+     * sử và thống kê không bị tính thêm. Trả về các từ đã đánh dấu (để hoàn tác bằng `resetProgress`).
+     */
+    async markKnown(ids: ID[], now = Date.now()): Promise<ID[]> {
+      const items = (await database.vocabItems.bulkGet(ids)).filter((i): i is VocabItem => !!i && i.deletedAt === null && !i.archived)
+      const live = new Set((await database.cardStates.bulkGet(items.map((i) => i.id))).filter((c) => c && c.deletedAt === null).map((c) => c!.id))
+      const cards: CardStateRow[] = []
+      for (const item of items) if (!live.has(item.id)) cards.push(await repo.scheduledCard(item.id, Rating.Easy, now))
+      if (cards.length > 0) await save([{ table: 'cardStates', rows: cards }], now)
+      return cards.map((c) => c.id)
     },
 
     /** Tạm dừng ôn (R5.8): từ không đến hạn, không vào buổi ôn hay ôn chủ động cho tới khi bỏ tạm dừng. */

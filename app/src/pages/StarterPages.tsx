@@ -1,8 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { BookOpenCheck, Check, LogIn } from 'lucide-react'
+import { BookOpenCheck, Check, GraduationCap, LogIn } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { Buddy } from '../components/Buddy'
 import { BackButton, Chip, Segmented } from '../components/kit'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
@@ -129,7 +129,9 @@ export function WelcomePage() {
 function Welcome({ profile }: { profile: ProfileData }) {
   const navigate = useNavigate()
   const auth = useAuth()
-  const [step, setStep] = useState(0)
+  // Quay về từ bài kiểm tra trình độ: tiếp tục ở bước sau bước Trình độ.
+  const resume = (useLocation().state as { step?: number } | null)?.step
+  const [step, setStep] = useState(resume ?? 0)
   const [dir, setDir] = useState(1)
   const deck = STARTER_DECKS[0]
   const [withDeck, setWithDeck] = useState(true)
@@ -195,6 +197,14 @@ function Welcome({ profile }: { profile: ProfileData }) {
           {step === 1 && (
             <>
               <h1 className="text-[1.5rem] leading-tight font-bold">Trình độ và mục đích</h1>
+              <button
+                type="button"
+                onClick={() => navigate('/placement', { state: { from: 'welcome' } })}
+                className="flex items-center gap-3 rounded-2xl bg-accent-soft px-4 py-3 text-left text-accent"
+              >
+                <GraduationCap aria-hidden className="h-5 w-5 shrink-0" />
+                <span className="min-w-0 flex-1 text-sm font-semibold">Chưa chắc trình độ? Làm bài kiểm tra khoảng 5 phút</span>
+              </button>
               <div className="flex flex-col gap-2">
                 {SELF_LEVELS.map((l) => {
                   const on = profile.selfLevel === l.value

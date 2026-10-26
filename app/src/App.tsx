@@ -26,6 +26,7 @@ import { AiPage } from './pages/AiPage'
 import { ConfusablesPage } from './pages/ConfusablesPage'
 import { ExplainPage } from './pages/ExplainPage'
 import { ChatPage } from './pages/ChatPage'
+import { PlacementPage } from './pages/PlacementPage'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -60,7 +61,8 @@ function useWelcomeRedirect(pathname: string, navigate: (to: string, opts: { rep
   const auth = useAuth()
   const sync = useSyncStatus()
   useEffect(() => {
-    if (words !== 0 || welcomeDone() || /^\/(welcome|login|reset-password)(\/|$)/.test(pathname)) return
+    // Bài kiểm tra trình độ mở được từ bước thiết lập (R1.8).
+    if (words !== 0 || welcomeDone() || /^\/(welcome|login|reset-password|placement)(\/|$)/.test(pathname)) return
     if (auth.status === 'loading' || (auth.status === 'signed_in' && !sync.lastSyncedAt)) return
     navigate('/welcome', { replace: true })
   }, [words, auth.status, sync.lastSyncedAt, pathname, navigate])
@@ -175,6 +177,7 @@ export default function App() {
                   <Route path="/confusables" element={<ConfusablesPage />} />
                   <Route path="/explain" element={<ExplainPage />} />
                   <Route path="/chat" element={<ChatPage />} />
+                  <Route path="/placement" element={<PlacementPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

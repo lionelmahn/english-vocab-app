@@ -93,6 +93,28 @@ describe('repo — mục học và bộ từ', () => {
     expect(lib.cards.size).toBe(0)
   })
 
+  it('đánh dấu đã biết sau bài kiểm tra trình độ (R1.8): chỉ từ chưa học, lên lịch như Dễ, không ghi lượt; hoàn tác được', async () => {
+    const a = await repo.createItem(input('alpha', 'a'))
+    const b = await repo.createItem(input('beta', 'b'))
+    const learned = await repo.createItem(input('gamma', 'c'))
+    const archived = await repo.createItem(input('delta', 'd'))
+    await repo.setItemFlags(archived, { archived: true }, T0)
+    const before = await repo.scheduledCard(learned, Rating.Good, T0 - 86_400_000)
+    await database.cardStates.put(before)
+    const ids = await repo.markKnown([a, b, learned, archived, 'missing'], T0)
+    expect(ids.sort()).toEqual([a, b].sort())
+    let lib = await loadLibrary(database)
+    expect(learnCandidates(lib).map((i) => i.id)).not.toContain(a)
+    expect(lib.cards.get(a)!.reps).toBe(1)
+    // Lên lịch như "Dễ": vài ngày sau mới ôn lại, xa hơn trả lời "Tốt".
+    expect(lib.cards.get(a)!.due).toBeGreaterThan(T0 + 2 * 86_400_000)
+    expect(lib.cards.get(learned)).toEqual(before)
+    expect(await database.reviewLogs.count()).toBe(0)
+    expect(await repo.resetProgress(ids, T0 + 1)).toBe(2)
+    lib = await loadLibrary(database)
+    expect(learnCandidates(lib).map((i) => i.id)).toEqual(expect.arrayContaining([a, b]))
+  })
+
   it('tạm dừng ôn và học lại từ đầu nhiều từ một lúc (R5.8)', async () => {
     const a = await repo.createItem(input('alpha', 'a'))
     const b = await repo.createItem(input('beta', 'b'))

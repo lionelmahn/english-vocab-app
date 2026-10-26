@@ -1,4 +1,4 @@
-import { AudioLines, Bell, Bot, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, Flag, FileUp, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
+import { AudioLines, Bell, Bot, Brain, CalendarDays, ChevronRight, CircleHelp, DatabaseBackup, Flag, FileUp, GraduationCap, HardDriveDownload, LogIn, LogOut, ShieldCheck, Smartphone, Target, Volume2 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 import { Avatar } from '../components/Avatar'
@@ -11,6 +11,7 @@ import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { updateSettings, useSettings } from '../lib/settings'
 import { isInstalled } from '../lib/device'
 import { APP_VERSION } from '../lib/version'
+import { readPlacementLast } from '../lib/placementLast'
 import { signOut, useAuth } from '../services/auth'
 import { voiceLabel } from '../core/voices'
 import { englishVoices, hasExactVoice, isAppleDevice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
@@ -301,6 +302,7 @@ export function ProfilePage() {
           <Button icon={Bot} className="-mt-2 w-full" onClick={() => navigate('/me/ai')}>
             Trợ lý AI{profile ? (profile.ai.enabled ? ' · đang bật' : ' · đang tắt') : ''}
           </Button>
+          <PlacementButton onOpen={() => navigate('/placement')} />
         </div>
       </Card>
 
@@ -406,5 +408,23 @@ export function ProfilePage() {
 
       <p className="pt-2 text-center text-xs text-subtle">Phiên bản {APP_VERSION}</p>
     </Page>
+  )
+}
+
+/** Kiểm tra trình độ (R1.8), kèm kết quả lần gần nhất trên máy này. */
+function PlacementButton({ onOpen }: { onOpen: () => void }) {
+  const [last] = useState(readPlacementLast)
+  const level = last ? SELF_LEVELS.find((l) => l.value === last.level) : undefined
+  return (
+    <div className="-mt-2 flex flex-col gap-1">
+      <Button icon={GraduationCap} className="w-full" onClick={onOpen}>
+        Kiểm tra trình độ
+      </Button>
+      {last && (
+        <p className="px-1 text-xs text-subtle">
+          Lần gần nhất ({new Date(last.at).toLocaleDateString('vi-VN')}): khoảng {new Intl.NumberFormat('vi-VN').format(last.estimate)} từ{level ? `, ${level.label}` : ''}.
+        </p>
+      )}
+    </div>
   )
 }
