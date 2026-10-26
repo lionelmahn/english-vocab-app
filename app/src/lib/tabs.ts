@@ -19,6 +19,7 @@ const BELONGS_TO: [prefix: string, tab: string][] = [
   ['/words', '/notebook'],
   ['/decks', '/notebook'],
   ['/import', '/notebook'],
+  ['/confusables', '/lookup'],
   ['/backup', '/me'],
   ['/help', '/me'],
   ['/login', '/me'],

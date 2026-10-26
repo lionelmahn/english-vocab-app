@@ -7,10 +7,12 @@ import { shuffle, type ChoiceSource, type TermSource } from '../core/exercises'
 import type { AttemptResult, ExerciseKind } from '../core/grading'
 import { composeAnswer, letterCount, letterMask, nextHintSlot, pickReveals, scaffoldCount, slotTemplate } from '../core/letters'
 import { POS_SHORT } from '../core/pos'
+import { sameSense } from '../core/reference'
 import { contextSentence } from '../core/vocab'
 import { repo } from '../db/repo'
 import type { CardStateRow, VocabItem } from '../db/types'
 import { formatDueIn } from '../lib/format'
+import { useWordReference } from '../lib/useReference'
 import { useSettings } from '../lib/settings'
 import { playCorrect, playWrong } from '../lib/sfx'
 import { useItemImage } from '../services/images'
@@ -132,6 +134,9 @@ function TermBack({ item }: { item: VocabItem }) {
   const { accent } = useSettings()
   const pic = useItemImage(item.id)
   const ipa = accent === 'uk' ? (item.ipaUk ?? item.ipaUs) : (item.ipaUs ?? item.ipaUk)
+  // Mẹo nhớ của từ, hoặc mẹo soạn sẵn (bộ 1.000 từ) nếu cùng loại từ.
+  const ref = useWordReference(item.term)
+  const tip = item.mnemonic || (sameSense(ref ?? undefined, item.partOfSpeech) ? ref?.mnemonic : undefined)
   return (
     <>
       {pic?.url && <img src={pic.url} alt="" className="max-h-32 max-w-full rounded-2xl object-contain" />}
@@ -141,6 +146,12 @@ function TermBack({ item }: { item: VocabItem }) {
         <TermLabel item={item} />
       </p>
       {item.examples[0]?.vi && <p className="mt-2 text-[0.9375rem] text-muted italic">{item.examples[0].vi}</p>}
+      {tip && (
+        <p className="mt-3 flex max-w-sm gap-2 text-left text-sm leading-snug text-muted">
+          <Lightbulb aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+          <span>{tip}</span>
+        </p>
+      )}
     </>
   )
 }

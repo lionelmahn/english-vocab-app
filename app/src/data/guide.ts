@@ -15,7 +15,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback' | 'ai'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback' | 'ai' | 'usage'
 
 export type GuideBlock =
   | { h: string }
@@ -154,9 +154,10 @@ export const GUIDE: GuideTopic[] = [
           'Ở trang một từ, thẻ “Hình minh họa” có nút “Thêm ảnh”: chọn ảnh có sẵn hoặc chụp bằng camera. App thu nhỏ ảnh (cạnh dài tối đa 1024 điểm ảnh, dưới 1 MB) trước khi lưu, nên ảnh chụp từ điện thoại cũng lưu nhanh. Bấm “Đổi ảnh” để thay, “Xóa ảnh” để bỏ.',
           'Ảnh hiện ở trang của từ và ở mặt sau thẻ từ khi học (lúc lật thẻ giới thiệu hoặc thẻ tự đánh giá).',
           'Ảnh được lưu trên máy trước rồi đồng bộ sang các máy khác đã đăng nhập; máy khác tải ảnh về khi cần hiện (cần mạng lần đầu). Kho ảnh trên máy chủ cần chạy file SQL hình minh họa một lần; chưa chạy thì ảnh chỉ nằm trên máy đã thêm, và mục “Đồng bộ” ở “Cá nhân” sẽ nhắc.',
-          'Ghi chú và mẹo nhớ nhập ở trang sửa từ, trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)”; chúng hiện ở trang của từ. Âm thanh của từ (ghi âm, tải file, chọn bản Wiktionary) xem bài hướng dẫn về âm thanh.',
+          'Ghi chú và mẹo nhớ nhập ở trang sửa từ, trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)”; chúng hiện ở trang của từ. Mẹo nhớ còn hiện ở mặt sau thẻ khi học. Âm thanh của từ (ghi âm, tải file, chọn bản Wiktionary) xem bài hướng dẫn về âm thanh.',
+          'Với từ của bộ 1.000 từ thông dụng (kể cả khi bạn tự thêm đúng từ đó, cùng loại từ), app có sẵn mẹo nhớ cho khoảng hai phần ba số từ (bỏ qua các từ quá cơ bản như the, go, yes) và ba câu ví dụ theo trình độ A2, B1, B2. Từ chưa có mẹo nhớ của bạn thì trang của từ hiện “Mẹo nhớ soạn sẵn”, và mẹo này cũng hiện ở mặt sau thẻ khi học; bấm “Dùng mẹo này” để lưu thành mẹo nhớ của bạn và sửa được. Bấm “Thêm câu ví dụ” để mở bảng có mục “Câu soạn sẵn” (câu đúng trình độ của bạn đứng đầu), rồi “Thêm” ở câu muốn giữ.',
           'Nếu bật Trợ lý AI, ở trang một từ bấm “Gợi ý mẹo nhớ bằng AI” để xem ba kiểu mẹo: theo âm đọc, bằng hình ảnh và tách từ. Bấm “Dùng mẹo này” để lưu (thay mẹo cũ nếu có) hoặc “Gợi ý mẹo khác” để xin mẹo mới. Mẹo AI có lúc gượng hoặc đoán sai gốc từ; hãy chọn mẹo bạn thấy dễ nhớ và sửa ở trang sửa từ nếu cần.',
-          'Cũng ở trang một từ, bấm “Thêm câu ví dụ bằng AI” (khi từ chưa đủ 5 câu), chọn chủ đề rồi bấm “Soạn 3 câu ví dụ”. AI viết câu theo trình độ bạn chọn ở “Cá nhân” (chạm vào tên của bạn) và theo mục đích học; bấm “Thêm” ở câu muốn giữ, hoặc “Soạn câu khác” để xin câu mới.',
+          'Cũng ở trang một từ, bấm “Thêm câu ví dụ bằng AI” (khi từ chưa đủ 5 câu; với từ có câu soạn sẵn thì nút là “Thêm câu ví dụ” và phần AI nằm ở mục “Soạn bằng AI” trong cùng bảng), chọn chủ đề rồi bấm “Soạn 3 câu ví dụ”. AI viết câu theo trình độ bạn chọn ở “Cá nhân” (chạm vào tên của bạn) và theo mục đích học; bấm “Thêm” ở câu muốn giữ, hoặc “Soạn câu khác” để xin câu mới.',
         ],
       },
       { h: 'Sửa, lưu trữ, xóa' },
@@ -913,7 +914,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ'],
     blocks: [
       {
-        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay), kết hợp từ và từ dễ nhầm cho từ ngoài bộ 1.000 từ (xem bài Kết hợp từ và từ dễ nhầm). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
       },
       {
         terms: [
@@ -933,11 +934,48 @@ export const GUIDE: GuideTopic[] = [
       },
     ],
   },
+  {
+    id: 'usage',
+    title: 'Kết hợp từ và từ dễ nhầm',
+    summary: 'Cụm hay đi cùng, giới từ, mẫu câu; phân biệt từ hay nhầm và thử nhanh',
+    keywords: ['kết hợp từ', 'collocation', 'giới từ', 'mẫu câu', 'dễ nhầm', 'phân biệt', 'say tell', 'borrow lend'],
+    blocks: [
+      {
+        p: 'Trang của một từ có thêm thẻ “Kết hợp từ” và “Từ dễ nhầm”. Nội dung có sẵn trong app cho 1.000 từ của bộ từ thông dụng (kể cả khi bạn tự thêm đúng từ đó) và 250 nhóm từ dễ nhầm, xem được cả khi mất mạng. Khi tra một từ có nội dung này, trang “Tra từ” cũng hiện hai thẻ đó dưới phần nghĩa.',
+      },
+      {
+        terms: [
+          {
+            term: '“Kết hợp từ”',
+            text: 'Từ 3 đến 5 cụm hay dùng nhất, mỗi cụm ghi kiểu: “Cụm từ” (từ hay đi cùng: make a decision), “Giới từ” (giới từ đi kèm: depend on), “Mẫu câu” (cấu trúc: spend time V-ing). Cụm quan trọng có câu ví dụ, bản dịch và nút nghe.',
+          },
+          {
+            term: '“Từ dễ nhầm”',
+            text: 'Các nhóm có từ này (ví dụ say / tell / speak / talk). Chạm một nhóm để xem cách phân biệt nhanh, nghĩa, cách dùng và hai câu ví dụ cho mỗi từ (từ đang xét được tô màu). Từ gốc cũng hiện nhóm của dạng biến đổi, ví dụ trang “interest” có nhóm interested / interesting.',
+          },
+          {
+            term: '“Thử phân biệt”',
+            text: 'Bài thử nhanh trong mỗi nhóm: mỗi câu ví dụ thành một câu có chỗ trống, bạn chọn từ đúng. Lúc làm bài, phần cách dùng tạm ẩn để không lộ đáp án; xong thì xem điểm, “Làm lại” hoặc “Xem lại cách dùng”. Vài câu chấp nhận hai từ (như despite và in spite of), app ghi rõ từ bạn chọn cũng đúng. Bài thử không tính vào lịch ôn.',
+          },
+          {
+            term: 'Trang “Từ dễ nhầm”',
+            text: 'Ở “Tra từ”, khi ô tra đang trống, chạm thẻ “Từ dễ nhầm” để xem mọi nhóm; gõ từ tiếng Anh hoặc nghĩa tiếng Việt (không cần dấu) để tìm. Ở trang của một từ, bấm “Xem mọi nhóm từ dễ nhầm” cũng mở trang này.',
+          },
+        ],
+      },
+      {
+        list: [
+          'Từ không có nội dung soạn sẵn: nếu bật Trợ lý AI, thẻ “Kết hợp từ” có nút “Gợi ý kết hợp từ bằng AI” và thẻ “Từ dễ nhầm” có nút “Tìm từ dễ nhầm bằng AI”. Kết quả được lưu trên máy này, mở lại trang là thấy ngay, không tốn thêm lượt. AI có thể sai, nhất là ở bài thử của nhóm do AI soạn.',
+          'Nội dung soạn sẵn dùng chung cho mọi người học, không đồng bộ và không sửa được trong app. Thấy chỗ sai, bấm “Báo lỗi nội dung từ này” ở cuối trang của từ.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
-  { title: 'Thêm từ, học và ôn', topics: ['add-words', 'learn', 'review', 'schedule'] },
+  { title: 'Thêm từ, học và ôn', topics: ['add-words', 'usage', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
   { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account', 'feedback', 'ai'] },
 ]

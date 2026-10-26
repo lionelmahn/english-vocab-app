@@ -1,4 +1,4 @@
-import { BookmarkPlus, Check, ChevronDown, CloudOff, ExternalLink, History, LoaderCircle, Plus, RotateCcw, Search, SearchX, Trash2, Volume2, X } from 'lucide-react'
+import { BookmarkPlus, Check, ChevronDown, ChevronRight, CloudOff, ExternalLink, History, LoaderCircle, Plus, RotateCcw, Search, SearchX, Shuffle, Trash2, Volume2, X } from 'lucide-react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion, type Variants } from 'motion/react'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
@@ -18,6 +18,7 @@ import { cleanQuery, dictionary, type LookupResult } from '../services/dictionar
 import { suggestSenseMeanings } from '../services/aiTasks'
 import { useAiOn, useAiRun } from '../lib/useAi'
 import { AiErrorText, AiLink, AiNote } from '../components/AiAssist'
+import { LookupReference } from '../components/WordReference'
 import { speak } from '../services/speech'
 
 /** Số nghĩa hiện sẵn cho mỗi loại từ; còn lại bấm "Xem thêm". */
@@ -99,13 +100,25 @@ export function LookupPage() {
       <AnimatePresence mode="popLayout" initial={false}>
         {view === 'idle' && (
           <motion.div key="idle" {...fade}>
-            <RecentLookups onLookup={go}>
-              <EmptyState
-                icon={Volume2}
-                title="Tra từ và lưu nhanh"
-                body="Xem nghĩa theo loại từ, phiên âm Anh–Mỹ/Anh–Anh, nghe phát âm và câu ví dụ, rồi chọn nghĩa để lưu vào sổ tay."
-              />
-            </RecentLookups>
+            <div className="flex flex-col gap-3">
+              <RecentLookups onLookup={go}>
+                <EmptyState
+                  icon={Volume2}
+                  title="Tra từ và lưu nhanh"
+                  body="Xem nghĩa theo loại từ, phiên âm Anh–Mỹ/Anh–Anh, nghe phát âm và câu ví dụ, rồi chọn nghĩa để lưu vào sổ tay."
+                />
+              </RecentLookups>
+              <Link to="/confusables" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                  <Shuffle aria-hidden className="h-5 w-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[0.9375rem] font-semibold">Từ dễ nhầm</span>
+                  <span className="block text-[0.8125rem] leading-snug text-muted">borrow / lend, say / tell, fun / funny… cách phân biệt và bài thử nhanh</span>
+                </span>
+                <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+              </Link>
+            </div>
           </motion.div>
         )}
         {view === 'loading' && (
@@ -337,6 +350,8 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
           </Card>
         )
       })}
+
+      <LookupReference term={entry.title} />
 
       <p className="px-1 text-xs leading-relaxed text-subtle">
         Nguồn:{' '}

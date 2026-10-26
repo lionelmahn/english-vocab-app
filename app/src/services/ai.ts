@@ -145,6 +145,18 @@ export async function askJson<T>(opts: AskOptions, parse: (raw: unknown) => T | 
   return { data, cached: res.cached, neurons: res.neurons, ms: res.ms }
 }
 
+/**
+ * Kết quả đã lưu trên máy của một câu hỏi, không gọi AI và không tính lượt: để mở lại trang là thấy ngay kết quả lần
+ * trước. Chưa hỏi bao giờ, AI đang tắt hoặc kết quả không đọc được thì null.
+ */
+export async function peekJson<T>(opts: AskOptions, parse: (raw: unknown) => T | null, deps: Partial<AiDeps> = {}): Promise<T | null> {
+  const d = { ...defaults, ...deps }
+  const settings = await d.settings()
+  if (!settings.enabled) return null
+  const hit = await d.database.aiCache.get(await cacheKey(opts.task, settings.model, JSON.stringify([opts.system, opts.prompt ?? opts.messages, opts.schema ?? null])))
+  return hit ? parse(extractJson(hit.text)) : null
+}
+
 let settingsQueue: Promise<unknown> = Promise.resolve()
 
 /** Đổi cài đặt AI: các lần đổi chạy lần lượt, mỗi lần đọc bản mới nhất rồi gộp, nên bấm liền nhau không ghi đè nhau. */

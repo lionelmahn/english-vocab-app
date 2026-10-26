@@ -1,4 +1,6 @@
 import type { PartOfSpeech } from './pos'
+import { markWord, plainSentence, type Collocation, type CollocationKind, type ConfusableGroup, type ConfusableItem } from './reference'
+import { termKey } from './vocab'
 
 /**
  * Trợ lý AI (R8) — phần thuần: model được chọn, cài đặt, đọc JSON từ câu trả lời, thống kê lượt dùng (R8.8) và lời
@@ -337,4 +339,78 @@ export function toExamples(raw: unknown, term: string): { en: string; vi: string
 /** Trình độ CEFR từ trình độ trong hồ sơ (mặc định B1). */
 export function cefrOf(selfLevel: string | undefined): string {
   return { beginner: 'A1', elementary: 'A2', intermediate: 'B1', upper_intermediate: 'B2', advanced: 'C1' }[selfLevel ?? ''] ?? 'B1'
+}
+
+// ---- Kết hợp từ (R7.4) và từ dễ nhầm (R7.5) cho từ ngoài bộ soạn sẵn ---------------------------------
+
+export const COLLOCATIONS_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt.
+Với một từ tiếng Anh (kèm loại từ và nghĩa), liệt kê 3 đến 5 kết hợp từ thông dụng và hữu ích nhất cho người học.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"items": [{"kind": "col"|"prep"|"pattern", "en": string, "vi": string, "ex": string, "ex_vi": string}]}
+Quy tắc:
+- kind: "col" là cụm từ hay đi cùng (make a decision, heavy rain), "prep" là giới từ đi kèm (depend on, interested in), "pattern" là mẫu câu (spend time V-ing, too + adj + to V).
+- en: cụm tiếng Anh ngắn có chứa từ được hỏi; mẫu câu được dùng sb, sth, V, V-ing, to V.
+- vi: nghĩa tiếng Việt ngắn, tự nhiên.
+- ex: câu ví dụ tự nhiên 5 đến 14 từ có dùng cụm đó; ex_vi: bản dịch tiếng Việt tự nhiên. Ít nhất 2 mục có câu ví dụ; mục khác để chuỗi rỗng.
+- Chỉ đưa cụm thật sự phổ biến và đúng ngữ pháp; không bịa.`
+
+export function wordPrompt(term: string, partOfSpeech: PartOfSpeech, meaningVi: string): string {
+  return `Từ: "${term}" (${partOfSpeech}), nghĩa: ${meaningVi}`
+}
+
+const COLLOCATION_KINDS: readonly CollocationKind[] = ['col', 'prep', 'pattern']
+
+export function toCollocations(raw: unknown, term: string): Collocation[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).items) ? ((raw as Record<string, unknown>).items as unknown[]) : null
+  if (!list) return null
+  const out: Collocation[] = []
+  for (const c of list) {
+    const x = (c ?? {}) as Record<string, unknown>
+    const en = str(x.en, 80)
+    const vi = str(x.vi, 120)
+    if (!en || !vi || !usesTerm(en, term) || out.some((o) => o.en.toLowerCase() === en.toLowerCase())) continue
+    const ex = str(x.ex, 300)
+    out.push({ kind: COLLOCATION_KINDS.includes(x.kind as CollocationKind) ? (x.kind as CollocationKind) : 'col', en, vi, ex: ex || undefined, exVi: ex ? str(x.ex_vi, 300) || undefined : undefined })
+    if (out.length === 5) break
+  }
+  return out.length > 0 ? out : null
+}
+
+export const CONFUSABLES_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt.
+Với một từ tiếng Anh, tìm MỘT nhóm từ mà người Việt hay nhầm với nó nhất: nghĩa gần nhau nhưng cách dùng khác, hoặc viết, đọc gần giống. Nhóm có 2 hoặc 3 từ thông dụng và phải có chứa từ được hỏi.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"groups": [{"words": [string], "summary": string, "items": [{"word": string, "meaning": string, "usage": string, "examples": [{"en": string, "vi": string}]}]}]}
+Quy tắc:
+- groups chỉ có 1 phần tử. Không chọn từ thô tục hay nhạy cảm.
+- summary: 1 hoặc 2 câu tiếng Việt nói cách phân biệt nhanh nhất.
+- items: mỗi từ trong words có đúng một mục, theo đúng thứ tự. meaning: nghĩa tiếng Việt ngắn. usage: cách dùng bằng tiếng Việt, kèm mẫu tiếng Anh (không dùng ngoặc vuông).
+- examples: 2 câu tiếng Anh tự nhiên, 6 đến 14 từ, cho mỗi từ. Đặt từ đó (dạng đã chia nếu có) trong ngoặc vuông, ví dụ "Could you [lend] me your pen?". Câu phải sai hoặc đổi nghĩa nếu thay bằng từ khác trong nhóm. vi là bản dịch tiếng Việt, không có ngoặc vuông.
+- Nếu không có từ nào người Việt hay nhầm với từ này thì trả {"groups": []}.`
+
+/** Nhóm từ dễ nhầm do AI đưa: bỏ nhóm không chứa từ được hỏi, câu không đánh dấu được từ. Danh sách rỗng là câu trả lời hợp lệ. */
+export function toConfusables(raw: unknown, term: string): ConfusableGroup[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).groups) ? ((raw as Record<string, unknown>).groups as unknown[]) : null
+  if (!list) return null
+  const key = termKey(term)
+  const out: ConfusableGroup[] = []
+  for (const g of list.slice(0, 1)) {
+    const x = (g ?? {}) as Record<string, unknown>
+    const words = [...new Set((Array.isArray(x.words) ? x.words : []).map((w) => str(w, 40)).filter(Boolean))].slice(0, 4)
+    if (words.length < 2 || !words.some((w) => termKey(w) === key)) continue
+    const raws = (Array.isArray(x.items) ? x.items : []).map((i) => (i ?? {}) as Record<string, unknown>)
+    const items: ConfusableItem[] = []
+    for (const w of words) {
+      const it = raws.find((i) => termKey(str(i.word, 40)) === termKey(w))
+      if (!it) break
+      const examples = (Array.isArray(it.examples) ? it.examples : [])
+        .map((e) => (e ?? {}) as Record<string, unknown>)
+        .map((e) => ({ en: markWord(str(e.en, 300), w), vi: plainSentence(str(e.vi, 300)) }))
+        .filter((e): e is { en: string; vi: string } => !!e.en)
+        .slice(0, 2)
+      items.push({ word: w, meaning: str(it.meaning, 100), usage: plainSentence(str(it.usage, 300)), examples })
+    }
+    if (items.length !== words.length || items.some((i) => !i.meaning)) continue
+    out.push({ id: `ai-${termKey(words.join(' '))}`, words, summary: plainSentence(str(x.summary, 400)).replace(/\*+/g, ''), items, related: [] })
+  }
+  return out.length > 0 || list.length === 0 ? out : null
 }

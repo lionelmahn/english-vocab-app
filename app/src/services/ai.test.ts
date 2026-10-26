@@ -1,8 +1,8 @@
 import 'fake-indexeddb/auto'
 import { afterEach, describe, expect, it } from 'vitest'
-import { AI_DEFAULTS, cefrOf, defaultTopic, examplesPrompt, extractJson, sanitizeAi, toExamples, toMnemonics, toSenseMeanings, toWordInfo, usageSummary, usesTerm, type AiSettings, type AiUsageRow } from '../core/ai'
+import { AI_DEFAULTS, cefrOf, defaultTopic, examplesPrompt, extractJson, sanitizeAi, toCollocations, toConfusables, toExamples, toMnemonics, toSenseMeanings, toWordInfo, usageSummary, usesTerm, type AiSettings, type AiUsageRow } from '../core/ai'
 import { VocabDatabase } from '../db/db'
-import { AiError, askAI, askJson, type AiDeps } from './ai'
+import { AiError, askAI, askJson, peekJson, type AiDeps } from './ai'
 
 const opened: VocabDatabase[] = []
 afterEach(async () => {
@@ -47,6 +47,17 @@ describe('gọi trợ lý AI', () => {
       [false, 42.5],
       [true, 0],
     ])
+  })
+
+  it('xem kết quả đã lưu mà không gọi AI, không tính lượt', async () => {
+    const { deps, calls, database } = setup()
+    const parse = (raw: unknown) => toWordInfo(raw, 'issue')
+    expect(await peekJson(ASK, parse, deps)).toBeNull()
+    await askJson(ASK, parse, deps)
+    expect((await peekJson(ASK, parse, deps))?.senses[0].meaningVi).toBe('vấn đề')
+    expect(await peekJson(ASK, parse, { ...deps, settings: async () => ({ ...AI_DEFAULTS, enabled: false }) })).toBeNull()
+    expect(calls).toHaveLength(1)
+    expect(await database.aiUsage.count()).toBe(1)
   })
 
   it('đọc JSON theo khuôn; JSON hỏng thì báo lỗi và không giữ lại câu trả lời hỏng', async () => {
@@ -159,5 +170,53 @@ describe('kiểm kết quả AI cho nghĩa, mẹo nhớ, câu ví dụ (R8.1, R8
     expect(p).toContain('Trình độ người học: A2')
     expect(p).toContain('lần 2')
     expect(examplesPrompt({ term: 'issue', partOfSpeech: 'noun', meaningVi: 'vấn đề', level: 'A2', topic: 'Du lịch' })).not.toContain('lần')
+  })
+})
+
+describe('kiểm kết quả AI cho kết hợp từ và từ dễ nhầm (R7.4, R7.5)', () => {
+  it('kết hợp từ: bỏ cụm không chứa từ, cụm lặp, kiểu lạ thành "col"; tối đa 5', () => {
+    const raw = {
+      items: [
+        { kind: 'col', en: 'lend a hand', vi: 'giúp một tay', ex: 'Can you lend a hand?', ex_vi: 'Giúp một tay nhé?' },
+        { kind: 'prep', en: 'lend sth to sb', vi: 'cho ai mượn gì', ex: '', ex_vi: 'thừa' },
+        { kind: 'idiom', en: 'lending library', vi: 'thư viện cho mượn' },
+        { kind: 'col', en: 'Lend a hand', vi: 'lặp' },
+        { kind: 'col', en: 'give a hand', vi: 'không chứa từ' },
+        { kind: 'col', en: 'lend money', vi: 'cho vay tiền' },
+        { kind: 'col', en: 'lend support', vi: 'ủng hộ' },
+        { kind: 'col', en: 'lend weight', vi: 'thêm sức nặng' },
+      ],
+    }
+    const out = toCollocations(raw, 'lend')!
+    expect(out.map((c) => c.en)).toEqual(['lend a hand', 'lend sth to sb', 'lending library', 'lend money', 'lend support'])
+    expect(out[1]).toEqual({ kind: 'prep', en: 'lend sth to sb', vi: 'cho ai mượn gì', ex: undefined, exVi: undefined })
+    expect(out[2].kind).toBe('col')
+    expect(toCollocations({ items: [{ en: 'give up', vi: 'bỏ cuộc' }] }, 'lend')).toBeNull()
+    expect(toCollocations({ nope: 1 }, 'lend')).toBeNull()
+  })
+
+  it('từ dễ nhầm: nhóm phải chứa từ được hỏi, đủ mục cho mỗi từ; tự đánh dấu từ trong câu; danh sách rỗng hợp lệ', () => {
+    const raw = {
+      groups: [
+        {
+          words: ['lend', 'borrow'],
+          summary: '*lend* là cho mượn, [borrow] là mượn.',
+          items: [
+            { word: 'lend', meaning: 'cho mượn', usage: '[lend] sb sth', examples: [{ en: 'Could you lend me a pen?', vi: 'Cho tớ mượn bút?' }, { en: 'He lent me a car.', vi: 'Anh ấy cho tôi mượn xe.' }] },
+            { word: 'Borrow', meaning: 'mượn', usage: 'borrow sth from sb', examples: [{ en: 'Can I [borrow] it?', vi: 'Tớ [mượn] được không?' }] },
+          ],
+        },
+      ],
+    }
+    const [g] = toConfusables(raw, 'Lend')!
+    expect(g.words).toEqual(['lend', 'borrow'])
+    expect(g.summary).toBe('lend là cho mượn, borrow là mượn.')
+    expect(g.items[0].usage).toBe('lend sb sth')
+    // "lent" không đánh dấu được (dạng bất quy tắc) nên bị bỏ.
+    expect(g.items[0].examples).toEqual([{ en: 'Could you [lend] me a pen?', vi: 'Cho tớ mượn bút?' }])
+    expect(g.items[1].examples[0]).toEqual({ en: 'Can I [borrow] it?', vi: 'Tớ mượn được không?' })
+    expect(toConfusables({ groups: [] }, 'lend')).toEqual([])
+    expect(toConfusables({ groups: [{ words: ['say', 'tell'], summary: 'x', items: [] }] }, 'lend')).toBeNull()
+    expect(toConfusables({ groups: [{ words: ['lend', 'loan'], summary: 'x', items: [{ word: 'lend', meaning: 'cho mượn' }] }] }, 'lend')).toBeNull()
   })
 })

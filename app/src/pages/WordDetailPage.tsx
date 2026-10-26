@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Archive, ArchiveRestore, ChevronDown, Flag, Flame, Languages, Lightbulb, Mic, Pause, Pencil, Play, RotateCcw, StickyNote, Star, Trash } from 'lucide-react'
+import { Archive, ArchiveRestore, ChevronDown, Flag, Flame, Languages, Lightbulb, Mic, Pause, Pencil, Play, Plus, RotateCcw, StickyNote, Star, Trash } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -23,8 +23,12 @@ import { WordImageCard } from '../components/WordImage'
 import { SpeakPractice } from '../components/SpeakPractice'
 import { ReportSheet } from '../components/ReportSheet'
 import { AiLink } from '../components/AiAssist'
-import { AiExamplesSheet, AiMnemonicSheet } from '../components/AiWordExtras'
+import { AiMnemonicSheet, ExamplesSheet } from '../components/AiWordExtras'
+import { UseButton } from '../components/AiWordSuggest'
+import { CollocationsCard, ConfusablesCard } from '../components/WordReference'
+import { sameSense } from '../core/reference'
 import { useAiOn } from '../lib/useAi'
+import { useWordReference } from '../lib/useReference'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -40,6 +44,7 @@ export function WordDetailPage() {
   const [aiSheet, setAiSheet] = useState<'mnemonic' | 'examples' | null>(null)
   const aiOn = useAiOn()
   const [practice, setPractice] = useState(false)
+  const ref = useWordReference(lib?.itemById.get(id)?.term)
   const logs = useLiveQuery(async () => (await db.reviewLogs.where('itemId').equals(id).toArray()).sort((a, b) => b.reviewedAt - a.reviewedAt).slice(0, 10), [id], [])
 
   if (!lib) return null
@@ -56,6 +61,9 @@ export function WordDetailPage() {
   const status = itemStatus(item, card, now)
   const level = itemLevel(card)
   const decks = [...(lib.members.get(item.id) ?? [])].map((d) => lib.deckById.get(d)).filter((d) => !!d)
+  // Nội dung soạn sẵn (bộ 1.000 từ) viết theo một nghĩa: chỉ gợi ý mẹo nhớ, câu ví dụ khi cùng loại từ.
+  const ready = sameSense(ref ?? undefined, item.partOfSpeech)
+  const tip = ready && !item.mnemonic ? ref?.mnemonic : undefined
 
   return (
     <Page
@@ -86,7 +94,7 @@ export function WordDetailPage() {
 
       <VoiceClipPrompt item={item} />
 
-      {(item.examples.length > 0 || aiOn) && (
+      {(item.examples.length > 0 || aiOn || ready) && (
         <Card>
           <div className="mb-3 flex items-center justify-between">
             <SectionTitle className="">Câu ví dụ</SectionTitle>
@@ -115,16 +123,40 @@ export function WordDetailPage() {
               </li>
             ))}
           </ul>
-          {aiOn && item.examples.length < MAX_EXAMPLES && (
+          {(ready || aiOn) && item.examples.length < MAX_EXAMPLES && (
             <div className="mt-2">
-              <AiLink onClick={() => setAiSheet('examples')}>Thêm câu ví dụ bằng AI</AiLink>
+              {ready ? (
+                <button type="button" onClick={() => setAiSheet('examples')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                  <Plus aria-hidden className="h-4 w-4" /> Thêm câu ví dụ
+                </button>
+              ) : (
+                <AiLink onClick={() => setAiSheet('examples')}>Thêm câu ví dụ bằng AI</AiLink>
+              )}
             </div>
           )}
         </Card>
       )}
 
-      {(item.note || item.mnemonic || aiOn) && (
+      {(item.note || item.mnemonic || aiOn || tip) && (
         <Card>
+          {tip && (
+            <div className="flex items-start gap-3">
+              <p className="flex min-w-0 flex-1 gap-2.5 text-sm leading-relaxed">
+                <Lightbulb aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+                <span>
+                  <span className="block text-xs font-semibold text-muted">Mẹo nhớ soạn sẵn</span>
+                  {tip}
+                </span>
+              </p>
+              <UseButton
+                label="Dùng mẹo này"
+                onClick={async () => {
+                  await repo.setMnemonic(item.id, tip)
+                  showToast('Đã lưu mẹo nhớ')
+                }}
+              />
+            </div>
+          )}
           {item.mnemonic && (
             <p className="flex gap-2.5 text-sm leading-relaxed">
               <Lightbulb aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
@@ -138,15 +170,19 @@ export function WordDetailPage() {
             </p>
           )}
           {aiOn && (
-            <div className={item.note || item.mnemonic ? 'mt-2' : ''}>
-              {!item.mnemonic && !item.note && <p className="text-sm text-muted">Chưa có mẹo nhớ.</p>}
+            <div className={item.note || item.mnemonic || tip ? 'mt-2' : ''}>
+              {!item.mnemonic && !item.note && !tip && <p className="text-sm text-muted">Chưa có mẹo nhớ.</p>}
               <AiLink onClick={() => setAiSheet('mnemonic')}>{item.mnemonic ? 'Gợi ý mẹo nhớ khác bằng AI' : 'Gợi ý mẹo nhớ bằng AI'}</AiLink>
             </div>
           )}
         </Card>
       )}
       <AiMnemonicSheet item={item} open={aiSheet === 'mnemonic'} onClose={() => setAiSheet(null)} />
-      <AiExamplesSheet item={item} open={aiSheet === 'examples'} onClose={() => setAiSheet(null)} />
+      <ExamplesSheet item={item} ready={ready} open={aiSheet === 'examples'} onClose={() => setAiSheet(null)} />
+
+      <CollocationsCard item={item} />
+
+      <ConfusablesCard item={item} />
 
       <WordImageCard item={item} />
 

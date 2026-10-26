@@ -23,6 +23,7 @@ import { InsightsPage } from './pages/InsightsPage'
 import { AchievementsPage } from './pages/AchievementsPage'
 import { FeedbackPage } from './pages/FeedbackPage'
 import { AiPage } from './pages/AiPage'
+import { ConfusablesPage } from './pages/ConfusablesPage'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -169,6 +170,7 @@ export default function App() {
                   <Route path="/achievements" element={<AchievementsPage />} />
                   <Route path="/me/feedback" element={<FeedbackPage />} />
                   <Route path="/me/ai" element={<AiPage />} />
+                  <Route path="/confusables" element={<ConfusablesPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

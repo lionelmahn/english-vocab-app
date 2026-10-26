@@ -1,22 +1,28 @@
 import {
+  COLLOCATIONS_SYSTEM,
+  CONFUSABLES_SYSTEM,
   EXAMPLES_SYSTEM,
   examplesPrompt,
   MNEMONIC_SYSTEM,
   mnemonicPrompt,
   SENSE_MEANINGS_SYSTEM,
   senseMeaningsPrompt,
+  toCollocations,
+  toConfusables,
   toExamples,
   toMnemonics,
   toSenseMeanings,
   toWordInfo,
   WORD_INFO_SCHEMA,
   WORD_INFO_SYSTEM,
+  wordPrompt,
   type SenseInput,
 } from '../core/ai'
 import type { PartOfSpeech } from '../core/pos'
-import { askJson } from './ai'
+import type { VocabItem } from '../db/types'
+import { askJson, peekJson, type AskOptions } from './ai'
 
-/** Các tác vụ AI của app (R8.1, R8.3, R8.4). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
+/** Các tác vụ AI của app (R8.1, R8.3, R8.4, R7.4, R7.5). Kết quả được lưu theo nội dung hỏi: hỏi lại y hệt thì có ngay. */
 
 /** R8.1: nghĩa, loại từ, câu ví dụ và mẹo nhớ cho một từ (form thêm từ, ô "Thử trợ lý"). */
 export function suggestWordInfo(term: string) {
@@ -40,6 +46,8 @@ export interface WordRef {
   ipa?: string
 }
 
+export const wordRefOf = (item: VocabItem): WordRef => ({ term: item.term, partOfSpeech: item.partOfSpeech, meaningVi: item.meaningVi, meaningEn: item.meaningEn, ipa: item.ipaUs ?? item.ipaUk })
+
 /** R8.4: ba mẹo nhớ (theo âm, hình ảnh, tách từ). `attempt` > 1: xin mẹo khác. */
 export function suggestMnemonics(w: WordRef, attempt = 1) {
   const prompt = mnemonicPrompt(w.term, w.partOfSpeech, w.meaningVi, w.ipa) + (attempt > 1 ? `\nHãy đưa ra 3 mẹo mới, khác các mẹo trước (lần ${attempt}).` : '')
@@ -52,4 +60,26 @@ export function suggestExamples(w: WordRef, o: { level: string; topic: string; p
     { task: 'examples', system: EXAMPLES_SYSTEM, prompt: examplesPrompt({ term: w.term, partOfSpeech: w.partOfSpeech, meaningVi: w.meaningVi, meaningEn: w.meaningEn, ...o }), maxTokens: 1500 },
     (raw) => toExamples(raw, w.term),
   )
+}
+
+const collocationsAsk = (w: WordRef): AskOptions => ({ task: 'collocations', system: COLLOCATIONS_SYSTEM, prompt: wordPrompt(w.term, w.partOfSpeech, w.meaningVi), maxTokens: 1500 })
+const confusablesAsk = (w: WordRef): AskOptions => ({ task: 'confusables', system: CONFUSABLES_SYSTEM, prompt: wordPrompt(w.term, w.partOfSpeech, w.meaningVi), maxTokens: 2000 })
+
+/** R7.4: kết hợp từ cho từ không có trong nội dung soạn sẵn. */
+export function suggestCollocations(w: WordRef) {
+  return askJson(collocationsAsk(w), (raw) => toCollocations(raw, w.term))
+}
+
+/** Kết hợp từ AI đã gợi ý trước đây trên máy này (không gọi AI). */
+export function cachedCollocations(w: WordRef) {
+  return peekJson(collocationsAsk(w), (raw) => toCollocations(raw, w.term))
+}
+
+/** R7.5: nhóm từ dễ nhầm cho từ không có trong danh sách soạn sẵn. Danh sách rỗng: AI không thấy từ nào hay bị nhầm. */
+export function suggestConfusables(w: WordRef) {
+  return askJson(confusablesAsk(w), (raw) => toConfusables(raw, w.term))
+}
+
+export function cachedConfusables(w: WordRef) {
+  return peekJson(confusablesAsk(w), (raw) => toConfusables(raw, w.term))
 }
