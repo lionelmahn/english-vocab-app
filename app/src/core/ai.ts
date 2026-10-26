@@ -192,3 +192,149 @@ export function toWordInfo(raw: unknown, term: string): WordInfo | null {
   if (senses.length === 0) return null
   return { term: str(r.term, 200) || term, senses, mnemonicVi: str(r.mnemonic_vi, 300) }
 }
+
+// ---- Nghĩa tiếng Việt cho các nghĩa tiếng Anh đã chọn khi tra từ (R8.1) ---------------------------
+
+export interface SenseInput {
+  partOfSpeech: PartOfSpeech
+  definition: string
+  example?: string
+}
+
+export interface SenseMeaning {
+  meaningVi: string
+  exampleVi: string
+}
+
+export const SENSE_MEANINGS_SYSTEM = `Bạn là trợ lý từ điển Anh–Việt cho người Việt học tiếng Anh.
+Bạn nhận một từ tiếng Anh và danh sách các nghĩa tiếng Anh của nó (đánh số, có loại từ, có thể kèm câu ví dụ).
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"senses": [{"n": number, "meaning_vi": string, "example_vi": string}]}
+Quy tắc:
+- Mỗi nghĩa trong danh sách là một phần tử, giữ đúng số thứ tự n.
+- meaning_vi: nghĩa tiếng Việt ngắn gọn (tối đa 8 chữ), đúng với nghĩa tiếng Anh đó, như trong từ điển Anh–Việt.
+- example_vi: bản dịch tiếng Việt tự nhiên của câu ví dụ; nghĩa nào không có câu ví dụ thì để chuỗi rỗng.`
+
+export function senseMeaningsPrompt(term: string, senses: readonly SenseInput[]): string {
+  return [`Từ: "${term}"`, ...senses.map((s, i) => `${i + 1}. (${s.partOfSpeech}) ${s.definition}${s.example ? `\n   Ví dụ: ${s.example}` : ''}`)].join('\n')
+}
+
+/** Nghĩa tiếng Việt theo đúng thứ tự các nghĩa đã gửi; nghĩa thiếu thì để trống. Không có nghĩa nào thì null. */
+export function toSenseMeanings(raw: unknown, count: number): SenseMeaning[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).senses) ? ((raw as Record<string, unknown>).senses as unknown[]) : null
+  if (!list) return null
+  const out: SenseMeaning[] = Array.from({ length: count }, () => ({ meaningVi: '', exampleVi: '' }))
+  list.forEach((s, i) => {
+    const x = (s ?? {}) as Record<string, unknown>
+    const n = typeof x.n === 'number' && x.n >= 1 && x.n <= count ? x.n - 1 : i
+    if (n >= count || out[n].meaningVi) return
+    out[n] = { meaningVi: str(x.meaning_vi, 120), exampleVi: str(x.example_vi, 300) }
+  })
+  return out.some((m) => m.meaningVi) ? out : null
+}
+
+// ---- Mẹo nhớ (R8.4) ------------------------------------------------------------------------------
+
+export type MnemonicKind = 'sound' | 'image' | 'parts'
+
+export const MNEMONIC_KIND_LABEL: Record<MnemonicKind, string> = {
+  sound: 'Theo âm',
+  image: 'Hình ảnh',
+  parts: 'Tách từ',
+}
+
+export interface Mnemonic {
+  kind: MnemonicKind
+  text: string
+}
+
+export const MNEMONIC_SYSTEM = `Bạn là giáo viên tiếng Anh giỏi tạo mẹo ghi nhớ từ vựng cho người Việt.
+Với một từ tiếng Anh, loại từ và nghĩa tiếng Việt, đưa ra đúng 3 mẹo nhớ ngắn, mỗi kiểu một mẹo.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"mnemonics": [{"type": "sound"|"image"|"parts", "text": string}]}
+Ba kiểu:
+- sound: cách đọc của từ nghe gần giống một cụm tiếng Việt, rồi nối cụm đó với nghĩa thành một câu dễ nhớ. Ví dụ: "lazy" đọc gần "lây dì" → "Lây dì tính lười, cả nhà cùng lười (lazy = lười)".
+- image: một hình ảnh hoặc tình huống ngắn, cụ thể, gắn từ với nghĩa.
+- parts: tách từ thành các phần quen thuộc (tiền tố, gốc từ, hậu tố, hoặc từ ngắn bên trong) và giải thích vì sao ra nghĩa đó.
+Mỗi mẹo là một hoặc hai câu ngắn bằng tiếng Việt tự nhiên, có nhắc từ tiếng Anh và nghĩa; không cần đếm chữ. Không bịa nguồn gốc từ sai sự thật.`
+
+export function mnemonicPrompt(term: string, partOfSpeech: PartOfSpeech, meaningVi: string, ipa?: string): string {
+  return `Từ: "${term}" (${partOfSpeech})${ipa ? `, phát âm ${ipa}` : ''}\nNghĩa: ${meaningVi}`
+}
+
+const KINDS: readonly MnemonicKind[] = ['sound', 'image', 'parts']
+
+export function toMnemonics(raw: unknown): Mnemonic[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).mnemonics) ? ((raw as Record<string, unknown>).mnemonics as unknown[]) : null
+  if (!list) return null
+  const out: Mnemonic[] = []
+  for (const m of list.slice(0, 3)) {
+    const x = (m ?? {}) as Record<string, unknown>
+    const text = str(x.text, 300)
+    if (!text || /^none$/i.test(text)) continue
+    const kind = KINDS.includes(x.type as MnemonicKind) ? (x.type as MnemonicKind) : KINDS[out.length] ?? 'image'
+    out.push({ kind, text })
+  }
+  return out.length > 0 ? out : null
+}
+
+// ---- Câu ví dụ theo trình độ, chủ đề, mục đích (R8.3) -----------------------------------------------
+
+export const EXAMPLE_TOPICS = ['Đời sống hằng ngày', 'Công việc', 'Du lịch', 'Học tập, thi cử', 'Công nghệ', 'Sức khỏe'] as const
+export type ExampleTopic = (typeof EXAMPLE_TOPICS)[number]
+
+/** Chủ đề mặc định theo mục đích học trong hồ sơ. */
+export function defaultTopic(purpose: string | undefined): ExampleTopic {
+  const p = (purpose ?? '').toLowerCase()
+  if (/công việc|chuyên ngành/.test(p)) return 'Công việc'
+  if (/ielts|toeic|du học|thi/.test(p)) return 'Học tập, thi cử'
+  if (/du lịch/.test(p)) return 'Du lịch'
+  return 'Đời sống hằng ngày'
+}
+
+export const EXAMPLES_SYSTEM = `Bạn là giáo viên tiếng Anh cho người Việt.
+Viết đúng 3 câu ví dụ tiếng Anh tự nhiên, mỗi câu dùng đúng từ được cho với đúng nghĩa đã cho, hợp trình độ và chủ đề của người học, kèm bản dịch tiếng Việt tự nhiên.
+Trả về DUY NHẤT một đối tượng JSON (không giải thích, không markdown) đúng khuôn:
+{"examples": [{"en": string, "vi": string}]}
+Quy tắc:
+- Mỗi câu 6 đến 16 từ. Trình độ A1–A2: câu đơn giản, từ vựng cơ bản. B1–B2: câu đời thường. C1: câu phong phú hơn.
+- Ba câu khác nhau về tình huống; không dùng tên riêng lạ.
+- Bản dịch tiếng Việt sát nghĩa, tự nhiên như người Việt nói.`
+
+export function examplesPrompt(o: { term: string; partOfSpeech: PartOfSpeech; meaningVi: string; meaningEn?: string; level: string; topic: string; purpose?: string; attempt?: number }): string {
+  return [
+    `Từ: "${o.term}" (${o.partOfSpeech}), nghĩa: ${o.meaningVi}${o.meaningEn ? ` (${o.meaningEn})` : ''}`,
+    `Trình độ người học: ${o.level}`,
+    `Chủ đề: ${o.topic}`,
+    o.purpose ? `Mục đích học: ${o.purpose}` : '',
+    o.attempt && o.attempt > 1 ? `Hãy viết 3 câu mới, khác các câu đã viết trước đó (lần ${o.attempt}).` : '',
+  ]
+    .filter(Boolean)
+    .join('\n')
+}
+
+/** Câu có dùng từ (hoặc một dạng của nó): có ít nhất một từ thành phần dài từ 3 chữ cái xuất hiện ở đầu một từ trong câu. */
+export function usesTerm(sentence: string, term: string): boolean {
+  const parts = term.toLowerCase().match(/[a-z]{3,}/g)
+  if (!parts) return true
+  const words = sentence.toLowerCase().match(/[a-z]+/g) ?? []
+  return parts.some((p) => words.some((w) => w.startsWith(p.slice(0, Math.max(3, p.length - 2)))))
+}
+
+export function toExamples(raw: unknown, term: string): { en: string; vi: string }[] | null {
+  const list = raw && typeof raw === 'object' && Array.isArray((raw as Record<string, unknown>).examples) ? ((raw as Record<string, unknown>).examples as unknown[]) : null
+  if (!list) return null
+  const out = list
+    .slice(0, 3)
+    .map((e) => {
+      const x = (e ?? {}) as Record<string, unknown>
+      return { en: str(x.en, 300), vi: str(x.vi, 300) }
+    })
+    .filter((e) => e.en.split(' ').length >= 3 && usesTerm(e.en, term))
+  return out.length > 0 ? out : null
+}
+
+/** Trình độ CEFR từ trình độ trong hồ sơ (mặc định B1). */
+export function cefrOf(selfLevel: string | undefined): string {
+  return { beginner: 'A1', elementary: 'A2', intermediate: 'B1', upper_intermediate: 'B2', advanced: 'C1' }[selfLevel ?? ''] ?? 'B1'
+}

@@ -116,7 +116,11 @@ export async function askAI(opts: AskOptions, deps: Partial<AiDeps> = {}): Promi
   }
   if (res.status === 401) throw await fail('signed_out')
   if (res.status === 429) throw await fail('quota')
-  if (!res.ok) throw await fail('unavailable')
+  if (!res.ok) {
+    // Model nghĩ quá lâu mà chưa kịp trả lời (Worker báo "empty"): thử lại hoặc đổi model.
+    const err = (await res.json().catch(() => ({}))) as { error?: string }
+    throw await fail(err.error === 'empty' ? 'bad_output' : 'unavailable')
+  }
   const body = (await res.json()) as { text?: string; usage?: { inputTokens?: number; outputTokens?: number; neurons?: number } }
   if (!body.text) throw await fail('unavailable')
   const usage = body.usage ?? {}

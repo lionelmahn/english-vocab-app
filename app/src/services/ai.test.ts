@@ -1,6 +1,6 @@
 import 'fake-indexeddb/auto'
 import { afterEach, describe, expect, it } from 'vitest'
-import { AI_DEFAULTS, extractJson, sanitizeAi, toWordInfo, usageSummary, type AiSettings, type AiUsageRow } from '../core/ai'
+import { AI_DEFAULTS, cefrOf, defaultTopic, examplesPrompt, extractJson, sanitizeAi, toExamples, toMnemonics, toSenseMeanings, toWordInfo, usageSummary, usesTerm, type AiSettings, type AiUsageRow } from '../core/ai'
 import { VocabDatabase } from '../db/db'
 import { AiError, askAI, askJson, type AiDeps } from './ai'
 
@@ -112,5 +112,52 @@ describe('phần thuần của trợ lý AI', () => {
       now,
     )
     expect(s).toEqual({ todayRequests: 1, todayNeurons: 10, monthRequests: 2, monthNeurons: 20, monthCached: 1, monthErrors: 1 })
+  })
+})
+
+describe('kiểm kết quả AI cho nghĩa, mẹo nhớ, câu ví dụ (R8.1, R8.3, R8.4)', () => {
+  it('nghĩa tiếng Việt theo đúng số thứ tự; thiếu thì để trống; không có nghĩa nào thì null', () => {
+    expect(
+      toSenseMeanings({ senses: [{ n: 2, meaning_vi: 'số báo', example_vi: '' }, { n: 1, meaning_vi: 'vấn đề', example_vi: 'Đây là vấn đề lớn.' }] }, 3),
+    ).toEqual([
+      { meaningVi: 'vấn đề', exampleVi: 'Đây là vấn đề lớn.' },
+      { meaningVi: 'số báo', exampleVi: '' },
+      { meaningVi: '', exampleVi: '' },
+    ])
+    // Không có n thì theo thứ tự.
+    expect(toSenseMeanings({ senses: [{ meaning_vi: 'a' }, { meaning_vi: 'b' }] }, 2)?.map((m) => m.meaningVi)).toEqual(['a', 'b'])
+    expect(toSenseMeanings({ senses: [{ n: 1, meaning_vi: '' }] }, 1)).toBeNull()
+    expect(toSenseMeanings('x', 1)).toBeNull()
+  })
+
+  it('mẹo nhớ: bỏ mẹo rỗng hoặc "None", đoán kiểu khi model ghi sai', () => {
+    expect(toMnemonics({ mnemonics: [{ type: 'sound', text: ' Lây dì lười ' }, { type: 'image', text: 'None' }, { type: 'xyz', text: 'Tách: la + zy' }] })).toEqual([
+      { kind: 'sound', text: 'Lây dì lười' },
+      { kind: 'image', text: 'Tách: la + zy' },
+    ])
+    expect(toMnemonics({ mnemonics: [] })).toBeNull()
+  })
+
+  it('câu ví dụ phải dùng từ (kể cả dạng biến đổi) và đủ dài', () => {
+    expect(usesTerm('She issued a statement.', 'issue')).toBe(true)
+    expect(usesTerm('The plane took off at noon.', 'take off')).toBe(true)
+    expect(usesTerm('The weather is nice.', 'resilient')).toBe(false)
+    expect(usesTerm('I am here.', 'be')).toBe(true)
+    expect(
+      toExamples({ examples: [{ en: 'Children are resilient.', vi: 'Trẻ em kiên cường.' }, { en: 'Hi there.', vi: 'Chào' }, { en: 'The weather is very nice today.', vi: 'Trời đẹp.' }] }, 'resilient'),
+    ).toEqual([{ en: 'Children are resilient.', vi: 'Trẻ em kiên cường.' }])
+    expect(toExamples({ examples: [{ en: 'Nope.', vi: '' }] }, 'resilient')).toBeNull()
+  })
+
+  it('trình độ và chủ đề mặc định theo hồ sơ; lần soạn lại xin câu khác', () => {
+    expect(cefrOf('upper_intermediate')).toBe('B2')
+    expect(cefrOf(undefined)).toBe('B1')
+    expect(defaultTopic('Công việc, Du lịch')).toBe('Công việc')
+    expect(defaultTopic('Thi IELTS/TOEIC')).toBe('Học tập, thi cử')
+    expect(defaultTopic(undefined)).toBe('Đời sống hằng ngày')
+    const p = examplesPrompt({ term: 'issue', partOfSpeech: 'noun', meaningVi: 'vấn đề', level: 'A2', topic: 'Du lịch', attempt: 2 })
+    expect(p).toContain('Trình độ người học: A2')
+    expect(p).toContain('lần 2')
+    expect(examplesPrompt({ term: 'issue', partOfSpeech: 'noun', meaningVi: 'vấn đề', level: 'A2', topic: 'Du lịch' })).not.toContain('lần')
   })
 })

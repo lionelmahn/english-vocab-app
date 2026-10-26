@@ -4,13 +4,16 @@ import { useRef, useState, type FormEvent } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { BackButton, Chip, Sheet, SpeakButtons, TextArea } from '../components/kit'
 import { VoiceClipFormNote } from '../components/VoiceClip'
+import { useAiOn } from '../lib/useAi'
+import { AiWordSuggest } from '../components/AiWordSuggest'
+import type { WordSense } from '../core/ai'
 import { showToast } from '../lib/toast'
 import { Button, Card, Page, SectionTitle, TextField } from '../components/ui'
 import { liveCard } from '../core/library'
 import { POS_LABEL, POS_ORDER, type PartOfSpeech } from '../core/pos'
 import { meaningKey, parseTags, termKey, type DuplicateMatch } from '../core/vocab'
 import type { Library } from '../db/library'
-import { repo, type ItemInput } from '../db/repo'
+import { MAX_EXAMPLES, repo, type ItemInput } from '../db/repo'
 import type { Example, VocabItem } from '../db/types'
 import { useLibrary } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
@@ -119,11 +122,29 @@ function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; e
   const [exact, setExact] = useState<VocabItem | null>(null)
   const [progressAsk, setProgressAsk] = useState(false)
   const [busy, setBusy] = useState(false)
+  const aiOn = useAiOn()
   const andNew = useRef(false)
   const termRef = useRef<HTMLInputElement>(null)
 
   const decks = lib.decks.filter((d) => !d.archived || f.deckIds.includes(d.id))
   const hasProgress = !!editing && !!liveCard(lib.cards.get(editing.id))
+
+  /** Dùng một nghĩa AI gợi ý (R8.1): điền loại từ, nghĩa; câu ví dụ vào ô trống đầu tiên hoặc thêm câu mới. */
+  function useSense(s: WordSense) {
+    setF((x) => {
+      let examples = x.examples
+      const en = s.exampleEn.trim()
+      if (en && !examples.some((e) => e.en.trim().toLowerCase() === en.toLowerCase())) {
+        const ex = { en, vi: s.exampleVi }
+        const empty = examples.findIndex((e) => !e.en.trim())
+        if (empty >= 0) examples = examples.map((e, i) => (i === empty ? ex : e))
+        else if (examples.length < MAX_EXAMPLES) examples = [...examples, ex]
+      }
+      return { ...x, partOfSpeech: s.pos, meaningVi: s.meaningVi, examples }
+    })
+    setErrors((x) => ({ ...x, meaningVi: undefined }))
+    setSameTerm(null)
+  }
 
   function patch(p: Partial<FormState>) {
     setF((x) => ({ ...x, ...p }))
@@ -212,6 +233,16 @@ function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; e
               trailing={f.term.trim() ? <SpeakButtons text={f.term.trim()} size="sm" slow={false} /> : undefined}
             />
             <VoiceClipFormNote text={f.term} />
+            {aiOn && (
+              <AiWordSuggest
+                term={f.term}
+                onUseSense={useSense}
+                onUseMnemonic={(text) => {
+                  patch({ mnemonic: text })
+                  setMore(true)
+                }}
+              />
+            )}
 
             <div>
               <span className="mb-1.5 block text-sm font-medium">Loại từ</span>
@@ -299,7 +330,7 @@ function WordForm({ lib, editing, presetDeckIds, presetTerm }: { lib: Library; e
                 />
               </div>
             ))}
-            {f.examples.length < 5 && (
+            {f.examples.length < MAX_EXAMPLES && (
               <button type="button" onClick={() => patch({ examples: [...f.examples, { en: '', vi: '' }] })} className="flex items-center gap-1.5 self-start text-sm font-semibold text-accent">
                 <Plus aria-hidden className="h-4 w-4" /> Thêm câu ví dụ
               </button>

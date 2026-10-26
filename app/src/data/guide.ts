@@ -84,7 +84,7 @@ export const GUIDE: GuideTopic[] = [
     id: 'add-words',
     title: 'Thêm từ vào sổ tay',
     summary: 'Bốn cách thêm từ, từ trùng, bộ từ, lưu trữ và xóa',
-    keywords: ['nhập file', 'excel', 'csv', 'anki', 'bộ từ', 'trùng', 'lưu trữ', 'xóa từ', 'sửa từ'],
+    keywords: ['nhập file', 'excel', 'csv', 'anki', 'bộ từ', 'trùng', 'lưu trữ', 'xóa từ', 'sửa từ', 'ai', 'mẹo nhớ', 'câu ví dụ'],
     blocks: [
       { p: 'Lưu từ vào sổ tay chưa phải là đã học từ đó. Từ mới lưu có trạng thái “Chưa học” và chỉ được lên lịch ôn sau khi bạn học nó trong buổi “Học từ mới”.' },
       { h: 'Bốn cách thêm từ' },
@@ -92,11 +92,11 @@ export const GUIDE: GuideTopic[] = [
         terms: [
           {
             term: '“Thêm từ”',
-            text: 'Ở “Sổ tay”, bấm “Thêm từ”. Chỉ bắt buộc từ và nghĩa tiếng Việt; loại từ mặc định là Danh từ. Bạn có thể thêm phiên âm, tối đa 5 câu ví dụ, chọn bộ từ và gắn nhãn. Trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)” còn có ô “Đáp án chấp nhận thêm”: cách viết ghi ở đây cũng được chấm đúng khi gõ (ví dụ colour và color). Bài điền ô chữ có số ô bằng số chữ cái của từ chính, nên hãy để cách viết dài hơn làm từ chính. “Lưu và thêm từ khác” giữ loại từ và bộ đã chọn để nhập tiếp.',
+            text: 'Ở “Sổ tay”, bấm “Thêm từ”. Chỉ bắt buộc từ và nghĩa tiếng Việt; loại từ mặc định là Danh từ. Bạn có thể thêm phiên âm, tối đa 5 câu ví dụ, chọn bộ từ và gắn nhãn. Trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)” còn có ô “Đáp án chấp nhận thêm”: cách viết ghi ở đây cũng được chấm đúng khi gõ (ví dụ colour và color). Bài điền ô chữ có số ô bằng số chữ cái của từ chính, nên hãy để cách viết dài hơn làm từ chính. “Lưu và thêm từ khác” giữ loại từ và bộ đã chọn để nhập tiếp. Nếu bật Trợ lý AI, bấm “Gợi ý nghĩa và ví dụ bằng AI” dưới ô từ để xem các nghĩa AI gợi ý, rồi chạm “Dùng” ở nghĩa muốn học: app điền loại từ, nghĩa tiếng Việt và câu ví dụ kèm bản dịch; chạm “Dùng” ở dòng mẹo nhớ để điền vào ô mẹo nhớ. Xem lại trước khi lưu vì AI có thể sai.',
           },
           {
             term: '“Tra từ”',
-            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó. Khi ô tra đang trống, trang hiện “Đã tra gần đây”: chạm một từ để tra lại, bấm dấu × để bỏ từ đó, hoặc “Xóa lịch sử” để xóa hết (trên mọi máy đã đăng nhập).',
+            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Nếu bật Trợ lý AI, bấm “Gợi ý nghĩa tiếng Việt bằng AI” ở đầu bảng lưu: AI điền nghĩa vào các ô còn trống và dịch câu ví dụ, ô bạn đã gõ thì giữ nguyên. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó. Khi ô tra đang trống, trang hiện “Đã tra gần đây”: chạm một từ để tra lại, bấm dấu × để bỏ từ đó, hoặc “Xóa lịch sử” để xóa hết (trên mọi máy đã đăng nhập).',
           },
           {
             term: '“Nhập từ file”',
@@ -148,13 +148,15 @@ export const GUIDE: GuideTopic[] = [
           '“Sao chép bộ từ” (cuối trang của một bộ) tạo bộ mới cùng tên, thêm chữ (bản sao), gồm các từ của bộ gốc theo đúng thứ tự, để bạn thêm bớt từ hay đổi tên mà bộ gốc giữ nguyên. Hai bộ dùng chung các từ, nên tiến độ là một và sửa nội dung một từ thì đổi ở cả hai bộ.',
         ],
       },
-      { h: 'Hình minh họa, ghi chú và mẹo nhớ' },
+      { h: 'Hình minh họa, câu ví dụ, ghi chú và mẹo nhớ' },
       {
         list: [
           'Ở trang một từ, thẻ “Hình minh họa” có nút “Thêm ảnh”: chọn ảnh có sẵn hoặc chụp bằng camera. App thu nhỏ ảnh (cạnh dài tối đa 1024 điểm ảnh, dưới 1 MB) trước khi lưu, nên ảnh chụp từ điện thoại cũng lưu nhanh. Bấm “Đổi ảnh” để thay, “Xóa ảnh” để bỏ.',
           'Ảnh hiện ở trang của từ và ở mặt sau thẻ từ khi học (lúc lật thẻ giới thiệu hoặc thẻ tự đánh giá).',
           'Ảnh được lưu trên máy trước rồi đồng bộ sang các máy khác đã đăng nhập; máy khác tải ảnh về khi cần hiện (cần mạng lần đầu). Kho ảnh trên máy chủ cần chạy file SQL hình minh họa một lần; chưa chạy thì ảnh chỉ nằm trên máy đã thêm, và mục “Đồng bộ” ở “Cá nhân” sẽ nhắc.',
           'Ghi chú và mẹo nhớ nhập ở trang sửa từ, trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)”; chúng hiện ở trang của từ. Âm thanh của từ (ghi âm, tải file, chọn bản Wiktionary) xem bài hướng dẫn về âm thanh.',
+          'Nếu bật Trợ lý AI, ở trang một từ bấm “Gợi ý mẹo nhớ bằng AI” để xem ba kiểu mẹo: theo âm đọc, bằng hình ảnh và tách từ. Bấm “Dùng mẹo này” để lưu (thay mẹo cũ nếu có) hoặc “Gợi ý mẹo khác” để xin mẹo mới. Mẹo AI có lúc gượng hoặc đoán sai gốc từ; hãy chọn mẹo bạn thấy dễ nhớ và sửa ở trang sửa từ nếu cần.',
+          'Cũng ở trang một từ, bấm “Thêm câu ví dụ bằng AI” (khi từ chưa đủ 5 câu), chọn chủ đề rồi bấm “Soạn 3 câu ví dụ”. AI viết câu theo trình độ bạn chọn ở “Cá nhân” (chạm vào tên của bạn) và theo mục đích học; bấm “Thêm” ở câu muốn giữ, hoặc “Soạn câu khác” để xin câu mới.',
         ],
       },
       { h: 'Sửa, lưu trữ, xóa' },
@@ -907,11 +909,11 @@ export const GUIDE: GuideTopic[] = [
   {
     id: 'ai',
     title: 'Trợ lý AI',
-    summary: 'Bật/tắt, chọn model, giới hạn lượt và hạn mức miễn phí',
-    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn'],
+    summary: 'Các chức năng AI, bật/tắt, chọn model, giới hạn lượt và hạn mức miễn phí',
+    keywords: ['ai', 'trợ lý', 'gợi ý', 'model', 'neuron', 'cloudflare', 'miễn phí', 'giới hạn', 'mẹo nhớ', 'câu ví dụ'],
     blocks: [
       {
-        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Các chức năng dùng AI (gợi ý nghĩa và ví dụ khi thêm từ, mẹo nhớ, giải thích theo ngữ cảnh, sửa câu, hội thoại…) sẽ có dần ở các bản sau; bản này có phần cài đặt và ô “Thử trợ lý”.',
+        p: 'Mở “Cá nhân” → “Trợ lý AI”. Trợ lý dùng gói miễn phí của Cloudflare Workers AI nên không tốn tiền. Đang có: gợi ý nghĩa và ví dụ khi thêm từ, gợi ý nghĩa tiếng Việt khi tra từ, mẹo nhớ và câu ví dụ theo trình độ ở trang của từ (cách dùng xem bài Thêm từ vào sổ tay). Giải thích theo ngữ cảnh, sửa câu, hội thoại… sẽ có ở các bản sau.',
       },
       {
         terms: [
@@ -926,7 +928,7 @@ export const GUIDE: GuideTopic[] = [
           `Hạn mức miễn phí của Cloudflare là ${new Intl.NumberFormat('vi-VN').format(FREE_NEURONS_PER_DAY)} neuron mỗi ngày cho cả tài khoản, đặt lại lúc 7:00 sáng. Mỗi lượt gợi ý một từ tốn khoảng 20–60 neuron, nên mỗi ngày hỏi được vài trăm lượt. Hết hạn mức thì AI tạm ngừng tới 7:00 sáng hôm sau, không bị tính phí.`,
           'Mỗi câu trả lời được lưu trên máy: hỏi lại đúng câu đó thì app dùng kết quả đã lưu, không gọi AI và không tốn neuron. Bấm “Xóa kết quả đã lưu” để buộc hỏi lại.',
           'Cần đăng nhập và có mạng. Từ hoặc câu bạn hỏi được gửi tới Cloudflare để xử lý; đừng gửi thông tin riêng tư.',
-          'AI có thể sai, nhất là mẹo nhớ. Khi các chức năng gợi ý có mặt, bạn luôn được xem và sửa trước khi lưu.',
+          'AI có thể sai, nhất là mẹo nhớ. App không tự lưu gì AI gợi ý: bạn xem trước rồi mới chạm “Dùng” hoặc “Thêm”, và vẫn sửa được sau.',
         ],
       },
     ],

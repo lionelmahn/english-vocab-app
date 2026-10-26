@@ -12,7 +12,7 @@ import { itemLevel, itemStatus, liveCard, STATUS_LABEL } from '../core/library'
 import { LEVEL_LABELS } from '../core/levels'
 import { POS_LABEL } from '../core/pos'
 import { db } from '../db/db'
-import { repo } from '../db/repo'
+import { MAX_EXAMPLES, repo } from '../db/repo'
 import { useLibrary, useNow } from '../lib/hooks'
 import { EXERCISE_LABEL, GRADE_LABEL } from '../lib/labels'
 import { useSettings } from '../lib/settings'
@@ -22,6 +22,9 @@ import { WordAudioCard } from '../components/WordAudio'
 import { WordImageCard } from '../components/WordImage'
 import { SpeakPractice } from '../components/SpeakPractice'
 import { ReportSheet } from '../components/ReportSheet'
+import { AiLink } from '../components/AiAssist'
+import { AiExamplesSheet, AiMnemonicSheet } from '../components/AiWordExtras'
+import { useAiOn } from '../lib/useAi'
 
 /** Chi tiết mục từ (R2.9): nghĩa, cách đọc, ví dụ, bộ từ, tiến độ. */
 export function WordDetailPage() {
@@ -34,6 +37,8 @@ export function WordDetailPage() {
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
   const [report, setReport] = useState(false)
+  const [aiSheet, setAiSheet] = useState<'mnemonic' | 'examples' | null>(null)
+  const aiOn = useAiOn()
   const [practice, setPractice] = useState(false)
   const logs = useLiveQuery(async () => (await db.reviewLogs.where('itemId').equals(id).toArray()).sort((a, b) => b.reviewedAt - a.reviewedAt).slice(0, 10), [id], [])
 
@@ -81,7 +86,7 @@ export function WordDetailPage() {
 
       <VoiceClipPrompt item={item} />
 
-      {item.examples.length > 0 && (
+      {(item.examples.length > 0 || aiOn) && (
         <Card>
           <div className="mb-3 flex items-center justify-between">
             <SectionTitle className="">Câu ví dụ</SectionTitle>
@@ -92,6 +97,7 @@ export function WordDetailPage() {
               </button>
             )}
           </div>
+          {item.examples.length === 0 && <p className="text-sm text-muted">Chưa có câu ví dụ.</p>}
           <ul className="flex flex-col gap-3">
             {item.examples.map((ex, i) => (
               <li key={i} className="flex items-start gap-3">
@@ -109,10 +115,15 @@ export function WordDetailPage() {
               </li>
             ))}
           </ul>
+          {aiOn && item.examples.length < MAX_EXAMPLES && (
+            <div className="mt-2">
+              <AiLink onClick={() => setAiSheet('examples')}>Thêm câu ví dụ bằng AI</AiLink>
+            </div>
+          )}
         </Card>
       )}
 
-      {(item.note || item.mnemonic) && (
+      {(item.note || item.mnemonic || aiOn) && (
         <Card>
           {item.mnemonic && (
             <p className="flex gap-2.5 text-sm leading-relaxed">
@@ -126,8 +137,16 @@ export function WordDetailPage() {
               <span>{item.note}</span>
             </p>
           )}
+          {aiOn && (
+            <div className={item.note || item.mnemonic ? 'mt-2' : ''}>
+              {!item.mnemonic && !item.note && <p className="text-sm text-muted">Chưa có mẹo nhớ.</p>}
+              <AiLink onClick={() => setAiSheet('mnemonic')}>{item.mnemonic ? 'Gợi ý mẹo nhớ khác bằng AI' : 'Gợi ý mẹo nhớ bằng AI'}</AiLink>
+            </div>
+          )}
         </Card>
       )}
+      <AiMnemonicSheet item={item} open={aiSheet === 'mnemonic'} onClose={() => setAiSheet(null)} />
+      <AiExamplesSheet item={item} open={aiSheet === 'examples'} onClose={() => setAiSheet(null)} />
 
       <WordImageCard item={item} />
 

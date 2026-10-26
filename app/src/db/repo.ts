@@ -35,6 +35,9 @@ export interface DeckInput {
   dailyGoal?: number
 }
 
+/** Số câu ví dụ tối đa của một mục học (khớp form thêm từ). */
+export const MAX_EXAMPLES = 5
+
 function clean(s: string | undefined): string | undefined {
   const t = s?.trim()
   return t ? t : undefined
@@ -186,6 +189,34 @@ export function createRepo(database: VocabDatabase, scheduler: FSRS = createSche
       if (known.includes(text.toLowerCase())) return false
       await save([{ table: 'vocabItems', rows: [{ ...current, acceptedAnswers: [...current.acceptedAnswers, text], updatedAt: now }] }], now)
       return true
+    },
+
+    /** Đặt mẹo nhớ cho mục học (R8.4: nhận một mẹo AI gợi ý). Chuỗi trống thì bỏ mẹo nhớ. */
+    async setMnemonic(id: ID, mnemonic: string, now = Date.now()): Promise<void> {
+      const current = await database.vocabItems.get(id)
+      if (!current) return
+      await save([{ table: 'vocabItems', rows: [{ ...current, mnemonic: clean(mnemonic), updatedAt: now }] }], now)
+    },
+
+    /**
+     * Thêm câu ví dụ cho mục học (R8.3), tối đa `MAX_EXAMPLES` câu; câu đã có (không phân biệt hoa thường, khoảng trắng)
+     * thì bỏ qua. Trả về số câu đã thêm.
+     */
+    async addExamples(id: ID, examples: Example[], now = Date.now()): Promise<number> {
+      const current = await database.vocabItems.get(id)
+      if (!current) return 0
+      const key = (s: string) => s.trim().replace(/\s+/g, ' ').toLowerCase()
+      const have = new Set(current.examples.map((e) => key(e.en)))
+      const added: Example[] = []
+      for (const e of examples) {
+        if (current.examples.length + added.length >= MAX_EXAMPLES) break
+        const en = e.en.trim().replace(/\s+/g, ' ')
+        if (!en || have.has(key(en))) continue
+        have.add(key(en))
+        added.push({ en, vi: clean(e.vi) })
+      }
+      if (added.length > 0) await save([{ table: 'vocabItems', rows: [{ ...current, examples: [...current.examples, ...added], updatedAt: now }] }], now)
+      return added.length
     },
 
     async setItemFlags(id: ID, patch: Partial<Pick<VocabItem, 'favorite' | 'difficult' | 'archived' | 'tags'>>, now = Date.now()) {

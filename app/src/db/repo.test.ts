@@ -152,6 +152,32 @@ describe('repo — mục học và bộ từ', () => {
     expect((await database.lookupHistory.toArray()).every((e) => e.deletedAt !== null && e.updatedAt >= e.lookedUpAt)).toBe(true)
   })
 
+  it('lưu mẹo nhớ AI gợi ý; thêm câu ví dụ không trùng, tối đa 5 câu (R8.3, R8.4)', async () => {
+    const id = await repo.createItem(input('resilient', 'kiên cường', { examples: [{ en: 'She is resilient.' }] }), [], T0)
+    await repo.setMnemonic(id, '  Cây cau bị gió quật lại đứng thẳng  ', T0 + 1)
+    expect((await database.vocabItems.get(id))!.mnemonic).toBe('Cây cau bị gió quật lại đứng thẳng')
+    const added = await repo.addExamples(
+      id,
+      [
+        { en: 'she is  RESILIENT.', vi: 'trùng' },
+        { en: 'Kids are resilient.', vi: 'Trẻ con kiên cường.' },
+        { en: 'Teams must be resilient.' },
+        { en: 'Be resilient at work.', vi: '' },
+        { en: 'Stay resilient.' },
+        { en: 'One too many.' },
+      ],
+      T0 + 2,
+    )
+    const item = (await database.vocabItems.get(id))!
+    expect(added).toBe(4)
+    expect(item.examples.map((e) => e.en)).toEqual(['She is resilient.', 'Kids are resilient.', 'Teams must be resilient.', 'Be resilient at work.', 'Stay resilient.'])
+    expect(item.examples[1].vi).toBe('Trẻ con kiên cường.')
+    expect(item.examples[3].vi).toBeUndefined()
+    expect(await repo.addExamples(id, [{ en: 'More.' }], T0 + 3)).toBe(0)
+    await repo.setMnemonic(id, '', T0 + 4)
+    expect((await database.vocabItems.get(id))!.mnemonic).toBeUndefined()
+  })
+
   it('báo đáp án của mình cũng đúng: thêm vào đáp án chấp nhận, không thêm trùng (R6.13)', async () => {
     const id = await repo.createItem(input('large', 'lớn', { acceptedAnswers: ['huge'] }))
     expect(await repo.addAcceptedAnswer(id, '  big  ', T0)).toBe(true)

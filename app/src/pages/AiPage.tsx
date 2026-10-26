@@ -3,10 +3,11 @@ import { useState, type FormEvent } from 'react'
 import { HelpButton } from '../components/Guide'
 import { BackButton, Chip } from '../components/kit'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
-import { AI_MODELS, DAILY_LIMITS, FREE_NEURONS_PER_DAY, toWordInfo, WORD_INFO_SCHEMA, WORD_INFO_SYSTEM, type WordInfo } from '../core/ai'
+import { AI_MODELS, DAILY_LIMITS, FREE_NEURONS_PER_DAY, type WordInfo } from '../core/ai'
 import { POS_LABEL } from '../core/pos'
 import { showToast } from '../lib/toast'
-import { AI_ERROR_TEXT, AiError, askJson, clearAiCache, setAiSettings, useAiCacheCount, useAiUsage } from '../services/ai'
+import { AI_ERROR_TEXT, AiError, clearAiCache, setAiSettings, useAiCacheCount, useAiUsage } from '../services/ai'
+import { suggestWordInfo } from '../services/aiTasks'
 import { useAuth } from '../services/auth'
 import { useProfile } from '../services/profile'
 
@@ -126,7 +127,7 @@ function TryCard() {
     setError(null)
     setResult(null)
     try {
-      const res = await askJson({ task: 'word_info', system: WORD_INFO_SYSTEM, prompt: `Từ cần tra: "${q}"`, schema: WORD_INFO_SCHEMA as unknown as Record<string, unknown>, maxTokens: 1200 }, (raw) => toWordInfo(raw, q))
+      const res = await suggestWordInfo(q)
       setResult({ info: res.data, cached: res.cached, neurons: res.neurons, ms: res.ms })
     } catch (err) {
       setError(err instanceof AiError ? AI_ERROR_TEXT[err.code] : AI_ERROR_TEXT.unavailable)

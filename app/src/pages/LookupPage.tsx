@@ -15,6 +15,9 @@ import { useLibrary } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
 import { showToast } from '../lib/toast'
 import { cleanQuery, dictionary, type LookupResult } from '../services/dictionary'
+import { suggestSenseMeanings } from '../services/aiTasks'
+import { useAiOn, useAiRun } from '../lib/useAi'
+import { AiErrorText, AiLink, AiNote } from '../components/AiAssist'
 import { speak } from '../services/speech'
 
 /** Số nghĩa hiện sẵn cho mỗi loại từ; còn lại bấm "Xem thêm". */
@@ -395,7 +398,11 @@ function SaveSheet({
   onSaved: () => void
 }) {
   const [meanings, setMeanings] = useState<Record<string, string>>({})
+  /** Bản dịch câu ví dụ do AI gợi ý (R8.1), lưu kèm câu ví dụ. */
+  const [exampleVi, setExampleVi] = useState<Record<string, string>>({})
   const [noExample, setNoExample] = useState<string[]>([])
+  const aiOn = useAiOn()
+  const ai = useAiRun<number>()
   const [deckIds, setDeckIds] = useState<string[]>([])
   const [tried, setTried] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -406,6 +413,36 @@ function SaveSheet({
   function close() {
     setTried(false)
     onClose()
+  }
+
+  /** Hỏi AI nghĩa tiếng Việt cho các nghĩa đã chọn; chỉ điền ô còn trống, không đè nghĩa bạn đã gõ. */
+  async function suggest() {
+    await ai.run(async () => {
+      const res = await suggestSenseMeanings(
+        entry.title,
+        picks.map((p) => ({ partOfSpeech: p.group.partOfSpeech, definition: p.sense.definition, example: p.sense.examples[0] })),
+      )
+      const additions: Record<string, string> = {}
+      picks.forEach((p, i) => {
+        const v = res.data[i]?.meaningVi
+        if (v && !meanings[p.key]?.trim()) additions[p.key] = v
+      })
+      // Gộp với nghĩa mới nhất: ô nào bạn vừa gõ trong lúc chờ AI thì giữ nguyên.
+      setMeanings((m) => {
+        const next = { ...m }
+        for (const [k, v] of Object.entries(additions)) if (!next[k]?.trim()) next[k] = v
+        return next
+      })
+      const filled = Object.keys(additions).length
+      setExampleVi((x) => {
+        const next = { ...x }
+        picks.forEach((p, i) => {
+          if (res.data[i]?.exampleVi && p.sense.examples[0]) next[p.key] = res.data[i].exampleVi
+        })
+        return next
+      })
+      return filled
+    })
   }
 
   async function save() {
@@ -423,7 +460,7 @@ function SaveSheet({
           meaningEn: p.sense.definition,
           ipaUs: ipa.us,
           ipaUk: ipa.uk,
-          examples: example ? [{ en: example }] : [],
+          examples: example ? [{ en: example, vi: exampleVi[p.key] }] : [],
           acceptedAnswers: [],
           tags: [],
           favorite: false,
@@ -434,6 +471,7 @@ function SaveSheet({
       const parts = [res.created.length > 0 && `Đã lưu ${res.created.length} nghĩa của “${entry.title}”`, res.existing.length > 0 && `${res.existing.length} nghĩa đã có sẵn`]
       showToast(parts.filter(Boolean).join(' · '))
       setMeanings({})
+      setExampleVi({})
       setNoExample([])
       setTried(false)
       onSaved()
@@ -446,6 +484,23 @@ function SaveSheet({
     <Sheet open={open} onClose={close} title={`Lưu “${entry.title}”`}>
       <div className="-mx-5 max-h-[62dvh] overflow-y-auto px-5 pb-1">
         <div className="flex flex-col gap-4">
+          {aiOn && (
+            <div className="-mt-1 flex flex-col gap-1">
+              <div>
+                <AiLink busy={ai.busy} onClick={() => void suggest()}>
+                  Gợi ý nghĩa tiếng Việt bằng AI
+                </AiLink>
+              </div>
+              <AiErrorText message={ai.error} />
+              {ai.result !== null && !ai.busy && !ai.error && (
+                <AiNote>
+                  {ai.result > 0
+                    ? `AI đã điền nghĩa vào các ô còn trống${picks.some((p) => p.sense.examples[0]) ? ' và dịch câu ví dụ' : ''}. Xem lại trước khi lưu.`
+                    : 'Các ô nghĩa đều đã có chữ, AI không điền đè. Xóa ô nào muốn AI gợi ý rồi bấm lại.'}
+                </AiNote>
+              )}
+            </div>
+          )}
           {picks.map((p) => {
             const hints = [...new Set(hintsFor(entry, p.group).flatMap((h) => h.words))]
             const value = meanings[p.key] ?? ''
@@ -482,6 +537,7 @@ function SaveSheet({
                     />
                     <span>
                       Lưu câu ví dụ: <i>{example}</i>
+                      {exampleVi[p.key] && <span className="mt-0.5 block text-xs">Dịch: {exampleVi[p.key]}</span>}
                     </span>
                   </label>
                 )}
