@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { AI_ERROR_TEXT, AiError } from '../services/ai'
+import { aiErrorText } from '../services/ai'
 import { useProfile } from '../services/profile'
 
 /** Trợ lý AI đang bật (Cá nhân → Trợ lý AI). Tắt thì các nút AI ẩn đi. */
@@ -25,7 +25,7 @@ export function useAiRun<T>() {
       if (id === seq.current) setResult(value)
       return value
     } catch (e) {
-      if (id === seq.current) setError(e instanceof AiError ? AI_ERROR_TEXT[e.code] : AI_ERROR_TEXT.unavailable)
+      if (id === seq.current) setError(aiErrorText(e))
       return null
     } finally {
       if (id === seq.current) setBusy(false)

@@ -937,9 +937,9 @@ export const GUIDE: GuideTopic[] = [
       {
         terms: [
           { term: '“Bật trợ lý AI”', text: 'Tắt thì app không gửi gì tới AI; việc học và ôn vẫn chạy bình thường. Cài đặt này dùng chung trên mọi máy đã đăng nhập.' },
+          { term: '“Thử trợ lý”', text: 'Ô ngay dưới công tắc: gõ một từ tiếng Anh, bấm “Hỏi” để xem AI gợi ý nghĩa, câu ví dụ và mẹo nhớ. Chỉ để xem thử, không lưu vào sổ tay.' },
           { term: '“Model”', text: 'GPT-OSS 120B (đề xuất) cho nghĩa và ví dụ chuẩn nhất khi thử, nhưng chậm hơn; Llama 3.3 70B và Llama 4 Scout nhanh hơn, ít neuron hơn nhưng hay sai nghĩa hơn. Đổi model thì câu hỏi cũ được hỏi lại bằng model mới.' },
           { term: '“Tối đa mỗi ngày trên máy này”', text: `Số lượt hỏi AI tối đa mỗi ngày trên máy đang dùng (mặc định ${AI_DEFAULTS.dailyLimit}). Lượt lấy lại kết quả đã lưu không tính.` },
-          { term: '“Thử trợ lý”', text: 'Gõ một từ tiếng Anh, bấm “Hỏi” để xem AI gợi ý nghĩa, câu ví dụ và mẹo nhớ. Chỉ để xem thử, không lưu vào sổ tay.' },
         ],
       },
       {
@@ -947,6 +947,7 @@ export const GUIDE: GuideTopic[] = [
           `Hạn mức miễn phí của Cloudflare là ${new Intl.NumberFormat('vi-VN').format(FREE_NEURONS_PER_DAY)} neuron mỗi ngày cho cả tài khoản, đặt lại lúc 7:00 sáng. Mỗi lượt gợi ý một từ tốn khoảng 20–60 neuron, nên mỗi ngày hỏi được vài trăm lượt. Hết hạn mức thì AI tạm ngừng tới 7:00 sáng hôm sau, không bị tính phí.`,
           'Mỗi câu trả lời được lưu trên máy: hỏi lại đúng câu đó thì app dùng kết quả đã lưu, không gọi AI và không tốn neuron. Bấm “Xóa kết quả đã lưu” để buộc hỏi lại.',
           'Cần đăng nhập và có mạng. Từ hoặc câu bạn hỏi được gửi tới Cloudflare để xử lý; đừng gửi thông tin riêng tư.',
+          'Phiên đăng nhập được làm mới mỗi giờ. Mở lại app sau một lúc lâu mà thấy “Chưa làm mới được phiên đăng nhập”, đợi vài giây rồi bấm lại. Câu báo lỗi kèm mã trong ngoặc ở cuối thì chụp màn hình gửi kèm khi báo lỗi.',
           'AI có thể sai, nhất là mẹo nhớ. App không tự lưu gì AI gợi ý: bạn xem trước rồi mới chạm “Dùng” hoặc “Thêm”, và vẫn sửa được sau.',
         ],
       },
@@ -954,7 +955,7 @@ export const GUIDE: GuideTopic[] = [
       {
         list: [
           'Ở “Tra từ”, khi ô tra đang trống, chạm thẻ “Giải thích từ trong câu”. Dán câu hoặc đoạn văn tiếng Anh đang đọc (tối đa 1.500 ký tự), bấm “Chọn từ cần giải thích”, rồi chạm vào từ chưa hiểu.',
-          'Muốn chọn một cụm (give up, take care of), chạm chữ đầu rồi chạm chữ cuối của cụm trong cùng câu. Chạm lại chữ đã chọn để bỏ chọn. Chỉ chọn một chữ thuộc cụm động từ hay thành ngữ thì AI cũng nhận ra cả cụm.',
+          'Muốn chọn một cụm (give up, take care of), chạm chữ đầu rồi chạm chữ cuối của cụm trong cùng câu (tối đa 6 chữ; dài hơn hoặc khác câu thì app chọn lại từ chữ vừa chạm và báo lý do). Chạm lại chữ đã chọn để bỏ chọn. Muốn hiểu cả câu thì chọn chữ hoặc cụm khó nhất: phần giải thích có kèm bản dịch cả câu. Chỉ chọn một chữ thuộc cụm động từ hay thành ngữ thì AI cũng nhận ra cả cụm.',
           'Bấm “Giải thích bằng AI” để xem nghĩa đúng trong câu đó, loại từ, vì sao mang nghĩa đó, bản dịch câu và các nghĩa khác. “Lưu vào sổ tay” mở form thêm từ đã điền sẵn dạng gốc, nghĩa và câu đang đọc làm câu ví dụ (xem lại rồi mới lưu); từ đã có trong sổ tay thì nút mở từ đó. “Tra từ điển” tra dạng gốc trên Wiktionary.',
           'Gõ cả một câu vào ô tra từ mà không tìm thấy thì trang cũng gợi ý mở phần giải thích này. Đoạn văn được giữ lại trong lúc app đang mở; bấm “Sửa đoạn văn” để đổi.',
         ],

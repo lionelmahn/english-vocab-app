@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { motion } from 'motion/react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { BackButton } from '../components/kit'
 import { Page } from '../components/ui'
@@ -13,7 +14,9 @@ import { useConfusables } from '../lib/useReference'
 export function ConfusablesPage() {
   const groups = useConfusables()
   const [params, setParams] = useSearchParams()
-  const q = params.get('q') ?? ''
+  // Ô tìm giữ chữ ở state riêng rồi mới ghi vào URL (quay lại trang vẫn còn). Gắn thẳng ô vào URL thì chữ cập nhật trễ
+  // một nhịp, bộ gõ tiếng Việt (Telex) trên iPhone gõ ra chữ lặp.
+  const [q, setQ] = useState(() => params.get('q') ?? '')
   const list = groups ? searchGroups(groups, q) : []
 
   return (
@@ -22,11 +25,10 @@ export function ConfusablesPage() {
         <Search aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
         <input
           value={q}
-          onChange={(e) =>
-            setParams(e.target.value ? { q: e.target.value } : {}, {
-              replace: true,
-            })
-          }
+          onChange={(e) => {
+            setQ(e.target.value)
+            setParams(e.target.value ? { q: e.target.value } : {}, { replace: true })
+          }}
           placeholder="Tìm từ, ví dụ: borrow"
           aria-label="Tìm nhóm từ dễ nhầm"
           autoCapitalize="none"

@@ -12,7 +12,7 @@ import { repo } from '../db/repo'
 import { useLibrary, useNow } from '../lib/hooks'
 import { useSettings } from '../lib/settings'
 import { useAiOn } from '../lib/useAi'
-import { AI_ERROR_TEXT, AiError } from '../services/ai'
+import { aiErrorText } from '../services/ai'
 import { freshSentences, wordRefOf } from '../services/aiTasks'
 import { useProfile } from '../services/profile'
 import { speechAvailable } from '../services/speech'
@@ -65,7 +65,7 @@ export function PracticePage() {
         const contexts = Object.fromEntries(picked.flatMap((it, i) => (data[i] ? [[it.id, data[i]]] : [])))
         plan = buildFreshPracticePlan(lib, picked.map((i) => i.id), contexts, { now: Date.now(), style: settings.reviewStyle, audioAvailable: speechAvailable() })
       } catch (e) {
-        setAiError(e instanceof AiError ? AI_ERROR_TEXT[e.code] : AI_ERROR_TEXT.unavailable)
+        setAiError(aiErrorText(e))
         return setStarting(false)
       }
     } else {

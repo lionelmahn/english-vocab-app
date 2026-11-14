@@ -6,7 +6,7 @@ import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { AI_MODELS, DAILY_LIMITS, FREE_NEURONS_PER_DAY, type WordInfo } from '../core/ai'
 import { POS_LABEL } from '../core/pos'
 import { showToast } from '../lib/toast'
-import { AI_ERROR_TEXT, AiError, clearAiCache, setAiSettings, useAiCacheCount, useAiUsage } from '../services/ai'
+import { aiErrorText, clearAiCache, setAiSettings, useAiCacheCount, useAiUsage } from '../services/ai'
 import { suggestWordInfo } from '../services/aiTasks'
 import { useAuth } from '../services/auth'
 import { useProfile } from '../services/profile'
@@ -39,6 +39,9 @@ export function AiPage() {
         </p>
         {auth.status !== 'signed_in' && <p className="mt-2 text-xs text-warning">Bạn chưa đăng nhập: cần đăng nhập để dùng trợ lý AI.</p>}
       </Card>
+
+      {/* Ngay dưới công tắc: để cuối trang thì phải cuộn qua model và lượt dùng mới thấy. */}
+      <TryCard />
 
       <Card>
         <SectionTitle className="mb-1">Model</SectionTitle>
@@ -106,8 +109,6 @@ export function AiPage() {
           Xóa kết quả đã lưu{cached ? ` (${cached})` : ''}
         </Button>
       </Card>
-
-      <TryCard />
     </Page>
   )
 }
@@ -130,7 +131,7 @@ function TryCard() {
       const res = await suggestWordInfo(q)
       setResult({ info: res.data, cached: res.cached, neurons: res.neurons, ms: res.ms })
     } catch (err) {
-      setError(err instanceof AiError ? AI_ERROR_TEXT[err.code] : AI_ERROR_TEXT.unavailable)
+      setError(aiErrorText(err))
     } finally {
       setBusy(false)
     }

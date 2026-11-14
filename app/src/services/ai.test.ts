@@ -29,7 +29,7 @@ import {
   type AiUsageRow,
 } from '../core/ai'
 import { VocabDatabase } from '../db/db'
-import { AiError, askAI, askJson, peekJson, transcribe, type AiDeps } from './ai'
+import { AI_ERROR_TEXT, AiError, aiErrorText, askAI, askJson, peekJson, transcribe, type AiDeps } from './ai'
 
 const opened: VocabDatabase[] = []
 afterEach(async () => {
@@ -346,5 +346,35 @@ describe('gửi bản ghi đi nhận dạng giọng nói (R7.3)', () => {
     await expect(transcribe('UklGR', quota.deps)).rejects.toMatchObject({ code: 'quota' })
     await expect(transcribe('UklGR', { ...deps, token: async () => null })).rejects.toMatchObject({ code: 'signed_out' })
     await expect(transcribe('UklGR', { ...deps, settings: async () => ({ ...AI_DEFAULTS, enabled: false }) })).rejects.toMatchObject({ code: 'disabled' })
+  })
+
+  it('máy chủ từ chối token (vừa hết hạn): xin phiên mới rồi gửi lại một lần', async () => {
+    let first = true
+    const fresh: boolean[] = []
+    const { deps, calls } = setup({
+      token: async (f = false) => (fresh.push(f), f ? 'new' : 'old'),
+      reply: () => (first ? ((first = false), new Response(JSON.stringify({ error: 'unauthorized', reason: 'expired' }), { status: 401 })) : new Response(JSON.stringify({ text: 'Rice.' }))),
+    })
+    expect((await transcribe('UklGR', deps)).text).toBe('Rice.')
+    expect(fresh).toEqual([false, true])
+    expect(calls.map((c) => c.auth)).toEqual(['Bearer old', 'Bearer new'])
+  })
+})
+
+describe('phiên đăng nhập khi hỏi AI', () => {
+  it('phiên mới vẫn bị từ chối thì báo cần đăng nhập kèm lý do của máy chủ; lỗi phiên báo riêng', async () => {
+    const denied = setup({ reply: () => new Response(JSON.stringify({ error: 'unauthorized', reason: 'expired' }), { status: 401 }) })
+    const err = await askAI(ASK, denied.deps).catch((e: AiError) => e)
+    expect(err).toMatchObject({ code: 'signed_out', detail: 'expired' })
+    expect(denied.calls).toHaveLength(2)
+    expect(aiErrorText(err)).toBe('Cần đăng nhập để dùng trợ lý AI. (mã: expired)')
+    const session = setup({
+      token: async () => {
+        throw new AiError('session')
+      },
+    })
+    await expect(askAI(ASK, session.deps)).rejects.toMatchObject({ code: 'session' })
+    expect(session.calls).toHaveLength(0)
+    expect(aiErrorText(new Error('x'))).toBe(AI_ERROR_TEXT.unavailable)
   })
 })

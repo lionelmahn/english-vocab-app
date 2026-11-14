@@ -7,7 +7,7 @@ import { BackButton, TextArea } from '../components/kit'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
 import { MarkedSentence } from '../components/WordReference'
 import type { ContextExplanation } from '../core/ai'
-import { MAX_PASSAGE, parsePassage, selectionOf, tapToken } from '../core/passage'
+import { MAX_PASSAGE, MAX_PHRASE_WORDS, parsePassage, phraseIssue, selectionOf, tapToken } from '../core/passage'
 import { POS_LABEL } from '../core/pos'
 import { markWord } from '../core/reference'
 import { termKey } from '../core/vocab'
@@ -41,6 +41,8 @@ export function ExplainPage() {
   const [text, setText] = useState(() => incoming ?? readDraft())
   const [editing, setEditing] = useState(() => !(incoming ?? readDraft()).trim())
   const [sel, setSel] = useState<{ from: number; to: number } | null>(null)
+  // Vì sao lần chạm vừa rồi không ghép được cụm (app đã chọn lại từ chữ vừa chạm).
+  const [issue, setIssue] = useState<'other_sentence' | 'too_long' | null>(null)
   const passage = useMemo(() => parsePassage(text), [text])
   const ai = useAiRun<{ key: string; data: ContextExplanation }>()
   const picked = sel ? selectionOf(text, passage, sel.from, sel.to) : null
@@ -78,6 +80,7 @@ export function ExplainPage() {
             onClick={() => {
               saveDraft(text)
               setSel(null)
+              setIssue(null)
               setEditing(false)
             }}
           >
@@ -89,7 +92,9 @@ export function ExplainPage() {
         <>
           <Card>
             <div className="mb-2 flex items-center justify-between gap-2">
-              <p className="text-xs text-muted">Chạm một từ. Muốn chọn cụm (give up, take care of) thì chạm thêm chữ cuối của cụm.</p>
+              <p className="text-xs text-muted">
+                Chạm một từ. Muốn chọn cụm (give up, take care of) thì chạm thêm chữ cuối của cụm, tối đa {MAX_PHRASE_WORDS} chữ. Phần giải thích có kèm bản dịch cả câu.
+              </p>
               <button type="button" onClick={() => setEditing(true)} className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-accent">
                 <Pencil aria-hidden className="h-4 w-4" /> Sửa đoạn văn
               </button>
@@ -103,7 +108,10 @@ export function ExplainPage() {
                   <button
                     key={i}
                     type="button"
-                    onClick={() => setSel((s) => tapToken(passage, s, i))}
+                    onClick={() => {
+                      setIssue(phraseIssue(passage, sel, i))
+                      setSel(tapToken(passage, sel, i))
+                    }}
                     aria-pressed={on}
                     className={`-mx-0.5 rounded-md px-0.5 transition-colors ${on ? 'bg-accent-soft font-semibold text-accent' : 'active:bg-surface-2'}`}
                   >
@@ -113,6 +121,13 @@ export function ExplainPage() {
               })}
             </p>
           </Card>
+          {issue && (
+            <p role="status" className="px-1 text-sm text-warning">
+              {issue === 'too_long'
+                ? `Cụm chọn được dài tối đa ${MAX_PHRASE_WORDS} chữ, nên app chọn lại từ chữ vừa chạm. Muốn hiểu cả câu thì chọn chữ hoặc cụm khó nhất: phần giải thích có kèm bản dịch cả câu.`
+                : 'Hai chữ nằm ở hai câu khác nhau, nên app chọn lại từ chữ vừa chạm. Cụm phải nằm trong một câu.'}
+            </p>
+          )}
           {picked && (
             <div className="flex flex-col gap-1 px-1">
               <p className="text-sm">

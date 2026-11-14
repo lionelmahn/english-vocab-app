@@ -68,7 +68,8 @@ function WordsView({ lib }: { lib: Library }) {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [limit, setLimit] = useState(PAGE)
 
-  const q = params.get('q') ?? ''
+  // Ô tìm giữ chữ ở state riêng (xem ConfusablesPage): gắn thẳng vào URL thì bộ gõ Telex trên iPhone gõ ra chữ lặp.
+  const [q, setQ] = useState(() => params.get('q') ?? '')
   const status = (params.get('status') ?? 'all') as StatusFilter
   const fav = params.get('fav') === '1'
   const hard = params.get('hard') === '1'
@@ -145,7 +146,10 @@ function WordsView({ lib }: { lib: Library }) {
           <Search aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
           <input
             value={q}
-            onChange={(e) => set('q', e.target.value)}
+            onChange={(e) => {
+              setQ(e.target.value)
+              set('q', e.target.value)
+            }}
             placeholder="Tìm từ hoặc nghĩa"
             aria-label="Tìm trong sổ tay"
             autoCapitalize="none"

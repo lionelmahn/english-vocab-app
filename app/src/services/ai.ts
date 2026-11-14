@@ -3,7 +3,7 @@ import { cacheKey, extractJson, sanitizeAi, usageSummary, utcDayStart, type AiSe
 import { db, type VocabDatabase } from '../db/db'
 import { repo } from '../db/repo'
 import { PROFILE_ID } from '../db/types'
-import { getAuth } from './auth'
+import { getAuth, settledAuth } from './auth'
 import { getSupabase } from './supabase'
 
 /**
@@ -11,24 +11,34 @@ import { getSupabase } from './supabase'
  * cùng câu hỏi thì dùng lại, không gọi lại. Mỗi lượt ghi vào bảng lượt dùng (R8.8); quá giới hạn mỗi ngày thì dừng.
  */
 
-export type AiErrorCode = 'disabled' | 'signed_out' | 'offline' | 'limit' | 'quota' | 'unavailable' | 'bad_output'
+export type AiErrorCode = 'disabled' | 'signed_out' | 'session' | 'offline' | 'limit' | 'quota' | 'unavailable' | 'bad_output'
 
 export class AiError extends Error {
   readonly code: AiErrorCode
-  constructor(code: AiErrorCode) {
+  /** Lý do máy chủ báo (ví dụ phiên hết hạn), hiện kèm câu báo lỗi để dễ tìm nguyên nhân. */
+  readonly detail?: string
+  constructor(code: AiErrorCode, detail?: string) {
     super(code)
     this.code = code
+    this.detail = detail
   }
 }
 
 export const AI_ERROR_TEXT: Record<AiErrorCode, string> = {
   disabled: 'Trợ lý AI đang tắt. Bật ở Cá nhân → Trợ lý AI.',
   signed_out: 'Cần đăng nhập để dùng trợ lý AI.',
+  session: 'Chưa làm mới được phiên đăng nhập (mạng chập chờn hoặc app vừa mở lại). Đợi vài giây rồi thử lại; vẫn lỗi thì đăng xuất và đăng nhập lại.',
   offline: 'Đang mất mạng. Trợ lý AI cần có mạng.',
   limit: 'Đã đến giới hạn lượt hỏi AI hôm nay trên máy này. Đổi giới hạn ở Cá nhân → Trợ lý AI.',
   quota: 'Đã dùng hết hạn mức miễn phí của Cloudflare hôm nay. Hạn mức đặt lại lúc 7:00 sáng.',
   unavailable: 'Trợ lý AI đang trục trặc. Thử lại sau ít phút.',
   bad_output: 'AI trả lời không đúng khuôn. Thử lại, hoặc chọn model khác.',
+}
+
+/** Câu báo lỗi cho người dùng, kèm mã lý do của máy chủ nếu có. */
+export function aiErrorText(e: unknown): string {
+  if (!(e instanceof AiError)) return AI_ERROR_TEXT.unavailable
+  return e.detail ? `${AI_ERROR_TEXT[e.code]} (mã: ${e.detail})` : AI_ERROR_TEXT[e.code]
 }
 
 export interface AskOptions {
@@ -53,7 +63,8 @@ export interface AskResult {
 export interface AiDeps {
   database: VocabDatabase
   fetch: typeof fetch
-  token: () => Promise<string | null>
+  /** Access token của phiên đăng nhập; `fresh`: xin phiên mới hẳn (máy chủ vừa từ chối token cũ). */
+  token: (fresh?: boolean) => Promise<string | null>
   settings: () => Promise<AiSettings>
   online: () => boolean
   now: () => number
@@ -66,10 +77,16 @@ async function profileAi(database: VocabDatabase): Promise<AiSettings> {
 const defaults: AiDeps = {
   database: db,
   fetch: (...args) => fetch(...args),
-  token: async () => {
-    if (getAuth().status !== 'signed_in') return null
+  token: async (fresh = false) => {
+    // Vừa mở app thì phiên lưu trên máy có thể chưa đọc xong: chờ, đừng vội báo chưa đăng nhập.
+    if ((await settledAuth()).status !== 'signed_in') return null
     const client = await getSupabase()
-    return (await client?.auth.getSession())?.data.session?.access_token ?? null
+    if (!client) return null
+    // getSession tự làm mới token sắp hết hạn; làm mới hỏng (app vừa mở lại sau hơn một giờ, mạng chưa sẵn sàng) thì
+    // trả về không có phiên dù vẫn đăng nhập: báo lỗi phiên, không báo "cần đăng nhập".
+    const { data } = fresh ? await client.auth.refreshSession() : await client.auth.getSession()
+    if (!data.session?.access_token) throw new AiError(getAuth().status === 'signed_in' ? 'session' : 'signed_out')
+    return data.session.access_token
   },
   settings: () => profileAi(db),
   online: () => typeof navigator === 'undefined' || navigator.onLine !== false,
@@ -78,6 +95,32 @@ const defaults: AiDeps = {
 
 async function record(d: AiDeps, row: Omit<AiUsageRow, 'id' | 'at'>, at: number) {
   await d.database.aiUsage.put({ id: crypto.randomUUID(), at, ...row })
+}
+
+/**
+ * Gửi yêu cầu kèm phiên đăng nhập tới Worker. Worker báo phiên không hợp lệ (thường là token vừa hết hạn) thì xin
+ * phiên mới và gửi lại đúng một lần.
+ */
+async function post(d: AiDeps, url: string, body: string): Promise<Response> {
+  let token = await d.token()
+  if (!token) throw new AiError('signed_out')
+  for (let attempt = 0; ; attempt++) {
+    let res: Response
+    try {
+      res = await d.fetch(url, { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` }, body })
+    } catch {
+      throw new AiError(d.online() ? 'unavailable' : 'offline')
+    }
+    if (res.status !== 401 || attempt > 0) return res
+    token = await d.token(true)
+    if (!token) return res
+  }
+}
+
+/** Lý do Worker từ chối phiên (expired, signature…), để hiện kèm câu báo lỗi. */
+async function reasonOf(res: Response): Promise<string | undefined> {
+  const body = (await res.json().catch(() => ({}))) as { reason?: unknown }
+  return typeof body.reason === 'string' ? body.reason : undefined
 }
 
 export async function askAI(opts: AskOptions, deps: Partial<AiDeps> = {}): Promise<AskResult> {
@@ -97,24 +140,13 @@ export async function askAI(opts: AskOptions, deps: Partial<AiDeps> = {}): Promi
   if (!d.online()) throw new AiError('offline')
   const used = await d.database.aiUsage.where('at').aboveOrEqual(utcDayStart(start)).filter((r) => !r.cached && !r.error).count()
   if (used >= settings.dailyLimit) throw new AiError('limit')
-  const token = await d.token()
-  if (!token) throw new AiError('signed_out')
 
-  let res: Response
-  try {
-    res = await d.fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-      body: JSON.stringify({ model: settings.model, system: opts.system, prompt: opts.prompt, messages: opts.messages, schema: opts.schema, maxTokens: opts.maxTokens }),
-    })
-  } catch {
-    throw new AiError(d.online() ? 'unavailable' : 'offline')
-  }
-  const fail = async (code: AiErrorCode) => {
+  const res = await post(d, '/api/ai', JSON.stringify({ model: settings.model, system: opts.system, prompt: opts.prompt, messages: opts.messages, schema: opts.schema, maxTokens: opts.maxTokens }))
+  const fail = async (code: AiErrorCode, detail?: string) => {
     await record(d, { task: opts.task, model: settings.model, inputTokens: 0, outputTokens: 0, neurons: 0, cached: false, error: code }, start)
-    return new AiError(code)
+    return new AiError(code, detail)
   }
-  if (res.status === 401) throw await fail('signed_out')
+  if (res.status === 401) throw await fail('signed_out', await reasonOf(res))
   if (res.status === 429) throw await fail('quota')
   if (!res.ok) {
     // Model nghĩ quá lâu mà chưa kịp trả lời (Worker báo "empty"): thử lại hoặc đổi model.
@@ -164,20 +196,13 @@ export async function transcribe(audio: string, deps: Partial<AiDeps> = {}): Pro
   const start = d.now()
   const used = await d.database.aiUsage.where('at').aboveOrEqual(utcDayStart(start)).filter((r) => !r.cached && !r.error).count()
   if (used >= settings.dailyLimit) throw new AiError('limit')
-  const token = await d.token()
-  if (!token) throw new AiError('signed_out')
-  let res: Response
-  try {
-    res = await d.fetch('/api/stt', { method: 'POST', headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` }, body: JSON.stringify({ audio }) })
-  } catch {
-    throw new AiError(d.online() ? 'unavailable' : 'offline')
-  }
+  const res = await post(d, '/api/stt', JSON.stringify({ audio }))
   const row = { task: 'pronounce', model: 'whisper-large-v3-turbo', inputTokens: 0, outputTokens: 0, cached: false }
-  const fail = async (code: AiErrorCode) => {
+  const fail = async (code: AiErrorCode, detail?: string) => {
     await record(d, { ...row, neurons: 0, error: code }, start)
-    return new AiError(code)
+    return new AiError(code, detail)
   }
-  if (res.status === 401) throw await fail('signed_out')
+  if (res.status === 401) throw await fail('signed_out', await reasonOf(res))
   if (res.status === 429) throw await fail('quota')
   if (!res.ok) throw await fail('unavailable')
   const body = (await res.json()) as Partial<SpeechResult> & { neurons?: number }

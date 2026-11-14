@@ -56,6 +56,22 @@ export function getAuth(): AuthState {
   return state
 }
 
+/** Trạng thái đăng nhập sau khi đã đọc xong phiên lưu trên máy (vừa mở app thì chờ, tối đa `ms`). */
+export function settledAuth(ms = 5000): Promise<AuthState> {
+  if (state.status !== 'loading') return Promise.resolve(state)
+  return new Promise((resolve) => {
+    const finish = () => {
+      clearTimeout(timer)
+      off()
+      resolve(state)
+    }
+    const off = subscribeAuth(() => {
+      if (state.status !== 'loading') finish()
+    })
+    const timer = setTimeout(finish, ms)
+  })
+}
+
 export function useAuth(): AuthState {
   return useSyncExternalStore(subscribeAuth, () => state)
 }
