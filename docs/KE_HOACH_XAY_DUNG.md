@@ -537,6 +537,7 @@ Nguyên tắc:
 
 ### Giai đoạn 6 — Khóa học và lộ trình (2–3 tuần, 6 chức năng)
 - R16.1 → R16.6. Khóa học dùng lại luồng học R4 và lưu từ qua R2.8; nội dung khóa ban đầu soạn bằng file seed.
+- **Kế hoạch chi tiết, các khóa đề xuất và lộ trình bản: [KE_HOACH_GIAI_DOAN_6.md](KE_HOACH_GIAI_DOAN_6.md)** (lập 15/11/2026). Cả giai đoạn 0đ, không cần bảng mới trên máy chủ: tiến độ khóa tính từ sổ tay và lịch ôn.
 
 ### Giai đoạn 7 — Mở rộng cộng đồng (chỉ khi mở cho người khác, 16 chức năng P3)
 - R1.1 (đăng ký), R10.8 (bảng xếp hạng), R12.1 → R12.6 (kho chung, chia sẻ), R13.1 → R13.7 (quản trị), R13.8 mở rộng, R16.7 (biên soạn khóa học)
