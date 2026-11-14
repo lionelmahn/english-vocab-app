@@ -499,6 +499,11 @@ Nguyên tắc:
 > - Ôn chủ động: phạm vi, số từ và công tắc “Câu mới do AI soạn” trong một thẻ; lời giải thích xuống dưới nút bắt đầu; vừa một màn hình.
 > - Hướng dẫn cập nhật đường dẫn mới (Cách học và ôn, Giọng đọc, Giao diện và âm thanh, Mục tiêu và lịch học, lịch sử tra, phần Tham khảo khi tra). 384 test. Đã thử trên trình duyệt (375 px, sáng và tối): bốn trang, ba trang con, bảng lịch sử tra (xem tất cả, xác nhận xóa, hủy, tra lại), tra “abandon” (không có phần Tham khảo, 3 nghĩa + “Xem thêm 4 nghĩa”) và “decision” (Nghĩa / Tham khảo), Trợ lý AI tắt/bật; không trang nào tràn ngang.
 
+> **Cập nhật 15/11/2026 (bản 0.34.1): Đổi tiếng chạm nghe như “gõ mõ tụng kinh”.** Bạn nghe trên iPhone thấy vài tiếng chạm giống gõ mõ. Nguyên nhân: các tiếng chạm của bản 0.33.0 là nốt ngắn ở âm vực trung (520–990 Hz), vào nhanh tắt nhanh, đúng kiểu tiếng gõ gỗ (chạm nút, chuyển tab, quay lại, bật/tắt, “tục” khi gõ quá chữ, bắt đầu/dừng ghi âm).
+> - Tiếng chạm mới theo “Kiểu tiếng chạm” (Cá nhân → Giao diện và âm thanh): “Tách nhẹ” (mặc định: tiếng tách giòn không cao độ, nhiễu qua bộ lọc dải cao, như bàn phím iPhone), “Bong bóng” (tiếng bóp trượt nhanh lên cao 900→1.800 Hz, vào mềm), “Pha lê” (chuông nhỏ 1.760–2.637 Hz). Chọn kiểu nào là nghe thử kiểu đó ngay; bấm đổi liên tục thì phần nghe thử cũ dừng.
+> - Tiếng sự kiện cũng bỏ kiểu gõ: ghi âm và tin nhắn hội thoại thành chuông nhỏ, lỗi thành hai tiếng chuông đi xuống, gõ quá chữ thành hai tiếng tách trầm, sai và xóa vào chậm hơn cho mềm. Mở bảng và lật thẻ chỉ còn tiếng gió (bỏ nốt trầm đi kèm).
+> - Test chặn tiếng kiểu gõ mõ: không còn nốt nào dưới 850 Hz, dài dưới 0,1 giây, vào nhanh; ba kiểu đủ sáu tiếng chạm. 385 test. Đã đo trên trình duyệt: mỗi kiểu phát đúng tiếng của kiểu đó, cài đặt lưu đúng. Chưa nghe trên iPhone.
+
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

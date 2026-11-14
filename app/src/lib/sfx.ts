@@ -1,4 +1,4 @@
-import { getSettings } from './settings'
+import { getSettings, type TapStyle } from './settings'
 
 /**
  * Âm thanh hiệu ứng, tạo bằng Web Audio (không cần file âm thanh): mỗi ngữ cảnh một tiếng ngắn và nhẹ. Tiếng chạm
@@ -35,56 +35,86 @@ export type Sfx =
 /** Tiếng chạm: phát ngay khi bấm, tắt riêng được. */
 export const TAP_SOUNDS: ReadonlySet<Sfx> = new Set<Sfx>(['tap', 'nav', 'back', 'select', 'toggleOn', 'toggleOff', 'open', 'close', 'flip'])
 
+/** Các tiếng chạm đổi theo "Kiểu tiếng chạm". */
+export type StyledSfx = 'tap' | 'nav' | 'back' | 'select' | 'toggleOn' | 'toggleOff'
+const STYLED: readonly StyledSfx[] = ['tap', 'nav', 'back', 'select', 'toggleOn', 'toggleOff']
+
 /**
  * Một lớp âm: `tone` là một nốt (có thể trượt cao độ tới `to`), `bell` là nốt kiểu chuông (thêm hai họa âm, tắt
  * dần), `swish` là tiếng gió (nhiễu trắng qua bộ lọc trượt từ `from` tới `to`). `at`, `len` tính bằng giây.
  */
 export type Layer =
-  | { kind: 'tone'; f: number; to?: number; at?: number; len: number; gain: number; wave?: OscillatorType }
+  | { kind: 'tone'; f: number; to?: number; at?: number; len: number; gain: number; wave?: OscillatorType; attack?: number }
   | { kind: 'bell'; f: number; at?: number; len: number; gain: number }
   | { kind: 'swish'; from: number; to: number; at?: number; len: number; gain: number }
 
-const tone = (f: number, len: number, gain: number, more: { to?: number; at?: number; wave?: OscillatorType } = {}): Layer => ({ kind: 'tone', f, len, gain, ...more })
+const tone = (f: number, len: number, gain: number, more: { to?: number; at?: number; wave?: OscillatorType; attack?: number } = {}): Layer => ({ kind: 'tone', f, len, gain, ...more })
 const bell = (f: number, at: number, len: number, gain: number): Layer => ({ kind: 'bell', f, at, len, gain })
 const swish = (from: number, to: number, len: number, gain: number, at = 0): Layer => ({ kind: 'swish', from, to, len, gain, at })
 /** Ba nốt cao lấp lánh. */
 const sparkle = (at: number, gain: number): Layer[] => [2093, 2637, 3136].map((f, i) => tone(f, 0.12, gain, { at: at + i * 0.045 }))
+/** Tiếng "tách" giòn: một chút nhiễu ở dải cao, không có cao độ nên không nghe như gõ gỗ. */
+const tick = (from: number, to: number, gain: number, at = 0, len = 0.02): Layer => swish(from, to, len, gain, at)
+
+/**
+ * Tiếng chạm theo từng kiểu. Nốt ngắn ở âm vực trung, tắt nhanh (kiểu bản 0.33.0) nghe như gõ mõ, nên cả ba kiểu đều
+ * tránh: "Tách nhẹ" chỉ là tiếng tách không cao độ, như bàn phím iPhone; "Bong bóng" trượt nhanh lên cao; "Pha lê" là
+ * chuông nhỏ ngân.
+ */
+export const TAP_STYLES: Record<TapStyle, Record<StyledSfx, readonly Layer[]>> = {
+  soft: {
+    tap: [tick(4200, 3000, 0.09)],
+    nav: [tick(3400, 2400, 0.08, 0, 0.03)],
+    back: [tick(3000, 1800, 0.075, 0, 0.035)],
+    select: [tick(5400, 4200, 0.09)],
+    toggleOn: [tick(3200, 3600, 0.075), tick(4800, 5400, 0.08, 0.05)],
+    toggleOff: [tick(5000, 4400, 0.075), tick(3400, 2800, 0.07, 0.05)],
+  },
+  bubble: {
+    tap: [tone(900, 0.045, 0.035, { to: 1800, attack: 0.008 })],
+    nav: [tone(1100, 0.05, 0.034, { to: 2000, attack: 0.01 })],
+    back: [tone(1600, 0.05, 0.03, { to: 900, attack: 0.01 })],
+    select: [tone(1250, 0.045, 0.035, { to: 2400, attack: 0.008 })],
+    toggleOn: [tone(1000, 0.04, 0.03, { to: 1500, attack: 0.008 }), tone(1500, 0.05, 0.03, { at: 0.045, to: 2300, attack: 0.008 })],
+    toggleOff: [tone(1900, 0.04, 0.028, { to: 1300, attack: 0.008 }), tone(1300, 0.05, 0.026, { at: 0.045, to: 800, attack: 0.008 })],
+  },
+  glass: {
+    tap: [bell(2349, 0, 0.12, 0.024)],
+    nav: [bell(1976, 0, 0.14, 0.024)],
+    back: [bell(1760, 0, 0.12, 0.022)],
+    select: [bell(2637, 0, 0.12, 0.024)],
+    toggleOn: [bell(1760, 0, 0.1, 0.022), bell(2637, 0.05, 0.14, 0.022)],
+    toggleOff: [bell(2637, 0, 0.1, 0.02), bell(1760, 0.05, 0.14, 0.02)],
+  },
+}
 
 export const SOUNDS: Record<Sfx, readonly Layer[]> = {
-  // Chạm: tiếng "bóp" nhỏ trượt lên, như bong bóng.
-  tap: [tone(520, 0.05, 0.045, { to: 820 })],
-  // Chuyển tab: tiếng gõ gỗ ngắn.
-  nav: [tone(740, 0.06, 0.04, { wave: 'triangle' }), tone(1480, 0.03, 0.012)],
-  back: [tone(720, 0.06, 0.04, { to: 480 })],
-  // Chọn một phương án, một chip: "pốp" cao hơn tiếng chạm.
-  select: [tone(880, 0.045, 0.045, { to: 1240 })],
-  toggleOn: [tone(660, 0.05, 0.04), tone(990, 0.07, 0.04, { at: 0.05 })],
-  toggleOff: [tone(880, 0.05, 0.035), tone(587, 0.07, 0.032, { at: 0.05 })],
+  ...TAP_STYLES.soft,
   // Mở bảng: gió nhẹ đi lên; đóng: đi xuống.
-  open: [swish(600, 2200, 0.14, 0.045), tone(440, 0.1, 0.015, { to: 660 })],
+  open: [swish(600, 2200, 0.14, 0.045)],
   close: [swish(2000, 650, 0.12, 0.035)],
   // Lật thẻ: tiếng "phựt" của tấm thẻ.
-  flip: [swish(1600, 900, 0.09, 0.05), tone(300, 0.03, 0.015)],
+  flip: [swish(1600, 900, 0.09, 0.05)],
   // Lưu xong, thêm xong: hai tiếng chuông sáng.
   success: [bell(1047, 0, 0.3, 0.045), bell(1568, 0.07, 0.4, 0.04)],
   // AI trả lời xong: ba tiếng chuông nhỏ đi lên.
   ready: [bell(1319, 0, 0.3, 0.035), bell(1760, 0.06, 0.32, 0.03), bell(2093, 0.12, 0.45, 0.026)],
-  // Tin nhắn mới trong hội thoại: "píp píp" êm.
-  message: [tone(988, 0.07, 0.035), tone(1319, 0.1, 0.03, { at: 0.08 })],
+  // Tin nhắn mới trong hội thoại: hai tiếng chuông nhỏ.
+  message: [bell(1319, 0, 0.2, 0.03), bell(1760, 0.08, 0.28, 0.028)],
   correct: [bell(880, 0, 0.25, 0.055), bell(1319, 0.09, 0.45, 0.055)],
   // Gần đúng: hai nốt sát nhau, nghe như "suýt nữa".
   almost: [bell(880, 0, 0.22, 0.045), bell(988, 0.1, 0.3, 0.038)],
-  // Sai: hai nốt trầm đi xuống, êm chứ không chói.
-  wrong: [tone(330, 0.16, 0.055, { to: 300 }), tone(262, 0.22, 0.055, { at: 0.12, to: 240 })],
-  error: [tone(392, 0.09, 0.04, { wave: 'triangle' }), tone(330, 0.14, 0.04, { at: 0.1, wave: 'triangle' })],
-  // Gõ quá số chữ, thao tác không được: tiếng "tục" trầm ngắn.
-  reject: [tone(200, 0.07, 0.05, { to: 170 })],
-  delete: [tone(420, 0.2, 0.05, { to: 140 }), swish(900, 300, 0.16, 0.02)],
+  // Sai: hai nốt đi xuống ("ồ ồ"), vào chậm để mềm chứ không thành tiếng gõ.
+  wrong: [tone(392, 0.2, 0.05, { to: 370, attack: 0.025 }), tone(311, 0.28, 0.05, { at: 0.13, to: 294, attack: 0.025 })],
+  error: [bell(659, 0, 0.25, 0.035), bell(523, 0.1, 0.3, 0.035)],
+  // Gõ quá số chữ, thao tác không được: hai tiếng tách trầm.
+  reject: [tick(1800, 1300, 0.08, 0, 0.03), tick(1500, 1000, 0.07, 0.06, 0.03)],
+  delete: [tone(420, 0.22, 0.045, { to: 140, attack: 0.025 }), swish(900, 300, 0.16, 0.025)],
   hint: sparkle(0, 0.022),
   // Đánh dấu yêu thích: một tiếng chuông kèm lấp lánh.
   star: [bell(1568, 0, 0.3, 0.035), ...sparkle(0.05, 0.018)],
-  recStart: [tone(523, 0.05, 0.04), tone(784, 0.07, 0.04, { at: 0.06 })],
-  recStop: [tone(784, 0.05, 0.04), tone(523, 0.07, 0.04, { at: 0.06 })],
+  recStart: [bell(1047, 0, 0.16, 0.035), bell(1568, 0.07, 0.22, 0.035)],
+  recStop: [bell(1568, 0, 0.16, 0.035), bell(1047, 0.07, 0.22, 0.035)],
   // Xong buổi học: hợp âm rải Đô–Mi–Son–Đô rồi một tiếng ngân cao.
   complete: [523, 659, 784, 1047].map((f, i) => bell(f, i * 0.08, 0.35, 0.042)).concat(bell(2093, 0.34, 0.6, 0.022)),
   // Đạt huy hiệu: rải nhanh lên cao và lấp lánh.
@@ -137,7 +167,7 @@ function osc(a: AudioContext, t0: number, f: number, len: number, gain: number, 
 
 function render(a: AudioContext, layer: Layer) {
   const t0 = a.currentTime + 0.005 + (layer.at ?? 0)
-  if (layer.kind === 'tone') return osc(a, t0, layer.f, layer.len, layer.gain, layer.wave, layer.to)
+  if (layer.kind === 'tone') return osc(a, t0, layer.f, layer.len, layer.gain, layer.wave, layer.to, layer.attack)
   if (layer.kind === 'bell') {
     osc(a, t0, layer.f, layer.len, layer.gain, 'sine', undefined, 0.003)
     osc(a, t0, layer.f * 2.76, layer.len * 0.5, layer.gain * 0.25, 'sine', undefined, 0.003)
@@ -165,6 +195,11 @@ let pendingTap: ReturnType<typeof setTimeout> | undefined
 /** Lúc phát tiếng sự kiện (không phải tiếng chạm) gần nhất. */
 let lastEvent = 0
 
+/** Các lớp âm của một tiếng, theo kiểu tiếng chạm đang chọn. */
+export function layersOf(name: Sfx, style: TapStyle = getSettings().tapStyle): readonly Layer[] {
+  return (STYLED as readonly Sfx[]).includes(name) ? (TAP_STYLES[style] ?? TAP_STYLES.soft)[name as StyledSfx] : SOUNDS[name]
+}
+
 /** Tiếng này đang được bật trong cài đặt không. */
 export function sfxAllowed(name: Sfx, settings: { soundEffects: boolean; tapSounds: boolean } = getSettings()): boolean {
   return settings.soundEffects && (settings.tapSounds || !TAP_SOUNDS.has(name))
@@ -178,7 +213,7 @@ export function play(name: Sfx): void {
   const a = audio()
   if (!a || !out) return
   if (!TAP_SOUNDS.has(name)) lastEvent = Date.now()
-  for (const layer of SOUNDS[name]) render(a, layer)
+  for (const layer of layersOf(name)) render(a, layer)
 }
 
 /** Phát nếu chưa có tiếng sự kiện nào trong `ms` vừa qua (ví dụ thông báo "Đã xóa" ngay sau tiếng xóa thì thôi). */
@@ -215,8 +250,21 @@ export function installTapSounds(root: Document = document): () => void {
   }
 }
 
+/** Hẹn giờ của lần nghe thử đang phát: nghe thử lần mới thì bỏ phần còn lại của lần cũ. */
+let demoTimers: ReturnType<typeof setTimeout>[] = []
+
+function playSequence(names: Sfx[], gap: number) {
+  demoTimers.forEach(clearTimeout)
+  play(names[0])
+  demoTimers = names.slice(1).map((name, i) => setTimeout(() => play(name), (i + 1) * gap))
+}
+
+/** Nghe thử kiểu tiếng chạm vừa chọn: chạm, chọn, bật, chuyển tab. */
+export function playTapStyleDemo(): void {
+  playSequence(['tap', 'select', 'toggleOn', 'nav'], 280)
+}
+
 /** Nghe thử vài tiếng tiêu biểu (Cá nhân → Âm thanh hiệu ứng). */
 export function playDemo(): void {
-  const names: Sfx[] = ['tap', 'toggleOn', 'open', 'success', 'correct', 'almost', 'wrong', 'complete']
-  names.forEach((name, i) => setTimeout(() => play(name), i * 650))
+  playSequence(['tap', 'toggleOn', 'open', 'success', 'correct', 'almost', 'wrong', 'complete'], 650)
 }

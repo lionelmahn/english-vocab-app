@@ -731,6 +731,7 @@ export const GUIDE: GuideTopic[] = [
         list: [
           'Mỗi việc có một tiếng ngắn và nhẹ riêng: chọn đúng, gần đúng, chọn sai, lưu xong, AI trả lời xong, tin nhắn mới trong hội thoại, bắt đầu và dừng ghi âm, lật thẻ, gợi ý, xóa, hoàn thành buổi học, đạt huy hiệu.',
           'Tắt hết ở “Cá nhân” → “Giao diện và âm thanh” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử” để nghe vài tiếng.',
+          'Ở “Kiểu tiếng chạm” chọn “Tách nhẹ” (mặc định: tiếng tách giòn như bàn phím iPhone), “Bong bóng” (tiếng bóp nhỏ trượt lên cao) hoặc “Pha lê” (tiếng chuông nhỏ). Chọn kiểu nào là nghe thử kiểu đó ngay.',
           'Trên iPhone, khi gạt nút im lặng bên hông máy, tiếng hiệu ứng có thể bị tắt theo.',
         ],
       },
