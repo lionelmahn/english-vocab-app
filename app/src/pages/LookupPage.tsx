@@ -1,9 +1,9 @@
-import { BookmarkPlus, Check, ChevronDown, ChevronRight, CloudOff, ExternalLink, History, LoaderCircle, MessageSquareText, Plus, RotateCcw, Search, SearchX, Shuffle, Trash2, Volume2, X } from 'lucide-react'
+import { BookmarkPlus, Check, ChevronDown, ChevronRight, CloudOff, ExternalLink, History, LoaderCircle, MessageSquareText, Plus, RotateCcw, Search, SearchX, Shuffle, Trash2, Volume2, X, type LucideIcon } from 'lucide-react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion, type Variants } from 'motion/react'
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
-import { Badge, Chip, IpaPill, Sheet, SpeakButtons } from '../components/kit'
+import { Badge, Chip, IpaPill, Segmented, Sheet, SpeakButtons } from '../components/kit'
 import { Button, Card, EmptyState, Page, SectionTitle, TextField } from '../components/ui'
 import type { DictEntry, DictGroup, DictSense, Ipa, VietnameseHint } from '../core/dictionary'
 import { POS_LABEL } from '../core/pos'
@@ -19,10 +19,11 @@ import { suggestSenseMeanings } from '../services/aiTasks'
 import { useAiOn, useAiRun } from '../lib/useAi'
 import { AiErrorText, AiLink, AiNote } from '../components/AiAssist'
 import { LookupReference } from '../components/WordReference'
+import { useConfusablesOf, useWordReference } from '../lib/useReference'
 import { speak } from '../services/speech'
 
-/** Số nghĩa hiện sẵn cho mỗi loại từ; còn lại bấm "Xem thêm". */
-const SHOWN = 5
+/** Số nghĩa hiện sẵn cho mỗi loại từ; còn lại bấm "Xem thêm" (ít để trang không quá dài). */
+const SHOWN = 3
 
 /**
  * Chuyển giữa các trạng thái (đang tra, kết quả, không tìm thấy). Dùng nhãn hidden/show giống khung trang,
@@ -102,6 +103,10 @@ export function LookupPage() {
         {view === 'idle' && (
           <motion.div key="idle" {...fade}>
             <div className="flex flex-col gap-3">
+              <div className={`grid gap-2 ${aiOn ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                <ToolTile to="/confusables" icon={Shuffle} title="Từ dễ nhầm" detail="borrow / lend, say / tell… cách phân biệt, bài thử" />
+                {aiOn && <ToolTile to="/explain" icon={MessageSquareText} title="Giải thích từ trong câu" detail="Dán câu đang đọc, chạm từ chưa hiểu" />}
+              </div>
               <RecentLookups onLookup={go}>
                 <EmptyState
                   icon={Volume2}
@@ -109,28 +114,6 @@ export function LookupPage() {
                   body="Xem nghĩa theo loại từ, phiên âm Anh–Mỹ/Anh–Anh, nghe phát âm và câu ví dụ, rồi chọn nghĩa để lưu vào sổ tay."
                 />
               </RecentLookups>
-              <Link to="/confusables" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                  <Shuffle aria-hidden className="h-5 w-5" />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[0.9375rem] font-semibold">Từ dễ nhầm</span>
-                  <span className="block text-[0.8125rem] leading-snug text-muted">borrow / lend, say / tell, fun / funny… cách phân biệt và bài thử nhanh</span>
-                </span>
-                <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
-              </Link>
-              {aiOn && (
-                <Link to="/explain" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                    <MessageSquareText aria-hidden className="h-5 w-5" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[0.9375rem] font-semibold">Giải thích từ trong câu</span>
-                    <span className="block text-[0.8125rem] leading-snug text-muted">Dán câu đang đọc, chạm từ chưa hiểu, AI giải thích đúng nghĩa trong câu đó</span>
-                  </span>
-                  <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
-                </Link>
-              )}
             </div>
           </motion.div>
         )}
@@ -169,57 +152,104 @@ export function LookupPage() {
   )
 }
 
+/** Lối vào một công cụ tra cứu ở trang Tra từ (ô vuông nhỏ, hai ô một hàng). */
+function ToolTile({ to, icon: Icon, title, detail }: { to: string; icon: LucideIcon; title: string; detail: string }) {
+  return (
+    <Link to={to} className="flex flex-col gap-2 rounded-3xl border border-line bg-surface p-3.5 active:bg-surface-2">
+      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent">
+        <Icon aria-hidden className="h-[1.125rem] w-[1.125rem]" />
+      </span>
+      <span className="block text-[0.9375rem] leading-snug font-semibold">{title}</span>
+      <span className="block text-[0.8125rem] leading-snug text-muted">{detail}</span>
+    </Link>
+  )
+}
+
 // ---- Lịch sử tra (R15.4) ---------------------------------------------------------------------
 
 const RECENT = 30
+/** Số từ hiện sẵn dưới dạng chip; còn lại bấm "Xem tất cả". */
+const RECENT_CHIPS = 12
 
-/** Từ đã tra gần đây (đồng bộ giữa các máy): chạm để tra lại, bỏ từng từ hoặc xóa hết. Chưa tra gì thì hiện `children`. */
+/** Từ đã tra gần đây (đồng bộ giữa các máy): chạm để tra lại; bảng "Xem tất cả" để bỏ từng từ hoặc xóa hết. Chưa tra gì thì hiện `children`. */
 function RecentLookups({ onLookup, children }: { onLookup: (term: string) => void; children: ReactNode }) {
   const entries = useLiveQuery(async () => (await db.lookupHistory.orderBy('lookedUpAt').reverse().toArray()).filter((e) => e.deletedAt === null), [])
+  const [all, setAll] = useState(false)
   const [confirm, setConfirm] = useState(false)
   if (!entries) return null
   if (entries.length === 0) return <>{children}</>
   // Cùng một từ tra trên hai máy trước khi đồng bộ: chỉ hiện một lần.
   const seen = new Set<string>()
   const list = entries.filter((e) => !seen.has(e.query.toLowerCase()) && seen.add(e.query.toLowerCase())).slice(0, RECENT)
+  const close = () => {
+    setAll(false)
+    setConfirm(false)
+  }
   return (
-    <Card className="p-2">
-      <div className="flex items-center justify-between px-2 pt-1 pb-1">
+    <Card>
+      <div className="mb-3 flex items-center justify-between gap-2">
         <SectionTitle className="flex items-center gap-2">
           <History aria-hidden className="h-4 w-4 text-subtle" /> Đã tra gần đây
         </SectionTitle>
-        <button type="button" onClick={() => setConfirm(true)} className="flex items-center gap-1 text-sm font-semibold text-muted">
-          <Trash2 aria-hidden className="h-4 w-4" /> Xóa lịch sử
+        <button type="button" onClick={() => setAll(true)} className="text-sm font-semibold text-accent">
+          {list.length > RECENT_CHIPS ? `Xem tất cả (${list.length})` : 'Sửa'}
         </button>
       </div>
-      <ul>
-        {list.map((e) => (
-          <li key={e.id} className="flex items-center gap-1">
-            <button type="button" onClick={() => onLookup(e.query)} className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl px-3 py-2.5 text-left active:bg-surface-2">
-              <Search aria-hidden className="h-4 w-4 shrink-0 text-subtle" />
-              <span className="truncate font-medium">{e.query}</span>
-            </button>
-            <button type="button" aria-label={`Bỏ “${e.query}” khỏi lịch sử`} onClick={() => void repo.clearLookups([e.id])} className="flex h-10 w-10 shrink-0 items-center justify-center text-subtle">
-              <X aria-hidden className="h-4 w-4" />
-            </button>
-          </li>
-        ))}
-      </ul>
-      <Sheet open={confirm} onClose={() => setConfirm(false)} title="Xóa lịch sử tra?">
-        <div className="flex flex-col gap-3">
-          <p className="text-sm leading-relaxed text-muted">Danh sách từ đã tra bị xóa trên mọi máy đã đăng nhập. Từ đã lưu vào sổ tay và kết quả tra đã lưu để xem khi mất mạng vẫn giữ nguyên.</p>
-          <Button
-            variant="danger"
-            onClick={async () => {
-              await repo.clearLookups()
-              setConfirm(false)
-              showToast('Đã xóa lịch sử tra')
-            }}
+      <div className="flex flex-wrap gap-2">
+        {list.slice(0, RECENT_CHIPS).map((e) => (
+          <button
+            key={e.id}
+            type="button"
+            onClick={() => onLookup(e.query)}
+            className="max-w-full truncate rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm font-medium active:bg-surface-2"
           >
-            Xóa lịch sử
-          </Button>
-          <Button onClick={() => setConfirm(false)}>Hủy</Button>
-        </div>
+            {e.query}
+          </button>
+        ))}
+      </div>
+      <Sheet open={all} onClose={close} title={confirm ? 'Xóa lịch sử tra?' : 'Đã tra gần đây'}>
+        {confirm ? (
+          <div className="flex flex-col gap-3">
+            <p className="text-sm leading-relaxed text-muted">Danh sách từ đã tra bị xóa trên mọi máy đã đăng nhập. Từ đã lưu vào sổ tay và kết quả tra đã lưu để xem khi mất mạng vẫn giữ nguyên.</p>
+            <Button
+              variant="danger"
+              onClick={async () => {
+                await repo.clearLookups()
+                close()
+                showToast('Đã xóa lịch sử tra')
+              }}
+            >
+              Xóa lịch sử
+            </Button>
+            <Button onClick={() => setConfirm(false)}>Hủy</Button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            <ul className="-mx-2 max-h-[55vh] overflow-y-auto">
+              {list.map((e) => (
+                <li key={e.id} className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      close()
+                      onLookup(e.query)
+                    }}
+                    className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl px-3 py-2.5 text-left active:bg-surface-2"
+                  >
+                    <Search aria-hidden className="h-4 w-4 shrink-0 text-subtle" />
+                    <span className="truncate font-medium">{e.query}</span>
+                  </button>
+                  <button type="button" aria-label={`Bỏ “${e.query}” khỏi lịch sử`} onClick={() => void repo.clearLookups([e.id])} className="flex h-10 w-10 shrink-0 items-center justify-center text-subtle">
+                    <X aria-hidden className="h-4 w-4" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <Button icon={Trash2} onClick={() => setConfirm(true)}>
+              Xóa lịch sử
+            </Button>
+          </div>
+        )}
       </Sheet>
     </Card>
   )
@@ -248,6 +278,10 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
   const [picked, setPicked] = useState<string[]>([])
   const [expanded, setExpanded] = useState<number[]>([])
   const [saving, setSaving] = useState(false)
+  const [tab, setTab] = useState<'meanings' | 'reference'>('meanings')
+  const ref = useWordReference(entry.title)
+  const confusables = useConfusablesOf(entry.title)
+  const hasRef = (ref?.collocations.length ?? 0) > 0 || (confusables?.length ?? 0) > 0
   const key = termKey(entry.title)
   const saved = useMemo(() => lib.items.filter((i) => i.termKey === key), [lib.items, key])
   const savedDefinitions = new Set(saved.map((i) => i.meaningEn).filter(Boolean))
@@ -285,7 +319,21 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
         </p>
       </Card>
 
-      {entry.groups.map((group, gi) => {
+      {hasRef && (
+        <Segmented
+          value={tab}
+          onChange={setTab}
+          layoutId="lookup-tab"
+          options={[
+            { value: 'meanings', label: 'Nghĩa' },
+            { value: 'reference', label: 'Tham khảo' },
+          ]}
+        />
+      )}
+
+      {tab === 'reference' && hasRef && <LookupReference term={entry.title} />}
+
+      {(tab === 'meanings' || !hasRef) && entry.groups.map((group, gi) => {
         const hints = hintsFor(entry, group)
         const ipa = ipaFor(entry, group)
         const showAll = expanded.includes(gi)
@@ -363,8 +411,6 @@ function EntryView({ entry, lib, onLookup }: { entry: DictEntry; lib: Library; o
           </Card>
         )
       })}
-
-      <LookupReference term={entry.title} />
 
       <p className="px-1 text-xs leading-relaxed text-subtle">
         Nguồn:{' '}

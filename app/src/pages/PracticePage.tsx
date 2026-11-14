@@ -137,11 +137,9 @@ export function PracticePage() {
                 </Chip>
               ))}
             </div>
-            <p className="mt-3 text-sm text-muted">{scopeNote}</p>
-          </Card>
+            <p className="mt-2 text-sm text-muted">{scopeNote}</p>
 
-          <Card>
-            <SectionTitle>Số từ</SectionTitle>
+            <SectionTitle className="mt-5 mb-3">Số từ</SectionTitle>
             <div className="flex flex-wrap gap-2">
               {(fresh ? FRESH_COUNTS : COUNTS).map((n) => (
                 <Chip key={n} active={count === n} onClick={() => setCount(n)}>
@@ -149,22 +147,14 @@ export function PracticePage() {
                 </Chip>
               ))}
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
-              Ôn chủ động không làm đổi lịch ôn: kết quả chỉ ghi vào lịch sử bài làm. Trả lời sai thì từ quay lại để bạn luyện thêm.{' '}
-              {fresh ? 'Dạng bài: điền từ vào chỗ trống trong câu mới.' : settings.reviewStyle === 'flashcard' ? 'Kiểu ôn: thẻ tự đánh giá.' : 'Dạng bài chọn theo mức độ nhớ của từng từ.'}
-            </p>
-          </Card>
 
-          {aiOn && (
-            <Card>
-              <div className="flex items-center justify-between gap-4">
+            {aiOn && (
+              <div className="mt-5 flex items-center justify-between gap-4 border-t border-line pt-4">
                 <div>
                   <p className="flex items-center gap-1.5 text-[0.9375rem] font-semibold">
                     <Sparkles aria-hidden className="h-4 w-4 text-accent" /> Câu mới do AI soạn
                   </p>
-                  <p className="text-[0.8125rem] leading-snug text-muted">
-                    Mỗi từ có một câu mới hợp trình độ của bạn để điền từ vào chỗ trống (chọn từ hoặc gõ từ). App kiểm câu có đúng chữ cần điền trước khi dùng. Tối đa 10 từ một lần.
-                  </p>
+                  <p className="text-[0.8125rem] leading-snug text-muted">Mỗi từ một câu mới hợp trình độ của bạn để điền từ vào chỗ trống. Tối đa 10 từ một lần.</p>
                 </div>
                 <Switch
                   label="Câu mới do AI soạn"
@@ -176,13 +166,17 @@ export function PracticePage() {
                   }}
                 />
               </div>
-              <AiErrorText message={aiError} />
-            </Card>
-          )}
+            )}
+            <AiErrorText message={aiError} />
+          </Card>
 
           <Button variant="primary" icon={Dumbbell} className="w-full disabled:opacity-70" disabled={size === 0 || starting} onClick={() => void start()}>
             {starting && fresh ? 'AI đang soạn câu… (khoảng 20 giây)' : size > 0 ? `Bắt đầu ôn ${size} từ` : 'Chưa có từ để ôn'}
           </Button>
+          <p className="-mt-1 px-1 text-xs leading-relaxed text-subtle">
+            Ôn chủ động không làm đổi lịch ôn: kết quả chỉ ghi vào lịch sử bài làm. Trả lời sai thì từ quay lại để bạn luyện thêm.{' '}
+            {fresh ? 'Dạng bài: điền từ vào chỗ trống trong câu mới (app kiểm câu có đúng chữ cần điền trước khi dùng).' : settings.reviewStyle === 'flashcard' ? 'Kiểu ôn: thẻ tự đánh giá.' : 'Dạng bài chọn theo mức độ nhớ của từng từ.'}
+          </p>
 
           {aiOn && (
             <Link to="/chat" className="flex items-center gap-3 rounded-3xl border border-line bg-surface px-4 py-3.5 active:bg-surface-2">

@@ -1,9 +1,9 @@
 import { Bot, LoaderCircle, Search, Sparkles, Trash2 } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { HelpButton } from '../components/Guide'
-import { BackButton, Chip } from '../components/kit'
+import { BackButton, Chip, Select } from '../components/kit'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
-import { AI_MODELS, DAILY_LIMITS, FREE_NEURONS_PER_DAY, type WordInfo } from '../core/ai'
+import { AI_MODELS, DAILY_LIMITS, FREE_NEURONS_PER_DAY, type AiModelId, type WordInfo } from '../core/ai'
 import { POS_LABEL } from '../core/pos'
 import { showToast } from '../lib/toast'
 import { aiErrorText, clearAiCache, setAiSettings, useAiCacheCount, useAiUsage } from '../services/ai'
@@ -40,75 +40,70 @@ export function AiPage() {
         {auth.status !== 'signed_in' && <p className="mt-2 text-xs text-warning">Bạn chưa đăng nhập: cần đăng nhập để dùng trợ lý AI.</p>}
       </Card>
 
-      {/* Ngay dưới công tắc: để cuối trang thì phải cuộn qua model và lượt dùng mới thấy. */}
-      <TryCard />
+      {ai.enabled && (
+        <>
+          {/* Ngay dưới công tắc: để cuối trang thì phải cuộn qua model và lượt dùng mới thấy. */}
+          <TryCard />
 
-      <Card>
-        <SectionTitle className="mb-1">Model</SectionTitle>
-        <p className="mb-3 text-xs text-subtle">Đổi model thì các câu hỏi cũ sẽ được hỏi lại bằng model mới.</p>
-        <div className="flex flex-col gap-2">
-          {AI_MODELS.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              aria-pressed={ai.model === m.id}
-              onClick={() => set({ model: m.id })}
-              className={`rounded-2xl border-2 px-4 py-3 text-left transition-colors ${ai.model === m.id ? 'border-accent bg-accent-soft' : 'border-line bg-surface'}`}
+          <Card>
+            <SectionTitle className="mb-3">Cài đặt</SectionTitle>
+            <Select label="Model" value={ai.model} onChange={(e) => set({ model: e.target.value as AiModelId })}>
+              {AI_MODELS.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                  {m.id === AI_MODELS[0].id ? ' (đề xuất)' : ''}
+                </option>
+              ))}
+            </Select>
+            <p className="mt-2 text-[0.8125rem] leading-snug text-muted">{AI_MODELS.find((m) => m.id === ai.model)?.note}. Đổi model thì các câu hỏi cũ sẽ được hỏi lại bằng model mới.</p>
+            <p className="mt-4 mb-2 text-sm font-medium">Tối đa mỗi ngày trên máy này</p>
+            <div className="flex flex-wrap gap-2">
+              {DAILY_LIMITS.map((n) => (
+                <Chip key={n} active={ai.dailyLimit === n} onClick={() => set({ dailyLimit: n })}>
+                  {n} lượt
+                </Chip>
+              ))}
+            </div>
+          </Card>
+
+          <Card>
+            <SectionTitle className="mb-3">Lượt đã dùng</SectionTitle>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              <dt className="text-muted">Hôm nay</dt>
+              <dd className="text-right font-medium tabular-nums">
+                {usage.todayRequests}/{ai.dailyLimit} lượt
+              </dd>
+              <dt className="text-muted">Hạn mức miễn phí hôm nay</dt>
+              <dd className="text-right font-medium tabular-nums">
+                {num.format(usage.todayNeurons)}/{num.format(FREE_NEURONS_PER_DAY)} neuron
+              </dd>
+              <dt className="text-muted">30 ngày qua</dt>
+              <dd className="text-right font-medium tabular-nums">
+                {usage.monthRequests} lượt · {num.format(usage.monthNeurons)} neuron
+              </dd>
+              <dt className="text-muted">Lấy lại kết quả đã lưu</dt>
+              <dd className="text-right font-medium tabular-nums">{usage.monthCached} lượt</dd>
+            </dl>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-2" aria-hidden>
+              <div className={`h-full rounded-full ${share > 0.8 ? 'bg-warning' : 'bg-accent'}`} style={{ width: `${share * 100}%` }} />
+            </div>
+            <p className="mt-2 text-xs leading-relaxed text-subtle">
+              Số neuron chỉ đếm lượt hỏi từ máy này; hạn mức 10.000 neuron/ngày là chung cho cả tài khoản Cloudflare, đặt lại lúc 7:00 sáng. Mỗi lượt gợi ý một từ tốn khoảng 20–60 neuron.
+            </p>
+            <Button
+              icon={Trash2}
+              className="mt-3 h-11 w-full px-2! text-sm disabled:opacity-60"
+              disabled={!cached}
+              onClick={async () => {
+                await clearAiCache()
+                showToast('Đã xóa kết quả AI đã lưu')
+              }}
             >
-              <span className="block text-[0.9375rem] font-semibold">
-                {m.label}
-                {m.id === AI_MODELS[0].id && <span className="ml-2 text-xs font-semibold text-accent">Đề xuất</span>}
-              </span>
-              <span className="block text-[0.8125rem] leading-snug text-muted">{m.note}</span>
-            </button>
-          ))}
-        </div>
-      </Card>
-
-      <Card>
-        <SectionTitle className="mb-3">Giới hạn và lượt đã dùng</SectionTitle>
-        <p className="mb-2 text-sm font-medium">Tối đa mỗi ngày trên máy này</p>
-        <div className="flex flex-wrap gap-2">
-          {DAILY_LIMITS.map((n) => (
-            <Chip key={n} active={ai.dailyLimit === n} onClick={() => set({ dailyLimit: n })}>
-              {n} lượt
-            </Chip>
-          ))}
-        </div>
-        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-          <dt className="text-muted">Hôm nay</dt>
-          <dd className="text-right font-medium tabular-nums">
-            {usage.todayRequests}/{ai.dailyLimit} lượt
-          </dd>
-          <dt className="text-muted">Hạn mức miễn phí hôm nay</dt>
-          <dd className="text-right font-medium tabular-nums">
-            {num.format(usage.todayNeurons)}/{num.format(FREE_NEURONS_PER_DAY)} neuron
-          </dd>
-          <dt className="text-muted">30 ngày qua</dt>
-          <dd className="text-right font-medium tabular-nums">
-            {usage.monthRequests} lượt · {num.format(usage.monthNeurons)} neuron
-          </dd>
-          <dt className="text-muted">Lấy lại kết quả đã lưu</dt>
-          <dd className="text-right font-medium tabular-nums">{usage.monthCached} lượt</dd>
-        </dl>
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-2" aria-hidden>
-          <div className={`h-full rounded-full ${share > 0.8 ? 'bg-warning' : 'bg-accent'}`} style={{ width: `${share * 100}%` }} />
-        </div>
-        <p className="mt-2 text-xs leading-relaxed text-subtle">
-          Số neuron chỉ đếm lượt hỏi từ máy này; hạn mức 10.000 neuron/ngày là chung cho cả tài khoản Cloudflare, đặt lại lúc 7:00 sáng. Mỗi lượt gợi ý một từ tốn khoảng 20–60 neuron.
-        </p>
-        <Button
-          icon={Trash2}
-          className="mt-3 h-11 w-full px-2! text-sm disabled:opacity-60"
-          disabled={!cached}
-          onClick={async () => {
-            await clearAiCache()
-            showToast('Đã xóa kết quả AI đã lưu')
-          }}
-        >
-          Xóa kết quả đã lưu{cached ? ` (${cached})` : ''}
-        </Button>
-      </Card>
+              Xóa kết quả đã lưu{cached ? ` (${cached})` : ''}
+            </Button>
+          </Card>
+        </>
+      )}
     </Page>
   )
 }

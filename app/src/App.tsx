@@ -20,6 +20,7 @@ import { AccountPage } from './pages/AccountPage'
 import { TestPage } from './pages/TestPage'
 import { PracticePage } from './pages/PracticePage'
 import { MemoryPage } from './pages/MemoryPage'
+import { AppearancePage, SpeechSettingsPage, StudySettingsPage } from './pages/SettingsPages'
 import { InsightsPage } from './pages/InsightsPage'
 import { AchievementsPage } from './pages/AchievementsPage'
 import { FeedbackPage } from './pages/FeedbackPage'
@@ -172,6 +173,9 @@ export default function App() {
                   <Route path="/test" element={<TestPage />} />
                   <Route path="/practice" element={<PracticePage />} />
                   <Route path="/me/memory" element={<MemoryPage />} />
+                  <Route path="/me/study" element={<StudySettingsPage />} />
+                  <Route path="/me/speech" element={<SpeechSettingsPage />} />
+                  <Route path="/me/appearance" element={<AppearancePage />} />
                   <Route path="/insights" element={<InsightsPage />} />
                   <Route path="/achievements" element={<AchievementsPage />} />
                   <Route path="/me/feedback" element={<FeedbackPage />} />

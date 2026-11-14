@@ -491,6 +491,14 @@ Nguyên tắc:
 > - Hướng dẫn: thêm “Trang của một từ” (Thêm từ), “Âm thanh hiệu ứng” (Âm thanh), sửa các chỗ nhắc vị trí thẻ. 384 test (bộ tiếng: tiếng nào cũng ngắn, nhỏ, trong dải nghe êm; công tắc tắt đúng nhóm). Đã thử trên trình duyệt (sáng và tối, 375 px): bốn phần, đếm tiếng mỗi cú chạm. Chưa nghe thử trên iPhone (khung xem trước không phát ra loa).
 > - Tiếp theo: bản 0.34.0 bố cục lại Cá nhân, Tra từ, Trợ lý AI và Ôn chủ động.
 
+> **Cập nhật 15/11/2026 (bản 0.34.0): Bố cục lại Cá nhân, Tra từ, Trợ lý AI và Ôn chủ động** (bốn trang bạn chọn trong ghi chú “trang dài, chưa gọn”).
+> - Cá nhân: kiểu trang Cài đặt của iPhone — thẻ hồ sơ, rồi các nhóm “Học tập” (Mục tiêu và lịch học, Nhắc nhở, Cách học và ôn, Giọng đọc, Mục tiêu ghi nhớ, Trợ lý AI, Kiểm tra trình độ), “Máy chủ và đồng bộ” (giữ nguyên, vì hay dùng “Đồng bộ ngay”), “Ứng dụng” (Giao diện và âm thanh, Dùng khi không có mạng, Sao lưu, Nhập file, Tài khoản và quyền riêng tư), “Hỗ trợ”; “Đăng xuất” xuống cuối. Mỗi dòng ghi giá trị đang dùng (ví dụ “Bài luyện · tối đa 50 từ mỗi buổi”). Thành phần dùng chung `MenuGroup`, `MenuRow` (components/ui.tsx). Trang dài khoảng 1.700 px (trước gấp đôi).
+> - Ba trang con mới (`pages/SettingsPages.tsx`): `/me/study` “Cách học và ôn” (kiểu ôn; mặt trước thẻ chỉ hiện khi chọn thẻ tự đánh giá; tối đa mỗi buổi; tự phát âm; bản dịch), `/me/speech` “Giọng đọc” (Anh–Mỹ/Anh–Anh, giọng người thật, giọng máy, tốc độ; hướng dẫn giọng iPhone thu vào nút “Giọng máy đọc chưa đúng giọng đã chọn?”), `/me/appearance` “Giao diện và âm thanh”. Mỗi trang vừa một màn hình.
+> - Tra từ: hai ô “Từ dễ nhầm” và “Giải thích từ trong câu” lên đầu (hai ô một hàng); “Đã tra gần đây” thành dãy chip (12 từ), “Xem tất cả” mở bảng để bỏ từng từ hoặc xóa lịch sử. Kết quả: mỗi loại từ hiện 3 nghĩa đầu (trước 5); từ có kết hợp từ hoặc từ dễ nhầm thì chia “Nghĩa / Tham khảo”.
+> - Trợ lý AI: tắt thì chỉ còn công tắc; bật thì “Thử trợ lý”, thẻ “Cài đặt” (model chọn bằng danh sách thả xuống, ghi chú của model đang chọn, giới hạn mỗi ngày), thẻ “Lượt đã dùng”.
+> - Ôn chủ động: phạm vi, số từ và công tắc “Câu mới do AI soạn” trong một thẻ; lời giải thích xuống dưới nút bắt đầu; vừa một màn hình.
+> - Hướng dẫn cập nhật đường dẫn mới (Cách học và ôn, Giọng đọc, Giao diện và âm thanh, Mục tiêu và lịch học, lịch sử tra, phần Tham khảo khi tra). 384 test. Đã thử trên trình duyệt (375 px, sáng và tối): bốn trang, ba trang con, bảng lịch sử tra (xem tất cả, xác nhận xóa, hủy, tra lại), tra “abandon” (không có phần Tham khảo, 3 nghĩa + “Xem thêm 4 nghĩa”) và “decision” (Nghĩa / Tham khảo), Trợ lý AI tắt/bật; không trang nào tràn ngang.
+
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

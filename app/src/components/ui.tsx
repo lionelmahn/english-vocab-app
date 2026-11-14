@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, type HTMLMotionProps } from 'motion/react'
-import { CircleAlert, CircleCheck, type LucideIcon } from 'lucide-react'
+import { ChevronRight, CircleAlert, CircleCheck, type LucideIcon } from 'lucide-react'
 import { useEffect, type InputHTMLAttributes, type ReactNode, type Ref } from 'react'
 import { duration, ease, riseIn, stagger, tapScale } from '../lib/motion'
 import { playIfQuiet } from '../lib/sfx'
@@ -42,6 +42,32 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
     <motion.section variants={riseIn} className={`rounded-3xl border border-line bg-surface p-4 ${className}`}>
       {children}
     </motion.section>
+  )
+}
+
+/** Nhóm các dòng mục (kiểu trang Cài đặt của iPhone): tên nhóm nhỏ phía trên, các dòng trong một thẻ. */
+export function MenuGroup({ title, children }: { title?: string; children: ReactNode }) {
+  return (
+    <motion.section variants={riseIn} className="flex flex-col gap-1.5">
+      {title && <h2 className="px-1 text-xs font-semibold tracking-wide text-subtle uppercase">{title}</h2>}
+      <div className="flex flex-col rounded-3xl border border-line bg-surface p-1.5">{children}</div>
+    </motion.section>
+  )
+}
+
+/** Một dòng mục: biểu tượng, tên, giá trị hoặc mô tả ngắn bên dưới, mũi tên mở trang con. */
+export function MenuRow({ icon: Icon, title, detail, onClick, warn = false }: { icon: LucideIcon; title: string; detail?: string; onClick: () => void; warn?: boolean }) {
+  return (
+    <button type="button" onClick={onClick} className="flex w-full items-center gap-3 rounded-2xl px-2.5 py-2.5 text-left transition-colors active:bg-surface-2">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+        <Icon aria-hidden className="h-[1.125rem] w-[1.125rem]" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[0.9375rem] font-semibold">{title}</span>
+        {detail && <span className={`block truncate text-[0.8125rem] leading-snug ${warn ? 'text-warning' : 'text-muted'}`}>{detail}</span>}
+      </span>
+      <ChevronRight aria-hidden className="h-5 w-5 shrink-0 text-subtle" />
+    </button>
   )
 }
 

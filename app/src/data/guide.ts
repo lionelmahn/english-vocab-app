@@ -104,7 +104,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Tra từ”',
-            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Nếu bật Trợ lý AI, bấm “Gợi ý nghĩa tiếng Việt bằng AI” ở đầu bảng lưu: AI điền nghĩa vào các ô còn trống và dịch câu ví dụ, ô bạn đã gõ thì giữ nguyên. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó. Khi ô tra đang trống, trang hiện “Đã tra gần đây”: chạm một từ để tra lại, bấm dấu × để bỏ từ đó, hoặc “Xóa lịch sử” để xóa hết (trên mọi máy đã đăng nhập).',
+            text: 'Gõ từ rồi bấm “Tra”. Chạm dấu cộng ở nghĩa muốn học (chọn được nhiều nghĩa), bấm nút lưu ở cuối màn hình, nhập nghĩa tiếng Việt (nếu có dòng “Gợi ý:”, chạm một chữ trong dòng đó để điền sẵn) và chọn bộ. Nếu bật Trợ lý AI, bấm “Gợi ý nghĩa tiếng Việt bằng AI” ở đầu bảng lưu: AI điền nghĩa vào các ô còn trống và dịch câu ví dụ, ô bạn đã gõ thì giữ nguyên. Mỗi nghĩa thành một mục học riêng, kèm phiên âm, nghĩa tiếng Anh và câu ví dụ đầu tiên nếu từ điển có. Nếu không tìm thấy, app gợi ý các từ gần giống hoặc cho bạn tự thêm từ đó. Khi ô tra đang trống, trang hiện “Đã tra gần đây”: chạm một từ để tra lại; bấm “Sửa” (hoặc “Xem tất cả” khi đã tra nhiều) để xem cả danh sách, bấm dấu × để bỏ một từ, hoặc “Xóa lịch sử” để xóa hết (trên mọi máy đã đăng nhập).',
           },
           {
             term: '“Nhập từ file”',
@@ -296,10 +296,10 @@ export const GUIDE: GuideTopic[] = [
     blocks: [
       { p: 'Mỗi từ đã học có một thời điểm đến hạn ôn riêng. Khi có từ đến hạn, trang “Hôm nay” hiện “Đến giờ ôn tập:” và nút “Ôn tập ngay”; bấm vào rồi bấm “Bắt đầu ôn”.' },
       {
-        p: `Số từ tối đa trong một buổi ôn đặt ở “Tối đa mỗi buổi ôn” (mặc định ${REVIEW_LIMIT}). Nếu số từ đến hạn nhiều hơn, app cho ôn trước những từ bạn dễ quên nhất; các từ còn lại bạn ôn tiếp bằng nút “Ôn tiếp” ở màn tổng kết.`,
+        p: `Số từ tối đa trong một buổi ôn đặt ở “Cá nhân” → “Cách học và ôn” → “Tối đa mỗi buổi ôn” (mặc định ${REVIEW_LIMIT}). Nếu số từ đến hạn nhiều hơn, app cho ôn trước những từ bạn dễ quên nhất; các từ còn lại bạn ôn tiếp bằng nút “Ôn tiếp” ở màn tổng kết.`,
       },
       { h: 'Hai kiểu ôn' },
-      { p: 'Chọn ở “Cá nhân” → “Kiểu ôn tập”.' },
+      { p: 'Chọn ở “Cá nhân” → “Cách học và ôn” → “Kiểu ôn tập”.' },
       {
         terms: [
           {
@@ -308,7 +308,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: '“Thẻ tự đánh giá”',
-            text: 'Lật thẻ rồi tự chọn “Quên”, “Khó”, “Nhớ” hoặc “Dễ”. Dưới mỗi nút có ghi bao lâu nữa bạn sẽ ôn lại nếu chọn nút đó; thẻ có nhãn “Luyện lại” và thẻ trong buổi ôn chủ động không đổi lịch nên không ghi thời gian. Vuốt phải là Nhớ, vuốt trái là Quên. Muốn đổi mặt trước thẻ, vào “Cá nhân” → “Mặt trước thẻ khi ôn”.',
+            text: 'Lật thẻ rồi tự chọn “Quên”, “Khó”, “Nhớ” hoặc “Dễ”. Dưới mỗi nút có ghi bao lâu nữa bạn sẽ ôn lại nếu chọn nút đó; thẻ có nhãn “Luyện lại” và thẻ trong buổi ôn chủ động không đổi lịch nên không ghi thời gian. Vuốt phải là Nhớ, vuốt trái là Quên. Muốn đổi mặt trước thẻ, vào “Cá nhân” → “Cách học và ôn” → “Mặt trước thẻ khi ôn” (chỉ hiện khi chọn kiểu ôn này).',
           },
         ],
       },
@@ -553,7 +553,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['mục tiêu', 'chuỗi', 'streak', 'tuần này', 'phút', 'múi giờ', 'lịch học', 'ngày nghỉ'],
     blocks: [
       {
-        p: `Đặt mục tiêu ở “Cá nhân” → “Đổi mục tiêu và lịch học”: “Từ mới mỗi ngày” (mặc định ${NEW_PER_DAY}), “Thời gian học mỗi ngày” (mặc định ${MINUTES_PER_DAY} phút, gồm cả ôn tập) và “Ngày học trong tuần”. Mỗi lựa chọn được lưu ngay và dùng chung trên mọi máy đã đăng nhập. Thời gian học mỗi ngày còn dùng để gợi ý học ít từ mới hơn khi còn nhiều từ cần ôn (xem bài Học từ mới).`,
+        p: `Đặt mục tiêu ở “Cá nhân” → “Mục tiêu và lịch học”: “Từ mới mỗi ngày” (mặc định ${NEW_PER_DAY}), “Thời gian học mỗi ngày” (mặc định ${MINUTES_PER_DAY} phút, gồm cả ôn tập) và “Ngày học trong tuần”. Mỗi lựa chọn được lưu ngay và dùng chung trên mọi máy đã đăng nhập. Thời gian học mỗi ngày còn dùng để gợi ý học ít từ mới hơn khi còn nhiều từ cần ôn (xem bài Học từ mới).`,
       },
       { h: '“Mục tiêu hôm nay” ở tab Thống kê' },
       {
@@ -730,7 +730,7 @@ export const GUIDE: GuideTopic[] = [
       {
         list: [
           'Mỗi việc có một tiếng ngắn và nhẹ riêng: chọn đúng, gần đúng, chọn sai, lưu xong, AI trả lời xong, tin nhắn mới trong hội thoại, bắt đầu và dừng ghi âm, lật thẻ, gợi ý, xóa, hoàn thành buổi học, đạt huy hiệu.',
-          'Tắt hết ở “Cá nhân” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử” để nghe vài tiếng.',
+          'Tắt hết ở “Cá nhân” → “Giao diện và âm thanh” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử” để nghe vài tiếng.',
           'Trên iPhone, khi gạt nút im lặng bên hông máy, tiếng hiệu ứng có thể bị tắt theo.',
         ],
       },
@@ -773,8 +773,8 @@ export const GUIDE: GuideTopic[] = [
       },
       {
         list: [
-          '“Tốc độ giọng máy” chỉ đổi tốc độ giọng đọc của máy, không đổi bản ghi âm, Wiktionary hay Giọng iPhone. Tốc độ Giọng iPhone chỉnh trong phím tắt lúc tạo.',
-          'Bật “Tự phát âm” thì app tự đọc to từ vựng mỗi khi thẻ hiện ra và ở bài nghe.',
+          '“Tốc độ giọng máy” (ở “Cá nhân” → “Giọng đọc”) chỉ đổi tốc độ giọng đọc của máy, không đổi bản ghi âm, Wiktionary hay Giọng iPhone. Tốc độ Giọng iPhone chỉnh trong phím tắt lúc tạo.',
+          'Bật “Tự phát âm” (ở “Cá nhân” → “Cách học và ôn”) thì app tự đọc to từ vựng mỗi khi thẻ hiện ra và ở bài nghe.',
         ],
       },
       { tip: 'Trên iPhone, âm thanh chỉ phát được sau lần chạm đầu tiên vào app. Nếu thẻ đầu tiên không tự đọc, chạm loa một lần là được.' },
@@ -972,7 +972,7 @@ export const GUIDE: GuideTopic[] = [
       { h: 'Giải thích từ trong câu' },
       {
         list: [
-          'Ở “Tra từ”, khi ô tra đang trống, chạm thẻ “Giải thích từ trong câu”. Dán câu hoặc đoạn văn tiếng Anh đang đọc (tối đa 1.500 ký tự), bấm “Chọn từ cần giải thích”, rồi chạm vào từ chưa hiểu.',
+          'Ở “Tra từ”, khi ô tra đang trống, chạm ô “Giải thích từ trong câu” ở đầu trang. Dán câu hoặc đoạn văn tiếng Anh đang đọc (tối đa 1.500 ký tự), bấm “Chọn từ cần giải thích”, rồi chạm vào từ chưa hiểu.',
           'Muốn chọn một cụm (give up, take care of), chạm chữ đầu rồi chạm chữ cuối của cụm trong cùng câu (tối đa 6 chữ; dài hơn hoặc khác câu thì app chọn lại từ chữ vừa chạm và báo lý do). Chạm lại chữ đã chọn để bỏ chọn. Muốn hiểu cả câu thì chọn chữ hoặc cụm khó nhất: phần giải thích có kèm bản dịch cả câu. Chỉ chọn một chữ thuộc cụm động từ hay thành ngữ thì AI cũng nhận ra cả cụm.',
           'Bấm “Giải thích bằng AI” để xem nghĩa đúng trong câu đó, loại từ, vì sao mang nghĩa đó, bản dịch câu và các nghĩa khác. “Lưu vào sổ tay” mở form thêm từ đã điền sẵn dạng gốc, nghĩa và câu đang đọc làm câu ví dụ (xem lại rồi mới lưu); từ đã có trong sổ tay thì nút mở từ đó. “Tra từ điển” tra dạng gốc trên Wiktionary.',
           'Gõ cả một câu vào ô tra từ mà không tìm thấy thì trang cũng gợi ý mở phần giải thích này. Đoạn văn được giữ lại trong lúc app đang mở; bấm “Sửa đoạn văn” để đổi.',
@@ -1011,7 +1011,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['kết hợp từ', 'collocation', 'giới từ', 'mẫu câu', 'dễ nhầm', 'phân biệt', 'say tell', 'borrow lend'],
     blocks: [
       {
-        p: 'Trang của một từ có thẻ “Kết hợp từ” và “Từ dễ nhầm” trong phần “Tham khảo”. Nội dung có sẵn trong app cho 1.000 từ của bộ từ thông dụng (kể cả khi bạn tự thêm đúng từ đó) và 250 nhóm từ dễ nhầm, xem được cả khi mất mạng. Khi tra một từ có nội dung này, trang “Tra từ” cũng hiện hai thẻ đó dưới phần nghĩa.',
+        p: 'Trang của một từ có thẻ “Kết hợp từ” và “Từ dễ nhầm” trong phần “Tham khảo”. Nội dung có sẵn trong app cho 1.000 từ của bộ từ thông dụng (kể cả khi bạn tự thêm đúng từ đó) và 250 nhóm từ dễ nhầm, xem được cả khi mất mạng. Khi tra một từ có nội dung này, kết quả ở trang “Tra từ” có thêm phần “Tham khảo” cạnh phần “Nghĩa”.',
       },
       {
         terms: [
@@ -1029,7 +1029,7 @@ export const GUIDE: GuideTopic[] = [
           },
           {
             term: 'Trang “Từ dễ nhầm”',
-            text: 'Ở “Tra từ”, khi ô tra đang trống, chạm thẻ “Từ dễ nhầm” để xem mọi nhóm; gõ từ tiếng Anh hoặc nghĩa tiếng Việt (không cần dấu) để tìm. Ở trang của một từ, bấm “Xem mọi nhóm từ dễ nhầm” cũng mở trang này.',
+            text: 'Ở “Tra từ”, khi ô tra đang trống, chạm ô “Từ dễ nhầm” ở đầu trang để xem mọi nhóm; gõ từ tiếng Anh hoặc nghĩa tiếng Việt (không cần dấu) để tìm. Ở trang của một từ, bấm “Xem mọi nhóm từ dễ nhầm” cũng mở trang này.',
           },
         ],
       },
