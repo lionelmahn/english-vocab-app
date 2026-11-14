@@ -29,6 +29,7 @@ import { ConfusablesPage } from './pages/ConfusablesPage'
 import { ExplainPage } from './pages/ExplainPage'
 import { ChatPage } from './pages/ChatPage'
 import { PlacementPage } from './pages/PlacementPage'
+import { CoursePage, CoursesPage, LessonPage } from './pages/CoursePages'
 import { HistoryPage, SessionDetailPage } from './pages/HistoryPage'
 import { LoginPage } from './pages/LoginPage'
 import { LookupPage } from './pages/LookupPage'
@@ -184,6 +185,9 @@ export default function App() {
                   <Route path="/explain" element={<ExplainPage />} />
                   <Route path="/chat" element={<ChatPage />} />
                   <Route path="/placement" element={<PlacementPage />} />
+                  <Route path="/courses" element={<CoursesPage />} />
+                  <Route path="/courses/:courseId" element={<CoursePage />} />
+                  <Route path="/courses/:courseId/:lessonNo" element={<LessonPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/history/:id" element={<SessionDetailPage />} />
                   <Route path="/voice" element={<VoiceClipsPage />} />

@@ -1,4 +1,4 @@
-import { ClipboardCheck, Dumbbell, Flag, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, Trophy, X, Zap } from 'lucide-react'
+import { BookMarked, ClipboardCheck, Dumbbell, Flag, GraduationCap, History, Lightbulb, Pause, Repeat, Sparkles, Trophy, X, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -712,7 +712,12 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
               Ôn tiếp ({due} từ đến hạn)
             </Button>
           )}
-          {plan.mode === 'learn' && moreNew > 0 && (
+          {plan.origin && (
+            <Button variant={s.needWork.length ? 'secondary' : 'primary'} icon={BookMarked} onClick={() => navigate(`/courses/${plan.origin!.courseId}/${plan.origin!.lesson}`, { replace: true })}>
+              Về bài học
+            </Button>
+          )}
+          {plan.mode === 'learn' && moreNew > 0 && !plan.origin && (
             <Button variant={s.needWork.length ? 'secondary' : 'primary'} icon={GraduationCap} onClick={() => navigate('/learn')}>
               Học thêm từ mới
             </Button>

@@ -15,7 +15,7 @@ import { DEFAULT_NEW_SEC, DEFAULT_REVIEW_SEC, PACE_WINDOW_DAYS } from '../core/w
  * Con số mặc định lấy từ mã nguồn để không lệch khi đổi cài đặt.
  */
 
-export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback' | 'ai' | 'usage'
+export type GuideTopicId = 'start' | 'add-words' | 'learn' | 'review' | 'schedule' | 'levels' | 'today' | 'goals' | 'stats' | 'reminders' | 'audio' | 'sync' | 'offline' | 'account' | 'feedback' | 'ai' | 'usage' | 'courses'
 
 export type GuideBlock =
   | { h: string }
@@ -1041,11 +1041,45 @@ export const GUIDE: GuideTopic[] = [
       },
     ],
   },
+  {
+    id: 'courses',
+    title: 'Khóa học',
+    summary: 'Học từ theo bài có sẵn: mục tiêu, danh sách từ, đoạn đọc và tiến độ khóa',
+    keywords: ['khóa học', 'bài học', 'lộ trình', 'chủ đề', 'đoạn đọc', 'tiến độ', 'khóa'],
+    blocks: [
+      {
+        p: 'Khóa học là các bài học có sẵn trong app, chia theo chương và chủ đề. Mỗi bài có mục tiêu, khoảng 11 từ và một đoạn đọc ngắn dùng chính các từ đó. Mở ở trang Hôm nay: thẻ “Khóa học theo chủ đề” (hoặc thẻ khóa bạn đang học).',
+      },
+      { h: 'Tìm khóa' },
+      {
+        list: [
+          'Trang “Khóa học” có ô tìm và bộ lọc theo nhóm (“Nền tảng”, “Giao tiếp”, “Chuyên ngành”, “Thi cử”) và theo trình độ A1–C1.',
+          'Khóa hợp trình độ trong hồ sơ của bạn có nhãn “Hợp với bạn”. Khóa có nhãn “Sắp có” sẽ có ở các bản sau.',
+        ],
+      },
+      { h: 'Học một bài' },
+      {
+        list: [
+          'Trang một khóa liệt kê các chương và bài; bài nên học tiếp có nhãn “Học tiếp”. Mọi bài đều mở, bạn học bài nào trước cũng được.',
+          'Trong bài: đọc đoạn văn (từ tô xanh là từ của bài, chạm để xem nghĩa; có bản dịch và nút nghe), rồi chọn từ muốn học trong danh sách. Từ đã có trong sổ tay ghi “Trong sổ tay”, từ đã học ghi “Đã học”.',
+          'Bấm nút Học (nút ghi số từ đã chọn): app lưu các từ vào sổ tay, vào bộ mang tên “Khóa:” kèm tên khóa, rồi mở buổi học từ mới chỉ gồm các từ đó, như học bình thường. Học xong, nút “Về bài học” ở màn tổng kết đưa bạn về bài.',
+          'Từ đã biết thì bấm nút Mình đã biết (cũng ghi số từ): từ được lưu và hẹn ôn lại sau vài ngày, không cần học. Lỡ tay thì bấm “Hoàn tác đánh dấu đã biết” ngay bên dưới.',
+        ],
+      },
+      { h: 'Tiến độ' },
+      {
+        list: [
+          'Bài “Hoàn thành” khi mọi từ của bài đã học hoặc đã đánh dấu đã biết. Trang khóa hiện số từ đã học và số bài đã xong.',
+          'Tiến độ tính thẳng từ sổ tay: một từ vừa thuộc khóa vừa thuộc bộ khác vẫn là một mục học, học ở đâu cũng tính cho cả hai. Đăng nhập thì khóa đang học và tiến độ giống nhau trên mọi máy.',
+        ],
+      },
+    ],
+  },
 ]
 
 export const GUIDE_GROUPS: { title: string; topics: GuideTopicId[] }[] = [
   { title: 'Bắt đầu', topics: ['start'] },
-  { title: 'Thêm từ, học và ôn', topics: ['add-words', 'usage', 'learn', 'review', 'schedule'] },
+  { title: 'Thêm từ, học và ôn', topics: ['add-words', 'usage', 'courses', 'learn', 'review', 'schedule'] },
   { title: 'Hiểu các con số', topics: ['levels', 'today', 'goals', 'stats'] },
   { title: 'Nhắc nhở, âm thanh và dữ liệu', topics: ['reminders', 'audio', 'sync', 'offline', 'account', 'feedback', 'ai'] },
 ]

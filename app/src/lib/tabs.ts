@@ -32,6 +32,7 @@ const BELONGS_TO: [prefix: string, tab: string][] = [
   ['/study', '/'],
   ['/practice', '/'],
   ['/chat', '/'],
+  ['/courses', '/'],
   ['/test', '/stats'],
   ['/history', '/stats'],
   ['/insights', '/stats'],

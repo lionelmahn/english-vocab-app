@@ -1,4 +1,4 @@
-import { BarChart3, Bell, BookOpenCheck, Bot, CalendarClock, ChevronRight, CloudCog, Flag, Gauge, House, Layers, Plus, Rocket, Search, ShieldCheck, Shuffle, Target, Volume2, WifiOff, type LucideIcon } from 'lucide-react'
+import { BarChart3, Bell, BookMarked, BookOpenCheck, Bot, CalendarClock, ChevronRight, CloudCog, Flag, Gauge, House, Layers, Plus, Rocket, Search, ShieldCheck, Shuffle, Target, type LucideIcon, Volume2, WifiOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
@@ -26,6 +26,7 @@ const ICONS: Record<GuideTopicId, LucideIcon> = {
   feedback: Flag,
   ai: Bot,
   usage: Shuffle,
+  courses: BookMarked,
 }
 
 function TopicRow({ id, title, summary, onOpen }: { id: GuideTopicId; title: string; summary: string; onOpen: () => void }) {

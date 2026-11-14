@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { BookOpenCheck, FileUp, Flame, GraduationCap, Lightbulb, NotebookPen, Play, Plus, Sparkles, WifiOff } from 'lucide-react'
+import { BookMarked, BookOpenCheck, FileUp, Flame, GraduationCap, Lightbulb, NotebookPen, Play, Plus, Sparkles, WifiOff } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
@@ -23,6 +23,7 @@ import { useProfile } from '../services/profile'
 import { useOnline } from '../services/storage'
 import { useNewWordAdvice, workloadText } from '../services/workload'
 import { PillButton, TextLink } from '../study/ui'
+import { TodayCourseCard } from './CoursePages'
 
 function greeting(hour: number): string {
   if (hour < 11) return 'Chào buổi sáng'
@@ -142,6 +143,9 @@ export function TodayPage() {
           <Button icon={BookOpenCheck} onClick={() => navigate('/decks/starter')}>
             Chọn bộ 1.000 từ thông dụng
           </Button>
+          <Button icon={BookMarked} onClick={() => navigate('/courses')}>
+            Học theo khóa học
+          </Button>
           <Button icon={FileUp} onClick={() => navigate('/import')}>
             Nhập từ file Excel/CSV
           </Button>
@@ -233,6 +237,8 @@ export function TodayPage() {
                 </p>
               )}
             </Card>
+
+            <TodayCourseCard lib={lib} />
           </>
         )
       )}

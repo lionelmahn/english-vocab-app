@@ -113,12 +113,14 @@ export interface ProfileFields {
   fsrs: FsrsSettings
   /** Trợ lý AI (R8.8): bật/tắt, model, giới hạn lượt mỗi ngày. */
   ai: AiSettings
+  /** Khóa học đang học và bài đang làm (R16.3), để máy nào cũng tiếp tục đúng chỗ. */
+  course?: { id: string; lesson: number }
 }
 
 export type ProfileData = ProfileFields & LearningSettings
 
 /** Mục chỉ có trên máy chủ ở ô `settings` (không có cột riêng). */
-export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime', 'reminders', 'ai'] as const
+export const PROFILE_EXTRA_KEYS = ['reviewLimit', 'reviewStyle', 'flashcardFront', 'showTranslations', 'autoPlay', 'preferRecordings', 'speechSpeed', 'studyTime', 'reminders', 'ai', 'course'] as const
 
 export const ALL_WEEKDAYS = [0, 1, 2, 3, 4, 5, 6]
 
@@ -171,6 +173,7 @@ export function sanitizeProfile(raw: Partial<Record<keyof ProfileData, unknown>>
     reminders: sanitizeReminders(raw.reminders, base.reminders),
     fsrs: sanitizeFsrs(raw.fsrs, base.fsrs),
     ai: sanitizeAi(raw.ai, base.ai),
+    course: sanitizeCourse(raw.course),
     accent: oneOf(raw.accent, ['us', 'uk'], base.accent),
     dailyNewWords: clampInt(raw.dailyNewWords, 0, 200, base.dailyNewWords),
     reviewLimit: clampInt(raw.reviewLimit, 1, 1000, base.reviewLimit),
@@ -181,6 +184,12 @@ export function sanitizeProfile(raw: Partial<Record<keyof ProfileData, unknown>>
     preferRecordings: bool(raw.preferRecordings, base.preferRecordings),
     speechSpeed: oneOf(raw.speechSpeed, ['slower', 'slow', 'normal', 'fast'], base.speechSpeed),
   }
+}
+
+function sanitizeCourse(raw: unknown): ProfileFields['course'] {
+  const r = raw as { id?: unknown; lesson?: unknown } | null | undefined
+  if (!r || typeof r.id !== 'string' || !/^[a-z0-9-]{1,40}$/.test(r.id)) return undefined
+  return { id: r.id, lesson: clampInt(r.lesson, 1, 10_000, 1) }
 }
 
 // ---- Hiển thị lịch học --------------------------------------------------------------------------

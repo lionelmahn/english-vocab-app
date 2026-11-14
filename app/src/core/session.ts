@@ -41,6 +41,8 @@ export interface SessionPlan {
   timeLimitMs?: number
   /** Bài luyện câu mới (R8.5): câu do AI soạn cho từng từ, dùng thay câu ví dụ quen thuộc ở bài điền từ. */
   contexts?: Record<string, { en: string; vi?: string }>
+  /** Buổi học mở từ một bài của khóa học (R16.4): màn tổng kết có nút quay lại bài. */
+  origin?: { courseId: string; lesson: number }
 }
 
 export type SessionAction =
