@@ -504,6 +504,10 @@ Nguyên tắc:
 > - Tiếng sự kiện cũng bỏ kiểu gõ: ghi âm và tin nhắn hội thoại thành chuông nhỏ, lỗi thành hai tiếng chuông đi xuống, gõ quá chữ thành hai tiếng tách trầm, sai và xóa vào chậm hơn cho mềm. Mở bảng và lật thẻ chỉ còn tiếng gió (bỏ nốt trầm đi kèm).
 > - Test chặn tiếng kiểu gõ mõ: không còn nốt nào dưới 850 Hz, dài dưới 0,1 giây, vào nhanh; ba kiểu đủ sáu tiếng chạm. 385 test. Đã đo trên trình duyệt: mỗi kiểu phát đúng tiếng của kiểu đó, cài đặt lưu đúng. Chưa nghe trên iPhone.
 
+> **Cập nhật 15/11/2026 (bản 0.34.2): Âm thanh do bạn tự chọn.** Bạn thấy tiếng của 0.34.1 đơn điệu và muốn tự chọn tiếng cho từng tình huống. Tôi làm trang riêng tư “Phòng thử âm thanh” (artifact trên claude.ai): 24 tình huống, mỗi tình huống 8–11 tiếng thuộc 14 họ (tách giòn, bong bóng, giọt nước, pha lê, hộp nhạc, kalimba, đàn dây, trò chơi 8-bit, hoạt hình, phím đàn mềm, gió nhẹ, kèn, gió vút, lật giấy), lựa chọn lưu ở kho dữ liệu của trang.
+> - Bạn chọn: chạm nút và chuyển tab — bong bóng; chọn, quay lại, bật, tắt, mở và đóng bảng, yêu thích — hoạt hình (trượt cao độ, rung); lật thẻ — gió vút; đúng, gần đúng, sai, AI trả lời, tin nhắn hội thoại — phím đàn mềm; gợi ý, lưu xong — kalimba; gõ quá chữ — pha lê; lỗi, xóa — giọt nước; bắt đầu/dừng ghi âm — trò chơi 8-bit; xong buổi học — hộp nhạc; đạt huy hiệu — giữ tiếng cũ.
+> - `lib/sfx.ts`: các họ tiếng chép đúng công thức của trang thử (thêm rung cao độ và họa âm riêng cho chuông); mỗi ngữ cảnh = họ đã chọn × các nốt của ngữ cảnh. Đã so tự động cả 24 tiếng trong app với công thức trên trang thử: khớp hết. Bỏ “Kiểu tiếng chạm” của 0.34.1 (thay bằng tiếng bạn chọn); “Nghe thử” thành “Nghe thử một lượt” (chuỗi tiếng như khi học). Test chặn tiếng kiểu gõ mõ vẫn giữ (nốt trượt nhanh lên cao như bong bóng, hoạt hình không tính là gõ) và kiểm mỗi ngữ cảnh đúng họ đã chọn. 385 test. Muốn đổi tiếng: mở lại trang thử, chọn lại, báo Claude.
+
 - Thiết lập & hồ sơ: R1.4, R1.5, R1.7 (lần đầu dùng: mục tiêu, trình độ, giọng, lịch, bộ từ khởi đầu)
 - Tra từ & lưu nhanh: R15.1, R15.2, R15.3, R15.5, R2.8
 - Âm thanh: R7.8 (bổ sung âm thanh thiếu: lấy từ điển, tạo TTS, tải lên, nghe thử), R13.8 phần cơ bản

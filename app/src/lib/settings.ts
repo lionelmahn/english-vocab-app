@@ -11,8 +11,6 @@ import { LEARNING_DEFAULTS, LEARNING_KEYS, type LearningSettings, type SpeechSpe
 export type { SpeechSpeed }
 
 export type ThemeChoice = 'system' | 'light' | 'dark'
-/** Kiểu tiếng chạm nút: tách nhẹ, bong bóng, pha lê. */
-export type TapStyle = 'soft' | 'bubble' | 'glass'
 export type TextSize = 'small' | 'normal' | 'large' | 'larger'
 
 /** Cỡ chữ gốc của trang: cỡ chữ, khoảng cách và nút đều tính theo rem nên phóng to đều nhau. */
@@ -26,7 +24,6 @@ export interface DeviceSettings {
   soundEffects: boolean
   /** Tiếng nhẹ khi chạm nút, chuyển tab, bật tắt, mở bảng (cần bật âm thanh hiệu ứng). */
   tapSounds: boolean
-  tapStyle: TapStyle
   /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
   voiceUS: string | null
   voiceUK: string | null
@@ -49,7 +46,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
   reduceMotion: false,
   soundEffects: true,
   tapSounds: true,
-  tapStyle: 'soft',
   voiceUS: null,
   voiceUK: null,
   useVoiceClips: true,

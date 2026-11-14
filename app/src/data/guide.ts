@@ -729,9 +729,8 @@ export const GUIDE: GuideTopic[] = [
       { h: 'Âm thanh hiệu ứng' },
       {
         list: [
-          'Mỗi việc có một tiếng ngắn và nhẹ riêng: chọn đúng, gần đúng, chọn sai, lưu xong, AI trả lời xong, tin nhắn mới trong hội thoại, bắt đầu và dừng ghi âm, lật thẻ, gợi ý, xóa, hoàn thành buổi học, đạt huy hiệu.',
-          'Tắt hết ở “Cá nhân” → “Giao diện và âm thanh” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử” để nghe vài tiếng.',
-          'Ở “Kiểu tiếng chạm” chọn “Tách nhẹ” (mặc định: tiếng tách giòn như bàn phím iPhone), “Bong bóng” (tiếng bóp nhỏ trượt lên cao) hoặc “Pha lê” (tiếng chuông nhỏ). Chọn kiểu nào là nghe thử kiểu đó ngay.',
+          'Mỗi việc có một tiếng riêng do bạn tự chọn: chạm nút và chuyển tab là tiếng bong bóng; chọn, quay lại, bật tắt, mở và đóng bảng, yêu thích là tiếng hoạt hình; đúng, gần đúng, sai, AI trả lời và tin nhắn hội thoại là tiếng phím đàn mềm; gợi ý và lưu xong là tiếng kalimba; lỗi và xóa là tiếng giọt nước; gõ quá chữ là tiếng pha lê; ghi âm là tiếng trò chơi 8-bit; lật thẻ là tiếng gió; xong buổi học là hộp nhạc; đạt huy hiệu là chuông lấp lánh.',
+          'Tắt hết ở “Cá nhân” → “Giao diện và âm thanh” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử một lượt” để nghe các tiếng như khi đang học.',
           'Trên iPhone, khi gạt nút im lặng bên hông máy, tiếng hiệu ứng có thể bị tắt theo.',
         ],
       },

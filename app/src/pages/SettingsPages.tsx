@@ -5,7 +5,7 @@ import { BackButton, Segmented, Select } from '../components/kit'
 import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { voiceLabel } from '../core/voices'
 import { updateSettings, useSettings } from '../lib/settings'
-import { playDemo, playTapStyleDemo } from '../lib/sfx'
+import { playDemo } from '../lib/sfx'
 import { englishVoices, hasExactVoice, isAppleDevice, isAppleMobile, pickVoice, previewVoice, speechAvailable, useVoicesReady } from '../services/speech'
 import { useClipKeys } from '../services/voiceClips'
 
@@ -290,27 +290,8 @@ export function AppearancePage() {
             <SettingRow title="Tiếng chạm nút" description="Tiếng nhẹ khi chạm nút, chuyển tab, bật tắt, mở bảng, lật thẻ.">
               <Switch label="Tiếng chạm nút" checked={settings.tapSounds} onChange={(v) => updateSettings({ tapSounds: v })} />
             </SettingRow>
-            {settings.tapSounds && (
-              <div className="py-2">
-                <p className="mb-2 text-[0.9375rem] font-medium">Kiểu tiếng chạm</p>
-                <Segmented
-                  layoutId="tap-style"
-                  value={settings.tapStyle}
-                  onChange={(v) => {
-                    updateSettings({ tapStyle: v })
-                    playTapStyleDemo()
-                  }}
-                  options={[
-                    { value: 'soft', label: 'Tách nhẹ' },
-                    { value: 'bubble', label: 'Bong bóng' },
-                    { value: 'glass', label: 'Pha lê' },
-                  ]}
-                />
-                <p className="mt-2 text-[0.8125rem] leading-snug text-muted">Chọn một kiểu để nghe thử ngay.</p>
-              </div>
-            )}
             <button type="button" data-sfx="none" onClick={playDemo} className="inline-flex items-center gap-1.5 py-1 text-sm font-semibold text-accent">
-              <Volume2 aria-hidden className="h-4 w-4" /> Nghe thử
+              <Volume2 aria-hidden className="h-4 w-4" /> Nghe thử một lượt
             </button>
           </>
         )}
