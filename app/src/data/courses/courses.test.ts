@@ -47,3 +47,47 @@ describe('khóa “1.000 từ thông dụng theo chủ đề”', () => {
     }
   })
 })
+
+// Mọi khóa có nội dung (ngoài khóa 1.000 từ ở trên): file đúng khuôn, từ mới không trùng nhau, đoạn đọc đủ từ.
+describe('các khóa học khác', () => {
+  const starterTerms = new Set(starter.map((r) => r[1].toLowerCase()))
+  const extra = COURSES.filter((c) => c.load && c.id !== 'ngsl-chu-de')
+  const parsed = extra.map((info) => ({ info, course: parseCourse(info.id, read(`${info.id}.txt`)) }))
+
+  it('danh mục ghi đúng số bài, số từ; mỗi khóa có nguồn và ghi chú giấy phép', () => {
+    for (const { info, course } of parsed) {
+      expect(info.lessons, info.id).toBe(course.lessons.length)
+      expect(info.words, info.id).toBe(course.lessons.reduce((n, l) => n + l.words.length, 0))
+      expect(info.attribution && info.source, info.id).toBeTruthy()
+    }
+  })
+
+  it('từ mới: không có trong bộ 1.000 từ, không trùng trong khóa hay giữa các khóa', () => {
+    const owner = new Map<string, string>()
+    for (const { info, course } of parsed) {
+      for (const w of course.lessons.flatMap((l) => l.words)) {
+        const k = w.term.toLowerCase()
+        expect(starterTerms.has(k), `${info.id}: ${w.term}`).toBe(false)
+        expect(owner.get(k), `${info.id}: ${w.term}`).toBeUndefined()
+        owner.set(k, info.id)
+      }
+    }
+  })
+
+  it('mỗi bài 8–14 từ có nghĩa và câu ví dụ kèm bản dịch; đoạn đọc đánh dấu đủ mọi từ của bài', () => {
+    for (const { info, course } of parsed) {
+      for (const l of course.lessons) {
+        const tag = `${info.id} bài ${l.no} ${l.title}`
+        expect(l.words.length, tag).toBeGreaterThanOrEqual(8)
+        expect(l.words.length, tag).toBeLessThanOrEqual(14)
+        expect(l.goal, tag).toMatch(/^Sau bài này bạn/)
+        for (const w of l.words) expect([w.meaningVi, w.example?.en, w.example?.vi].every(Boolean), `${tag}: ${w.term}`).toBe(true)
+        const marked = new Set(passageParts(l.passage).flatMap((p) => (p.term ? [p.term.toLowerCase()] : [])))
+        const own = new Set(l.words.map((w) => w.term.toLowerCase()))
+        expect([...own].filter((t) => !marked.has(t)), tag).toEqual([])
+        expect([...marked].filter((t) => !own.has(t)), tag).toEqual([])
+        expect(l.passageVi.length, tag).toBeGreaterThan(40)
+      }
+    }
+  })
+})

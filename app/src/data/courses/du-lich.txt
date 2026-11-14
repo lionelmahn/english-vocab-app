@@ -1,0 +1,270 @@
+# Khóa “Du lịch”. Phiên âm: Wiktionary (CC BY-SA 4.0); chọn từ, chia bài, nghĩa, ví dụ, đoạn đọc do app soạn (CC BY-SA 4.0).
+# H|chương  L|tên bài|mục tiêu  W|từ|loại từ|nghĩa|ví dụ|dịch ví dụ|phiên âm Mỹ|phiên âm Anh  P|đoạn đọc  V|bản dịch
+H|Chuẩn bị chuyến đi
+L|Lên kế hoạch chuyến đi|Sau bài này bạn nói được mình muốn đi đâu, đi kiểu gì và vào mùa nào.
+W|destination|noun|điểm đến|Da Nang is a popular destination for families.|Đà Nẵng là điểm đến được nhiều gia đình yêu thích.|/dɛstɪˈneɪʃən/|/dɛstɪˈneɪʃən/
+W|abroad|adverb|ở nước ngoài, ra nước ngoài|Have you ever traveled abroad?|Bạn đã từng đi du lịch nước ngoài chưa?|/əˈbrɔd/|/əˈbrɔːd/
+W|vacation|noun|kỳ nghỉ|We are going on vacation next week.|Tuần sau chúng tôi đi nghỉ.|/veɪˈkeɪ.ʃən/|/vəˈkeɪ.ʃən/
+W|journey|noun|chuyến đi, hành trình|The journey to Sa Pa takes about six hours.|Hành trình lên Sa Pa mất khoảng sáu tiếng.|/ˈdʒɝni/|/ˈdʒɜːni/
+W|tourist|noun|khách du lịch|The old town is full of tourists in summer.|Mùa hè phố cổ đông nghịt khách du lịch.|/ˈtʊrɪst/|/ˈtʊərɪst/
+W|tour|noun|chuyến tham quan, tour du lịch|We booked a three-day tour of Ha Long Bay.|Chúng tôi đã đặt tour ba ngày đi vịnh Hạ Long.|/tʊɚ/|/tɔː/
+W|itinerary|noun|lịch trình chuyến đi|Can you send me the itinerary for our trip?|Bạn gửi mình lịch trình chuyến đi được không?|/aɪˈtɪnəˌrɛri/|/aɪˈtɪnərəri/
+W|brochure|noun|tờ gấp, sách nhỏ giới thiệu (du lịch)|The brochure has photos of beautiful beaches.|Tờ giới thiệu có ảnh những bãi biển rất đẹp.|/broʊˈʃʊɚ/|/ˈbrəʊ.ʃə/
+W|travel agency|noun|công ty du lịch, đại lý du lịch|My aunt works at a travel agency in Hanoi.|Dì tôi làm ở một công ty du lịch tại Hà Nội.||
+W|backpacker|noun|người đi du lịch bụi|This street is full of backpackers from Europe.|Con phố này đầy dân du lịch bụi đến từ châu Âu.|/ˈbækˌpækɚ/|/ˈbækpækə/
+W|peak season|noun|mùa cao điểm (du lịch)|Flights are more expensive in peak season.|Vé máy bay đắt hơn vào mùa cao điểm.||
+P|My sister Lan and I are planning our summer [vacation]. This time we want to go [abroad] for the first time. Last Saturday we visited a small [travel agency] near our house. The woman there gave us a [brochure] about Thailand, and Bangkok quickly became our favorite [destination]. She suggested a five-day [tour], but we prefer to travel like [backpackers|backpacker], with cheap guesthouses and street food. She also told us that July is [peak season], so the city is full of [tourists|tourist] and hotels are expensive. In the end, we decided to go in early June. Tonight I am writing our [itinerary], and I am already excited about the [journey].
+V|Chị Lan và tôi đang lên kế hoạch cho kỳ nghỉ hè. Lần này chúng tôi muốn ra nước ngoài lần đầu tiên. Thứ Bảy tuần trước, chúng tôi ghé một công ty du lịch nhỏ gần nhà. Chị nhân viên ở đó đưa cho chúng tôi một tờ gấp giới thiệu về Thái Lan, và Bangkok nhanh chóng trở thành điểm đến chúng tôi thích nhất. Chị gợi ý một tour năm ngày, nhưng chúng tôi thích đi du lịch bụi hơn, ở nhà nghỉ giá rẻ và ăn đồ ăn đường phố. Chị cũng cho biết tháng Bảy là mùa cao điểm, thành phố đông nghịt khách du lịch và khách sạn rất đắt. Cuối cùng, chúng tôi quyết định đi vào đầu tháng Sáu. Tối nay tôi đang viết lịch trình chuyến đi, và tôi đã thấy háo hức với hành trình này rồi.
+L|Đặt vé và giấy tờ|Sau bài này bạn đặt được vé và chuẩn bị đủ giấy tờ cho chuyến đi.
+W|ticket|noun|vé|I bought two plane tickets online.|Tôi đã mua hai vé máy bay trên mạng.|/ˈtɪk.ɪt/|/ˈtɪk.ɪt/
+W|booking|noun|sự đặt chỗ, đơn đặt chỗ|Your booking number is in the email.|Mã đặt chỗ của bạn có trong email.|/ˈbʊkɪŋ/|/ˈbʊkɪŋ/
+W|economy class|noun|hạng phổ thông (vé máy bay)|Economy class seats are cheaper but smaller.|Ghế hạng phổ thông rẻ hơn nhưng chật hơn.||
+W|round trip|noun|chuyến khứ hồi|A round trip to Bangkok costs about 200 dollars.|Một chuyến khứ hồi đi Bangkok giá khoảng 200 đô.|/ˈraʊnd.trɪp/|/ˈraʊnd.trɪp/
+W|one-way|adjective|một chiều (vé, chuyến đi)|I only need a one-way ticket.|Tôi chỉ cần vé một chiều.|/wʌn.weɪ/|/wʌn.weɪ/
+W|passport|noun|hộ chiếu|Don't forget your passport.|Đừng quên hộ chiếu nhé.|/ˈpæspɔrt/|/ˈpɑːspɔːt/
+W|visa|noun|thị thực, visa|Do I need a visa to visit Japan?|Tôi có cần visa để đi Nhật không?|/ˈvi.zə/|/ˈviː.zə/
+W|valid|adjective|còn hạn, có giá trị|Your passport must be valid for at least six months.|Hộ chiếu của bạn phải còn hạn ít nhất sáu tháng.|/ˈvælɪd/|/ˈvælɪd/
+W|expire|verb|hết hạn|My visa expires next month.|Visa của tôi hết hạn vào tháng sau.|/ɪkˈspaɪɚ/|/ɪkˈspaɪə/
+W|insurance|noun|bảo hiểm|Always buy travel insurance before a long trip.|Luôn mua bảo hiểm du lịch trước một chuyến đi dài.|/ɪnˈʃʊr.əns/|/ɪnˈʃɔː.rəns/
+W|photocopy|noun|bản sao, bản photo|Keep a photocopy of your passport in your bag.|Hãy để một bản photo hộ chiếu trong túi.|/ˈfoʊtoʊˌkɑpi/|/ˈfəʊtəʊkɒpi/
+W|renew|verb|gia hạn, làm lại (giấy tờ)|I need to renew my passport before the trip.|Tôi cần làm lại hộ chiếu trước chuyến đi.|/rɪˈnju/|/rɪˈnjuː/
+P|Last week I bought my plane [tickets|ticket] to Japan online. I chose [economy class] because it was much cheaper. At first I looked at a [one-way] ticket, but a [round trip] cost only a little more, so I took that. A few minutes later, an email confirmed my [booking]. Then I checked my documents. My [passport] was [valid] for only four more months, and it would [expire] in March! To get a [visa], my passport had to be valid for at least six months, so I went to [renew] it the next day. I also bought travel [insurance] and put a [photocopy] of my new passport in my bag.
+V|Tuần trước tôi mua vé máy bay đi Nhật Bản qua mạng. Tôi chọn hạng phổ thông vì rẻ hơn nhiều. Lúc đầu tôi xem vé một chiều, nhưng vé khứ hồi chỉ đắt hơn một chút, nên tôi chọn loại đó. Vài phút sau, tôi nhận được email xác nhận đặt chỗ. Sau đó tôi kiểm tra giấy tờ. Hộ chiếu của tôi chỉ còn hạn bốn tháng nữa, đến tháng Ba là hết hạn! Muốn xin visa thì hộ chiếu phải còn hạn ít nhất sáu tháng, nên ngay hôm sau tôi đi làm lại hộ chiếu. Tôi cũng mua bảo hiểm du lịch và để một bản photo hộ chiếu mới trong túi.
+L|Xếp hành lý|Sau bài này bạn biết cần mang theo những gì và tự xếp hành lý.
+W|luggage|noun|hành lý|How much luggage are you taking?|Bạn mang theo bao nhiêu hành lý?|/ˈlʌɡɪdʒ/|/ˈlʌɡɪdʒ/
+W|suitcase|noun|vali|My suitcase is too heavy.|Vali của tôi nặng quá.|/ˈsutkeɪs/|/ˈsjuːtkeɪs/
+W|backpack|noun|ba lô|I only take a small backpack on short trips.|Đi ngắn ngày tôi chỉ mang một chiếc ba lô nhỏ.|/ˈbæk.pæk/|/ˈbæk.pæk/
+W|pack|verb|xếp đồ (vào vali, ba lô)|Have you packed your clothes yet?|Bạn xếp quần áo vào vali chưa?|/pæk/|/pæk/
+W|unpack|verb|lấy đồ ra (khỏi vali, ba lô)|I always unpack as soon as I get to the hotel.|Tôi luôn lấy đồ ra ngay khi tới khách sạn.|/ʌnˈpæk/|/ʌnˈpæk/
+W|flip-flops|noun|dép tông, dép xỏ ngón|Don't forget to pack your flip-flops for the beach.|Đừng quên mang dép tông để đi biển nhé.|/ˈflɪpˌflɑps/|/ˈflɪpflɒps/
+W|adapter|noun|ổ cắm chuyển đổi|You need an adapter because the plugs are different.|Bạn cần ổ cắm chuyển đổi vì phích cắm ở đây khác.|/əˈdæptɚ/|/əˈdæptə/
+W|power bank|noun|sạc dự phòng|A power bank is useful on long bus trips.|Sạc dự phòng rất tiện khi đi xe buýt đường dài.||
+W|toothbrush|noun|bàn chải đánh răng|I forgot my toothbrush at home.|Tôi để quên bàn chải đánh răng ở nhà.|/ˈtuθ.brʌʃ/|/ˈtuːθ.brʌʃ/
+W|sunscreen|noun|kem chống nắng|Put on sunscreen before you go to the beach.|Thoa kem chống nắng trước khi ra biển nhé.|/ˈsʌn.skrin/|/ˈsʌn.skriːn/
+W|sunglasses|noun|kính râm|It's very bright, so wear your sunglasses.|Trời chói lắm, đeo kính râm vào đi.|/ˈsʌnˌɡlæsɪz/|/ˈsʌnɡlɑːsɪz/
+W|first-aid kit|noun|hộp sơ cứu|We always carry a small first-aid kit.|Chúng tôi luôn mang theo một hộp sơ cứu nhỏ.||
+P|Tomorrow Minh and I are flying to Singapore, so tonight I am [packing|pack]. I don't want much [luggage], so I am taking a small [suitcase] and a [backpack]. In the suitcase I put some clothes, my [flip-flops], a [toothbrush] and a big bottle of [sunscreen]. My [sunglasses] go in the backpack with my phone and a [power bank] for long days out. Minh reminds me to bring an [adapter] because the plugs in Singapore are different. My mom always says, "Never travel without a [first-aid kit]," so I put a small one in too. When we get to the hotel, I will [unpack] first and then go to the beach.
+V|Ngày mai Minh và tôi bay sang Singapore, nên tối nay tôi xếp đồ. Tôi không muốn mang nhiều hành lý, nên chỉ mang một chiếc vali nhỏ và một cái ba lô. Trong vali, tôi để vài bộ quần áo, đôi dép tông, bàn chải đánh răng và một chai kem chống nắng to. Kính râm thì tôi cho vào ba lô, cùng với điện thoại và sạc dự phòng để dùng khi đi chơi cả ngày. Minh nhắc tôi mang theo ổ cắm chuyển đổi vì ổ điện ở Singapore khác ở nhà. Mẹ tôi luôn dặn: “Đi đâu cũng đừng quên hộp sơ cứu”, nên tôi cũng bỏ vào một hộp nhỏ. Khi đến khách sạn, tôi sẽ lấy đồ ra trước rồi mới đi biển.
+H|Ở sân bay
+L|Làm thủ tục sân bay|Sau bài này bạn tự làm thủ tục, qua cửa an ninh và tìm đúng cửa ra máy bay.
+W|airport|noun|sân bay|We need to be at the airport two hours early.|Chúng ta cần có mặt ở sân bay sớm hai tiếng.|/ˈɛr.pɔrt/|/ˈɛə.pɔːt/
+W|airline|noun|hãng hàng không|Which airline are you flying with?|Bạn bay hãng nào?|/ˈɛrˌlaɪn/|/ˈɛəˌlaɪn/
+W|flight|noun|chuyến bay|Our flight leaves at nine in the morning.|Chuyến bay của chúng ta cất cánh lúc chín giờ sáng.|/flaɪt/|/flaɪt/
+W|terminal|noun|nhà ga (sân bay)|International flights leave from Terminal 2.|Các chuyến bay quốc tế khởi hành từ nhà ga số 2.|/ˈtɝmɪnəl/|/ˈtɜːmɪnəl/
+W|check in|phrasal_verb|làm thủ tục (lên máy bay, nhận phòng)|You can check in online the day before your flight.|Bạn có thể làm thủ tục trực tuyến từ hôm trước ngày bay.||
+W|boarding pass|noun|thẻ lên máy bay|Please show your boarding pass at the gate.|Vui lòng đưa thẻ lên máy bay khi qua cửa.|/ˈbɔrdɪŋ ˌpæs/|
+W|carry-on|noun|hành lý xách tay|My carry-on must weigh less than seven kilos.|Hành lý xách tay của tôi phải nhẹ hơn bảy ký.|/ˈkæri ˌɑn/|/ˈkæri ˌɒn/
+W|overweight|adjective|quá cân (hành lý)|Your suitcase is overweight, so you have to pay extra.|Vali của bạn bị quá cân nên bạn phải trả thêm tiền.|/ˌoʊvɚˈweɪt/|/ˌəʊvəˈweɪt/
+W|security check|noun|cửa kiểm tra an ninh|Take your laptop out of your bag at the security check.|Lấy máy tính ra khỏi túi khi qua cửa kiểm tra an ninh.||
+W|gate|noun|cửa ra máy bay|Our flight now leaves from Gate 12.|Chuyến bay của chúng ta giờ khởi hành từ cửa số 12.|/ɡeɪt/|/ɡeɪt/
+W|departure|noun|sự khởi hành, giờ khởi hành|Check the departure time on the screen.|Xem giờ khởi hành trên màn hình.|/dɪˈpɑrtʃɚ/|/dɪˈpɑːtʃə/
+W|delay|noun|sự chậm trễ, sự trễ chuyến|There is a two-hour delay because of the storm.|Chuyến bay bị trễ hai tiếng vì bão.|/dɪˈleɪ/|/dɪˈleɪ/
+W|duty-free|adjective|miễn thuế|She bought some perfume at the duty-free shop.|Cô ấy mua nước hoa ở cửa hàng miễn thuế.|/ˌdutiˈfri/|/ˌdjuːtiˈfriː/
+P|Our [flight] to Seoul left at ten, so Tom and I got to the [airport] two hours early. International flights left from [Terminal] 2, and there was a long line at the [airline] counter. When we [checked in|check in], my suitcase was [overweight], so I moved some clothes into my [carry-on]. Then the man at the counter gave us our [boarding passes|boarding pass]. At the [security check], I took my laptop out of my bag. After that, Tom bought some chocolate at a [duty-free] shop. On the [departure] screen we saw a thirty-minute [delay], and our flight now left from [Gate] 15. We walked there and waited.
+V|Chuyến bay đi Seoul của chúng tôi khởi hành lúc mười giờ, nên Tom và tôi đến sân bay sớm hai tiếng. Các chuyến bay quốc tế đi từ Nhà ga 2, và quầy của hãng hàng không có một hàng người dài. Khi làm thủ tục, vali của tôi bị quá cân, nên tôi chuyển bớt quần áo sang hành lý xách tay. Sau đó, anh nhân viên ở quầy đưa thẻ lên máy bay cho chúng tôi. Ở cửa kiểm tra an ninh, tôi lấy máy tính xách tay ra khỏi túi. Xong xuôi, Tom mua ít sô-cô-la ở một cửa hàng miễn thuế. Trên màn hình giờ khởi hành, chúng tôi thấy chuyến bay bị trễ ba mươi phút và đã đổi sang cửa số 15. Chúng tôi đi bộ tới đó rồi ngồi chờ.
+L|Trên máy bay|Sau bài này bạn hiểu lời dặn của tiếp viên và kể lại chuyến bay của mình.
+W|passenger|noun|hành khách|All passengers must stay in their seats.|Tất cả hành khách phải ngồi yên tại chỗ.|/ˈpæs.ɪn.dʒɚ/|/ˈpæs.ɪn.dʒə/
+W|aisle|noun|lối đi (giữa các hàng ghế)|Would you like a window seat or an aisle seat?|Anh muốn ngồi cạnh cửa sổ hay cạnh lối đi?|/aɪl/|/aɪl/
+W|seat belt|noun|dây an toàn|Keep your seat belt on during the flight.|Hãy thắt dây an toàn suốt chuyến bay.||
+W|fasten|verb|thắt, cài chặt|Please fasten your seat belt.|Vui lòng thắt dây an toàn.|/ˈfæsən/|/ˈfɑːsən/
+W|take off|phrasal_verb|cất cánh|The plane will take off in ten minutes.|Máy bay sẽ cất cánh trong mười phút nữa.||
+W|landing|noun|sự hạ cánh|The landing was very smooth.|Máy bay hạ cánh rất êm.|/ˈlændɪŋ/|/ˈlændɪŋ/
+W|pilot|noun|phi công|The pilot said we would arrive early.|Phi công nói chúng ta sẽ đến sớm.|/ˈpaɪ.lət/|/ˈpaɪ.lət/
+W|flight attendant|noun|tiếp viên hàng không|The flight attendant brought me a glass of water.|Tiếp viên mang cho tôi một ly nước.||
+W|blanket|noun|cái chăn, cái mền|It was cold, so I asked for a blanket.|Trời lạnh nên tôi xin một cái chăn.|/ˈblæŋ.kɪt/|/ˈblæŋ.kɪt/
+W|life jacket|noun|áo phao|Your life jacket is under your seat.|Áo phao nằm dưới ghế của bạn.||
+W|turbulence|noun|nhiễu động (máy bay rung lắc)|We hit some turbulence over the sea.|Máy bay gặp nhiễu động khi bay qua biển.|/ˈtɝ.bjə.ləns/|/ˈtɜː.bjə.ləns/
+P|Last month I flew from Hanoi to London. I had an [aisle] seat, so I could stand up easily. Before we [took off|take off], a [flight attendant] showed the [passengers|passenger] how to put on a [life jacket]. Then she said, "Please [fasten] your [seat belt]." The cabin was cold, so I asked for a [blanket] and slept for a few hours. Later we hit some [turbulence] over the sea, and the plane shook a lot. The [pilot] said, "Don't worry, everyone. Please stay in your seats." After twelve hours, we finally arrived. The [landing] was very smooth, and I felt happy but tired.
+V|Tháng trước tôi bay từ Hà Nội sang London. Tôi ngồi ghế cạnh lối đi nên có thể đứng dậy dễ dàng. Trước khi máy bay cất cánh, một tiếp viên hàng không hướng dẫn hành khách cách mặc áo phao. Sau đó cô ấy nói: “Xin quý khách vui lòng thắt dây an toàn.” Trong khoang khá lạnh nên tôi xin một cái chăn và ngủ được vài tiếng. Lúc sau, máy bay gặp nhiễu động trên biển và rung lắc khá mạnh. Phi công nói: “Mọi người đừng lo. Xin hãy ngồi yên tại chỗ.” Sau mười hai tiếng, cuối cùng chúng tôi cũng đến nơi. Máy bay hạ cánh rất êm, tôi thấy vui nhưng cũng mệt.
+L|Nhập cảnh, lấy hành lý|Sau bài này bạn qua cửa nhập cảnh, hải quan và lấy được hành lý.
+W|arrival|noun|sự đến nơi, giờ đến|Our arrival time is 6:30 in the evening.|Giờ đến nơi của chúng ta là 6 giờ 30 tối.|/əˈraɪ.vəl/|/əˈraɪ.vəl/
+W|immigration|noun|quầy nhập cảnh, thủ tục nhập cảnh|There was a long line at immigration.|Ở quầy nhập cảnh người xếp hàng rất dài.|/ˌɪmɪˈɡreɪʃən/|/ˌɪmɪˈɡreɪʃən/
+W|border|noun|biên giới, cửa khẩu|The officer at the border checked my visa.|Nhân viên ở cửa khẩu kiểm tra visa của tôi.|/ˈbɔr.dɚ/|/ˈbɔː.də/
+W|nationality|noun|quốc tịch|Write your name and nationality on the form.|Ghi tên và quốc tịch của bạn vào tờ khai.|/ˌnæʃ.əˈnæl.ɪ.ti/|/ˌnæʃ.əˈnæl.ɪ.ti/
+W|stamp|noun|con dấu|The officer put a stamp in my passport.|Nhân viên đóng dấu vào hộ chiếu của tôi.|/stæmp/|/stæmp/
+W|customs|noun|hải quan|We went through customs very quickly.|Chúng tôi qua hải quan rất nhanh.|/ˈkʌs.təmz/|/ˈkʌs.təmz/
+W|declare|verb|khai báo (với hải quan)|Do you have anything to declare?|Anh có gì cần khai báo không?|/dɪˈklɛɚ/|/dɪˈklɛə/
+W|baggage claim|noun|khu nhận hành lý|Let's meet at baggage claim.|Mình gặp nhau ở khu nhận hành lý nhé.||
+W|trolley|noun|xe đẩy hành lý|Put the suitcases on a trolley.|Đặt mấy cái vali lên xe đẩy đi.|/ˈtrɑli/|/ˈtrɒli/
+W|jet lag|noun|mệt mỏi do lệch múi giờ|I had terrible jet lag for three days.|Tôi bị mệt vì lệch múi giờ suốt ba ngày.|/ˈdʒɛt.læɡ/|/ˈdʒɛt.læɡ/
+W|shuttle|noun|xe đưa đón (sân bay, khách sạn)|The hotel shuttle leaves every 30 minutes.|Xe đưa đón của khách sạn chạy 30 phút một chuyến.|/ˈʃʌtəl/|/ˈʃʌtəl/
+P|My flight's [arrival] time in Sydney was six in the morning, and after twelve hours in the air, I could already feel the [jet lag]. At [immigration], the line was long, but the officer at the [border] was friendly. "What's your [nationality]?" she asked. "Vietnamese," I said. "How long will you stay?" "Two weeks." Then she put a [stamp] in my passport. Next, I went to [baggage claim] and waited for my suitcase. I put it on a [trolley] and walked to [customs]. "Do you have anything to [declare]?" an officer asked. "No, nothing," I answered. Outside, I found the hotel [shuttle] and finally relaxed.
+V|Chuyến bay của tôi đến Sydney lúc sáu giờ sáng, và sau mười hai tiếng trên không, tôi đã bắt đầu thấy mệt vì lệch múi giờ. Ở quầy nhập cảnh, hàng người xếp khá dài, nhưng cô nhân viên ở cửa khẩu rất thân thiện. "Quốc tịch của bạn là gì?" cô hỏi. "Việt Nam," tôi đáp. "Bạn sẽ ở lại bao lâu?" "Hai tuần." Rồi cô đóng dấu vào hộ chiếu của tôi. Tiếp đó, tôi đến khu nhận hành lý và chờ chiếc va li của mình. Tôi đặt nó lên xe đẩy rồi đi tới khu hải quan. "Bạn có gì cần khai báo không?" một nhân viên hỏi. "Không, không có gì cả," tôi trả lời. Ra bên ngoài, tôi tìm thấy xe đưa đón của khách sạn và cuối cùng cũng được thở phào.
+H|Ở khách sạn
+L|Đặt và nhận phòng|Sau bài này bạn chọn chỗ ở, đặt phòng và nhận phòng ở quầy lễ tân.
+W|accommodation|noun|chỗ ở|Accommodation in the city center is very expensive.|Chỗ ở tại trung tâm thành phố rất đắt.|/əˌkɑ.məˈdeɪ.ʃən/|/əˌkɒm.əˈdeɪ.ʃən/
+W|hostel|noun|nhà nghỉ bình dân (thường ở phòng chung)|We stayed in a hostel near the beach.|Chúng tôi ở một nhà nghỉ bình dân gần biển.|/ˈhɑstəl/|/ˈhɒstəl/
+W|homestay|noun|chỗ ở trong nhà dân, homestay|A homestay is a great way to learn about local life.|Ở homestay là cách rất hay để tìm hiểu đời sống người dân.|/ˈhoʊmˌsteɪ/|/ˈhəʊmsteɪ/
+W|resort|noun|khu nghỉ dưỡng|The resort has three swimming pools.|Khu nghỉ dưỡng có ba hồ bơi.|/riˈzɔrt/|/rɪˈzɔːt/
+W|reservation|noun|sự đặt trước (phòng, bàn)|I have a reservation under the name Nam.|Tôi đã đặt phòng trước, tên Nam.|/ˌrɛzɚˈveɪʃən/|/ˌrɛzəˈveɪʃən/
+W|fully booked|phrase|kín chỗ, hết phòng|Sorry, we are fully booked tonight.|Xin lỗi, tối nay chúng tôi hết phòng.||
+W|reception|noun|quầy lễ tân|Please leave your key at reception.|Vui lòng để lại chìa khóa ở quầy lễ tân.|/rɪˈsɛp.ʃən/|/rɪˈsɛp.ʃən/
+W|receptionist|noun|nhân viên lễ tân|The receptionist gave us a map of the town.|Nhân viên lễ tân đưa chúng tôi tấm bản đồ thị trấn.|/rɪˈsɛp.ʃə.nɪst/|/rɪˈsɛp.ʃə.nɪst/
+W|lobby|noun|sảnh (khách sạn)|Let's meet in the lobby at eight.|Tám giờ mình gặp nhau ở sảnh nhé.|/ˈlɑ.bi/|/ˈlɒb.i/
+W|double room|noun|phòng đôi (một giường lớn)|We'd like a double room for two nights.|Chúng tôi muốn một phòng đôi trong hai đêm.||
+W|key card|noun|thẻ từ (mở cửa phòng)|My key card doesn't open the door.|Thẻ từ của tôi không mở được cửa.||
+W|deposit|noun|tiền đặt cọc|You need to pay a deposit of 50 dollars.|Bạn cần đặt cọc 50 đô.|/dɪˈpɑ.zɪt/|/dɪˈpɒz.ɪt/
+P|Before our trip to Da Nang, my husband and I looked at different kinds of [accommodation]. A [hostel] was cheap but too noisy, and a [homestay] was lovely but far from the beach. In the end, we chose a small [resort] by the sea. I made a [reservation] online early because many places were already [fully booked]. When we arrived, we walked through the big [lobby] to [reception]. "Good afternoon. I booked a [double room] under the name Lan," I said. The [receptionist] smiled and checked her computer. "Yes, three nights. We need a [deposit] of one million dong," she said. Then she gave us two [key cards|key card].
+V|Trước chuyến đi Đà Nẵng, chồng tôi và tôi đã xem qua nhiều kiểu chỗ ở khác nhau. Nhà nghỉ bình dân thì rẻ nhưng quá ồn, còn homestay thì dễ thương nhưng lại xa biển. Cuối cùng, chúng tôi chọn một khu nghỉ dưỡng nhỏ cạnh biển. Tôi đặt phòng trên mạng từ sớm vì nhiều nơi đã kín chỗ. Khi đến nơi, chúng tôi đi qua sảnh lớn tới quầy lễ tân. "Chào chị. Tôi đã đặt một phòng đôi dưới tên Lan," tôi nói. Cô lễ tân mỉm cười và kiểm tra trên máy tính. "Vâng, ba đêm ạ. Chị cần đặt cọc một triệu đồng," cô nói. Rồi cô đưa cho chúng tôi hai thẻ từ để mở cửa phòng.
+L|Trong phòng, trả phòng|Sau bài này bạn hỏi về tiện nghi trong phòng, báo đồ hỏng và trả phòng.
+W|towel|noun|khăn tắm|Could I have two more towels, please?|Cho tôi xin thêm hai cái khăn tắm được không?|/ˈtaʊəl/|/ˈtaʊəl/
+W|pillow|noun|cái gối|This pillow is too hard for me.|Cái gối này cứng quá với tôi.|/ˈpɪl.oʊ/|/ˈpɪl.əʊ/
+W|shower|noun|vòi sen, buồng tắm vòi sen|There's no hot water in the shower.|Vòi sen không có nước nóng.|/ˈʃaʊ.ɚ/|/ˈʃaʊ.ə/
+W|hairdryer|noun|máy sấy tóc|Is there a hairdryer in the room?|Trong phòng có máy sấy tóc không?|/ˈhɛrˌdraɪɚ/|/ˈhɛədraɪə/
+W|air conditioning|noun|máy lạnh, điều hòa|The air conditioning is too loud at night.|Ban đêm máy lạnh kêu to quá.|/ˈɛr kənˈdɪ.ʃəˌnɪŋ/|
+W|room service|noun|dịch vụ phục vụ tại phòng|We were too tired to go out, so we ordered room service.|Chúng tôi mệt quá không muốn ra ngoài nên gọi đồ ăn lên phòng.||
+W|balcony|noun|ban công|We had coffee on the balcony every morning.|Sáng nào chúng tôi cũng uống cà phê ngoài ban công.|/ˈbælkəni/|/ˈbælkəni/
+W|sea view|noun|cảnh nhìn ra biển|Can we get a room with a sea view?|Cho chúng tôi phòng nhìn ra biển được không?||
+W|out of order|phrase|bị hỏng, không hoạt động|The elevator is out of order, so we took the stairs.|Thang máy bị hỏng nên chúng tôi đi cầu thang bộ.||
+W|wake-up call|noun|cuộc gọi báo thức|Could I have a wake-up call at six?|Gọi báo thức cho tôi lúc sáu giờ được không?||
+W|check out|phrasal_verb|trả phòng|We have to check out before noon.|Chúng tôi phải trả phòng trước 12 giờ trưa.||
+P|Our room had a lovely [balcony] with a [sea view], but there were a few problems. The [air conditioning] was [out of order], and there was no hot water in the [shower]. I called the front desk. "Could you send someone to fix them? And could I have two more [towels|towel], a softer [pillow] and a [hairdryer], please?" Ten minutes later, a man brought everything and fixed the problems. That evening, we were too tired to go out, so we ordered [room service]. Before bed, I asked for a [wake-up call] at six because our flight was early. The next morning, we [checked out|check out] quickly.
+V|Phòng của chúng tôi có ban công rất đẹp nhìn ra biển, nhưng lại gặp vài trục trặc. Máy lạnh bị hỏng, còn vòi sen thì không có nước nóng. Tôi gọi xuống quầy lễ tân. "Anh cho người lên sửa giúp được không? Và cho tôi xin thêm hai cái khăn tắm, một cái gối mềm hơn và một máy sấy tóc nhé." Mười phút sau, một nhân viên mang đồ lên và sửa xong mọi thứ. Tối hôm đó, chúng tôi mệt quá không muốn ra ngoài nên gọi đồ ăn lên phòng. Trước khi ngủ, tôi đặt một cuộc gọi báo thức lúc sáu giờ vì chuyến bay của chúng tôi rất sớm. Sáng hôm sau, chúng tôi trả phòng thật nhanh.
+H|Đi lại ở nơi mới
+L|Tàu điện và xe buýt|Sau bài này bạn mua vé, đọc lịch chạy và đi tàu điện, xe buýt trong thành phố.
+W|subway|noun|tàu điện ngầm|The subway is the fastest way to get around Seoul.|Tàu điện ngầm là cách đi lại nhanh nhất ở Seoul.|/ˈsʌbˌweɪ/|/ˈsʌbˌweɪ/
+W|tram|noun|xe điện (chạy trên phố)|You can take a tram to the old town.|Bạn có thể đi xe điện đến khu phố cổ.|/træm/|/tram/
+W|platform|noun|sân ga|The train to Hue leaves from platform 3.|Tàu đi Huế khởi hành ở sân ga số 3.|/ˈplætfɔrm/|/ˈplætfɔːm/
+W|ticket office|noun|phòng bán vé|The ticket office opens at six.|Phòng bán vé mở cửa lúc sáu giờ.||
+W|timetable|noun|lịch chạy (tàu, xe)|Check the timetable before you go to the station.|Xem lịch tàu chạy trước khi ra ga.|/ˈtaɪmˌteɪbəl/|/ˈtaɪmˌteɪbəl/
+W|fare|noun|giá vé (tàu, xe, taxi)|The bus fare is only one dollar.|Vé xe buýt chỉ một đô.|/fɛɚ/|/fɛə/
+W|day pass|noun|vé đi không giới hạn trong ngày|With a day pass, you can take any bus in the city.|Có vé ngày, bạn đi được mọi tuyến xe buýt trong thành phố.||
+W|bus stop|noun|trạm xe buýt|The bus stop is right outside the hotel.|Trạm xe buýt ở ngay trước khách sạn.||
+W|route|noun|tuyến đường, lộ trình|Which route goes to the airport?|Tuyến nào đi sân bay?|/rut/|/ruːt/
+W|get on|phrasal_verb|lên (xe, tàu)|Get on the number 9 bus at the market.|Bạn lên xe buýt số 9 ở chỗ chợ.||
+W|get off|phrasal_verb|xuống (xe, tàu)|Get off at the third stop.|Xuống ở trạm thứ ba.||
+W|transfer|verb|chuyển tuyến, đổi tàu xe|You need to transfer to the green line at the next station.|Bạn cần chuyển sang tuyến xanh ở ga tiếp theo.|/trænsˈfɚ/|/trɑːnsˈfɜː/
+P|On my first morning in Lisbon, I wanted to see the old castle. At the [subway] station, I asked at the [ticket office], "What's the [fare] for one trip?" "Two euros, but a [day pass] is cheaper if you take many trips," the man said. I bought one and checked the [timetable]. The next train left from [platform] 2 in three minutes. I [got on|get on] the blue line and [transferred|transfer] to the green line. Then I took a yellow [tram] up the hill to the castle. Later, a woman at the [bus stop] explained the [route] to my hotel. "[Get off] at the third stop," she said.
+V|Buổi sáng đầu tiên ở Lisbon, tôi muốn đi xem lâu đài cổ. Ở ga tàu điện ngầm, tôi hỏi tại phòng bán vé: "Giá vé một lượt là bao nhiêu ạ?" "Hai euro, nhưng nếu bạn đi nhiều chuyến thì vé ngày sẽ rẻ hơn," người đàn ông đáp. Tôi mua một vé ngày rồi xem lịch chạy tàu. Ba phút nữa sẽ có chuyến tiếp theo chạy từ sân ga số 2. Tôi lên tuyến xanh dương rồi chuyển sang tuyến xanh lá. Sau đó, tôi đi một chiếc xe điện màu vàng lên đồi tới lâu đài. Lúc về, một chị ở trạm xe buýt chỉ cho tôi tuyến xe về khách sạn. "Bạn xuống ở trạm thứ ba nhé," chị ấy nói.
+L|Taxi, thuê xe, đi phà|Sau bài này bạn đi taxi, thuê xe máy và đi xa bằng xe khách hoặc phà.
+W|taxi|noun|xe taxi|Let's take a taxi to the hotel.|Mình đi taxi về khách sạn nhé.|/ˈtæksi/|/ˈtæksi/
+W|meter|noun|đồng hồ tính tiền (taxi)|Could you turn on the meter, please?|Anh bật đồng hồ tính tiền giúp tôi nhé?|/ˈmitɚ/|/ˈmiːtə/
+W|rush hour|noun|giờ cao điểm|It's hard to find a taxi at rush hour.|Giờ cao điểm rất khó bắt taxi.||
+W|traffic jam|noun|kẹt xe, tắc đường|We were stuck in a traffic jam for an hour.|Chúng tôi bị kẹt xe suốt một tiếng.||
+W|rent|verb|thuê (xe, nhà)|We rented a motorbike for two days.|Chúng tôi thuê một chiếc xe máy trong hai ngày.|/rɛnt/|/rɛnt/
+W|motorbike|noun|xe máy|Riding a motorbike is a fun way to see the island.|Đi xe máy là cách thú vị để ngắm hòn đảo.|/ˈmoʊtɚˌbaɪk/|/ˈməʊtəˌbaɪk/
+W|helmet|noun|mũ bảo hiểm|Always wear a helmet when you ride.|Luôn đội mũ bảo hiểm khi chạy xe.|/ˈhɛlmɪt/|/ˈhɛlmɪt/
+W|driver's license|noun|bằng lái xe|You need an international driver's license to rent a car.|Bạn cần bằng lái quốc tế để thuê ô tô.||
+W|gas station|noun|trạm xăng, cây xăng|Is there a gas station near here?|Gần đây có cây xăng nào không?|/ˈɡæs stɛɪʃən/|
+W|coach|noun|xe khách đường dài|We took a night coach to Da Lat.|Chúng tôi đi xe khách đêm lên Đà Lạt.|/koʊtʃ/|/kəʊtʃ/
+W|ferry|noun|phà, tàu chở khách|The ferry to the island leaves every hour.|Phà ra đảo cứ mỗi tiếng có một chuyến.|/ˈfɛri/|/ˈfɛri/
+P|We arrived in Da Nang at [rush hour], so it was hard to find a [taxi]. When we finally got one, I asked the driver, "Could you turn on the [meter], please?" Then we sat in a [traffic jam] for forty minutes. The next morning, we [rented|rent] a [motorbike] for three days. The shop owner gave us two [helmets|helmet] and asked to see my [driver's license]. We stopped at a [gas station] before we rode up the mountain. After that, we took a night [coach] to Nha Trang. Finally, we caught the [ferry] to a small island, and the sea there was beautiful.
+V|Chúng tôi đến Đà Nẵng đúng giờ cao điểm nên rất khó tìm taxi. Khi cuối cùng cũng bắt được một chiếc, tôi nói với tài xế: "Anh bật đồng hồ tính tiền giúp tôi nhé." Sau đó chúng tôi kẹt xe suốt bốn mươi phút. Sáng hôm sau, chúng tôi thuê một chiếc xe máy trong ba ngày. Chủ cửa hàng đưa chúng tôi hai chiếc mũ bảo hiểm và xin xem bằng lái xe của tôi. Chúng tôi ghé trạm xăng đổ xăng trước khi chạy xe lên núi. Sau đó, chúng tôi đi xe khách đêm vào Nha Trang. Cuối cùng, chúng tôi đi phà ra một hòn đảo nhỏ, và biển ở đó đẹp tuyệt.
+H|Ăn uống khi đi du lịch
+L|Gọi món ở nhà hàng|Sau bài này bạn đọc thực đơn, gọi món và nói rõ mình ăn chay hay bị dị ứng.
+W|table for two|phrase|bàn cho hai người|Good evening. A table for two, please.|Chào anh. Cho tôi bàn hai người.||
+W|menu|noun|thực đơn|Could we see the menu, please?|Cho chúng tôi xem thực đơn được không?|/ˈmɛn.ju/|/ˈmɛn.juː/
+W|waiter|noun|người phục vụ bàn|The waiter brought us some water.|Anh phục vụ mang nước ra cho chúng tôi.|/ˈweɪtɚ/|/ˈweɪtəː/
+W|appetizer|noun|món khai vị|Let's share a few appetizers first.|Mình gọi vài món khai vị ăn chung trước nhé.|/ˈæpəˌtaɪzɚ/|/ˈæpɪtaɪzə/
+W|main course|noun|món chính|For my main course, I'll have the grilled fish.|Món chính thì tôi chọn cá nướng.||
+W|napkin|noun|khăn ăn|Could we have some more napkins, please?|Cho chúng tôi xin thêm ít khăn ăn được không?|/ˈnæpˌkɪn/|/ˈnæpˌkɪn/
+W|dish|noun|món ăn|Pho is the most famous dish in Vietnam.|Phở là món ăn nổi tiếng nhất Việt Nam.|/dɪʃ/|/dɪʃ/
+W|specialty|noun|đặc sản, món đặc trưng|Grilled squid is the specialty of this town.|Mực nướng là đặc sản của thị trấn này.|/ˈspɛʃ.əl.ti/|/ˈspɛʃ.əl.ti/
+W|seafood|noun|hải sản|The seafood here is very fresh.|Hải sản ở đây rất tươi.|/ˈsifud/|/ˈsiːfuːd/
+W|vegetarian|adjective|chay, ăn chay|Do you have any vegetarian dishes?|Ở đây có món chay không?|/vɛ.dʒɪˈtɛ.ri.ən/|/vɛ.dʒɪˈtɛə.ri.ən/
+W|allergic|adjective|bị dị ứng|I'm allergic to peanuts.|Tôi bị dị ứng đậu phộng.|/əˈlɝ.dʒɪk/|/əˈlɜː.dʒɪk/
+P|On our last night in Hoi An, Tom and I went to a small restaurant by the river. "A [table for two], please," Tom said. The [waiter] gave us the [menu] and some [napkins|napkin]. "What is the [specialty] here?" I asked. "Our grilled [seafood] is very popular," he answered. For an [appetizer], we shared some vegetable spring rolls. Tom is [vegetarian], so he asked, "Which [dish] has no meat?" The waiter showed him a tofu curry. For my [main course], I wanted the fish soup, but first I said, "I'm [allergic] to peanuts. Are there any peanuts in it?" "No, don't worry," he said with a smile.
+V|Vào buổi tối cuối cùng ở Hội An, Tom và tôi đến một nhà hàng nhỏ bên sông. Tom nói: "Cho chúng tôi một bàn hai người." Người phục vụ đưa chúng tôi thực đơn và mấy chiếc khăn ăn. Tôi hỏi: "Món đặc trưng ở đây là gì vậy anh?" Anh ấy trả lời: "Hải sản nướng của quán được nhiều người gọi lắm." Món khai vị, chúng tôi gọi chung một đĩa chả giò rau củ. Tom ăn chay nên anh hỏi: "Món nào không có thịt vậy?" Người phục vụ chỉ cho anh món cà ri đậu phụ. Món chính, tôi muốn gọi canh cá, nhưng trước tiên tôi nói: "Tôi bị dị ứng đậu phộng. Món này có đậu phộng không?" Anh ấy mỉm cười: "Không có đâu, đừng lo ạ."
+L|Ăn ngoài và trả tiền|Sau bài này bạn thử đồ ăn đường phố, mua đồ mang đi, trả tiền và để tiền boa.
+W|street food|noun|đồ ăn đường phố|Bangkok is famous for its street food.|Bangkok nổi tiếng với đồ ăn đường phố.||
+W|food stall|noun|quầy hàng ăn, sạp đồ ăn|We had noodles at a small food stall.|Chúng tôi ăn mì ở một quầy hàng ăn nhỏ.||
+W|bakery|noun|tiệm bánh|There's a nice bakery across the street.|Bên kia đường có một tiệm bánh ngon.|/ˈbeɪ.kə.ri/|/ˈbeɪ.kə.ri/
+W|cuisine|noun|ẩm thực, cách nấu ăn|I really love Thai cuisine.|Tôi rất mê ẩm thực Thái.|/kwɪˈzin/|/kwɪˈziːn/
+W|portion|noun|suất ăn, phần ăn|The portions here are very big.|Suất ăn ở đây rất to.|/ˈpɔrʃən/|/ˈpɔːʃən/
+W|takeaway|noun|đồ ăn mua mang đi|Let's get a takeaway and eat in our room.|Mình mua đồ mang về ăn trong phòng nhé.|/ˈteɪkəweɪ/|/ˈteɪkəweɪ/
+W|bottled water|noun|nước đóng chai|Only drink bottled water when you travel.|Khi đi du lịch chỉ nên uống nước đóng chai.||
+W|tip|noun|tiền boa|In the US, people usually leave a tip of 15 to 20 percent.|Ở Mỹ, người ta thường để lại tiền boa 15 đến 20 phần trăm.|/tɪp/|/tɪp/
+W|service charge|noun|phí phục vụ|Is the service charge included in the bill?|Phí phục vụ đã tính vào hóa đơn chưa?||
+W|split the bill|idiom|chia nhau trả tiền|Shall we split the bill?|Mình chia nhau trả tiền nhé?||
+W|keep the change|phrase|khỏi trả lại tiền thừa|Here's 100,000 dong. Keep the change.|Gửi anh 100.000 đồng. Khỏi thối lại nhé.||
+P|Lan and I love Vietnamese [cuisine], so in Saigon we tried a lot of [street food]. For breakfast, we bought bread at a small [bakery] near our hotel. At lunch, we ate broken rice at a busy [food stall]. The [portions|portion] were big and cheap, and we drank [bottled water] because it was very hot. That evening, the bill at a nice restaurant already had a ten percent [service charge], so we didn't leave a [tip]. "Let's [split the bill]," Lan said. Later, we bought noodles as a [takeaway] to eat in our room. They cost 45,000 dong, so I gave the seller 50,000 and said, "[Keep the change]!"
+V|Lan và tôi rất mê ẩm thực Việt Nam, nên ở Sài Gòn chúng tôi ăn thử rất nhiều món đường phố. Bữa sáng, chúng tôi mua bánh mì ở một tiệm bánh nhỏ gần khách sạn. Bữa trưa, chúng tôi ăn cơm tấm ở một quầy hàng ăn đông khách. Phần ăn vừa nhiều vừa rẻ, và chúng tôi uống nước đóng chai vì trời rất nóng. Tối hôm đó, hóa đơn ở một nhà hàng đẹp đã tính sẵn mười phần trăm phí phục vụ nên chúng tôi không để tiền boa. Lan bảo: "Mình chia nhau trả nhé." Sau đó, chúng tôi mua mì mang về ăn trong phòng. Mì giá 45.000 đồng, tôi đưa người bán 50.000 và nói: "Khỏi thối lại nhé!"
+H|Hỏi đường và tham quan
+L|Hỏi đường|Sau bài này bạn hỏi đường, hiểu lời chỉ đường và tự tìm đến nơi cần đến.
+W|map|noun|bản đồ|Can you show me on the map?|Bạn chỉ giúp tôi trên bản đồ được không?|/mæp/|/mæp/
+W|landmark|noun|địa danh, công trình dễ nhận ra|The clock tower is a famous landmark in the city.|Tháp đồng hồ là một địa danh nổi tiếng của thành phố.|/ˈlændmɑrk/|/ˈlændmɑːk/
+W|corner|noun|góc đường|The bank is on the corner.|Ngân hàng ở ngay góc đường.|/ˈkɔr.nɚ/|/ˈkɔː.nə/
+W|crossroads|noun|ngã tư|Turn left at the crossroads.|Đến ngã tư thì rẽ trái.|/ˈkrɔsˌroʊdz/|/ˈkrɒsrəʊdz/
+W|traffic lights|noun|đèn giao thông|Go past the traffic lights and turn right.|Đi qua đèn giao thông rồi rẽ phải.||
+W|opposite|preposition|đối diện|The museum is opposite the park.|Bảo tàng nằm đối diện công viên.|/ˈɑ.pə.sɪt/|/ˈɒp.ə.zɪt/
+W|bridge|noun|cây cầu|Cross the bridge and you will see the market.|Qua cầu là bạn sẽ thấy chợ.|/brɪdʒ/|/brɪdʒ/
+W|square|noun|quảng trường|There is a coffee shop in the main square.|Ở quảng trường chính có một quán cà phê.|/skwɛɚ/|/skwɛə/
+W|crosswalk|noun|vạch kẻ sang đường|Always cross the street at the crosswalk.|Luôn sang đường ở vạch dành cho người đi bộ.|/ˈkrɔsˌwɔk/|/ˈkrɒswɔːk/
+W|on foot|phrase|đi bộ|The beach is only ten minutes on foot.|Đi bộ ra biển chỉ mất mười phút.||
+W|get lost|phrase|bị lạc (đường)|It's easy to get lost in the old town.|Ở phố cổ rất dễ bị lạc.||
+P|On my first day in the old town, I wanted to go to the night market [on foot]. After twenty minutes, I [got lost|get lost], and the [map] on my phone stopped working. I asked a woman at the [corner] of a small street. "Go straight to the [crossroads] and turn left," she said. "Then go past the [traffic lights] and cross the [bridge]. You will see the main [square]. The clock tower there is a good [landmark]. The market is [opposite] the clock tower." I thanked her and walked carefully. I crossed the busy road at the [crosswalk], and ten minutes later, I found the market.
+V|Ngày đầu tiên ở phố cổ, tôi muốn đi bộ đến chợ đêm. Được hai mươi phút thì tôi bị lạc, và bản đồ trên điện thoại cũng không chạy nữa. Tôi hỏi một chị đứng ở góc một con phố nhỏ. Chị ấy nói: "Em đi thẳng tới ngã tư rồi rẽ trái. Sau đó đi qua đèn giao thông và qua cầu. Em sẽ thấy quảng trường chính. Tháp đồng hồ ở đó rất dễ nhận ra. Chợ nằm đối diện tháp đồng hồ." Tôi cảm ơn chị rồi cẩn thận đi theo lời chỉ. Tôi băng qua con đường đông xe ở vạch kẻ sang đường, và mười phút sau thì tìm thấy chợ.
+L|Đi tham quan|Sau bài này bạn hỏi giờ mở cửa, phí vào cửa và kể về những nơi đã tham quan.
+W|sightseeing|noun|việc tham quan, ngắm cảnh|We spent the whole day sightseeing.|Chúng tôi dành cả ngày đi tham quan.|/ˈsaɪtˌsiɪŋ/|/ˈsaɪtsiːɪŋ/
+W|attraction|noun|điểm tham quan, nơi thu hút du khách|The Old Quarter is the top attraction in Hanoi.|Phố cổ là điểm tham quan hấp dẫn nhất Hà Nội.|/əˈtrækʃən/|/əˈtrækʃən/
+W|museum|noun|bảo tàng|The museum is closed on Mondays.|Bảo tàng đóng cửa vào thứ Hai.|/mjuˈziəm/|/mjuːˈziːəm/
+W|temple|noun|đền, chùa|We visited an old temple on the hill.|Chúng tôi đến thăm một ngôi đền cổ trên đồi.|/tɪm.pəl/|/ˈtɛm.pəl/
+W|palace|noun|cung điện|The king once lived in this palace.|Nhà vua từng sống trong cung điện này.|/ˈpæləs/|/ˈpælɪs/
+W|guide|noun|hướng dẫn viên|Our guide told us about the history of the city.|Hướng dẫn viên kể cho chúng tôi nghe về lịch sử thành phố.|/ɡaɪd/|/ɡaɪd/
+W|entrance fee|noun|phí vào cửa|The entrance fee is 50,000 dong.|Phí vào cửa là 50.000 đồng.||
+W|opening hours|noun|giờ mở cửa|What are the museum's opening hours?|Bảo tàng mở cửa từ mấy giờ đến mấy giờ?||
+W|crowded|adjective|đông đúc, đông người|The beach is very crowded on weekends.|Cuối tuần bãi biển rất đông người.|/ˈkraʊdɪd/|/ˈkraʊdɪd/
+W|beach|noun|bãi biển|Let's go to the beach this afternoon.|Chiều nay mình ra biển nhé.|/bitʃ/|/biːtʃ/
+W|island|noun|hòn đảo|Phu Quoc is the largest island in Vietnam.|Phú Quốc là hòn đảo lớn nhất Việt Nam.|/ˈaɪ.lənd/|/ˈaɪ.lənd/
+W|scenery|noun|phong cảnh|The scenery in Sa Pa is amazing.|Phong cảnh ở Sa Pa thật tuyệt vời.|/ˈsinəri/|/ˈsiːnəri/
+P|Last summer, Minh and I spent a week [sightseeing] in central Vietnam. On the first day, we visited an old royal [palace], the most famous [attraction] in the area. "What are the [opening hours]?" I asked at the gate. "From seven to five. The [entrance fee] is 200,000 dong," the woman said. Our [guide] told us many stories about the kings. The next day, we saw a quiet [temple] on a hill and a small [museum] of old clothes. The city was very [crowded], so in the afternoon we were happy to relax at the [beach]. Later, we took a boat to an [island]. The [scenery] there was beautiful.
+V|Mùa hè năm ngoái, Minh và tôi dành một tuần đi tham quan miền Trung. Ngày đầu tiên, chúng tôi đến một cung điện cổ của nhà vua, điểm tham quan nổi tiếng nhất vùng. Tôi hỏi ở cổng: "Giờ mở cửa là mấy giờ ạ?" Cô bán vé trả lời: "Từ bảy giờ sáng đến năm giờ chiều. Phí vào cửa là 200.000 đồng." Hướng dẫn viên kể cho chúng tôi nghe nhiều chuyện về các vị vua. Hôm sau, chúng tôi ghé một ngôi chùa yên tĩnh trên đồi và một bảo tàng nhỏ trưng bày quần áo xưa. Thành phố rất đông người nên buổi chiều chúng tôi vui vẻ ra bãi biển nghỉ ngơi. Sau đó, chúng tôi đi thuyền ra một hòn đảo. Phong cảnh ở đó thật đẹp.
+H|Tiền bạc và mua sắm
+L|Đổi tiền, rút tiền|Sau bài này bạn đổi tiền, rút tiền và chọn cách trả tiền khi ở nước ngoài.
+W|currency|noun|tiền tệ, đơn vị tiền|The local currency in Thailand is the baht.|Đơn vị tiền tệ ở Thái Lan là đồng baht.|/ˈkʌr.ən.si/|/ˈkʌr.ən.si/
+W|exchange|verb|đổi (tiền)|Where can I exchange dollars for euros?|Tôi có thể đổi đô la sang euro ở đâu?|/ɛksˈtʃeɪndʒ/|/ɛksˈtʃeɪndʒ/
+W|exchange rate|noun|tỷ giá hối đoái|The exchange rate is better in town than at the airport.|Tỷ giá trong thành phố tốt hơn ở sân bay.||
+W|ATM|noun|máy rút tiền tự động|Is there an ATM near the hotel?|Gần khách sạn có cây ATM không?|/ˌeɪtiˈɛm/|/ˌeɪtiːˈɛm/
+W|withdraw|verb|rút (tiền)|I want to withdraw 200 dollars from my account.|Tôi muốn rút 200 đô từ tài khoản.|/wɪðˈdrɔ/|/wɪðˈdrɔː/
+W|debit card|noun|thẻ ghi nợ (thẻ ATM)|You can use your debit card in most shops abroad.|Bạn có thể dùng thẻ ghi nợ ở hầu hết cửa hàng nước ngoài.|/ˈdɛbɪt ˌkɑrd/|
+W|coin|noun|đồng xu|I need some coins for the bus.|Tôi cần vài đồng xu để đi xe buýt.|/ˈkoɪn/|/ˈkoɪn/
+W|banknote|noun|tờ tiền giấy|Some taxis don't accept large banknotes.|Một số taxi không nhận tờ tiền mệnh giá lớn.|/ˈbæŋkˌnoʊt/|/ˈbæŋknəʊt/
+W|credit card|noun|thẻ tín dụng|Can I pay by credit card?|Tôi trả bằng thẻ tín dụng được không?|/ˈkrɛdɪt ˌkɑrd/|
+W|receipt|noun|hóa đơn, biên lai|Please keep your receipt.|Vui lòng giữ lại hóa đơn.|/rɪˈsit/|/rɪˈsiːt/
+W|money belt|noun|túi đeo bụng đựng tiền|I keep my passport and cash in a money belt.|Tôi để hộ chiếu và tiền mặt trong túi đeo bụng.||
+P|On my first morning in Bangkok, I had no local [currency], so I went to a bank to [exchange] some dollars. The [exchange rate] was not very good, so I only changed fifty dollars. Then I found an [ATM] near my hotel and [withdrew|withdraw] more cash with my [debit card]. The machine gave me only large [banknotes|banknote], but I needed small money for the bus. So I bought a bottle of water and got some [coins|coin] back. In the evening, I paid for dinner by [credit card], and the waiter gave me a [receipt]. I keep my passport and most of my cash in a [money belt] under my shirt.
+V|Buổi sáng đầu tiên ở Bangkok, tôi chưa có chút tiền địa phương nào, nên tôi đến ngân hàng để đổi một ít đô la. Tỷ giá không tốt lắm, nên tôi chỉ đổi năm mươi đô la. Sau đó tôi tìm thấy một cây ATM gần khách sạn và rút thêm tiền mặt bằng thẻ ghi nợ. Máy chỉ nhả ra toàn tờ tiền mệnh giá lớn, nhưng tôi cần tiền lẻ để đi xe buýt. Vì vậy tôi mua một chai nước và được thối lại vài đồng xu. Buổi tối, tôi trả tiền ăn bằng thẻ tín dụng, và người phục vụ đưa cho tôi hóa đơn. Tôi để hộ chiếu và phần lớn tiền mặt trong túi đeo bụng giấu dưới áo.
+L|Mua quà lưu niệm|Sau bài này bạn mua quà lưu niệm, mặc cả và hỏi giảm giá.
+W|souvenir|noun|quà lưu niệm|I bought a small souvenir for my mom.|Tôi mua một món quà lưu niệm nhỏ cho mẹ.|/ˈsu.vəˌnɪr/|/ˌsuː.vəˈnɪə/
+W|gift shop|noun|cửa hàng quà tặng|There's a gift shop near the museum exit.|Gần lối ra bảo tàng có một cửa hàng quà tặng.||
+W|handmade|adjective|làm bằng tay, thủ công|These bags are handmade by local women.|Những chiếc túi này do phụ nữ địa phương làm thủ công.|/ˈhændˌmeɪd/|/ˈhændˌmeɪd/
+W|postcard|noun|bưu thiếp|I sent a postcard to my grandparents.|Tôi gửi một tấm bưu thiếp cho ông bà.|/ˈpoʊstˌkɑrd/|/ˈpəʊstkɑːd/
+W|night market|noun|chợ đêm|The night market opens at six in the evening.|Chợ đêm mở cửa lúc sáu giờ tối.||
+W|bargain|verb|mặc cả, trả giá|You can bargain at the market, but not in big shops.|Ở chợ thì bạn mặc cả được, còn ở cửa hàng lớn thì không.|/ˈbɑrɡən/|/ˈbɑːɡən/
+W|discount|noun|sự giảm giá|Can you give me a discount if I buy two?|Tôi mua hai cái thì bạn giảm giá được không?|/ˈdɪskaʊnt/|/ˈdɪskaʊnt/
+W|on sale|phrase|đang giảm giá|These T-shirts are on sale this week.|Tuần này mấy chiếc áo thun này đang giảm giá.||
+W|try on|phrasal_verb|mặc thử, đội thử|Can I try on this jacket?|Tôi mặc thử áo khoác này được không?||
+W|fitting room|noun|phòng thử đồ|The fitting room is at the back of the shop.|Phòng thử đồ ở cuối cửa hàng.||
+W|shopping mall|noun|trung tâm mua sắm|It's too hot outside, so let's go to the shopping mall.|Ngoài trời nóng quá, mình vào trung tâm mua sắm đi.||
+P|On my last evening in Hoi An, I went shopping with my friend Lan. First, we visited a [gift shop] near the museum, and I bought a few [postcards|postcard] for my family. Then we walked to the [night market]. I wanted a [souvenir] for my mom, and I found some beautiful [handmade] bags. "In the market, you can [bargain]," Lan said. I asked the seller, "Can you give me a [discount] if I buy two?" She smiled and said yes. Later, we went to a [shopping mall] because some dresses were [on sale]. I [tried on|try on] a blue one in the [fitting room], and it fit perfectly!
+V|Vào buổi tối cuối cùng ở Hội An, tôi đi mua sắm với cô bạn tên Lan. Đầu tiên, chúng tôi ghé một cửa hàng quà tặng gần bảo tàng, và tôi mua vài tấm bưu thiếp cho gia đình. Sau đó chúng tôi đi bộ ra chợ đêm. Tôi muốn mua một món quà lưu niệm cho mẹ và tìm được mấy chiếc túi làm thủ công rất đẹp. "Ở chợ thì bạn có thể mặc cả," Lan nói. Tôi hỏi người bán: "Nếu tôi mua hai cái thì chị giảm giá cho tôi được không?" Chị ấy mỉm cười và đồng ý. Sau đó, chúng tôi đến một trung tâm mua sắm vì có mấy chiếc váy đang giảm giá. Tôi mặc thử một chiếc màu xanh trong phòng thử đồ, và nó vừa như in!
+H|Sự cố và về nhà
+L|Mất đồ, nhờ giúp đỡ|Sau bài này bạn báo mất đồ và nhờ cảnh sát hoặc đại sứ quán giúp đỡ.
+W|pickpocket|noun|kẻ móc túi|Watch out for pickpockets on crowded buses.|Coi chừng kẻ móc túi trên xe buýt đông người.|/ˈpɪkˌpɑkɪt/|/ˈpɪkpɒkɪt/
+W|thief|noun|kẻ trộm|The thief ran away with my bag.|Tên trộm chạy mất cùng cái túi của tôi.|/θif/|/θiːf/
+W|steal|verb|lấy trộm, ăn cắp|Someone tried to steal my phone on the train.|Có người định lấy trộm điện thoại của tôi trên tàu.|/stil/|/stiːl/
+W|wallet|noun|cái ví|I can't find my wallet anywhere!|Tôi tìm khắp nơi mà không thấy ví đâu!|/ˈwɑl.ət/|/ˈwɒl.ɪt/
+W|valuables|noun|đồ có giá trị|Keep your valuables in the hotel safe.|Hãy cất đồ có giá trị trong két sắt khách sạn.|/ˈvæljəbəlz/|/ˈvæljuəbəlz/
+W|scam|noun|trò lừa đảo|That cheap boat tour was a scam.|Tour đi thuyền giá rẻ đó là lừa đảo.|/skæm/|/skæm/
+W|lost and found|noun|nơi giữ đồ thất lạc|Let's ask at the lost and found.|Mình ra chỗ giữ đồ thất lạc hỏi thử đi.||
+W|police station|noun|đồn cảnh sát|Where is the nearest police station?|Đồn cảnh sát gần nhất ở đâu?||
+W|embassy|noun|đại sứ quán|If you lose your passport, contact your embassy.|Nếu mất hộ chiếu, hãy liên hệ đại sứ quán.|/ˈɛmbəsi/|/ˈɛmbəsi/
+W|emergency|noun|trường hợp khẩn cấp|In an emergency, call 112.|Khi khẩn cấp, hãy gọi 112.|/ɪˈmɝ.dʒən.si/|/ɪˈmɜː.dʒən.si/
+W|missing|adjective|bị mất, bị thất lạc|One of my suitcases is missing.|Một chiếc vali của tôi bị thất lạc.|/ˈmɪsɪŋ/|/ˈmɪsɪŋ/
+P|On a crowded bus in Rome, Tom noticed that his [wallet] was [missing]. "Maybe a [pickpocket] took it!" he said. It wasn't an [emergency], so we didn't call the police. Instead, we walked to the nearest [police station]. A kind officer wrote a report and said, "A [thief] can [steal] a wallet in one second. Always keep your [valuables] in the hotel safe, and be careful of cheap tours. Some are [scams|scam]." Luckily, Tom's passport was at the hotel, so he didn't need to contact his [embassy]. The next morning, the bus company called. His wallet was at the [lost and found]. It had just fallen out of his pocket!
+V|Trên một chuyến xe buýt đông người ở Rome, Tom phát hiện ví của mình bị mất. "Có khi kẻ móc túi lấy rồi!" cậu ấy nói. Đây không phải trường hợp khẩn cấp, nên chúng tôi không gọi cảnh sát mà đi bộ tới đồn cảnh sát gần nhất. Một viên cảnh sát tốt bụng ghi biên bản và dặn: "Kẻ trộm có thể lấy cắp một chiếc ví chỉ trong một giây. Hãy luôn để đồ có giá trị trong két sắt khách sạn, và cẩn thận với những tour quá rẻ. Có tour là trò lừa đảo đấy." May mắn là hộ chiếu của Tom để ở khách sạn, nên cậu ấy không cần liên hệ đại sứ quán. Sáng hôm sau, công ty xe buýt gọi điện báo ví của Tom đang ở nơi giữ đồ thất lạc. Hóa ra nó chỉ rơi ra khỏi túi thôi!
+L|Ốm đau và về nhà|Sau bài này bạn mua thuốc khi bị ốm, xử lý chuyến bay bị hủy và kể lại chuyến đi.
+W|pharmacy|noun|hiệu thuốc|Is there a pharmacy near the hotel?|Gần khách sạn có hiệu thuốc không?|/ˈfɑrməsi/|/ˈfɑːməsi/
+W|seasick|adjective|say sóng|I always get seasick on small boats.|Cứ đi thuyền nhỏ là tôi say sóng.|/ˈsisɪk/|/ˈsiːsɪk/
+W|painkiller|noun|thuốc giảm đau|I took a painkiller for my headache.|Tôi uống một viên giảm đau vì bị nhức đầu.|/ˈpeɪnˌkɪlɚ/|/ˈpeɪnˌkɪlə/
+W|sunburn|noun|sự cháy nắng|I got a bad sunburn on the first day.|Ngay ngày đầu tôi đã bị cháy nắng nặng.|/ˈsʌnˌbɝn/|/ˈsʌnˌbɜːn/
+W|food poisoning|noun|ngộ độc thực phẩm|He got food poisoning from some bad seafood.|Anh ấy bị ngộ độc thực phẩm vì ăn phải hải sản hỏng.|/ˈfud ˌpɔɪzənɪŋ/|/ˈfuːd ˌpɔɪzənɪŋ/
+W|mosquito|noun|con muỗi|There are lots of mosquitoes near the lake.|Gần hồ có rất nhiều muỗi.|/məsˈki.toʊ/|/mɒˈskiː.təʊ/
+W|clinic|noun|phòng khám|The hotel sent me to a small clinic nearby.|Khách sạn đưa tôi đến một phòng khám nhỏ gần đó.|/ˈklɪn.ɪk/|/ˈklɪn.ɪk/
+W|ambulance|noun|xe cứu thương|Call an ambulance, quickly!|Gọi xe cấp cứu, nhanh lên!|/ˈæm.bjə.ləns/|/ˈæm.bjə.ləns/
+W|rebook|verb|đặt lại, đổi sang chuyến khác|The airline rebooked us on the next morning flight.|Hãng bay đổi cho chúng tôi sang chuyến sáng hôm sau.|/riˈbʊk/|/riːˈbʊk/
+W|refund|noun|tiền hoàn lại|They gave us a full refund.|Họ hoàn lại toàn bộ tiền cho chúng tôi.|/ˈrifʌnd/|/ˈriːfʌnd/
+W|homesick|adjective|nhớ nhà|After two weeks away, I started to feel homesick.|Đi xa hai tuần, tôi bắt đầu thấy nhớ nhà.|/ˈhoʊm.sɪk/|/ˈhəʊm.sɪk/
+W|unforgettable|adjective|khó quên, không thể nào quên|It was an unforgettable trip.|Đó là một chuyến đi không thể nào quên.|/ˌʌnfɚˈɡɛtəbəl/|/ˌʌnfəˈɡɛtəbəl/
+P|Our trip to the islands had a few problems. On the boat, I felt [seasick], and on the beach I got a bad [sunburn]. At night, [mosquitoes|mosquito] bit my legs, so I bought some cream and a [painkiller] at a [pharmacy]. My brother got [food poisoning] from some old seafood. We didn't need an [ambulance], but a doctor at a small [clinic] gave him medicine, and he soon felt better. Then our flight home was cancelled. The airline offered us a [refund], but we asked them to [rebook] us on the next morning flight. I was a little [homesick] by then, but it was still an [unforgettable] trip.
+V|Chuyến đi ra đảo của chúng tôi gặp vài trục trặc. Trên thuyền, tôi bị say sóng, còn ở bãi biển thì tôi bị cháy nắng khá nặng. Buổi tối, muỗi đốt chân tôi, nên tôi ra hiệu thuốc mua ít kem bôi và thuốc giảm đau. Em trai tôi bị ngộ độc thực phẩm vì ăn phải hải sản không tươi. Chúng tôi không cần gọi xe cứu thương, chỉ cần một bác sĩ ở phòng khám nhỏ cho em uống thuốc, và em nhanh chóng khỏe lại. Rồi chuyến bay về nhà của chúng tôi bị hủy. Hãng hàng không đề nghị hoàn tiền, nhưng chúng tôi nhờ họ đổi sang chuyến bay sáng hôm sau. Lúc đó tôi đã hơi nhớ nhà, nhưng đó vẫn là một chuyến đi khó quên.

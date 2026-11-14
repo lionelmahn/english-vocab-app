@@ -1,0 +1,320 @@
+# Khóa “Giao tiếp hằng ngày”. Một phần từ: NGSL-Spoken 1.2 (CC BY-SA 4.0); phiên âm: Wiktionary (CC BY-SA 4.0); chọn từ, chia bài, nghĩa, ví dụ, đoạn đọc do app soạn (CC BY-SA 4.0).
+# H|chương  L|tên bài|mục tiêu  W|từ|loại từ|nghĩa|ví dụ|dịch ví dụ|phiên âm Mỹ|phiên âm Anh  P|đoạn đọc  V|bản dịch
+H|Con số hằng ngày
+L|Đếm từ 0 đến 12|Sau bài này bạn đếm được từ 0 đến 12 và dùng các số nhỏ trong câu nói hằng ngày.
+W|zero|other|số không (số đếm)|My phone number starts with zero.|Số điện thoại của mình bắt đầu bằng số không.|/ˈzɪroʊ/|/ˈzɪərəʊ/
+W|two|other|hai (số đếm)|I have two brothers.|Mình có hai anh trai.|/tu/|/tu/
+W|three|other|ba (số đếm)|We need three more chairs.|Chúng ta cần thêm ba cái ghế.|/θri/|/θriː/
+W|four|other|bốn (số đếm)|There are four people in my family.|Nhà mình có bốn người.|/foə/|/fɔː/
+W|five|other|năm (số đếm)|I'll be there in five minutes.|Năm phút nữa mình tới.|/faɪv/|/faɪv/
+W|six|other|sáu (số đếm)|I get up at six every day.|Ngày nào mình cũng dậy lúc sáu giờ.|/sɪks/|/sɪks/
+W|seven|other|bảy (số đếm)|There are seven days in a week.|Một tuần có bảy ngày.|/ˈsɛvən/|/ˈsɛvən/
+W|eight|other|tám (số đếm)|The shop opens at eight.|Cửa hàng mở cửa lúc tám giờ.|/eɪt/|/eɪt/
+W|nine|other|chín (số đếm)|My son is nine years old.|Con trai mình chín tuổi.|/naɪn/|/naɪn/
+W|ten|other|mười (số đếm)|Can you wait ten minutes?|Bạn chờ mười phút được không?|/tɛn/|/tɛn/
+W|eleven|other|mười một (số đếm)|I usually go to bed at eleven.|Mình thường đi ngủ lúc mười một giờ.|/əˈlɛv.ən/|/ɪˈlɛv.ən/
+W|twelve|other|mười hai (số đếm)|A year has twelve months.|Một năm có mười hai tháng.|/twɛlv/|/twɛlv/
+P|Lan and Tom are shopping for a small party. "How many people are coming?" Tom asks. "Let me count. My family is [four] people, your family is [three], and [five] friends are coming. That's [twelve]," Lan says. "Okay, so we need twelve cups and [six] bottles of water. Do we have any juice at home?" "No, we have [zero] bottles. Let's get [two] big ones." "What time is the party?" "It starts at [seven] and ends at [ten]." "Good. My son is [nine], and he can stay up until ten on Saturday." "It's [eleven] minutes past [eight] now. The shop closes at nine, so let's hurry!"
+V|Lan và Tom đang đi mua đồ cho một bữa tiệc nhỏ. "Có bao nhiêu người đến vậy?" Tom hỏi. "Để mình đếm nhé. Nhà mình bốn người, nhà bạn ba người, thêm năm người bạn nữa. Tổng cộng là mười hai," Lan nói. "Được, vậy mình cần mười hai cái cốc và sáu chai nước. Ở nhà còn nước ép không?" "Không, chẳng còn chai nào cả. Mua hai chai lớn đi." "Mấy giờ tiệc bắt đầu?" "Bảy giờ bắt đầu, mười giờ kết thúc." "Tốt. Con trai mình chín tuổi, thứ Bảy thì cháu được thức đến mười giờ." "Giờ là tám giờ mười một phút rồi. Chín giờ cửa hàng đóng cửa, nhanh lên nào!"
+L|Số tròn chục và số lớn|Sau bài này bạn nói được các số tròn chục và số hàng trăm, hàng nghìn, hàng triệu.
+W|fifteen|other|mười lăm (số đếm)|The bus comes every fifteen minutes.|Cứ mười lăm phút lại có một chuyến xe buýt.|/ˈfɪf.tin/|/ˈfɪf.tiːn/
+W|nineteen|other|mười chín (số đếm)|My sister is nineteen.|Em gái mình mười chín tuổi.|/ˈnaɪnˌtin/|/ˈnaɪntiːn/
+W|twenty|other|hai mươi (số đếm)|There are twenty students in my class.|Lớp mình có hai mươi học sinh.|/ˈtwɛnti/|/ˈtwɛnti/
+W|thirty|other|ba mươi (số đếm)|It takes thirty minutes to get to work.|Đi làm mất ba mươi phút.|/ˈθɝti/|/ˈθɜːti/
+W|forty|other|bốn mươi (số đếm)|My boss turns forty this year.|Năm nay sếp mình tròn bốn mươi tuổi.|/ˈfɔrti/|/ˈfɔːti/
+W|fifty|other|năm mươi (số đếm)|This shirt costs fifty dollars.|Cái áo này giá năm mươi đô.|/ˈfɪfti/|/ˈfɪfti/
+W|sixty|other|sáu mươi (số đếm)|There are sixty minutes in an hour.|Một giờ có sáu mươi phút.|/ˈsɪksti/|/ˈsɪksti/
+W|seventy|other|bảy mươi (số đếm)|My grandmother is seventy years old.|Bà mình bảy mươi tuổi.|/ˈsɛv.ən.ti/|/ˈsɛv.ən.ti/
+W|eighty|other|tám mươi (số đếm)|About eighty people came to the wedding.|Khoảng tám mươi người đã đến dự đám cưới.|/ˈeɪ.ti/|/ˈeɪ.ti/
+W|ninety|other|chín mươi (số đếm)|She got ninety points on the test.|Cô ấy được chín mươi điểm bài kiểm tra.|/ˈnaɪn.di/|/ˈnaɪn.ti/
+W|hundred|other|trăm (số đếm)|This phone costs three hundred dollars.|Cái điện thoại này giá ba trăm đô.|/ˈhʌn.drəd/|/ˈhʌn.drəd/
+W|thousand|other|nghìn (số đếm)|A coffee here costs about thirty thousand dong.|Ở đây một ly cà phê khoảng ba mươi nghìn đồng.|/ˈθaʊzənd/|/ˈθaʊzənd/
+W|million|other|triệu (số đếm)|More than a million people live in this city.|Hơn một triệu người sống ở thành phố này.|/ˈmɪl.jən/|/ˈmɪl.jən/
+P|"How was your grandma's birthday party?" Ben asks. "It was great! She's [ninety] now, and Grandpa is [eighty]," Mai says. "About [seventy] people came, from little kids to my cousin, who is [nineteen]." "Wow! Was it expensive?" "The food was about [twenty] [million] dong. The cake alone cost eight [hundred] [thousand] dong." "And how long was the party?" "Almost five hours. My dad is [sixty], but he danced for [thirty] minutes!" "Ha! My mom is only [forty], and she gets tired after [fifteen] minutes." "I took more than [fifty] photos. Do you want to see them?"
+V|"Tiệc sinh nhật bà cậu thế nào?" Ben hỏi. "Vui lắm! Bà mình năm nay chín mươi tuổi rồi, còn ông thì tám mươi," Mai kể. "Khoảng bảy mươi người đến dự, từ mấy đứa nhỏ cho đến anh họ mình năm nay mười chín tuổi." "Chà! Có tốn kém không?" "Đồ ăn hết khoảng hai mươi triệu đồng. Riêng cái bánh kem đã tám trăm nghìn rồi." "Thế bữa tiệc kéo dài bao lâu?" "Gần năm tiếng. Bố mình sáu mươi tuổi mà còn nhảy suốt ba mươi phút!" "Ha! Mẹ mình mới bốn mươi mà nhảy mười lăm phút đã mệt rồi." "Mình chụp hơn năm mươi tấm ảnh đấy. Cậu có muốn xem không?"
+L|Hỏi tuổi, giá và số|Sau bài này bạn hỏi được tuổi, giá tiền, số điện thoại và nhờ người khác nói lại cho rõ.
+W|birthday|noun|sinh nhật|When is your birthday?|Sinh nhật bạn là ngày nào?|/ˈbɝθˌdeɪ/|/ˈbɜːθ.dei/
+W|teenager|noun|thiếu niên (13 đến 19 tuổi)|My daughter is a teenager now.|Con gái mình giờ đã là thiếu niên rồi.|/ˈtinˌeɪdʒɚ/|/ˈtiːnˌeɪdʒə/
+W|mobile|noun|điện thoại di động|Can I have your mobile number?|Cho mình xin số di động của bạn nhé?|/ˈmoʊ.bəl/|/ˈməʊ.baɪl/
+W|plus|preposition|cộng, cộng thêm|It's fifty dollars plus tax.|Giá là năm mươi đô cộng thêm thuế.|/plʌs/|/plʌs/
+W|twice|adverb|hai lần, gấp đôi|This one is twice as expensive.|Cái này đắt gấp đôi.|/twaɪs/|/twaɪs/
+W|dozen|noun|tá (mười hai cái)|How much is a dozen eggs?|Một tá trứng giá bao nhiêu?|/ˈdʌzən/|/ˈdʌzən/
+W|double|adjective|đôi, hai số giống nhau liền nhau|My number ends in double seven.|Số của mình tận cùng là hai số bảy.|/ˈdʌb.əl/|/ˈdʌb.əl/
+W|spell|verb|đánh vần|Could you spell your name, please?|Bạn đánh vần tên của bạn giúp mình được không?|/spɛl/|/spɛl/
+W|repeat|verb|nhắc lại, lặp lại|Could you repeat the number?|Bạn nhắc lại số đó được không?|/rəˈpit/|/rɪˈpiːt/
+W|pardon|interjection|xin lỗi, bạn nói gì cơ?|Pardon? I didn't hear you.|Xin lỗi, bạn nói gì cơ? Mình nghe không rõ.|/ˈpɑrdən/|/ˈpɑːdən/
+W|slowly|adverb|chậm, chầm chậm|Please speak more slowly.|Bạn nói chậm hơn một chút nhé.|/ˈsloʊli/|/ˈsləʊli/
+P|"Hello, I'd like to order a cake for my son's [birthday]," Lan says. "How old is he?" asks the baker. "Thirteen. He's a [teenager] now!" "Would you like some cupcakes too? We sell them by the [dozen]." "One dozen, please. How much is that?" "Three hundred thousand for the cake, [plus] eighty thousand for the cupcakes." "[Pardon]? Could you [repeat] that?" "Three hundred and eighty thousand." "That's almost [twice] last year's price!" "Can I have your name and [mobile] number?" "Lan. It's zero nine one two, [double] five, seven eight four six." "Sorry, could you say it more [slowly]? And can you [spell] your name?" "Of course. L, A, N."
+V|"Chào chị, tôi muốn đặt một chiếc bánh cho sinh nhật con trai," Lan nói. "Cháu bao nhiêu tuổi rồi chị?" người bán bánh hỏi. "Mười ba. Cháu thành thiếu niên rồi đấy!" "Chị có lấy thêm bánh nướng nhỏ không ạ? Bên em bán theo tá." "Cho tôi một tá. Hết bao nhiêu tiền?" "Bánh kem ba trăm nghìn, cộng thêm tám mươi nghìn tiền bánh nhỏ ạ." "Chị nói gì cơ? Chị nhắc lại giúp tôi được không?" "Ba trăm tám mươi nghìn ạ." "Gần gấp đôi giá năm ngoái đấy!" "Chị cho em xin tên và số di động nhé." "Lan. Số của tôi là không chín một hai, năm năm, bảy tám bốn sáu." "Xin lỗi, chị đọc chậm lại giúp em được không ạ? Và chị đánh vần tên giúp em nhé." "Được chứ. L, A, N."
+H|Chào hỏi và phép lịch sự
+L|Chào hỏi và làm quen|Sau bài này bạn chào hỏi, làm quen với người mới và chào tạm biệt tự nhiên.
+W|hello|interjection|xin chào|Hello, my name is Lan.|Xin chào, mình tên là Lan.|/hɛˈloʊ/|/həˈləʊ/
+W|hi|interjection|chào (thân mật)|Hi, how are you today?|Chào bạn, hôm nay bạn thế nào?|/haɪ/|/haɪ/
+W|bye|interjection|tạm biệt|Bye, see you tomorrow!|Tạm biệt, mai gặp nhé!|/baɪ/|/baɪ/
+W|greet|verb|chào, chào đón|She greeted me with a big smile.|Cô ấy chào mình với nụ cười thật tươi.|/ɡrit/|/ɡriːt/
+W|hug|verb|ôm|We hugged when we met at the station.|Bọn mình ôm nhau khi gặp ở nhà ga.|/hʌɡ/|/hʌɡ/
+W|neighbor|noun|hàng xóm|Our new neighbor is very friendly.|Người hàng xóm mới của bọn mình rất thân thiện.|/ˈneɪbɚ/|/ˈneɪbə/
+W|colleague|noun|đồng nghiệp|This is Nam, my colleague.|Đây là Nam, đồng nghiệp của mình.|/ˈkɑliɡ/|/ˈkɒliːɡ/
+W|stranger|noun|người lạ|I don't often talk to strangers on the bus.|Mình không hay nói chuyện với người lạ trên xe buýt.|/ˈstreɪndʒɚ/|/ˈstreɪndʒə/
+W|nickname|noun|biệt danh, tên gọi ở nhà|My name is Thanh, but my nickname is Bin.|Mình tên Thanh, nhưng tên ở nhà là Bin.|/ˈnɪkneɪm/|/ˈnɪkneɪm/
+W|nice to meet you|phrase|rất vui được gặp bạn|Hi, I'm Mai. Nice to meet you.|Chào bạn, mình là Mai. Rất vui được gặp bạn.||
+W|take care|phrase|giữ gìn sức khỏe nhé, bảo trọng|Bye, take care!|Tạm biệt, giữ gìn sức khỏe nhé!||
+P|On her first morning in a new flat, Mai meets a woman in the hallway. The woman [greets|greet] her with a big smile. "[Hello]! I'm Anna, your [neighbor] from next door." "[Hi], Anna. I'm Mai. [Nice to meet you]." "Nice to meet you too. Everyone here calls me Annie. It's my [nickname]." Then a man walks up. "This is Ben, my [colleague]. We work at the same school," Anna says. "In big cities, neighbors are often like [strangers|stranger], but not in this building." Just then, Anna's little daughter runs out and [hugs|hug] Mai like an old friend. "We have to go now. [Bye], Mai!" "Bye! [Take care]!"
+V|Buổi sáng đầu tiên ở căn hộ mới, Mai gặp một người phụ nữ ngoài hành lang. Chị ấy chào cô bằng một nụ cười thật tươi. "Xin chào! Chị là Anna, hàng xóm sát vách của em." "Chào chị Anna. Em là Mai. Rất vui được gặp chị." "Chị cũng rất vui được gặp em. Ở đây mọi người gọi chị là Annie. Đó là biệt danh của chị." Rồi một người đàn ông đi tới. "Đây là Ben, đồng nghiệp của chị. Bọn chị làm cùng một trường," Anna nói. "Ở thành phố lớn, hàng xóm thường như người lạ với nhau, nhưng ở tòa nhà này thì không đâu." Đúng lúc đó, cô con gái nhỏ của Anna chạy ra và ôm Mai như một người bạn cũ. "Bọn chị phải đi rồi. Tạm biệt em nhé, Mai!" "Tạm biệt anh chị! Giữ gìn sức khỏe nhé!"
+L|Cảm ơn và xin lỗi|Sau bài này bạn cảm ơn, xin lỗi và đáp lại lời xin lỗi một cách lịch sự.
+W|thanks|interjection|cảm ơn|Thanks for your help!|Cảm ơn bạn đã giúp!|/θæŋks/|/θæŋks/
+W|appreciate|verb|cảm kích, trân trọng|I really appreciate your help.|Mình thật sự cảm kích vì bạn đã giúp.|/əˈpri.ʃi.eɪt/|/əˈpriː.ʃi.eɪt/
+W|grateful|adjective|biết ơn|I'm very grateful to my teachers.|Mình rất biết ơn các thầy cô.|/ˈɡreɪtfəl/|/ˈɡreɪtfʊl/
+W|apologize|verb|xin lỗi|I apologize for being late.|Mình xin lỗi vì đến muộn.|/əˈpɑləˌdʒaɪz/|/əˈpɒləˌdʒaɪz/
+W|excuse|verb|xin lỗi (khi làm phiền), thứ lỗi|Excuse me, is this seat free?|Xin lỗi, chỗ này còn trống không?|/ɪksˈkjuz/|/ɪkˈskjuːz/
+W|mistake|noun|lỗi, sai lầm|Sorry, it was my mistake.|Xin lỗi, đó là lỗi của mình.|/mɪˈsteɪk/|/mɪˈsteɪk/
+W|fault|noun|lỗi (trách nhiệm của ai)|Don't worry, it's not your fault.|Đừng lo, đó không phải lỗi của bạn.|/fɔlt/|/fɔːlt/
+W|accident|noun|sự vô tình, tai nạn|Sorry, I broke your cup by accident.|Xin lỗi, mình vô tình làm vỡ cái cốc của bạn.|/ˈæk.sə.dənt/|/ˈæk.sɪ.dənt/
+W|forgive|verb|tha thứ, bỏ qua|Please forgive me. I forgot your birthday.|Bỏ qua cho mình nhé. Mình quên sinh nhật bạn.|/fɚˈɡɪv/|/fəˈɡɪv/
+W|polite|adjective|lịch sự|It's polite to say thank you.|Nói lời cảm ơn là lịch sự.|/pəˈlaɪt/|/pəˈlaɪt/
+W|rude|adjective|thô lỗ, bất lịch sự|It was rude of me to interrupt you.|Mình ngắt lời bạn như vậy là bất lịch sự.|/rud/|/ruːd/
+W|no problem|phrase|không có gì, không sao|Thanks a lot! – No problem.|Cảm ơn nhiều nhé! – Không có gì.||
+P|In a busy café, Tom says, "[Excuse] me, can I get past?" Then he hits Lan's cup by [accident], and coffee goes all over the table. "Oh no! I'm so sorry. I [apologize]. That was my [mistake]," he says. "It's okay. It's not really your [fault]. My bag was in the way," Lan answers. "Please [forgive] me. Let me buy you a new coffee." Five minutes later, he comes back with a cup. "[Thanks]! I really [appreciate] it." "[No problem]." Later, Lan tells her friend, "Some people are [rude] and just walk away, but he was so [polite]. I'm [grateful] that he also helped me clean the table."
+V|Trong một quán cà phê đông người, Tom nói: "Xin lỗi, cho tôi đi qua một chút được không?" Rồi anh vô tình va vào cốc của Lan, cà phê đổ tràn khắp bàn. "Trời ơi! Tôi xin lỗi chị. Tôi thành thật xin lỗi. Là lỗi của tôi," anh nói. "Không sao đâu. Thật ra cũng không hẳn là lỗi của anh. Túi của tôi để chắn lối đi," Lan đáp. "Mong chị bỏ qua cho. Để tôi mua cho chị cốc khác." Năm phút sau, anh quay lại với một cốc cà phê. "Cảm ơn anh! Tôi thật sự cảm kích." "Không có gì đâu." Sau đó, Lan kể với bạn: "Có người thô lỗ, làm đổ xong là bỏ đi luôn, nhưng anh ấy lịch sự lắm. Mình rất biết ơn vì anh ấy còn giúp mình lau bàn nữa."
+L|Nhờ giúp và giúp người|Sau bài này bạn hỏi mượn đồ, nhờ người khác giúp và nhận lời giúp người khác.
+W|borrow|verb|mượn|Can I borrow your pen?|Mình mượn bút của bạn được không?|/ˈbɑr.oʊ/|/ˈbɒrəʊ/
+W|lend|verb|cho mượn, cho vay|Could you lend me some money?|Bạn cho mình mượn ít tiền được không?|/lɛnd/|/lɛnd/
+W|favor|noun|việc nhờ, sự giúp đỡ|Can you do me a favor?|Bạn giúp mình một việc được không?|/ˈfeɪ.vɚ/|/ˈfeɪ.və/
+W|bother|verb|làm phiền|Sorry to bother you, but can you help me?|Xin lỗi đã làm phiền, bạn giúp mình được không?|/ˈbɑðɚ/|/ˈbɒðə/
+W|anybody|pronoun|ai đó, bất kỳ ai|Can anybody help me with this box?|Có ai giúp mình cái thùng này được không?|/ˈɛn.i.bʌ.di/|/ˈɛn.i.bɒd.i/
+W|nobody|pronoun|không ai|Nobody answered, so I did it myself.|Không ai trả lời nên mình tự làm.|/ˈnoʊˌbʌd.i/|/ˈnəʊ.bɒd.i/
+W|heavy|adjective|nặng|This bag is too heavy for me.|Cái túi này nặng quá với mình.|/ˈhɛv.i/|/ˈhɛv.i/
+W|lift|verb|nhấc, nâng lên|Can you help me lift this table?|Bạn giúp mình nhấc cái bàn này được không?|/lɪft/|/lɪft/
+W|charger|noun|cục sạc, dây sạc|Can I borrow your phone charger?|Mình mượn cục sạc điện thoại của bạn được không?|/ˈtʃɑrdʒɚ/|/ˈtʃɑːdʒə/
+W|help out|phrasal_verb|giúp một tay|My friends helped out when I moved house.|Bạn bè đã giúp một tay khi mình chuyển nhà.||
+W|of course|phrase|tất nhiên, dĩ nhiên|Of course I can help you.|Tất nhiên là mình giúp bạn được.|/əv ˈkɔrs/|/əv ˈkɔːs/
+P|"Sorry to [bother] you, Ben. Can you do me a [favor]?" Minh asks. "[Of course]. What's up?" "My phone is almost dead. Can I [borrow] your [charger]?" "Sure, here you go." "Thanks. And one more thing. I need to take this box upstairs, but it's really [heavy]. I can't [lift] it alone, and [nobody] else is in the office today." "Don't worry, I can [help out]." They carry the box up together. "You're a lifesaver! By the way, do you know if [anybody] is free on Saturday? I'm moving to a new flat." "I'm free. I can also [lend] you my car if you need it."
+V|"Xin lỗi làm phiền cậu, Ben. Cậu giúp mình một việc được không?" Minh hỏi. "Tất nhiên rồi. Có chuyện gì thế?" "Điện thoại mình sắp hết pin. Cho mình mượn cục sạc của cậu nhé?" "Được, đây này." "Cảm ơn. À, còn một việc nữa. Mình cần mang cái thùng này lên tầng trên, nhưng nó nặng quá. Mình không nhấc nổi một mình, mà hôm nay chẳng có ai khác ở văn phòng." "Đừng lo, mình giúp một tay cho." Hai người cùng khiêng cái thùng lên. "Cậu đúng là cứu tinh của mình! À mà cậu có biết ai rảnh vào thứ Bảy này không? Mình chuyển sang căn hộ mới." "Mình rảnh đây. Nếu cần, mình cho cậu mượn xe luôn."
+H|Gia đình và sở thích
+L|Gia đình và họ hàng|Sau bài này bạn giới thiệu được các thành viên trong gia đình và họ hàng của mình.
+W|dad|noun|bố, ba|My dad works in a bank.|Bố mình làm ở ngân hàng.|/dæd/|/dæd/
+W|mom|noun|mẹ|My mom is a great cook.|Mẹ mình nấu ăn rất giỏi.|/mɑm/|/mɒm/
+W|grandma|noun|bà|I visit my grandma every Sunday.|Chủ nhật nào mình cũng về thăm bà.|/ˈɡrænmɑ/|/ˈɡrænmɑː/
+W|grandpa|noun|ông|My grandpa tells great stories.|Ông mình kể chuyện rất hay.|/ˈɡræm.pɑ/|/ˈɡræm.pɑː/
+W|uncle|noun|chú, bác, cậu|My uncle lives in Da Nang.|Chú mình sống ở Đà Nẵng.|/ˈʌŋ.kəl/|/ˈʌŋ.kəl/
+W|aunt|noun|cô, dì, thím, mợ|My aunt is a nurse.|Dì mình là y tá.|/ɑnt/|/ɑːnt/
+W|cousin|noun|anh chị em họ|My cousin and I are the same age.|Mình với đứa em họ bằng tuổi nhau.|/ˈkʌzən/|/ˈkʌzən/
+W|nephew|noun|cháu trai (con của anh chị em)|My nephew is five years old.|Cháu trai mình năm tuổi.|/ˈnɛf.ju/|/ˈnɛf.ju/
+W|niece|noun|cháu gái (con của anh chị em)|My niece loves drawing.|Cháu gái mình rất thích vẽ.|/nis/|/niːs/
+W|sibling|noun|anh chị em ruột|Do you have any siblings?|Bạn có anh chị em ruột không?|/ˈsɪb.lɪŋ/|/ˈsɪb.lɪŋ/
+W|relative|noun|họ hàng, người thân|All our relatives come to visit at Tet.|Tết thì họ hàng đến thăm đông đủ.|/ˈrɛl.ə.tɪv/|/ˈrɛl.ə.tɪv/
+W|get along|phrasal_verb|hòa thuận, hợp nhau|I get along well with my sister.|Mình với chị gái rất hợp nhau.||
+P|Anna shows Minh a photo from Tet. "Who are all these people?" Minh asks. "These are my [relatives|relative]," Anna says. "This is my [dad] and my [mom], and the old couple in the middle are my [grandpa] and [grandma]. The tall man is my [uncle], and next to him is my [aunt]." "And the kids?" "That's my [cousin] Ben. The little boy is my [nephew], and the girl with the cake is my [niece]." "Do you have any [siblings|sibling]?" "Yes, one older sister. We [get along] really well." "You're lucky. My brother and I fight all the time!"
+V|Anna cho Minh xem một tấm ảnh chụp dịp Tết. "Những người này là ai vậy?" Minh hỏi. "Đây là họ hàng của mình," Anna nói. "Đây là bố và mẹ mình, còn hai người lớn tuổi ngồi ở giữa là ông và bà mình. Người đàn ông cao là chú mình, đứng cạnh chú là cô mình." "Còn mấy đứa nhỏ?" "Đó là Ben, em họ mình. Cậu bé kia là cháu trai mình, còn bé gái cầm bánh là cháu gái mình." "Bạn có anh chị em ruột không?" "Có, mình có một chị gái. Hai chị em rất hợp nhau." "Bạn sướng thật. Mình với anh trai suốt ngày cãi nhau!"
+L|Sở thích lúc rảnh|Sau bài này bạn kể được sở thích, việc mình thích và ghét làm lúc rảnh.
+W|hobby|noun|sở thích|My hobby is taking photos.|Sở thích của mình là chụp ảnh.|/ˈhɑ.bi/|/ˈhɒ.bi/
+W|cook|verb|nấu ăn|I love to cook for my friends.|Mình thích nấu ăn cho bạn bè.|/kʊk/|/kʊk/
+W|bake|verb|nướng (bánh)|My sister bakes cookies on weekends.|Cuối tuần chị mình hay nướng bánh quy.|/beɪk/|/beɪk/
+W|guitar|noun|đàn ghi-ta|He plays the guitar very well.|Anh ấy chơi ghi-ta rất hay.|/ɡɪˈtɑr/|/ɡɪˈtɑː/
+W|piano|noun|đàn piano, dương cầm|I'm learning to play the piano.|Mình đang học chơi đàn piano.|/piˈænoʊ/|/ˈpjænəʊ/
+W|fan|noun|người hâm mộ, fan|I'm a big fan of Korean movies.|Mình rất mê phim Hàn.|/fæn/|/fæn/
+W|collect|verb|sưu tầm|My dad collects old coins.|Bố mình sưu tầm tiền xu cũ.|/kəˈlɛkt/|/kəˈlɛkt/
+W|gym|noun|phòng tập thể dục, phòng gym|I go to the gym three times a week.|Mỗi tuần mình đi tập gym ba lần.|/dʒɪm/|/dʒɪm/
+W|hate|verb|ghét|I hate getting up early.|Mình ghét dậy sớm.|/heɪt/|/heɪt/
+W|interested|adjective|thích, quan tâm|Are you interested in music?|Bạn có thích âm nhạc không?|/ˈɪn.təˌrɛs.tɪd/|/ˈɪn.tə.rɛs.tɪd/
+W|free time|phrase|thời gian rảnh|What do you do in your free time?|Lúc rảnh bạn hay làm gì?||
+W|take up|phrasal_verb|bắt đầu (một sở thích, môn mới)|I want to take up swimming this summer.|Hè này mình muốn bắt đầu học bơi.||
+P|"What do you do in your [free time], Tom?" Lan asks. "I go to the [gym] after work, and I play the [guitar] on weekends," Tom says. "What about you? Do you have a [hobby]?" "I love to [cook]. On Sundays I [bake] bread with my mom. My dad [collects|collect] old stamps, but I'm not [interested] in that." "Do you like sports?" "Not really. I [hate] running! But I'm a big [fan] of music. I want to [take up] the [piano] this year." "That's great! Maybe we can play together one day."
+V|"Lúc rảnh cậu hay làm gì, Tom?" Lan hỏi. "Mình đi tập gym sau giờ làm, cuối tuần thì chơi ghi-ta," Tom đáp. "Còn cậu thì sao? Cậu có sở thích gì không?" "Mình mê nấu ăn. Chủ nhật nào mình cũng nướng bánh mì với mẹ. Bố mình sưu tầm tem cũ, nhưng mình không thích mấy thứ đó." "Cậu có thích thể thao không?" "Không hẳn. Mình ghét chạy bộ lắm! Nhưng mình rất mê âm nhạc. Năm nay mình muốn bắt đầu học piano." "Hay quá! Biết đâu sau này tụi mình chơi nhạc chung."
+H|Ăn uống và đi chợ
+L|Đói, khát và mùi vị|Sau bài này bạn nói được mình đói, khát và tả món ăn ngon, cay, ngọt hay mặn.
+W|hungry|adjective|đói|I'm hungry. Let's eat.|Mình đói rồi. Đi ăn thôi.|/ˈhʌŋ.ɡri/|/ˈhʌŋ.ɡri/
+W|thirsty|adjective|khát|I'm thirsty. Can I have some water?|Mình khát quá. Cho mình xin ít nước nhé?|/ˈθɝs.ti/|/ˈθɜːs.ti/
+W|delicious|adjective|ngon|This soup is delicious!|Món súp này ngon quá!|/dɪˈlɪ.ʃəs/|/dɪˈlɪ.ʃəs/
+W|tasty|adjective|ngon miệng, đậm đà|The noodles here are cheap and tasty.|Mì ở đây vừa rẻ vừa ngon.|/ˈteɪsti/|/ˈteɪsti/
+W|spicy|adjective|cay|Is this dish too spicy for you?|Món này có cay quá với bạn không?|/ˈspaɪsi/|/ˈspaɪsi/
+W|sweet|adjective|ngọt|This cake is too sweet for me.|Cái bánh này ngọt quá với mình.|/swit/|/swiːt/
+W|salty|adjective|mặn|The soup is a bit salty.|Súp hơi mặn.|/ˈsɔlti/|/ˈsɒlti/
+W|sour|adjective|chua|Green mangoes are very sour.|Xoài xanh rất chua.|/ˈsaʊ.ɚ/|/ˈsaʊ.ə/
+W|breakfast|noun|bữa sáng|What do you usually have for breakfast?|Bạn thường ăn sáng món gì?|/ˈbrɛk.fəst/|/ˈbrɛk.fəst/
+W|lunch|noun|bữa trưa|Let's have lunch together.|Mình ăn trưa cùng nhau nhé.|/lʌntʃ/|/lʌntʃ/
+W|dinner|noun|bữa tối|My mom is cooking dinner.|Mẹ mình đang nấu bữa tối.|/ˈdɪnɚ/|/ˈdɪnə/
+W|snack|noun|đồ ăn vặt, bữa phụ|I often have a snack in the afternoon.|Buổi chiều mình hay ăn vặt.|/snæk/|/snæk/
+P|"I'm so [hungry]," Minh says. "I didn't have [breakfast] this morning." "And I'm [thirsty]," Mai says. "Let's get [lunch] at the noodle shop." At the shop, Minh tries the soup. "Mmm, this is [delicious]! But it's a bit [salty]." Mai tastes her salad. "Mine is [sour] and [spicy], but very [tasty]." "Do you want some of my lemon tea? It's really [sweet]." "Yes, please! Then let's buy a [snack] for later." "Okay, but not too much. My mom is making [dinner] tonight."
+V|"Đói quá," Minh nói. "Sáng nay mình chưa ăn sáng." "Còn mình thì khát," Mai nói. "Mình đi ăn trưa ở quán mì đi." Đến quán, Minh nếm thử nước dùng. "Ừm, ngon quá! Nhưng hơi mặn." Mai nếm món gỏi của mình. "Món của mình vừa chua vừa cay, mà đậm đà lắm." "Cậu uống thử trà chanh của mình không? Ngọt lắm đấy." "Ừ, cho mình với! Xong mình mua ít đồ ăn vặt để lát nữa ăn nhé." "Được, nhưng đừng mua nhiều quá. Tối nay mẹ mình nấu cơm mà."
+L|Ở quán cà phê|Sau bài này bạn gọi đồ uống, bánh ngọt ở quán cà phê và nhờ người khác gợi ý món.
+W|coffee|noun|cà phê|I'd like a coffee with milk, please.|Cho mình một ly cà phê sữa nhé.|/ˈkɔfi/|/ˈkɒfi/
+W|tea|noun|trà|Would you like some green tea?|Bạn uống chút trà xanh không?|/ti/|/tiː/
+W|cup|noun|tách, cốc|She drinks three cups of coffee a day.|Mỗi ngày cô ấy uống ba tách cà phê.|/kʌp/|/kʌp/
+W|glass|noun|ly, cốc (thủy tinh)|Can I have a glass of water?|Cho mình xin một ly nước.|/ɡlæs/|/ɡlɑːs/
+W|juice|noun|nước ép, nước trái cây|I'll have an orange juice.|Mình lấy một ly nước cam.|/dʒus/|/dʒuːs/
+W|milk|noun|sữa|Do you want milk in your coffee?|Bạn có muốn cho sữa vào cà phê không?|/mɪlk/|/mɪlk/
+W|sugar|noun|đường|No sugar for me, thanks.|Mình không lấy đường, cảm ơn.|/ˈʃʊɡɚ/|/ˈʃʊɡə/
+W|ice|noun|đá (lạnh)|Can I have my tea with less ice?|Cho mình trà ít đá nhé.|/aɪs/|/aɪs/
+W|cake|noun|bánh ngọt|The chocolate cake here is really good.|Bánh sô-cô-la ở đây ngon lắm.|/keɪk/|/keɪk/
+W|dessert|noun|món tráng miệng|Do you want any dessert?|Bạn có muốn ăn tráng miệng không?|/dɪˈzɝt/|/dɪˈzɜːt/
+W|extra|adjective|thêm, phụ thêm|Can I get extra milk, please?|Cho mình thêm sữa nhé.|/ˈɛkstrə/|/ˈɛkstrə/
+W|recommend|verb|gợi ý, giới thiệu|What drink do you recommend?|Bạn gợi ý mình uống món gì?|/ˌrɛkəˈmɛnd/|/ˌrɛkəˈmɛnd/
+P|"Hi! What do you [recommend]?" Ben asks the waiter. "Our hot [coffee] with [milk] is very popular." "Great, I'll have a [cup], with no [sugar], please." His friend Lan says, "And I'd like a [glass] of orange [juice] with [extra] [ice]." "Sure. Would you like any [dessert]? The chocolate [cake] is really good today." "Yes, one piece for us to share," Ben says. "Oh, and could we have some green [tea] too?" "Of course. It's coming right up."
+V|"Chào anh! Anh gợi ý giúp em món gì với?" Ben hỏi người phục vụ. "Cà phê sữa nóng bên mình được nhiều người gọi lắm." "Tuyệt, cho em một tách, không đường nhé." Lan, bạn của Ben, nói: "Còn em lấy một ly nước cam, cho thêm đá ạ." "Dạ được. Hai bạn có muốn dùng món tráng miệng không? Hôm nay bánh sô-cô-la ngon lắm." "Có ạ, cho một miếng để tụi em ăn chung," Ben nói. "À, cho tụi em thêm ít trà xanh nữa nhé." "Dạ được. Có ngay ạ."
+L|Đi chợ, đi siêu thị|Sau bài này bạn nói chuyện khi đi chợ, đi siêu thị: chọn đồ tươi, hỏi giá và trả tiền.
+W|supermarket|noun|siêu thị|I go to the supermarket every Sunday.|Chủ nhật nào mình cũng đi siêu thị.|/ˌsupɚˈmɑrkət/|/ˌsuːpəˈmɑːkɪt/
+W|fresh|adjective|tươi|The fish at this market is very fresh.|Cá ở chợ này rất tươi.|/frɛʃ/|/frɛʃ/
+W|vegetable|noun|rau, rau củ|You should eat more vegetables.|Bạn nên ăn nhiều rau hơn.|/ˈvɛdʒ.tə.bəl/|/ˈvɛdʒ.tə.bəl/
+W|fruit|noun|trái cây, hoa quả|Mango is my favorite fruit.|Xoài là loại trái cây mình thích nhất.|/frut/|/fruːt/
+W|meat|noun|thịt|I don't eat much meat.|Mình không ăn nhiều thịt.|/mit/|/miːt/
+W|rice|noun|gạo, cơm|We need to buy a bag of rice.|Nhà mình cần mua một bao gạo.|/raɪs/|/raɪs/
+W|cheap|adjective|rẻ|Vegetables are cheap at the market.|Rau ở chợ rẻ.|/tʃip/|/tʃiːp/
+W|expensive|adjective|đắt|Meat is expensive this month.|Tháng này thịt đắt.|/ɪkˈspɛn.sɪv/|/ɪkˈspɛn.sɪv/
+W|afford|verb|đủ tiền (mua, làm gì)|I can't afford a new phone.|Mình không đủ tiền mua điện thoại mới.|/əˈfɔrd/|/əˈfɔːd/
+W|bag|noun|túi, bao|Do you need a bag?|Bạn có cần túi không?|/bæɡ/|/bæɡ/
+W|cash|noun|tiền mặt|Can I pay in cash?|Mình trả tiền mặt được không?|/kæʃ/|/kæʃ/
+W|run out of|phrasal_verb|hết, cạn (đồ gì đó)|We've run out of eggs.|Nhà mình hết trứng rồi.||
+P|"We've [run out of] [rice]," Mom says. "Can you come to the market with me, Lan?" "Why not the [supermarket]?" Lan asks. "Things are [cheap] at the market, and the [vegetables|vegetable] are always [fresh]." At the market, Mom buys some fish and [meat] for dinner. Lan points at some mangoes. "Can we get some [fruit] too?" "How much are these?" Mom asks the seller. "Eighty thousand dong a kilo." "That's too [expensive]! I can't [afford] that." "Okay, seventy for you." Mom smiles and pays in [cash]. "Do you need a [bag]?" "No, thanks. I brought my own."
+V|"Nhà mình hết gạo rồi," mẹ nói. "Lan đi chợ với mẹ nhé?" "Sao mình không đi siêu thị hả mẹ?" Lan hỏi. "Đồ ở chợ rẻ, mà rau lúc nào cũng tươi." Ở chợ, mẹ mua ít cá và thịt cho bữa tối. Lan chỉ vào mấy trái xoài. "Mình mua thêm ít trái cây nữa nha mẹ?" "Cái này bao nhiêu vậy em?" mẹ hỏi cô bán hàng. "Tám chục nghìn một ký chị ạ." "Đắt quá! Giá đó chị không mua nổi đâu." "Thôi, bảy chục cho chị đó." Mẹ mỉm cười rồi trả bằng tiền mặt. "Chị có lấy túi không?" "Thôi, cảm ơn em. Chị mang túi theo rồi."
+H|Hỏi thăm và chuyện thường ngày
+L|Hỏi thăm sức khỏe|Sau bài này bạn hỏi thăm khi ai đó không khỏe và kể được mình bị đau, ốm ra sao.
+W|tired|adjective|mệt|You look tired. Did you sleep well?|Trông bạn mệt quá. Bạn ngủ có ngon không?|/ˈtaɪɚd/|/ˈtaɪəd/
+W|sick|adjective|ốm, bệnh|I can't come to work today. I'm sick.|Hôm nay mình không đi làm được. Mình bị ốm.|/sɪk/|/sɪk/
+W|ill|adjective|ốm, không khỏe|She was ill for a whole week.|Cô ấy bị ốm suốt cả tuần.|/ɪl/|/ɪl/
+W|hurt|verb|đau, làm đau|Where does it hurt?|Bạn đau ở đâu?|/hɝt/|/hɜːt/
+W|headache|noun|chứng đau đầu|I have a terrible headache.|Mình bị đau đầu kinh khủng.|/ˈhɛdeɪk/|/ˈhɛdeɪk/
+W|fever|noun|sốt, cơn sốt|My son has a high fever.|Con trai mình bị sốt cao.|/ˈfivɚ/|/ˈfiːvə/
+W|cough|noun|ho, cơn ho|You have a bad cough. Drink some warm water.|Bạn ho nặng quá. Uống chút nước ấm đi.|/kɔf/|/kɒf/
+W|sore|adjective|đau, nhức, rát|My eyes are sore after a long day at the computer.|Mắt mình nhức sau cả ngày ngồi máy tính.|/sɔr/|/sɔː/
+W|throat|noun|cổ họng|I have a sore throat, so I can't sing tonight.|Mình bị đau họng nên tối nay không hát được.|/θroʊt/|/θrəʊt/
+W|medicine|noun|thuốc|Did you take your medicine?|Bạn uống thuốc chưa?|/ˈmɛd.ɪ.sɪn/|/ˈmɛd.ɪ.sɪn/
+W|dear|interjection|trời ơi (trong Oh dear), thân mến|Oh dear, you don't look well.|Trời ơi, trông bạn không khỏe lắm.|/dɪr/|/dɪə/
+W|get well soon|phrase|mau khỏe nhé|Get well soon! We miss you.|Mau khỏe nhé! Bọn mình nhớ bạn.||
+P|"Hi, Ben. You look [tired]. Are you OK?" Mai asked. "Not really. I feel [sick]," Ben said. "I've got a [headache] and a bad [cough]." "Oh [dear]! Do you have a [fever]?" "A little. And my [throat] is really [sore]. It [hurts|hurt] when I talk." "You should go home and rest. Did you take any [medicine]?" "Yes, this morning. My sister was [ill] last week, so maybe I got it from her." "Drink lots of warm water and go to bed early. [Get well soon], Ben!"
+V|"Chào Ben. Trông cậu mệt quá. Cậu ổn không?" Mai hỏi. "Không ổn lắm. Mình thấy ốm," Ben nói. "Mình bị đau đầu và ho nhiều." "Trời ơi! Cậu có sốt không?" "Hơi sốt. Cổ họng mình cũng rát lắm, nói chuyện là đau." "Cậu nên về nhà nghỉ đi. Cậu uống thuốc chưa?" "Rồi, sáng nay. Tuần trước chị mình bị ốm, chắc mình bị lây từ chị ấy." "Uống nhiều nước ấm và đi ngủ sớm nhé. Mau khỏe nhé, Ben!"
+L|Chuyện thời tiết|Sau bài này bạn bắt chuyện về thời tiết và nói được trời nắng, mưa, nóng hay lạnh.
+W|weather|noun|thời tiết|What's the weather like today?|Hôm nay thời tiết thế nào?|/ˈwɛðɚ/|/ˈwɛðə/
+W|sunny|adjective|nắng, có nắng|It's sunny today. Let's go to the park.|Hôm nay trời nắng. Đi công viên thôi.|/ˈsʌni/|/ˈsʌni/
+W|rainy|adjective|mưa, có mưa|I don't like rainy days.|Mình không thích những ngày mưa.|/ˈreɪni/|/ˈreɪni/
+W|cloudy|adjective|nhiều mây, âm u|It's cloudy, but it isn't raining.|Trời nhiều mây nhưng không mưa.|/ˈklaʊdi/|/ˈklaʊdiː/
+W|warm|adjective|ấm, ấm áp|It's warm today, so I don't need a jacket.|Hôm nay trời ấm nên mình không cần áo khoác.|/wɔrm/|/wɔːm/
+W|cool|adjective|mát, mát mẻ|The evenings are cool in autumn.|Mùa thu buổi tối trời mát.|/kul/|/kuːl/
+W|freezing|adjective|lạnh cóng, rét buốt|It's freezing outside!|Ngoài trời lạnh cóng!|/ˈfrizɪŋ/|/ˈfriːzɪŋ/
+W|humid|adjective|ẩm, oi ẩm|Hanoi is very humid in summer.|Mùa hè Hà Nội rất oi ẩm.|/ˈhjumɪd/|/ˈhjuːmɪd/
+W|umbrella|noun|cái ô, cái dù|Take an umbrella. It might rain.|Mang ô theo nhé. Trời có thể mưa đấy.|/ʌmˈbrɛl.ə/|/ʌmˈbrɛl.ə/
+W|forecast|noun|bản dự báo (thời tiết)|The forecast says it will rain tomorrow.|Dự báo nói mai trời mưa.|/ˈfɔrkæst/|/ˈfɔːkɑːst/
+W|storm|noun|bão, cơn giông|A big storm is coming tonight.|Tối nay có một cơn bão lớn sắp đến.|/stɔrm/|/stɔːm/
+P|"Lovely [weather] today, isn't it?" Tom said to his neighbor Lan at the bus stop. "Yes, it's [sunny] and [warm]. Yesterday was so [cloudy] and dark." "In my hometown it's often [rainy], and in winter it's [freezing]." Lan laughed. "Here the summer is hot and [humid]. But autumn evenings are [cool] and nice." "What does the [forecast] say for tomorrow?" "It says a big [storm] is coming in the afternoon." "Really? Then I'll take my [umbrella] to work."
+V|"Hôm nay trời đẹp nhỉ?" Tom nói với Lan, cô hàng xóm, ở trạm xe buýt. "Ừ, trời nắng và ấm. Hôm qua thì âm u quá." "Ở quê tôi trời hay mưa, mùa đông thì rét buốt." Lan cười. "Ở đây mùa hè vừa nóng vừa oi ẩm. Nhưng buổi tối mùa thu thì mát và dễ chịu." "Dự báo thời tiết ngày mai thế nào?" "Dự báo nói chiều mai sẽ có một cơn bão lớn." "Thật à? Vậy mai tôi sẽ mang ô đi làm."
+L|Chuyện cuối tuần|Sau bài này bạn hỏi và kể được những việc mình làm vào cuối tuần.
+W|relax|verb|thư giãn, nghỉ ngơi|I just want to relax at home this weekend.|Cuối tuần này mình chỉ muốn thư giãn ở nhà.|/rɪˈlæks/|/rɪˈlæks/
+W|nap|noun|giấc ngủ ngắn, giấc ngủ trưa|I took a short nap after lunch.|Mình chợp mắt một lát sau bữa trưa.|/næp/|/næp/
+W|laundry|noun|việc giặt giũ, đồ cần giặt|I do my laundry on Saturday morning.|Mình giặt đồ vào sáng thứ Bảy.|/ˈlɔn.dri/|/ˈlɔːn.dri/
+W|housework|noun|việc nhà|My husband and I share the housework.|Vợ chồng mình chia nhau làm việc nhà.|/ˈhaʊsˌwɝk/|/ˈhaʊsˌwɜːk/
+W|lazy|adjective|lười, uể oải|I had a lazy Sunday at home.|Mình có một ngày Chủ nhật lười biếng ở nhà.|/ˈleɪzi/|/ˈleɪzi/
+W|picnic|noun|buổi dã ngoại, picnic|We had a picnic in the park.|Bọn mình đi dã ngoại ở công viên.|/ˈpɪknɪk/|/ˈpɪknɪk/
+W|barbecue|noun|tiệc nướng, đồ nướng ngoài trời|We're having a barbecue on Saturday.|Thứ Bảy bọn mình tổ chức tiệc nướng.|/ˈbɑrbɪˌkju/|/ˈbɑːbɪˌkjuː/
+W|normally|adverb|thường thì, bình thường|I normally get up late on Sundays.|Chủ nhật mình thường dậy muộn.|/ˈnɔr.mə.li/|/ˈnɔː.mə.li/
+W|noise|noun|tiếng ồn|The noise from next door woke me up.|Tiếng ồn nhà bên làm mình thức giấc.|/ˈnoɪz/|/ˈnoɪz/
+W|sleep in|phrasal_verb|ngủ nướng, ngủ dậy muộn|I love to sleep in on Saturdays.|Mình rất thích ngủ nướng vào thứ Bảy.|/ˌslip ˈɪn/|/ˌsliːp ˈɪn/
+W|tidy up|phrasal_verb|dọn dẹp, thu dọn|I need to tidy up my room.|Mình cần dọn dẹp phòng.||
+P|"What did you do last weekend, Minh?" Anna asked on Monday. "Not much. It was a [lazy] weekend. I [normally] [sleep in] on Saturdays, but the [noise] from next door woke me up at seven!" "Oh no!" "Then I did my [laundry] and some [housework]. I had to [tidy up] my room too. After lunch I took a short [nap]. What about you?" "On Saturday we had a [picnic] by the lake, and on Sunday my uncle had a [barbecue] in his garden." "That sounds fun. I just wanted to [relax] at home."
+V|"Cuối tuần cậu làm gì thế, Minh?" Anna hỏi vào sáng thứ Hai. "Chẳng có gì nhiều. Một cuối tuần lười biếng. Thường thì thứ Bảy mình ngủ nướng, nhưng tiếng ồn nhà bên cạnh đánh thức mình lúc bảy giờ!" "Ôi không!" "Rồi mình giặt đồ và làm ít việc nhà. Mình còn phải dọn dẹp phòng nữa. Ăn trưa xong mình chợp mắt một lát. Còn cậu?" "Thứ Bảy nhà mình đi dã ngoại bên hồ, còn Chủ nhật chú mình tổ chức tiệc nướng trong vườn." "Nghe vui đấy. Mình thì chỉ muốn ở nhà nghỉ ngơi thôi."
+H|Mời mọc, hẹn gặp và liên lạc
+L|Mời và trả lời lời mời|Sau bài này bạn mời bạn bè đi chơi, nhận lời hoặc từ chối một cách khéo léo.
+W|invite|verb|mời|I want to invite you to my birthday party.|Mình muốn mời bạn đến dự tiệc sinh nhật của mình.|/ɪnˈvaɪt/|/ɪnˈvaɪt/
+W|invitation|noun|lời mời, thiệp mời|Thanks for the invitation!|Cảm ơn lời mời của bạn!|/ɪnvɪˈteɪʃən/|/ɪnvɪˈteɪʃən/
+W|tonight|adverb|tối nay|Are you free tonight?|Tối nay bạn rảnh không?|/təˈnaɪt/|/təˈnaɪt/
+W|busy|adjective|bận, bận rộn|Sorry, I'm busy this weekend.|Xin lỗi, cuối tuần này mình bận.|/ˈbɪz.i/|/ˈbɪz.i/
+W|celebrate|verb|ăn mừng, tổ chức (dịp vui)|Let's go out and celebrate!|Mình ra ngoài ăn mừng đi!|/ˈsɛl.ə.breɪt/|/ˈsɛl.ɪ.breɪt/
+W|guest|noun|khách (được mời)|We have ten guests coming to dinner.|Có mười người khách đến ăn tối với nhà mình.|/ɡɛst/|/ɡɛst/
+W|decline|verb|từ chối (lịch sự)|She politely declined the invitation.|Cô ấy lịch sự từ chối lời mời.|/dɪˈklaɪn/|/dɪˈklaɪn/
+W|unfortunately|adverb|tiếc là, không may|Unfortunately, I have to work tonight.|Tiếc là tối nay mình phải làm việc.|/ʌnˈfɔr.tʃə.nɪt.li/|/ʌnˈfɔː.tjʊ.nət.li/
+W|afraid|adjective|e là (I'm afraid), sợ|I'm afraid I can't come.|Mình e là không đến được.|/əˈfreɪd/|/əˈfreɪd/
+W|how about|phrase|hay là, thế còn… thì sao|How about dinner on Friday?|Hay là tối thứ Sáu mình đi ăn nhé?||
+W|sounds good|phrase|nghe được đấy, được đó|Dinner at seven? Sounds good!|Ăn tối lúc bảy giờ hả? Được đó!||
+P|"Hi, Mai! I passed my driving test, and I want to [celebrate]. Can I [invite] you to dinner at my place [tonight]?" Lan asked. "Congratulations! Thanks for the [invitation], but I'm [afraid] I can't. I'm really [busy] at work today." "Oh, that's a pity." "[Unfortunately], I have to work late tomorrow too. [How about] Saturday?" "Saturday? [Sounds good]! I'll ask Ben and Tom too. I'm only having three [guests|guest], because my apartment is small." "Perfect. I never like to [decline] an invitation from a good friend, so I'm glad we found a day."
+V|"Chào Mai! Mình thi đậu bằng lái rồi, mình muốn ăn mừng. Tối nay mời cậu đến nhà mình ăn tối nhé?" Lan hỏi. "Chúc mừng cậu! Cảm ơn lời mời nhé, nhưng e là mình không đến được. Hôm nay mình bận việc quá." "Ồ, tiếc thật." "Tiếc là mai mình cũng phải làm muộn. Hay là thứ Bảy nhé?" "Thứ Bảy à? Được đó! Mình sẽ rủ cả Ben và Tom. Mình chỉ mời ba người khách thôi, vì nhà mình nhỏ." "Tuyệt. Mình chẳng bao giờ muốn từ chối lời mời của bạn thân, nên mừng là tụi mình tìm được ngày."
+L|Hẹn giờ và chỗ gặp|Sau bài này bạn hẹn giờ, chọn chỗ gặp, xác nhận, dời hoặc hủy một cuộc hẹn.
+W|appointment|noun|cuộc hẹn, lịch hẹn|I have a doctor's appointment at ten.|Mình có lịch hẹn với bác sĩ lúc mười giờ.|/əˈpɔɪnt.mɛnt/|/əˈpɔɪnt.mɛnt/
+W|noon|noun|buổi trưa, 12 giờ trưa|Let's meet at noon.|Mình gặp nhau lúc 12 giờ trưa nhé.|/nun/|/nuːn/
+W|midnight|noun|nửa đêm|The party ended at midnight.|Bữa tiệc kết thúc lúc nửa đêm.|/ˈmɪdˌnaɪt/|/ˈmɪdˌnaɪt/
+W|o'clock|adverb|giờ (đúng)|The movie starts at eight o'clock.|Phim bắt đầu lúc tám giờ đúng.|/əˈklɑk/|/əˈklɒk/
+W|till|preposition|đến, cho tới (lúc)|I'm at work till five.|Mình làm việc đến năm giờ.|/tɪl/|/tɪl/
+W|somewhere|adverb|ở đâu đó, chỗ nào đó|Let's meet somewhere quiet.|Mình gặp nhau ở chỗ nào yên tĩnh nhé.|/ˈsʌm.wɛr/|/ˈsʌm.wɛː/
+W|unless|conjunction|trừ khi|I'll be there at six unless it rains.|Mình sẽ đến lúc sáu giờ, trừ khi trời mưa.|/ənˈlɛs/|/ənˈlɛs/
+W|confirm|verb|xác nhận|Can you confirm the time?|Bạn xác nhận lại giờ giúp mình được không?|/kənˈfɝm/|/kənˈfɜːm/
+W|cancel|verb|hủy, hủy bỏ|Sorry, I have to cancel our meeting.|Xin lỗi, mình phải hủy buổi gặp của tụi mình.|/ˈkæn.səl/|/ˈkæn.səl/
+W|postpone|verb|hoãn, dời lại|Can we postpone it until next week?|Mình dời sang tuần sau được không?|/poʊstˈpoʊn/|/pəʊstˈpəʊn/
+W|meet up|phrasal_verb|gặp nhau, tụ tập|Let's meet up after work.|Tan làm mình gặp nhau nhé.||
+W|on time|phrase|đúng giờ|Please be on time.|Nhớ đến đúng giờ nhé.||
+P|"Anna, do you want to [meet up] on Friday?" Tom asked. "Sure. I have a dentist [appointment] in the morning, and I'm at work [till] five. How about six [o'clock]?" "OK. Let's meet [somewhere] near your office, maybe the café on the corner." "Good idea. I'll be there [unless] my boss needs me late." "Please be [on time]. Last time I waited forty minutes!" Anna laughed. "Sorry! I'll text you at [noon] on Friday to [confirm]. If I'm too busy, we can [postpone] it to Saturday. I don't want to [cancel] again." "Fine. But don't text me at [midnight] like last time!"
+V|"Anna, thứ Sáu mình gặp nhau không?" Tom hỏi. "Được chứ. Sáng hôm đó mình có lịch hẹn nha sĩ, còn làm việc đến năm giờ. Sáu giờ thì sao?" "Được. Mình gặp ở chỗ nào đó gần công ty cậu nhé, có lẽ là quán cà phê ở góc đường." "Ý hay đấy. Mình sẽ có mặt, trừ khi sếp bắt ở lại muộn." "Nhớ đến đúng giờ nhé. Lần trước mình đợi bốn mươi phút đấy!" Anna cười. "Xin lỗi mà! Trưa thứ Sáu mình sẽ nhắn tin để xác nhận. Nếu bận quá thì tụi mình dời sang thứ Bảy. Mình không muốn hủy hẹn nữa đâu." "Được thôi. Nhưng đừng nhắn tin cho mình lúc nửa đêm như lần trước nhé!"
+L|Gọi điện và nhắn tin|Sau bài này bạn gọi điện, để lại lời nhắn, nhắn tin và trả lời tin nhắn.
+W|dial|verb|bấm số, quay số|Sorry, I dialed the wrong number.|Xin lỗi, mình bấm nhầm số.|/ˈdaɪ.əl/|/ˈdaɪ.əl/
+W|battery|noun|pin|My phone battery is almost dead.|Điện thoại mình sắp hết pin.|/ˈbæt.əri/|/ˈbæt.əri/
+W|signal|noun|sóng (điện thoại), tín hiệu|There's no signal in the basement.|Dưới tầng hầm không có sóng.|/ˈsɪɡnəl/|/ˈsɪɡnəl/
+W|voicemail|noun|hộp thư thoại, lời nhắn thoại|I left you a voicemail.|Mình đã để lại lời nhắn thoại cho bạn.|/ˈvɔɪsˌmeɪl/|/ˈvɔɪsmeɪl/
+W|text|verb|nhắn tin|I'll text you the address.|Mình sẽ nhắn địa chỉ cho bạn.|/tɛkst/|/tɛkst/
+W|reply|verb|trả lời, hồi âm|Sorry I didn't reply to your message.|Xin lỗi mình chưa trả lời tin nhắn của bạn.|/rɪˈplaɪ/|/rɪˈplaɪ/
+W|emoji|noun|biểu tượng cảm xúc|She always ends her messages with a smiley emoji.|Cô ấy luôn kết thúc tin nhắn bằng biểu tượng mặt cười.|/ɪˈmoʊ.dʒi/|/ɪˈməʊ.dʒi/
+W|online|adjective|trực tuyến, đang online|Are you online now?|Giờ bạn có đang online không?|/ˈɑnlaɪn/|/ˈɒnlaɪn/
+W|quick|adjective|nhanh, ngắn gọn|Can I ask you a quick question?|Mình hỏi nhanh một câu được không?|/kwɪk/|/kwɪk/
+W|hang up|phrasal_verb|cúp máy|Don't hang up, I'm still here.|Đừng cúp máy, mình vẫn đang nghe.||
+W|call back|phrasal_verb|gọi lại|I'm busy now. Can I call you back?|Giờ mình đang bận. Lát mình gọi lại nhé?||
+W|hold on|phrasal_verb|chờ máy, chờ một chút|Hold on, I'll get a pen.|Chờ chút, để mình lấy cái bút.||
+P|Lan [dialed|dial] Tom's number, but it went straight to [voicemail]. "Hi Tom, it's Lan. I have a [quick] question about Saturday. Please [call back] when you can." Ten minutes later, Tom rang. "Sorry, my [battery] was almost dead, and there's no [signal] on the train." "No problem. I want to ask about the picnic." "[Hold on], I can't hear you... Okay, go ahead." "Can I [text] you the address?" "Sure. I'm not [online] much today, but I'll [reply] tonight." "Great. See you Saturday!" Lan [hung up|hang up] and smiled. That evening, Tom sent her a thumbs-up [emoji].
+V|Lan bấm số của Tom nhưng máy chuyển thẳng vào hộp thư thoại. "Chào Tom, Lan đây. Mình có một câu hỏi nhanh về chuyện thứ Bảy. Khi nào rảnh thì gọi lại cho mình nhé." Mười phút sau, Tom gọi tới. "Xin lỗi nhé, điện thoại mình gần hết pin, mà trên tàu lại không có sóng." "Không sao. Mình muốn hỏi về buổi dã ngoại." "Chờ chút, mình không nghe rõ... Được rồi, cậu nói đi." "Mình nhắn địa chỉ cho cậu nhé?" "Ừ. Hôm nay mình ít khi online, nhưng tối mình sẽ trả lời." "Tốt quá. Hẹn gặp cậu thứ Bảy nhé!" Lan cúp máy và mỉm cười. Tối hôm đó, Tom gửi cho cô một biểu tượng giơ ngón tay cái.
+H|Cảm xúc và lời khen
+L|Cảm xúc hằng ngày|Sau bài này bạn nói được mình vui, buồn, lo hay bực và hỏi han cảm xúc người khác.
+W|glad|adjective|vui, mừng|I'm glad you came.|Mình mừng vì bạn đã đến.|/ɡlæd/|/ɡlæd/
+W|sad|adjective|buồn|Why do you look so sad?|Sao trông bạn buồn thế?|/sæd/|/sæd/
+W|upset|adjective|buồn bực, khó chịu|She was upset because I forgot her birthday.|Cô ấy buồn vì mình quên sinh nhật cô ấy.|/ˈʌp.sɛt/|/ˈʌp.sɛt/
+W|nervous|adjective|hồi hộp, lo lắng|I'm nervous about my job interview.|Mình hồi hộp vì buổi phỏng vấn xin việc.|/ˈnɝvəs/|/ˈnɜːvəs/
+W|excited|adjective|háo hức, phấn khích|The kids are excited about the holiday.|Bọn trẻ háo hức chờ kỳ nghỉ.|/ɪkˈsaɪ.tɪd/|/ɪkˈsaɪ.tɪd/
+W|bored|adjective|chán, buồn chán|I'm bored. Let's do something fun.|Chán quá. Mình làm gì vui vui đi.|/bɔrd/|/bɔːd/
+W|angry|adjective|tức giận, giận|Please don't be angry with me.|Bạn đừng giận mình nhé.|/ˈæŋ.ɡri/|/ˈæŋ.ɡri/
+W|scared|adjective|sợ, sợ hãi|My little sister is scared of dogs.|Em gái mình sợ chó.|/skɛɚd/|/skɛəd/
+W|proud|adjective|tự hào|I'm so proud of you!|Mình rất tự hào về bạn!|/praʊd/|/praʊd/
+W|embarrassed|adjective|xấu hổ, ngượng|I felt embarrassed when I fell in front of everyone.|Mình thấy xấu hổ khi bị ngã trước mặt mọi người.|/ɪmˈbær.əst/|/ɪmˈbær.əst/
+W|mood|noun|tâm trạng|You're in a good mood today!|Hôm nay tâm trạng bạn tốt ghê!|/mud/|/muːd/
+W|calm down|phrasal_verb|bình tĩnh lại|Calm down. Everything will be fine.|Bình tĩnh nào. Mọi chuyện sẽ ổn thôi.||
+P|"You look [upset], Mai. Are you OK?" Ben asked. "Not really. I have a job interview tomorrow, and I'm so [nervous]." "That's normal. I'm [glad] you told me. Are you [scared] of the questions?" "A bit. Last time I forgot my own phone number. I was so [embarrassed]!" Ben laughed. "Don't be [sad] about that. Just [calm down] and practice with me tonight." "Thanks. I'm also a little [angry] at myself because I worry too much." "Hey, you should be [proud]. You got the interview!" Mai smiled. "You're right. Now I'm actually [excited]." "Good. You were [bored] with your old job anyway." "True! You've really changed my [mood]."
+V|"Trông cậu có vẻ không vui, Mai. Cậu ổn chứ?" Ben hỏi. "Không ổn lắm. Mai mình có buổi phỏng vấn xin việc, mà mình hồi hộp quá." "Chuyện đó bình thường mà. Mình mừng là cậu đã kể với mình. Cậu sợ mấy câu hỏi à?" "Hơi hơi. Lần trước mình quên cả số điện thoại của chính mình. Xấu hổ lắm luôn!" Ben bật cười. "Đừng buồn vì chuyện đó. Cứ bình tĩnh lại, tối nay luyện tập với mình." "Cảm ơn cậu. Mình cũng hơi giận bản thân vì cứ lo lắng nhiều quá." "Này, cậu nên tự hào chứ. Cậu được mời phỏng vấn rồi còn gì!" Mai mỉm cười. "Cậu nói đúng. Giờ thì mình thấy háo hức thật rồi." "Thế mới phải. Dù sao cậu cũng chán công việc cũ lắm rồi mà." "Đúng thật! Cậu làm tâm trạng mình khá hẳn lên đấy."
+L|Khen, chê và chúc mừng|Sau bài này bạn khen, chúc mừng người khác và nói khi thấy điều gì đó tệ hay chán.
+W|lovely|adjective|đẹp, dễ thương, tuyệt|What a lovely dress!|Cái váy đẹp quá!|/ˈlʌv.li/|/ˈlʌv.li/
+W|wonderful|adjective|tuyệt vời|We had a wonderful time at your party.|Bọn mình đã rất vui ở bữa tiệc của bạn.|/ˈwʌndɚfəl/|/ˈwʌndəfəl/
+W|amazing|adjective|tuyệt vời, đáng kinh ngạc|Your cooking is amazing!|Bạn nấu ăn đỉnh quá!|/əˈmeɪ.zɪŋ/|/əˈmeɪ.zɪŋ/
+W|fantastic|adjective|tuyệt vời, xuất sắc|You did a fantastic job.|Bạn làm tuyệt lắm.|/fænˈtæs.tɪk/|/fænˈtæs.tɪk/
+W|awesome|adjective|tuyệt, đỉnh|That's awesome news!|Tin đó tuyệt quá!|/ˈɔ.səm/|/ˈɔːsəm/
+W|impressive|adjective|ấn tượng, đáng nể|Your English is really impressive.|Tiếng Anh của bạn thật sự ấn tượng.|/ɪmˈprɛsɪv/|/ɪmˈprɛsɪv/
+W|awful|adjective|tệ, kinh khủng|The movie was awful.|Bộ phim dở tệ.|/ˈɔfəl/|/ˈɔːfʊl/
+W|terrible|adjective|tồi tệ, kinh khủng|The traffic was terrible this morning.|Sáng nay kẹt xe kinh khủng.|/ˈtɛrəbəl/|/ˈtɛrəbəl/
+W|boring|adjective|nhàm chán, tẻ nhạt|The meeting was so boring.|Cuộc họp chán kinh khủng.|/ˈbɔr.ɪŋ/|/ˈbɔː.rɪŋ/
+W|compliment|noun|lời khen|Thank you for the compliment.|Cảm ơn lời khen của bạn.|/ˈkɑmpləmənt/|/ˈkɒmplɪmənt/
+W|congratulations|interjection|chúc mừng|Congratulations on your new job!|Chúc mừng bạn có công việc mới!|/kənˌɡrætʃəˈleɪʃənz/|/kənˌɡratʃəˈleɪʃənz/
+W|well done|phrase|giỏi lắm, làm tốt lắm|Well done! You passed the exam.|Giỏi lắm! Bạn thi đỗ rồi.||
+P|"[Congratulations], Anna! I heard you passed your driving test!" said Tom. "Thanks! It was [terrible] at the start. I was so slow." "But you passed. [Well done]!" "Thank you. And what a [lovely] cake! Did you make it?" "Yes. My first try was [awful], but this one is OK." Anna tasted it. "OK? It's [amazing]! Your baking is really [impressive]." "Thanks for the [compliment]. How was the party last night?" "The food was [fantastic], but the speeches were long and [boring]." "Ha! Well, today is a [wonderful] day for you anyway." "It is. Passing the test feels [awesome]!"
+V|"Chúc mừng Anna nhé! Mình nghe nói cậu thi đỗ bằng lái xe rồi!" Tom nói. "Cảm ơn cậu! Lúc đầu tệ kinh khủng, mình chậm ơi là chậm." "Nhưng cậu đỗ rồi. Giỏi lắm!" "Cảm ơn nhé. Mà cái bánh đẹp quá! Cậu tự làm à?" "Ừ. Lần đầu làm thì dở tệ, nhưng lần này cũng tạm được." Anna nếm thử. "Tạm được á? Ngon tuyệt luôn! Cậu làm bánh giỏi thật đấy." "Cảm ơn lời khen của cậu. Bữa tiệc tối qua thế nào?" "Đồ ăn thì xuất sắc, nhưng mấy bài phát biểu vừa dài vừa chán." "Ha! Dù sao hôm nay cũng là một ngày tuyệt vời với cậu." "Đúng vậy. Thi đỗ cảm giác đỉnh thật!"
+H|Ý kiến và chuyện phiếm
+L|Đồng ý và không đồng ý|Sau bài này bạn bày tỏ đồng ý, không đồng ý hoặc phân vân một cách tự nhiên.
+W|absolutely|adverb|hoàn toàn, chắc chắn rồi|You're absolutely right.|Bạn hoàn toàn đúng.|/ˌæb.səˈlut.li/|/ˈæb.səˌljuːt.li/
+W|definitely|adverb|chắc chắn|I'll definitely come to your party.|Mình chắc chắn sẽ đến bữa tiệc của bạn.|/ˈdɛf.ɪ.nɪt.li/|/ˈdɛf.ɪ.nɪt.li/
+W|totally|adverb|hoàn toàn|I totally agree with you.|Mình hoàn toàn đồng ý với bạn.|/ˈtoʊ.tə.li/|/ˈtəʊ.tə.li/
+W|alright|interjection|được rồi, ổn|Alright, let's do it your way.|Được rồi, làm theo cách của bạn đi.|/ˌɔlˈraɪt/|/ɔːlˈraɪt/
+W|correct|adjective|đúng, chính xác|That's correct. The meeting is on Monday.|Đúng rồi. Cuộc họp vào thứ Hai.|/kəˈrɛkt/|/kəˈrɛkt/
+W|fair|adjective|công bằng, hợp lý|That's not fair!|Thế là không công bằng!|/fɛɚ/|/fɛə/
+W|bet|verb|dám chắc, cá là|I bet it will rain tomorrow.|Mình cá là mai trời mưa.|/bɛt/|/bɛt/
+W|basically|adverb|về cơ bản, nói chung là|Basically, I agree, but I have one question.|Nói chung là mình đồng ý, nhưng mình có một câu hỏi.|/ˈbeɪ.sɪk.ə.li/|/ˈbeɪ.sɪk.ə.li/
+W|honestly|adverb|thật lòng mà nói|Honestly, I don't like this idea.|Thật lòng mà nói, mình không thích ý này.|/ˈɑ.nɪst.li/|/ˈɒn.ɪst.li/
+W|disagree|verb|không đồng ý|Sorry, but I disagree.|Xin lỗi, nhưng mình không đồng ý.|/dɪsəˈɡri/|/dɪsəˈɡriː/
+W|no way|phrase|không đời nào, làm gì có chuyện đó|No way! That's too expensive.|Không đời nào! Đắt quá.||
+W|it depends|phrase|còn tùy|Will you come? – It depends on the weather.|Bạn có đến không? – Còn tùy thời tiết.||
+P|Minh and Lan are planning a class trip. "Let's go to the beach. Everyone loves the beach," Minh said. "[Honestly], I [disagree]. It's too hot in June." "[No way]! The beach is [definitely] the best choice." "Is it? Ask the class. I [bet] half of them want the mountains." "Hmm, that's [fair]. So where do you want to go?" "[Basically], somewhere cool and cheap." "Is a mountain trip cheap?" "[It depends] on the bus. Does the school pay for it?" "That's [correct]." "Then I'm [absolutely] sure the mountains are cheaper." Minh thought for a moment. "[Alright], you're [totally] right. Let's ask the class on Monday."
+V|Minh và Lan đang lên kế hoạch cho chuyến đi của lớp. "Mình đi biển đi. Ai cũng thích biển mà," Minh nói. "Thật lòng mà nói, mình không đồng ý. Tháng Sáu nóng lắm." "Làm gì có chuyện đó! Biển chắc chắn là lựa chọn tốt nhất." "Thế à? Cứ hỏi cả lớp xem. Mình cá là một nửa lớp muốn lên núi." "Ừm, cũng hợp lý. Vậy cậu muốn đi đâu?" "Nói chung là chỗ nào mát mà rẻ." "Đi núi có rẻ không?" "Còn tùy tiền xe buýt. Trường có trả tiền xe không?" "Đúng vậy." "Thế thì mình chắc chắn đi núi rẻ hơn." Minh nghĩ một lúc. "Được rồi, cậu hoàn toàn đúng. Thứ Hai mình hỏi cả lớp nhé."
+L|Tán gẫu và kể chuyện|Sau bài này bạn tán gẫu, kể lại một câu chuyện và chuyển chủ đề một cách tự nhiên.
+W|chat|verb|trò chuyện, tán gẫu|We chatted for hours.|Bọn mình tán gẫu hàng giờ liền.|/tʃæt/|/tʃæt/
+W|gossip|noun|chuyện ngồi lê, chuyện phiếm|Have you heard the latest gossip?|Bạn nghe chuyện mới nhất chưa?|/ˈɡɑsɪp/|/ˈɡɒsɪp/
+W|rumor|noun|tin đồn|Is the rumor about Linh true?|Tin đồn về Linh có thật không?|/ˈrumɚ/|/ˈruːmə/
+W|secret|noun|bí mật|Can you keep a secret?|Bạn giữ bí mật được không?|/ˈsi.krɪt/|/ˈsiː.krɪt/
+W|joke|noun|chuyện đùa, câu đùa|He told us a joke.|Anh ấy kể cho bọn mình một câu chuyện cười.|/dʒoʊk/|/dʒəʊk/
+W|funny|adjective|buồn cười, hài hước|That's so funny!|Buồn cười quá!|/ˈfʌni/|/ˈfʌni/
+W|laughter|noun|tiếng cười|The room was full of laughter.|Căn phòng tràn ngập tiếng cười.|/ˈlæf.tɚ/|/ˈlɑːf.tə/
+W|apparently|adverb|nghe nói, hình như|Apparently, she's moving to Canada.|Nghe nói cô ấy sắp chuyển sang Canada.|/əˈpærəntli/|/əˈpærəntli/
+W|eventually|adverb|cuối cùng, rốt cuộc|We eventually became good friends.|Cuối cùng bọn mình đã thành bạn thân.|/ɪˈvɛn.tʃu.ə.li/|/ɪˈvɛn.tʃuː.ə.li/
+W|by the way|phrase|à mà, nhân tiện|By the way, did you see Lan yesterday?|À mà hôm qua bạn có gặp Lan không?||
+W|guess what|phrase|đoán xem|Guess what? I got the job!|Đoán xem? Mình được nhận việc rồi!||
+W|turn out|phrasal_verb|hóa ra|It turned out that he was right.|Hóa ra anh ấy nói đúng.||
+P|Mai and Anna were [chatting|chat] in a café. "[Guess what]? I heard some [gossip] at work today," Mai said. "[Apparently], our boss is leaving." "Really? Or is that just a [rumor]?" "That's what I thought. So I asked him. He smiled and said, 'Can you keep a [secret]? I'm not leaving. I'm getting married!'" "No! That's so [funny]!" "It [turned out|turn out] that the story started as a [joke] from Ben in the kitchen." Anna started laughing, and soon their table was full of [laughter]. "So everyone believed Ben?" "Yes, but [eventually] the truth came out. [By the way], are you free next Saturday? I want to try a new restaurant."
+V|Mai và Anna đang tán gẫu trong một quán cà phê. "Đoán xem nào? Hôm nay ở chỗ làm mình nghe được một chuyện hay lắm," Mai nói. "Nghe nói sếp bọn mình sắp nghỉ việc." "Thật à? Hay chỉ là tin đồn thôi?" "Mình cũng nghĩ thế. Nên mình hỏi thẳng sếp. Sếp mỉm cười rồi bảo: 'Em giữ bí mật được không? Anh không nghỉ đâu. Anh sắp cưới vợ!'" "Trời! Buồn cười thật đấy!" "Hóa ra chuyện đó bắt đầu từ một câu đùa của Ben trong phòng bếp." Anna bật cười, và chẳng mấy chốc bàn của hai người rộn tiếng cười. "Thế là mọi người tin lời Ben à?" "Ừ, nhưng rốt cuộc sự thật cũng lộ ra. À mà, thứ Bảy tới cậu rảnh không? Mình muốn thử một nhà hàng mới."
