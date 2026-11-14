@@ -41,6 +41,7 @@ export function RoundSpeak({ text, slow = false, size = 'md' }: { text: string; 
   const Icon = slow ? Snail : Volume2
   return (
     <button
+      data-sfx="none"
       type="button"
       aria-label={slow ? 'Nghe chậm' : 'Nghe phát âm'}
       onClick={(e) => {
@@ -116,6 +117,7 @@ export function ChoiceCard({ state, onClick, children, label }: { state: ChoiceS
       type="button"
       aria-label={label}
       aria-pressed={state === 'selected'}
+      data-sfx="select"
       disabled={state === 'removed'}
       onClick={onClick}
       animate={state === 'wrong' ? { x: [0, -8, 8, -5, 5, 0] } : state === 'right' ? { scale: [1, 1.03, 1] } : {}}

@@ -1,3 +1,5 @@
+import { playIfQuiet } from './sfx'
+
 /** Thông báo nhỏ hiện ở cuối màn hình (dùng chung cả app). */
 export interface ToastState {
   id: number
@@ -7,8 +9,10 @@ let toast: ToastState | null = null
 const toastListeners = new Set<() => void>()
 let toastTimer: ReturnType<typeof setTimeout> | undefined
 
-export function showToast(text: string): void {
+/** `tone`: báo xong việc (tiếng chuông nhỏ) hay báo lỗi (tiếng lỗi); vừa có tiếng khác (xóa, báo đúng) thì im. */
+export function showToast(text: string, tone: 'success' | 'error' = 'success'): void {
   toast = { id: Date.now(), text }
+  playIfQuiet(tone)
   toastListeners.forEach((l) => l())
   clearTimeout(toastTimer)
   toastTimer = setTimeout(() => {

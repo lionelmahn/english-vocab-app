@@ -31,7 +31,7 @@ function useAddStarter() {
       showToast(res.created > 0 ? `Đã thêm ${num.format(res.created)} từ vào bộ “${deck.name}”` : `Bộ “${deck.name}” đã có đủ từ`)
       return res.deckId
     } catch (e) {
-      showToast(`Không thêm được bộ từ: ${(e as Error).message}`)
+      showToast(`Không thêm được bộ từ: ${(e as Error).message}`, 'error')
       return null
     } finally {
       setAdding(null)

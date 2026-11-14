@@ -156,10 +156,20 @@ export const GUIDE: GuideTopic[] = [
           '“Sao chép bộ từ” (cuối trang của một bộ) tạo bộ mới cùng tên, thêm chữ (bản sao), gồm các từ của bộ gốc theo đúng thứ tự, để bạn thêm bớt từ hay đổi tên mà bộ gốc giữ nguyên. Hai bộ dùng chung các từ, nên tiến độ là một và sửa nội dung một từ thì đổi ở cả hai bộ.',
         ],
       },
+      { h: 'Trang của một từ' },
+      { p: 'Chạm một từ trong sổ tay để mở trang của từ đó. Trên cùng là nghĩa và phiên âm; bên dưới chia bốn phần, chạm tên phần để chuyển:' },
+      {
+        terms: [
+          { term: '“Từ”', text: 'Câu ví dụ, mẹo nhớ và ghi chú, hình minh họa, phát âm.' },
+          { term: '“Luyện”', text: 'Luyện đọc (kèm chấm phát âm khi bật Trợ lý AI) và luyện viết câu.' },
+          { term: '“Tham khảo”', text: 'Kết hợp từ và từ dễ nhầm.' },
+          { term: '“Tiến độ”', text: 'Cấp ghi nhớ, lần ôn tiếp theo, bộ từ và nhãn, lịch sử trả lời; cuối phần có nút lưu trữ, xóa và báo lỗi nội dung từ.' },
+        ],
+      },
       { h: 'Hình minh họa, câu ví dụ, ghi chú và mẹo nhớ' },
       {
         list: [
-          'Ở trang một từ, thẻ “Hình minh họa” có nút “Thêm ảnh”: chọn ảnh có sẵn hoặc chụp bằng camera. App thu nhỏ ảnh (cạnh dài tối đa 1024 điểm ảnh, dưới 1 MB) trước khi lưu, nên ảnh chụp từ điện thoại cũng lưu nhanh. Bấm “Đổi ảnh” để thay, “Xóa ảnh” để bỏ.',
+          'Ở trang một từ, phần “Từ” có thẻ “Hình minh họa” với nút “Thêm ảnh”: chọn ảnh có sẵn hoặc chụp bằng camera. App thu nhỏ ảnh (cạnh dài tối đa 1024 điểm ảnh, dưới 1 MB) trước khi lưu, nên ảnh chụp từ điện thoại cũng lưu nhanh. Bấm “Đổi ảnh” để thay, “Xóa ảnh” để bỏ.',
           'Ảnh hiện ở trang của từ và ở mặt sau thẻ từ khi học (lúc lật thẻ giới thiệu hoặc thẻ tự đánh giá).',
           'Ảnh được lưu trên máy trước rồi đồng bộ sang các máy khác đã đăng nhập; máy khác tải ảnh về khi cần hiện (cần mạng lần đầu). Kho ảnh trên máy chủ cần chạy file SQL hình minh họa một lần; chưa chạy thì ảnh chỉ nằm trên máy đã thêm, và mục “Đồng bộ” ở “Cá nhân” sẽ nhắc.',
           'Ghi chú và mẹo nhớ nhập ở trang sửa từ, trong mục “Thêm chi tiết (nghĩa tiếng Anh, ghi chú, mẹo nhớ…)”; chúng hiện ở trang của từ. Mẹo nhớ còn hiện ở mặt sau thẻ khi học. Âm thanh của từ (ghi âm, tải file, chọn bản Wiktionary) xem bài hướng dẫn về âm thanh.',
@@ -186,7 +196,7 @@ export const GUIDE: GuideTopic[] = [
         ],
       },
       { h: 'Tạm dừng ôn hoặc học lại một từ đã học' },
-      { p: 'Ở trang một từ đã học, mục “Tiến độ” có hai nút:' },
+      { p: 'Ở trang một từ đã học, phần “Tiến độ” có hai nút:' },
       {
         terms: [
           {
@@ -490,7 +500,7 @@ export const GUIDE: GuideTopic[] = [
         p: 'Ở trang một từ, trạng thái ghi đầy đủ như trên. Trong Sổ tay, nút lọc và nhãn cạnh từ ghi gọn là “Đến hạn”, “Tạm dừng” và “Lưu trữ”.',
       },
       { tip: 'Ô “Đang học” ở tab Thống kê đếm mọi từ đã có lịch ôn, nên thường lớn hơn số từ ở nút lọc “Đang học” trong Sổ tay (nút lọc này chỉ gồm từ đang trong lượt củng cố ngắn).' },
-      { h: 'Mục “Tiến độ” ở trang một từ' },
+      { h: 'Phần “Tiến độ” ở trang một từ' },
       {
         terms: [
           { term: '“Ôn tiếp theo”', text: 'Thời gian còn lại tới hạn ôn, “Có thể ôn ngay”, hoặc “Đang tạm dừng”.' },
@@ -716,6 +726,14 @@ export const GUIDE: GuideTopic[] = [
           'Giọng đọc của máy (giọng đọc tự động có sẵn trên điện thoại). Câu ví dụ dùng Giọng iPhone nếu bạn đã tạo, nếu không thì dùng giọng máy.',
         ],
       },
+      { h: 'Âm thanh hiệu ứng' },
+      {
+        list: [
+          'Mỗi việc có một tiếng ngắn và nhẹ riêng: chọn đúng, gần đúng, chọn sai, lưu xong, AI trả lời xong, tin nhắn mới trong hội thoại, bắt đầu và dừng ghi âm, lật thẻ, gợi ý, xóa, hoàn thành buổi học, đạt huy hiệu.',
+          'Tắt hết ở “Cá nhân” → “Âm thanh hiệu ứng”. Chỉ muốn tắt tiếng khi chạm nút, chuyển tab, bật tắt và mở bảng thì tắt “Tiếng chạm nút”. Bấm “Nghe thử” để nghe vài tiếng.',
+          'Trên iPhone, khi gạt nút im lặng bên hông máy, tiếng hiệu ứng có thể bị tắt theo.',
+        ],
+      },
       { h: 'Thẻ “Phát âm” ở trang một từ' },
       {
         list: [
@@ -734,7 +752,7 @@ export const GUIDE: GuideTopic[] = [
       },
       { h: 'Luyện đọc: tự so giọng mình với mẫu' },
       {
-        p: 'Mở “Luyện đọc” ở trang một từ, hoặc bấm nút micro (cạnh hai nút loa) trên thẻ giới thiệu từ mới. Từ có câu ví dụ thì chọn “Đọc từ” hoặc “Đọc câu ví dụ”. Nghe mẫu, bấm micro và đọc to (tối đa 8 giây), rồi dùng “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” để so. Bấm micro lần nữa để ghi lại. Bản ghi không được lưu, đóng lại là mất. Muốn dùng giọng mình làm phát âm của từ thì dùng “Ghi âm” ở thẻ Phát âm.',
+        p: 'Ở trang một từ, chạm phần “Luyện” để mở “Luyện đọc”; hoặc bấm nút micro (cạnh hai nút loa) trên thẻ giới thiệu từ mới. Từ có câu ví dụ thì chọn “Đọc từ” hoặc “Đọc câu ví dụ”. Nghe mẫu, bấm micro và đọc to (tối đa 8 giây), rồi dùng “Nghe mẫu”, “Nghe bạn” hoặc “Nghe mẫu rồi nghe bạn” để so. Bấm micro lần nữa để ghi lại. Bản ghi không được lưu, đóng lại là mất. Muốn dùng giọng mình làm phát âm của từ thì dùng “Ghi âm” ở thẻ Phát âm.',
       },
       { h: 'Chấm phát âm' },
       {
@@ -777,7 +795,7 @@ export const GUIDE: GuideTopic[] = [
         list: [
           'Nếu sửa những chỗ khác nhau trên hai máy, app giữ cả hai thay đổi; nếu cả hai máy cùng sửa một chỗ, app giữ lần sửa sau cùng.',
           'Lượt học không bao giờ bị mất hay tính hai lần; lịch ôn được tính lại từ toàn bộ lượt học khi cần.',
-          'Mục tiêu, lịch học và cài đặt học dùng chung. Riêng “Giao diện” (sáng, tối hoặc theo máy), “Cỡ chữ”, “Giảm hiệu ứng”, “Âm thanh hiệu ứng”, công tắc “Dùng giọng iPhone khi phát âm”, giọng máy đã chọn và tên phím tắt là của từng máy: đổi ở máy nào chỉ có tác dụng ở máy đó.',
+          'Mục tiêu, lịch học và cài đặt học dùng chung. Riêng “Giao diện” (sáng, tối hoặc theo máy), “Cỡ chữ”, “Giảm hiệu ứng”, “Âm thanh hiệu ứng”, “Tiếng chạm nút”, công tắc “Dùng giọng iPhone khi phát âm”, giọng máy đã chọn và tên phím tắt là của từng máy: đổi ở máy nào chỉ có tác dụng ở máy đó.',
         ],
       },
       { h: 'Trạng thái ở thẻ “Máy chủ và đồng bộ”' },
@@ -963,7 +981,7 @@ export const GUIDE: GuideTopic[] = [
       { h: 'Luyện viết câu' },
       {
         list: [
-          'Ở trang một từ có thẻ “Luyện viết câu”: viết một câu có từ đó rồi bấm “Nhờ AI sửa câu”. AI kiểm ngữ pháp, chính tả, dấu câu và từ có được dùng đúng nghĩa không.',
+          'Ở trang một từ, phần “Luyện” có thẻ “Luyện viết câu”: viết một câu có từ đó rồi bấm “Nhờ AI sửa câu”. AI kiểm ngữ pháp, chính tả, dấu câu và từ có được dùng đúng nghĩa không.',
           'Câu có lỗi: app hiện câu của bạn (phần sai gạch đỏ) và câu đã sửa (phần thêm tô xanh), từng lỗi kèm loại lỗi và giải thích bằng tiếng Việt, nhận xét về cách dùng từ, cách nói tự nhiên hơn nếu có, và bản dịch. Câu đúng thì báo “Câu đúng rồi!”.',
           'Bấm “Thêm vào câu ví dụ” để lưu câu đã sửa (kèm bản dịch) vào câu ví dụ của từ, hoặc “Viết câu khác” để viết tiếp. “Luyện trong hội thoại” mở hội thoại luyện từ với sẵn từ này. Khi thử 12 câu mẫu, AI chấm đúng cả 12 và không báo lỗi bừa ở câu đúng, nhưng vẫn có thể sai: xem lời giải thích như gợi ý.',
         ],
@@ -993,7 +1011,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['kết hợp từ', 'collocation', 'giới từ', 'mẫu câu', 'dễ nhầm', 'phân biệt', 'say tell', 'borrow lend'],
     blocks: [
       {
-        p: 'Trang của một từ có thêm thẻ “Kết hợp từ” và “Từ dễ nhầm”. Nội dung có sẵn trong app cho 1.000 từ của bộ từ thông dụng (kể cả khi bạn tự thêm đúng từ đó) và 250 nhóm từ dễ nhầm, xem được cả khi mất mạng. Khi tra một từ có nội dung này, trang “Tra từ” cũng hiện hai thẻ đó dưới phần nghĩa.',
+        p: 'Trang của một từ có thẻ “Kết hợp từ” và “Từ dễ nhầm” trong phần “Tham khảo”. Nội dung có sẵn trong app cho 1.000 từ của bộ từ thông dụng (kể cả khi bạn tự thêm đúng từ đó) và 250 nhóm từ dễ nhầm, xem được cả khi mất mạng. Khi tra một từ có nội dung này, trang “Tra từ” cũng hiện hai thẻ đó dưới phần nghĩa.',
       },
       {
         terms: [
@@ -1018,7 +1036,7 @@ export const GUIDE: GuideTopic[] = [
       {
         list: [
           'Từ không có nội dung soạn sẵn: nếu bật Trợ lý AI, thẻ “Kết hợp từ” có nút “Gợi ý kết hợp từ bằng AI” và thẻ “Từ dễ nhầm” có nút “Tìm từ dễ nhầm bằng AI”. Kết quả được lưu trên máy này, mở lại trang là thấy ngay, không tốn thêm lượt. AI có thể sai, nhất là ở bài thử của nhóm do AI soạn.',
-          'Nội dung soạn sẵn dùng chung cho mọi người học, không đồng bộ và không sửa được trong app. Thấy chỗ sai, bấm “Báo lỗi nội dung từ này” ở cuối trang của từ.',
+          'Nội dung soạn sẵn dùng chung cho mọi người học, không đồng bộ và không sửa được trong app. Thấy chỗ sai, bấm “Báo lỗi nội dung từ này” ở cuối phần “Tiến độ” của trang một từ.',
         ],
       },
     ],

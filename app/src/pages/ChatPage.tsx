@@ -156,8 +156,8 @@ function ChatRoom({ state, setState }: { state: ChatState; setState: (s: ChatSta
   const level = cefrOf(profile?.selfLevel)
   const [text, setText] = useState('')
   const [showVi, setShowVi] = useState<number[]>([])
-  const reply = useAiRun<ChatTurnResult>()
-  const summary = useAiRun<ChatSummary>()
+  const reply = useAiRun<ChatTurnResult>(() => 'message')
+  const summary = useAiRun<ChatSummary>(() => 'complete')
   const [ended, setEnded] = useState(false)
   const endRef = useRef<HTMLDivElement>(null)
   const learnerTurns = state.messages.filter((m) => m.role === 'user' && m.text !== CHAT_START).length

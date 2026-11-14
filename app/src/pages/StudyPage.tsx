@@ -23,7 +23,7 @@ import type { StudySessionRow } from '../db/types'
 import { useLibrary, useNow } from '../lib/hooks'
 import { duration, ease, riseIn } from '../lib/motion'
 import { getSettings, useSettings } from '../lib/settings'
-import { playComplete } from '../lib/sfx'
+import { play } from '../lib/sfx'
 import { prefetchWordAudio } from '../services/audio'
 import { speechAvailable } from '../services/speech'
 import { useNewWordAdvice, workloadText, type TodayWorkload } from '../services/workload'
@@ -593,7 +593,7 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
   const due = dueCount(lib, now)
 
   useEffect(() => {
-    playComplete()
+    play('complete')
   }, [])
 
   // Điểm kinh nghiệm của buổi và huy hiệu vừa đạt (R10.6), tính từ lượt trả lời đã lưu.
@@ -604,6 +604,13 @@ function Summary({ lib, plan, endedAt, sessionId, onStart }: { lib: Library; pla
     const mine = all.filter((l) => l.sessionId === sessionId)
     return { xp: sumXp(mine), badges: milestones(badgeStates(all, tz)).filter((m) => m.earnedAt >= plan.startedAt && m.earnedAt <= endedAt + 1000) }
   }, [sessionId, tz, plan.startedAt, endedAt])
+  // Vừa đạt huy hiệu: thêm tiếng chúc mừng sau tiếng hoàn thành.
+  const newBadges = reward?.badges.length ?? 0
+  useEffect(() => {
+    if (!newBadges) return
+    const t = setTimeout(() => play('achievement'), 900)
+    return () => clearTimeout(t)
+  }, [newBadges])
 
   const test = plan.mode === 'test'
   const unanswered = test ? new Set(plan.steps.map((st) => st.itemId)).size - s.items : 0

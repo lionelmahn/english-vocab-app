@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { play } from './sfx'
 
 /**
  * Ghi âm từ micro (R7.2, R7.8): xin quyền, ghi tối đa `maxSeconds` giây, trả về file khi dừng.
@@ -37,6 +38,8 @@ export function useRecorder(maxSeconds: number, onRecorded: (blob: Blob) => void
 
   async function start() {
     setError(null)
+    // Báo bắt đầu ghi trước khi mở micro, để tiếng báo không lọt vào bản ghi.
+    play('recStart')
     setPhase('asking')
     let stream: MediaStream
     try {
@@ -69,6 +72,7 @@ export function useRecorder(maxSeconds: number, onRecorded: (blob: Blob) => void
       clearInterval(tick)
       stream.getTracks().forEach((t) => t.stop())
       setPhase('idle')
+      if (keep) play('recStop')
       const blob = new Blob(chunks, { type: rec.mimeType || type || 'audio/mp4' })
       if (keep && blob.size > 0) handler.current(blob)
     }

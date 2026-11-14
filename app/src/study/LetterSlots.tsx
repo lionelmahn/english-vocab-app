@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { play } from '../lib/sfx'
 import { activeSlot, fillSlots, letterCount, lettersOnly, slotTemplate, type Slot } from '../core/letters'
 
 export type SlotsState = 'typing' | 'right' | 'wrong' | 'near'
@@ -61,6 +62,7 @@ export function LetterSlots({
       { duration: 320, easing: 'ease-out' },
     )
     navigator.vibrate?.(30)
+    play('reject')
     setOverflow(true)
     clearTimeout(overflowTimer.current)
     overflowTimer.current = setTimeout(() => setOverflow(false), 400)

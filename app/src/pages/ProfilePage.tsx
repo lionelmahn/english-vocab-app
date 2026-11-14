@@ -11,6 +11,7 @@ import { Button, Card, Page, SectionTitle, Switch } from '../components/ui'
 import { updateSettings, useSettings } from '../lib/settings'
 import { isInstalled } from '../lib/device'
 import { APP_VERSION } from '../lib/version'
+import { playDemo } from '../lib/sfx'
 import { readPlacementLast } from '../lib/placementLast'
 import { signOut, useAuth } from '../services/auth'
 import { voiceLabel } from '../core/voices'
@@ -340,9 +341,19 @@ export function ProfilePage() {
         <SettingRow title="Giảm hiệu ứng" description="Tắt chuyển động trượt, lật thẻ và pháo giấy.">
           <Switch label="Giảm hiệu ứng" checked={settings.reduceMotion} onChange={(v) => updateSettings({ reduceMotion: v })} />
         </SettingRow>
-        <SettingRow title="Âm thanh hiệu ứng" description="Tiếng báo đúng/sai khi luyện tập.">
+        <SettingRow title="Âm thanh hiệu ứng" description="Tiếng báo đúng, gần đúng, sai, lưu xong, AI trả lời, hoàn thành buổi học, đạt huy hiệu.">
           <Switch label="Âm thanh hiệu ứng" checked={settings.soundEffects} onChange={(v) => updateSettings({ soundEffects: v })} />
         </SettingRow>
+        {settings.soundEffects && (
+          <>
+            <SettingRow title="Tiếng chạm nút" description="Tiếng nhẹ khi chạm nút, chuyển tab, bật tắt, mở bảng, lật thẻ.">
+              <Switch label="Tiếng chạm nút" checked={settings.tapSounds} onChange={(v) => updateSettings({ tapSounds: v })} />
+            </SettingRow>
+            <button type="button" data-sfx="none" onClick={playDemo} className="inline-flex items-center gap-1.5 self-start py-1 text-sm font-semibold text-accent">
+              <Volume2 aria-hidden className="h-4 w-4" /> Nghe thử
+            </button>
+          </>
+        )}
       </Card>
 
       <Card>

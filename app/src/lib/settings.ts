@@ -22,6 +22,8 @@ export interface DeviceSettings {
   textSize: TextSize
   reduceMotion: boolean
   soundEffects: boolean
+  /** Tiếng nhẹ khi chạm nút, chuyển tab, bật tắt, mở bảng (cần bật âm thanh hiệu ứng). */
+  tapSounds: boolean
   /** Giọng máy người học chọn (voiceURI); null = tự chọn giọng tốt nhất. */
   voiceUS: string | null
   voiceUK: string | null
@@ -43,6 +45,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   textSize: 'normal',
   reduceMotion: false,
   soundEffects: true,
+  tapSounds: true,
   voiceUS: null,
   voiceUK: null,
   useVoiceClips: true,

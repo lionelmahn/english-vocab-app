@@ -24,7 +24,7 @@ export function WordImageCard({ item }: { item: VocabItem }) {
       await setItemImage(item.id, file)
       showToast(pic?.image ? 'Đã đổi ảnh' : 'Đã thêm ảnh')
     } catch (err) {
-      showToast((err as Error).message)
+      showToast((err as Error).message, 'error')
     } finally {
       setBusy(false)
     }

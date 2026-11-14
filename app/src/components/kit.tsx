@@ -1,10 +1,11 @@
 import { ArrowLeft, Snail, Volume2, type LucideIcon } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useSyncExternalStore, type ReactNode, type SelectHTMLAttributes } from 'react'
+import { useEffect, useRef, useSyncExternalStore, type ReactNode, type SelectHTMLAttributes } from 'react'
 import { createPortal } from 'react-dom'
 import { useLocation, useNavigate } from 'react-router'
 import type { MemoryLevel } from '../core/levels'
 import { duration, ease, spring, tapScale } from '../lib/motion'
+import { play, playIfQuiet, type Sfx } from '../lib/sfx'
 import { useSettings } from '../lib/settings'
 import { getToast, subscribeToast } from '../lib/toast'
 import { speak, speechAvailable, useSpeaking } from '../services/speech'
@@ -17,6 +18,7 @@ export function BackButton({ fallback, label = 'Quay lại' }: { fallback: strin
     <motion.button
       type="button"
       whileTap={tapScale}
+      data-sfx="back"
       onClick={() => (location.key === 'default' ? navigate(fallback, { replace: true }) : navigate(-1))}
       className="-ml-2 inline-flex h-10 items-center gap-1 rounded-xl px-2 text-[0.9375rem] font-semibold whitespace-nowrap text-accent"
     >
@@ -33,6 +35,7 @@ export function IconButton({
   active = false,
   tone = 'muted',
   className = '',
+  sfx,
 }: {
   icon: LucideIcon
   label: string
@@ -40,6 +43,8 @@ export function IconButton({
   active?: boolean
   tone?: 'muted' | 'accent' | 'warning' | 'danger'
   className?: string
+  /** Tiếng khi chạm (mặc định tiếng chạm thường). */
+  sfx?: Sfx
 }) {
   const color = active ? { muted: 'text-text', accent: 'text-accent', warning: 'text-warning', danger: 'text-danger' }[tone] : 'text-muted'
   return (
@@ -48,6 +53,7 @@ export function IconButton({
       whileTap={{ scale: 0.88 }}
       aria-label={label}
       aria-pressed={active || undefined}
+      data-sfx={sfx}
       onClick={onClick}
       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-2 ${color} ${className}`}
     >
@@ -56,7 +62,7 @@ export function IconButton({
   )
 }
 
-/** Thanh chọn 2–3 mục, ô chọn trượt theo. */
+/** Thanh chọn 2–4 mục, ô chọn trượt theo. */
 export function Segmented<T extends string>({ value, options, onChange, layoutId }: { value: T; options: { value: T; label: string }[]; onChange: (v: T) => void; layoutId: string }) {
   return (
     <div role="tablist" className="flex rounded-2xl bg-surface-2 p-1">
@@ -68,6 +74,7 @@ export function Segmented<T extends string>({ value, options, onChange, layoutId
             type="button"
             role="tab"
             aria-selected={active}
+            data-sfx="select"
             onClick={() => onChange(o.value)}
             className={`relative flex-1 rounded-xl py-2 text-sm font-semibold transition-colors ${active ? 'text-text' : 'text-muted'}`}
           >
@@ -87,6 +94,7 @@ export function Chip({ active, onClick, children }: { active: boolean; onClick: 
       whileTap={{ scale: 0.94 }}
       onClick={onClick}
       aria-pressed={active}
+      data-sfx="select"
       className={`h-9 shrink-0 rounded-full border px-3.5 text-[0.8125rem] font-medium whitespace-nowrap transition-colors ${
         active ? 'border-accent bg-accent-soft text-accent' : 'border-line bg-surface text-muted'
       }`}
@@ -158,7 +166,7 @@ export function SpeakButtons({ text, size = 'md', slow = true }: { text: string;
   const box = size === 'sm' ? 'h-8 w-8' : 'h-10 w-10'
   const icon = size === 'sm' ? 'h-4 w-4' : 'h-5 w-5'
   return (
-    <span className="inline-flex shrink-0 items-center gap-1.5">
+    <span data-sfx="none" className="inline-flex shrink-0 items-center gap-1.5">
       <motion.button
         type="button"
         whileTap={{ scale: 0.86 }}
@@ -200,7 +208,7 @@ export function SpeakButtons({ text, size = 'md', slow = true }: { text: string;
 /** Phiên âm kèm nhãn giọng ("Mỹ", "Anh"); chạm để nghe. */
 export function IpaPill({ label, ipa, onPlay }: { label: string; ipa: string; onPlay: () => void }) {
   return (
-    <motion.button type="button" whileTap={{ scale: 0.95 }} onClick={onPlay} className="inline-flex items-center gap-2 rounded-full bg-surface-2 px-3 py-1.5 text-sm">
+    <motion.button type="button" data-sfx="none" whileTap={{ scale: 0.95 }} onClick={onPlay} className="inline-flex items-center gap-2 rounded-full bg-surface-2 px-3 py-1.5 text-sm">
       <span className="text-xs font-semibold text-muted">{label}</span>
       <span className="font-medium">{ipa}</span>
     </motion.button>
@@ -210,6 +218,14 @@ export function IpaPill({ label, ipa, onPlay }: { label: string; ipa: string; on
 // ---- Bảng trượt từ dưới lên (xác nhận, chọn hành động) ---------------------------------------
 
 export function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title?: string; children: ReactNode }) {
+  // Tiếng mở/đóng bảng; đóng ngay sau một việc có tiếng riêng (xóa, lưu) thì im.
+  const was = useRef(open)
+  useEffect(() => {
+    if (open === was.current) return
+    was.current = open
+    if (open) play('open')
+    else playIfQuiet('close')
+  }, [open])
   return createPortal(
     <AnimatePresence>
       {open && (

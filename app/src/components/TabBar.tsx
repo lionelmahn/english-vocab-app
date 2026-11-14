@@ -20,6 +20,7 @@ export function TabBar() {
               <Link
                 to={tab.path}
                 aria-current={isActive ? 'page' : undefined}
+                data-sfx="nav"
                 className="flex flex-col items-center gap-0.5 pt-2 pb-1.5 outline-none"
               >
                 <motion.span whileTap={{ scale: 0.86 }} className="relative flex h-8 w-14 items-center justify-center">

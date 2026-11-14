@@ -23,7 +23,7 @@ export function WritingCard({ item }: { item: VocabItem }) {
   const aiOn = useAiOn()
   const profile = useProfile()
   const [text, setText] = useState('')
-  const ai = useAiRun<{ sentence: string; result: Correction }>()
+  const ai = useAiRun<{ sentence: string; result: Correction }>((v) => (v.result.correct ? 'correct' : 'ready'))
   if (!aiOn) return null
   const sentence = text.trim()
   const check = () => void ai.run(async () => ({ sentence, result: (await correctSentence(wordRefOf(item), sentence, cefrOf(profile?.selfLevel))).data }))

@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, type HTMLMotionProps } from 'motion/react'
 import { CircleAlert, CircleCheck, type LucideIcon } from 'lucide-react'
-import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
+import { useEffect, type InputHTMLAttributes, type ReactNode, type Ref } from 'react'
 import { duration, ease, riseIn, stagger, tapScale } from '../lib/motion'
+import { playIfQuiet } from '../lib/sfx'
 
 /** Khung màn hình: tiêu đề + nội dung xuất hiện lần lượt. */
 export function Page({
@@ -72,6 +73,8 @@ export function Button({
     <motion.button
       type="button"
       whileTap={variant === 'ghost' ? tapScale : undefined}
+      // Nút đỏ là nút xác nhận xóa, đặt lại: tiếng xóa (truyền data-sfx khác để đổi).
+      data-sfx={variant === 'danger' ? 'delete' : undefined}
       className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-5 text-[0.9375rem] font-bold whitespace-nowrap ${BUTTON_STYLES[variant]} ${variant === 'ghost' ? '' : DISABLED} ${className}`}
       {...rest}
     >
@@ -135,6 +138,10 @@ export function TextField({
 
 /** Thông báo dưới form. Đổi `shakeKey` để rung khi gặp lỗi mới. */
 export function FormMessage({ message, shakeKey = 0 }: { message: { tone: 'error' | 'success'; text: string } | null; shakeKey?: number }) {
+  const shown = message ? `${message.tone}|${message.text}|${shakeKey}` : ''
+  useEffect(() => {
+    if (shown) playIfQuiet(shown.startsWith('error') ? 'error' : 'success', 200)
+  }, [shown])
   return (
     <AnimatePresence initial={false}>
       {message && (
@@ -168,6 +175,7 @@ export function Switch({ checked, onChange, label }: { checked: boolean; onChang
       role="switch"
       aria-checked={checked}
       aria-label={label}
+      data-sfx={checked ? 'toggleOff' : 'toggleOn'}
       onClick={() => onChange(!checked)}
       className={`relative h-[30px] w-[50px] shrink-0 rounded-full p-[3px] transition-colors ${checked ? 'bg-accent' : 'bg-surface-2'}`}
     >

@@ -1,5 +1,5 @@
 import { Check, GraduationCap, RotateCcw } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { BackButton, SpeakButtons } from '../components/kit'
 import { Button, Card, Page, SectionTitle } from '../components/ui'
@@ -13,6 +13,7 @@ import { liveCard } from '../core/library'
 import { db } from '../db/db'
 import { repo } from '../db/repo'
 import { savePlacementLast } from '../lib/placementLast'
+import { play } from '../lib/sfx'
 import { useLibrary } from '../lib/hooks'
 import { showToast } from '../lib/toast'
 import { updateProfile, useProfile } from '../services/profile'
@@ -86,6 +87,7 @@ function QuestionView({ phase, onAnswer }: { phase: Extract<Phase, { kind: 'quiz
   const choose = (option: string | null) => {
     if (picked !== null) return
     setPicked(option ?? '')
+    if (option !== null) play(option === q.answer ? 'correct' : 'wrong')
     // Hiện đúng sai một chút rồi sang câu sau.
     setTimeout(() => onAnswer(option === q.answer), option === null ? 150 : 650)
   }
@@ -144,6 +146,9 @@ function ResultView({ result, starter, fromWelcome, onRetry }: { result: Placeme
   const level = SELF_LEVELS.find((l) => l.value === result.level)!
   const daily = suggestDailyNew(result.level, profile?.dailyMinutes ?? 15)
   const known = knownBands(result)
+  useEffect(() => {
+    play('complete')
+  }, [])
   const [chosen, setChosen] = useState<number[]>(known)
   const [marked, setMarked] = useState<string[] | null>(null)
   const [busy, setBusy] = useState(false)

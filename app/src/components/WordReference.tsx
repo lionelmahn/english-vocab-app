@@ -1,6 +1,7 @@
 import { Check, ChevronDown, RotateCcw, Shuffle, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
+import { play } from '../lib/sfx'
 import { Link } from 'react-router'
 import { COLLOCATION_KIND_LABEL, confusableQuiz, plainSentence, splitMarked, type Collocation, type ConfusableGroup } from '../core/reference'
 import { termKey } from '../core/vocab'
@@ -155,6 +156,7 @@ export function ConfusableQuiz({ group, onClose }: { group: ConfusableGroup; onC
               disabled={done}
               onClick={() => {
                 setPicked(o)
+                play(q.accept.includes(o) ? 'correct' : 'wrong')
                 if (q.accept.includes(o)) setScore((s) => s + 1)
               }}
               className={`inline-flex h-9 items-center gap-1 rounded-full border px-3.5 text-sm font-semibold transition-colors ${

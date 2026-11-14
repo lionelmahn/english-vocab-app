@@ -5,6 +5,7 @@ import { judgePronunciation, speechTokens, type PronounceResult } from '../core/
 import { recordingSupported, useRecorder } from '../lib/recorder'
 import { useSettings } from '../lib/settings'
 import { useAiOn, useAiRun } from '../lib/useAi'
+import type { Sfx } from '../lib/sfx'
 import { prepareSpeech, SILENCE_PEAK, type PreparedAudio } from '../lib/wav'
 import { transcribe } from '../services/ai'
 import { pronounceTip } from '../services/aiTasks'
@@ -21,6 +22,9 @@ const MAX_SECONDS = 8
  * nếu bật trợ lý AI, gửi bản ghi đi nhận dạng giọng nói (Whisper) để xem máy nghe ra chữ gì. Bản ghi chỉ nằm trong bộ
  * nhớ, không lưu; muốn dùng bản ghi làm phát âm của từ thì dùng "Ghi âm" ở thẻ Phát âm.
  */
+/** Tiếng khi có kết quả chấm: đúng, gần đúng, chưa đúng, không nghe thấy. */
+const VERDICT_SOUND: Record<PronounceResult['verdict'], Sfx> = { match: 'correct', close: 'almost', miss: 'wrong', empty: 'error' }
+
 export function SpeakPractice({ text, sentence, ipa }: { text: string; sentence?: string; ipa?: string }) {
   const { accent } = useSettings()
   const aiOn = useAiOn()
@@ -31,7 +35,7 @@ export function SpeakPractice({ text, sentence, ipa }: { text: string; sentence?
   const [decodeError, setDecodeError] = useState<string | null>(null)
   const urlRef = useRef<string | null>(null)
   const blobRef = useRef<Blob | null>(null)
-  const score = useAiRun<{ target: string; result: PronounceResult }>()
+  const score = useAiRun<{ target: string; result: PronounceResult }>((v) => VERDICT_SOUND[v.result.verdict])
   const tip = useAiRun<string>()
   const { phase, error, elapsed, start, stop } = useRecorder(MAX_SECONDS, (blob) => {
     if (urlRef.current) URL.revokeObjectURL(urlRef.current)
@@ -131,15 +135,16 @@ export function SpeakPractice({ text, sentence, ipa }: { text: string; sentence?
       </p>
       {error && <p className="text-center text-[0.8125rem] leading-snug text-danger">{error}</p>}
       <div className="grid w-full grid-cols-2 gap-2">
-        <Button icon={Volume2} className="h-11 text-sm" disabled={phase !== 'idle' || busy} onClick={() => void run(() => speak(target, { accent }))}>
+        <Button icon={Volume2} data-sfx="none" className="h-11 text-sm" disabled={phase !== 'idle' || busy} onClick={() => void run(() => speak(target, { accent }))}>
           Nghe mẫu
         </Button>
-        <Button icon={Play} className="h-11 text-sm" disabled={!recording || phase !== 'idle' || busy} onClick={() => void run(playMine)}>
+        <Button icon={Play} data-sfx="none" className="h-11 text-sm" disabled={!recording || phase !== 'idle' || busy} onClick={() => void run(playMine)}>
           Nghe bạn
         </Button>
         <Button
           icon={Repeat2}
           variant="primary"
+          data-sfx="none"
           className="col-span-2 h-11 text-sm"
           disabled={!recording || phase !== 'idle' || busy}
           onClick={() =>

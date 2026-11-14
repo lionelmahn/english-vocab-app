@@ -14,7 +14,7 @@ import type { CardStateRow, VocabItem } from '../db/types'
 import { formatDueIn } from '../lib/format'
 import { useWordReference } from '../lib/useReference'
 import { useSettings } from '../lib/settings'
-import { playCorrect, playWrong } from '../lib/sfx'
+import { play } from '../lib/sfx'
 import { useItemImage } from '../services/images'
 import { speak } from '../services/speech'
 import { KeyboardHint, LetterSlots, type SlotsState } from './LetterSlots'
@@ -192,7 +192,10 @@ export function IntroStep({ item, onNext, onKnown }: { item: VocabItem; onNext: 
         </div>
         <FlipCard
           flipped={flipped}
-          onFlip={() => setFlipped((f) => !f)}
+          onFlip={() => {
+            play('flip')
+            setFlipped((f) => !f)
+          }}
           onSwipe={flipped ? (dir) => onNext(dir) : undefined}
           showTapHint={!flipped}
           front={contextFront}
@@ -222,7 +225,7 @@ function useAnswer(onAnswer: AnswerFn) {
       if (busy.current) return
       busy.current = true
       // sound = false: âm báo đã phát lúc hiện kết quả chờ xác nhận.
-      if (sound) (tone === 'correct' ? playCorrect : playWrong)()
+      if (sound) play(tone === 'correct' ? 'correct' : 'wrong')
       const { card } = await onAnswer(result)
       setShown({ tone, title, card, note })
       busy.current = false
@@ -246,11 +249,13 @@ function stateFor(id: string, targetId: string, selected: string | null, answere
 /** Dùng gợi ý thì câu đúng chỉ được tính mức Khó; số lần dùng được lưu vào lịch sử bài làm. */
 function HintLink({ onClick }: { onClick: () => void }) {
   return (
-    <TextLink onClick={onClick}>
-      <span className="inline-flex items-center gap-1">
-        <Lightbulb aria-hidden className="h-4 w-4" /> Gợi ý
-      </span>
-    </TextLink>
+    <span data-sfx="hint" className="contents">
+      <TextLink onClick={onClick}>
+        <span className="inline-flex items-center gap-1">
+          <Lightbulb aria-hidden className="h-4 w-4" /> Gợi ý
+        </span>
+      </TextLink>
+    </span>
   )
 }
 
@@ -536,7 +541,7 @@ export function MatchingStep({ item, pairs, onAnswer, onContinue }: { item: Voca
       return
     }
     if (picked === item.id || id === item.id) setTargetMissed(true)
-    playWrong()
+    play('wrong')
     setWrongPair([picked, id])
     setPicked(null)
     setTimeout(() => setWrongPair(null), 450)
@@ -616,7 +621,7 @@ function useTypedAnswer(item: VocabItem, exercise: ExerciseKind, onAnswer: Answe
     const v = gradeTyped(item, candidates)
     if (v === 'correct') void submit({ kind: 'answer', exercise, correct: true, hintUsed: hintLevel > 0, hintLevel }, 'correct', 'Chính xác!')
     else {
-      if (v === 'wrong') playWrong()
+      if (v === 'wrong') play('wrong')
       setPending({ verdict: v, typed, hintLevel })
     }
   }
@@ -895,8 +900,8 @@ export function FlashcardStep({
   async function rate(grade: Grade) {
     if (busy) return
     setBusy(true)
-    if (grade === Rating.Again) playWrong()
-    else playCorrect()
+    if (grade === Rating.Again) play('wrong')
+    else play('correct')
     await onAnswer({ kind: 'self_rating', rating: RATING_KEY[grade] })
     onContinue(grade === Rating.Again ? -1 : 1)
   }
@@ -931,7 +936,10 @@ export function FlashcardStep({
         </div>
         <FlipCard
           flipped={flipped}
-          onFlip={() => setFlipped((f) => !f)}
+          onFlip={() => {
+            play('flip')
+            setFlipped((f) => !f)
+          }}
           onSwipe={flipped ? (dir) => void rate(dir === 1 ? Rating.Good : Rating.Again) : undefined}
           showTapHint={!flipped}
           front={front}

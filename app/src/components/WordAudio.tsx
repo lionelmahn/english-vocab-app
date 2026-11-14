@@ -89,8 +89,8 @@ export function WordAudioCard({ item }: { item: WordRef }) {
   function pickFile(file: File | undefined) {
     if (!file) return
     const audioLike = file.type.startsWith('audio/') || /\.(m4a|mp3|wav|aac|ogg|oga|opus|webm|caf|aiff?)$/i.test(file.name)
-    if (!audioLike) return showToast('File này không phải âm thanh')
-    if (file.size > MAX_AUDIO_BYTES) return showToast('File quá lớn: tối đa 2 MB (khoảng một phút)')
+    if (!audioLike) return showToast('File này không phải âm thanh', 'error')
+    if (file.size > MAX_AUDIO_BYTES) return showToast('File quá lớn: tối đa 2 MB (khoảng một phút)', 'error')
     setPanel({ kind: 'review', blob: file, source: 'upload' })
   }
 

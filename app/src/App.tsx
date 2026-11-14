@@ -4,6 +4,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router'
 import { TabBar } from './components/TabBar'
 import { Toaster } from './components/kit'
 import { pageTransition, pageVariants } from './lib/motion'
+import { installTapSounds } from './lib/sfx'
 import { applyAppearance } from './lib/appearance'
 import { useSettings } from './lib/settings'
 import { isFocusMode, tabIndexOf } from './lib/tabs'
@@ -100,6 +101,7 @@ export default function App() {
     startSync()
     startPush()
   }, [navigate])
+  useEffect(() => installTapSounds(), [])
 
   // Hướng trượt: đổi tab thì theo thứ tự tab; cùng tab thì đi sâu trượt từ phải, quay lại trượt từ trái.
   const [nav, setNav] = useState({ path: location.pathname, index, depth, direction: 0 })

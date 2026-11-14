@@ -13,6 +13,7 @@ import { useLibrary, useNow } from '../lib/hooks'
 import { useSettings } from '../lib/settings'
 import { useAiOn } from '../lib/useAi'
 import { aiErrorText } from '../services/ai'
+import { play } from '../lib/sfx'
 import { freshSentences, wordRefOf } from '../services/aiTasks'
 import { useProfile } from '../services/profile'
 import { speechAvailable } from '../services/speech'
@@ -66,6 +67,7 @@ export function PracticePage() {
         plan = buildFreshPracticePlan(lib, picked.map((i) => i.id), contexts, { now: Date.now(), style: settings.reviewStyle, audioAvailable: speechAvailable() })
       } catch (e) {
         setAiError(aiErrorText(e))
+        play('error')
         return setStarting(false)
       }
     } else {
