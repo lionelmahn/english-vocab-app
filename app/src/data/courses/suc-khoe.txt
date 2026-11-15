@@ -1,0 +1,224 @@
+# Khóa “Sức khỏe và đi khám”. Phiên âm: Wiktionary (CC BY-SA 4.0); chọn từ, chia bài, nghĩa, ví dụ, đoạn đọc do app soạn (CC BY-SA 4.0).
+# H|chương  L|tên bài|mục tiêu  W|từ|loại từ|nghĩa|ví dụ|dịch ví dụ|phiên âm Mỹ|phiên âm Anh  P|đoạn đọc  V|bản dịch
+H|Cơ thể người
+L|Đầu và khuôn mặt|Sau bài này bạn gọi được tên các bộ phận trên đầu, khuôn mặt và cổ.
+W|forehead|noun|trán|Her forehead feels very hot.|Sờ trán cô bé thấy rất nóng.|/ˈfɔr.hɛd/|/ˈfɔːhɛd/
+W|eyebrow|noun|lông mày|He raised his eyebrows in surprise.|Anh ấy nhướng mày ngạc nhiên.|/ˈaɪˌbraʊ/|/ˈaɪˌbraʊ/
+W|nose|noun|mũi|The baby has a small, round nose.|Em bé có cái mũi nhỏ và tròn.|/noʊz/|/nəʊz/
+W|ear|noun|tai|My left ear hurts when I swim.|Tai trái của tôi bị đau mỗi khi đi bơi.|/ɪɚ/|/ɪə/
+W|mouth|noun|miệng|Please open your mouth wide.|Bạn hãy há miệng thật to.|/maʊθ/|/maʊθ/
+W|lip|noun|môi|My lips get dry in winter.|Môi tôi hay bị khô vào mùa đông.|/lɪp/|/lɪp/
+W|tongue|noun|lưỡi|I burned my tongue on the hot soup.|Tôi bị bỏng lưỡi vì bát súp nóng.|/tʌŋ/|/tʌŋ/
+W|tooth|noun|răng (một chiếc)|My son lost his first tooth yesterday.|Con trai tôi vừa rụng chiếc răng đầu tiên hôm qua.|/tuθ/|/tuːθ/
+W|cheek|noun|má|The cold wind made her cheeks red.|Gió lạnh làm đôi má cô ấy ửng đỏ.|/tʃik/|/tʃiːk/
+W|chin|noun|cằm|He has a small cut on his chin.|Anh ấy có một vết đứt nhỏ ở cằm.|/tʃɪn/|/tʃɪn/
+W|jaw|noun|hàm, quai hàm|My jaw hurts when I chew.|Quai hàm tôi đau mỗi khi nhai.|/dʒɔ/|/dʒɔː/
+W|neck|noun|cổ|I can't turn my neck to the left.|Tôi không quay cổ sang trái được.|/nɛk/|/nɛk/
+P|In the art class on Saturday, Ms. Linh asked the children to draw a face. "Start with a big circle," she said. "Now draw two eyes in the middle and a [nose] under them. Above each eye, draw an [eyebrow]. The space above the eyebrows is the [forehead]. Next, draw an open [mouth], so we can see a [tooth] or two and a pink [tongue]. Don't forget the [lips|lip]!" Mai colored a red circle on each [cheek]. "Good!" said Ms. Linh. "Now put an [ear] on each side and draw the [chin] at the bottom." "What about the [jaw]?" Minh asked. "That's the bone that moves when you chew," she answered. "Finally, draw a long [neck], so the head doesn't fly away!"
+V|Trong lớp vẽ hôm thứ Bảy, cô Linh bảo các bạn nhỏ vẽ một khuôn mặt. "Các con bắt đầu bằng một hình tròn thật to," cô nói. "Giờ vẽ hai con mắt ở giữa và cái mũi ở bên dưới. Phía trên mỗi mắt vẽ một bên lông mày. Khoảng phía trên lông mày là cái trán. Tiếp theo, vẽ cái miệng đang há ra, để mình thấy một hai chiếc răng và cái lưỡi màu hồng. Đừng quên đôi môi nhé!" Mai tô một vòng tròn đỏ lên mỗi bên má. "Giỏi lắm!" cô Linh khen. "Giờ vẽ mỗi bên một cái tai và vẽ cái cằm ở dưới cùng." "Còn quai hàm thì sao cô?" Minh hỏi. "Đó là phần xương cử động khi mình nhai," cô trả lời. "Cuối cùng, vẽ một cái cổ dài để cái đầu khỏi bay mất nhé!"
+L|Thân mình và tay chân|Sau bài này bạn gọi được tên các phần của thân mình, tay và chân.
+W|shoulder|noun|vai|She carried her bag on her right shoulder.|Cô ấy đeo túi trên vai phải.|/ˈʃoʊldɚ/|/ˈʃəʊldə/
+W|chest|noun|ngực|He felt a strange pain in his chest.|Anh ấy thấy đau lạ ở ngực.|/tʃɛst/|/tʃɛst/
+W|stomach|noun|bụng, dạ dày|My stomach hurts after I eat spicy food.|Tôi bị đau bụng sau khi ăn đồ cay.|/ˈstʌmək/|/ˈstʌmək/
+W|hip|noun|hông|Grandma fell and hurt her hip.|Bà bị ngã và đau hông.|/hɪp/|/hɪp/
+W|leg|noun|chân (từ hông xuống bàn chân)|My legs were tired after the long walk.|Hai chân tôi mỏi nhừ sau chuyến đi bộ dài.|/lɛɡ/|/lɛɡ/
+W|knee|noun|đầu gối|He fell off his bike and cut his knee.|Cậu bé ngã xe đạp và bị trầy đầu gối.|/ni/|/niː/
+W|ankle|noun|mắt cá chân|These shoes are too tight around the ankle.|Đôi giày này chật quá ở chỗ mắt cá chân.|/ˈæŋkəl/|/ˈæŋkəl/
+W|toe|noun|ngón chân|I hit my toe on the door.|Tôi bị va ngón chân vào cửa.|/toʊ/|/təʊ/
+W|elbow|noun|khuỷu tay|Please take your elbows off the table.|Con bỏ khuỷu tay khỏi bàn đi.|/ˈɛlboʊ/|/ˈɛlbəʊ/
+W|wrist|noun|cổ tay|She wears a watch on her left wrist.|Cô ấy đeo đồng hồ ở cổ tay trái.|/rɪst/|/rɪst/
+W|finger|noun|ngón tay|The baby held my finger tightly.|Em bé nắm chặt ngón tay tôi.|/ˈfɪŋɡɚ/|/ˈfɪŋɡə/
+W|thumb|noun|ngón tay cái|I cut my thumb while I was cooking.|Tôi bị đứt ngón tay cái lúc nấu ăn.|/θʌm/|/θʌm/
+P|Every morning, Huy goes to the park with his grandfather to exercise. Today a young teacher led the class. "Stand up straight and roll your [shoulders|shoulder] back," she said. "Breathe in deeply and open your [chest]. Now put your hands on your [hips|hip] and turn left and right." Grandpa laughed. "My [stomach] is too big for this!" "Next, bend your [knees|knee] a little and shake each [leg]. Make small circles with each [ankle] and move every [toe]." Then they worked on their arms. "Bend your [elbows|elbow], turn your [wrists|wrist], and open and close your hands. Now touch each [finger] to your [thumb]." When the class ended, Grandpa smiled at Huy and said, "I feel ten years younger!"
+V|Sáng nào Huy cũng ra công viên với ông nội để tập thể dục. Hôm nay có một cô giáo trẻ dẫn bài tập. "Mọi người đứng thẳng lưng và xoay vai ra sau," cô nói. "Hít thật sâu và mở rộng ngực. Giờ chống hai tay lên hông rồi xoay người sang trái, sang phải." Ông bật cười: "Cái bụng của ông to quá, khó xoay lắm!" "Tiếp theo, hơi khuỵu đầu gối và rũ từng bên chân. Xoay từng bên mắt cá chân thành những vòng nhỏ và cử động từng ngón chân." Sau đó cả nhóm chuyển sang tập tay. "Gập khuỷu tay, xoay cổ tay, rồi nắm vào mở ra. Giờ chạm từng ngón tay vào ngón cái." Tập xong, ông mỉm cười với Huy: "Ông thấy mình trẻ ra cả chục tuổi!"
+H|Khi thấy không khỏe
+L|Đau nhức và khó chịu|Sau bài này bạn tả được chỗ đau và những cảm giác khó chịu thường gặp.
+W|pain|noun|cơn đau, sự đau|I have a sharp pain in my side.|Tôi bị đau nhói ở mạn sườn.|/peɪn/|/peɪn/
+W|cramp|noun|chuột rút|I got a cramp in my leg while I was swimming.|Tôi bị chuột rút ở chân khi đang bơi.|/kræmp/|/kræmp/
+W|ache|verb|đau âm ỉ, nhức|My whole body aches after the long trip.|Cả người tôi đau nhức sau chuyến đi dài.|/eɪk/|/eɪk/
+W|numb|adjective|tê, mất cảm giác|My leg went numb after sitting on the floor for an hour.|Ngồi dưới sàn suốt một tiếng làm chân tôi tê rần.|/nʌm/|/nʌm/
+W|stiff|adjective|cứng, mỏi (cơ, khớp)|My shoulders feel stiff after a day at the computer.|Sau một ngày ngồi máy tính, vai tôi mỏi cứng.|/stɪf/|/stɪf/
+W|dizzy|adjective|chóng mặt|I feel dizzy when I stand up too quickly.|Tôi thấy chóng mặt khi đứng dậy quá nhanh.|/ˈdɪzi/|/ˈdɪzi/
+W|throw up|phrasal_verb|nôn, ói|I think I'm going to throw up.|Tôi nghĩ là mình sắp nôn mất.|/ˌθroʊ ˈʌp/|/ˌθrəʊ ˈʌp/
+W|itchy|adjective|ngứa|Mosquito bites make my skin itchy.|Vết muỗi đốt làm da tôi ngứa.|/ˈɪtʃi/|/ˈɪtʃi/
+W|skin|noun|da|She has very dry skin.|Cô ấy có làn da rất khô.|/skɪn/|/skɪn/
+W|rash|noun|phát ban, mẩn đỏ|The baby has a red rash on his arms.|Em bé bị nổi mẩn đỏ trên hai cánh tay.|/ræʃ/|/ræʃ/
+W|swollen|adjective|sưng|My ankle is swollen and I can't walk.|Mắt cá chân tôi bị sưng, không đi được.|/ˈswoʊ.lən/|/ˈswəʊ.lən/
+W|weak|adjective|yếu, mệt lả|After three days in bed, I still feel weak.|Sau ba ngày nằm giường, tôi vẫn thấy người yếu.|/wik/|/wiːk/
+P|After a long weekend in the mountains, Lan called her friend Mai. "I'm a mess," she said. "My whole body [aches|ache]. On the first night I got a [cramp] in my leg. My back is [stiff] from the bus seat, and after six hours on the bus my feet went [numb]." "Oh no! Did you get carsick?" Mai asked. "Yes. The road had so many turns that I felt [dizzy], and I almost [threw up|throw up]. Then mosquitoes bit me, so now my [skin] is red and [itchy]. There's a [rash] on both arms, and my ankle is [swollen] because I slipped on a rock." "Any other [pain]?" "A little in my knee. Mostly I just feel [weak] and tired."
+V|Sau một kỳ nghỉ cuối tuần dài trên núi, Lan gọi điện cho cô bạn Mai. "Tớ tơi tả lắm," Lan kể. "Cả người tớ đau nhức. Đêm đầu tiên tớ bị chuột rút ở chân. Lưng thì mỏi cứng vì ngồi ghế xe buýt, mà ngồi xe sáu tiếng xong hai bàn chân tê rần luôn." "Trời ơi! Thế cậu có say xe không?" Mai hỏi. "Có chứ. Đường nhiều khúc cua quá nên tớ chóng mặt, suýt nữa thì nôn. Rồi còn bị muỗi đốt, giờ da tớ đỏ lên và ngứa ngáy. Hai cánh tay nổi mẩn đỏ, còn mắt cá chân thì sưng lên vì tớ trượt chân trên một hòn đá." "Còn đau chỗ nào nữa không?" "Đầu gối hơi đau một chút. Nhưng chủ yếu là tớ thấy mệt lả và uể oải."
+L|Cảm lạnh và bệnh vặt|Sau bài này bạn nói được về cảm lạnh, bệnh dễ lây và cách tránh lây cho người khác.
+W|catch a cold|phrase|bị cảm lạnh|Wash your hands often so you don't catch a cold.|Hãy rửa tay thường xuyên để khỏi bị cảm lạnh.|/ˌkætʃ ə ˈkoʊld/|/ˌkætʃ ə ˈkəʊld/
+W|sneeze|verb|hắt hơi|Cover your mouth when you sneeze.|Hãy che miệng khi hắt hơi.|/sniz/|/sniːz/
+W|runny|adjective|chảy nước (mũi), sổ (mũi)|I have a runny nose and a headache.|Tôi bị sổ mũi và nhức đầu.|/ˈrʌni/|/ˈrʌni/
+W|stuffy|adjective|nghẹt (mũi)|My nose is so stuffy that I can't sleep.|Mũi tôi nghẹt đến mức không ngủ được.|/ˈstʌfi/|/ˈstʌfi/
+W|shiver|verb|run (vì lạnh, vì sốt)|She was shivering under two blankets.|Cô ấy run cầm cập dưới hai lớp chăn.|/ˈʃɪvɚ/|/ˈʃɪvə/
+W|illness|noun|bệnh, sự ốm đau|He missed a week of school because of illness.|Cậu bé nghỉ học một tuần vì ốm.|/ˈɪl.nəs/|/ˈɪl.nəs/
+W|infection|noun|sự nhiễm trùng, nhiễm bệnh|Clean the cut well to prevent infection.|Rửa sạch vết đứt để phòng nhiễm trùng.|/ɪnˈfɛkʃən/|/ɪnˈfɛkʃən/
+W|contagious|adjective|dễ lây|Colds are very contagious, so stay at home.|Cảm lạnh rất dễ lây, nên bạn hãy ở nhà.|/kənˈteɪ.dʒəs/|/kənˈteɪ.dʒəs/
+W|germ|noun|vi trùng|Germs spread easily in crowded places.|Vi trùng dễ lây lan ở những nơi đông người.|/dʒɝm/|/dʒɜːm/
+W|pass on|phrasal_verb|lây (bệnh) sang người khác|I don't want to pass my cold on to the baby.|Tôi không muốn lây cảm cho em bé.|/ˌpæs ˈɑn/|/ˌpɑːs ˈɒn/
+W|diarrhea|noun|tiêu chảy|Drinking dirty water can cause diarrhea.|Uống nước bẩn có thể gây tiêu chảy.|/ˌdaɪəˈriə/|/ˌdaɪ.əˈriː.ə/
+W|mask|noun|khẩu trang|Please wear a mask if you have a cough.|Hãy đeo khẩu trang nếu bạn bị ho.|/mæsk/|/mɑːsk/
+W|get over|phrasal_verb|khỏi (bệnh), bình phục|It took me a week to get over the cold.|Tôi mất một tuần mới khỏi cảm.|/ˌɡɛt ˈoʊvɚ/|/ˌɡɛt ˈəʊvə/
+P|Tom woke up with a sore throat and a [runny] nose. "I think I've [caught a cold|catch a cold]," he told his mother, and then he started to [sneeze]. "Your nose sounds [stuffy] too," Mom said. "And you're [shivering|shiver]. Go back to bed." "But I have a test today!" "Colds are [contagious]. You don't want to [pass on] the [illness] to your friends." She gave him a [mask] to wear around his baby sister. "Wash your hands often so [germs|germ] don't spread. Remember when half your class got [diarrhea] after the school trip?" Tom nodded. "Drink warm water and rest," Mom said. "If your ear starts to hurt, it could be an [infection], so we'll go to the clinic. You'll [get over] it in a few days."
+V|Tom thức dậy với cổ họng đau rát và mũi chảy nước. "Con nghĩ là con bị cảm rồi," cậu nói với mẹ, rồi bắt đầu hắt hơi liên tục. "Nghe giọng thì mũi con cũng nghẹt nữa," mẹ nói. "Mà con đang run cầm cập kìa. Về giường nằm đi." "Nhưng hôm nay con có bài kiểm tra!" "Cảm lạnh dễ lây lắm. Con đâu muốn lây bệnh cho các bạn." Mẹ đưa cậu một chiếc khẩu trang để đeo khi ở gần em gái còn nhỏ. "Nhớ rửa tay thường xuyên để vi trùng không lây lan. Con còn nhớ lần nửa lớp con bị tiêu chảy sau chuyến dã ngoại của trường không?" Tom gật đầu. "Uống nước ấm và nghỉ ngơi nhé," mẹ dặn. "Nếu tai con bắt đầu đau thì có thể là bị nhiễm trùng, lúc đó mẹ sẽ đưa con đi phòng khám. Vài ngày nữa là con khỏi thôi."
+H|Đi khám bệnh
+L|Đến phòng khám|Sau bài này bạn biết cách nói khi đi khám, đăng ký và chờ gặp bác sĩ.
+W|unwell|adjective|không khỏe, mệt|I felt unwell, so I left work early.|Tôi thấy không khỏe nên về sớm.|/ʌnˈwɛl/|/ʌnˈwɛl/
+W|see a doctor|phrase|đi khám bác sĩ|If the pain doesn't stop, see a doctor.|Nếu cơn đau không hết, hãy đi khám bác sĩ.|/ˌsi ə ˈdɑktɚ/|/ˌsiː ə ˈdɒktə/
+W|family doctor|noun|bác sĩ gia đình|Our family doctor knows all our health problems.|Bác sĩ gia đình hiểu rõ mọi vấn đề sức khỏe của nhà tôi.|/ˌfæməli ˈdɑktɚ/|/ˌfæməli ˈdɒktə/
+W|register|verb|đăng ký|You need to register at the front desk first.|Bạn cần đăng ký ở quầy trước đã.|/ˈrɛdʒ.ɪ.stɚ/|/ˈrɛdʒ.ɪ.stə/
+W|waiting room|noun|phòng chờ|There were ten people in the waiting room.|Có mười người trong phòng chờ.|/ˈweɪtɪŋ ˌrum/|/ˈweɪtɪŋ ˌruːm/
+W|nurse|noun|y tá|A nurse called my name and took me inside.|Một cô y tá gọi tên tôi và dẫn tôi vào trong.|/nɝs/|/nɜːs/
+W|medical history|noun|tiền sử bệnh|The doctor asked about my medical history.|Bác sĩ hỏi về tiền sử bệnh của tôi.|/ˌmɛdɪkəl ˈhɪstəri/|/ˌmɛdɪkəl ˈhɪstəri/
+W|specialist|noun|bác sĩ chuyên khoa|My doctor sent me to a skin specialist.|Bác sĩ chuyển tôi đến bác sĩ chuyên khoa da liễu.|/ˈspɛʃəlɪst/|/ˈspɛʃəlɪst/
+W|emergency room|noun|phòng cấp cứu|We took him to the emergency room at midnight.|Chúng tôi đưa anh ấy vào phòng cấp cứu lúc nửa đêm.|/ɪˈmɝdʒənsi ˌrum/|/ɪˈmɜːdʒənsi ˌruːm/
+W|advice|noun|lời khuyên|Follow your doctor's advice and rest.|Hãy làm theo lời khuyên của bác sĩ và nghỉ ngơi.|/ədˈvaɪs/|/ədˈvaɪs/
+W|get better|phrase|khỏe lên, đỡ hơn|Rest at home and you will get better soon.|Cứ nghỉ ngơi ở nhà rồi bạn sẽ sớm khỏe lại.|/ˌɡɛt ˈbɛtɚ/|/ˌɡɛt ˈbɛtə/
+W|get worse|phrase|nặng hơn, tệ đi|Call me if your cough gets worse.|Gọi cho tôi nếu cơn ho nặng hơn.|/ˌɡɛt ˈwɝs/|/ˌɡɛt ˈwɜːs/
+P|Mai had felt [unwell] for three days with a bad cough, so her husband said, "You should [see a doctor]." Their [family doctor] was away, so she went to a small clinic nearby. First she had to [register] at the front desk and write down her [medical history]. Then she sat in the [waiting room] with a dozen other people. Soon a [nurse] called her name and checked her temperature. The doctor examined her and said, "It's not serious, so you don't need a [specialist]. But if you have trouble breathing, go straight to the [emergency room]." He gave her some [advice]: rest, drink lots of water and eat light food. "You'll [get better] soon. Come back if your cough [gets worse|get worse]."
+V|Mai bị ho nhiều và thấy trong người không khỏe đã ba ngày, nên chồng chị bảo: "Em nên đi khám bác sĩ đi." Bác sĩ gia đình của nhà chị đang đi vắng, nên chị đến một phòng khám nhỏ gần nhà. Trước tiên chị phải đăng ký ở quầy lễ tân và ghi lại tiền sử bệnh của mình. Sau đó chị ngồi trong phòng chờ cùng chừng mười mấy người khác. Một lúc sau, một cô y tá gọi tên chị và đo nhiệt độ cho chị. Bác sĩ khám cho chị rồi nói: "Không có gì nghiêm trọng đâu, chị không cần đi bác sĩ chuyên khoa. Nhưng nếu thấy khó thở thì chị đến thẳng phòng cấp cứu nhé." Ông cho chị vài lời khuyên: nghỉ ngơi, uống nhiều nước và ăn đồ nhẹ. "Chị sẽ sớm khỏe lại thôi. Nếu ho nặng hơn thì chị quay lại đây."
+L|Bác sĩ khám bệnh|Sau bài này bạn hiểu những việc bác sĩ làm và những lời bác sĩ dặn khi khám.
+W|examine|verb|khám (bệnh)|The doctor examined my throat and ears.|Bác sĩ khám họng và tai cho tôi.|/ɪɡˈzæmɪn/|/ɪɡˈzæmɪn/
+W|temperature|noun|nhiệt độ cơ thể|The nurse took my temperature.|Y tá đo nhiệt độ cho tôi.|/ˈtɛm.pər.ə.tʃɚ/|/ˈtɛm.pər.ə.tʃə/
+W|thermometer|noun|nhiệt kế|Put the thermometer under your arm.|Hãy kẹp nhiệt kế dưới nách.|/θɚˈmɑ.mɪ.tɚ/|/θəˈmɒm.ɪ.tə/
+W|pulse|noun|mạch (đập)|The doctor checked my pulse.|Bác sĩ bắt mạch cho tôi.|/pʌls/|/pʌls/
+W|bend|verb|gập, co (tay, chân, người)|Can you bend your knee for me?|Bạn gập đầu gối lại cho tôi xem được không?|/bɛnd/|/bɛnd/
+W|blood pressure|noun|huyết áp|My grandfather checks his blood pressure every morning.|Ông tôi đo huyết áp mỗi sáng.|/ˈblʌd ˌprɛʃɚ/|/ˈblʌd ˌprɛʃə/
+W|stick out|phrasal_verb|thè (lưỡi) ra, chìa ra|Open your mouth and stick out your tongue, please.|Bạn há miệng và thè lưỡi ra nhé.|/ˌstɪk ˈaʊt/|/ˌstɪk ˈaʊt/
+W|stethoscope|noun|ống nghe (của bác sĩ)|The doctor listened to my chest with a stethoscope.|Bác sĩ dùng ống nghe để nghe ngực tôi.|/ˈstɛθəsˌkoʊp/|/ˈstɛθəskəʊp/
+W|lie down|phrasal_verb|nằm xuống|Please lie down on the bed.|Bạn nằm xuống giường nhé.|/ˌlaɪ ˈdaʊn/|/ˌlaɪ ˈdaʊn/
+W|roll up|phrasal_verb|xắn (tay áo) lên|Roll up your sleeve, please.|Bạn xắn tay áo lên giúp tôi.|/ˌroʊl ˈʌp/|/ˌrəʊl ˈʌp/
+W|height|noun|chiều cao|The nurse measured my height and weight.|Y tá đo chiều cao và cân nặng của tôi.|/haɪt/|/haɪt/
+W|fluid|noun|chất lỏng, nước uống|Rest and drink plenty of fluids.|Hãy nghỉ ngơi và uống nhiều nước.|/ˈflu.ɪd/|/ˈfluːɪd/
+P|Minh had a sore throat and a fever, so his mother took him to the clinic near their house. First, a nurse measured his [height] and weight, then put a [thermometer] under his arm. "Your [temperature] is a bit high," she said. The doctor [examined|examine] him carefully. "Open your mouth and [stick out] your tongue, please." She listened to his chest with a [stethoscope] and checked his [pulse]. "Now [roll up] your sleeve. I need to check your [blood pressure]." Then she asked him to [lie down] on the bed and [bend] his knees while she pressed gently on his stomach. "It's only a throat infection," she said. "Rest at home and drink plenty of [fluids|fluid]."
+V|Minh bị đau họng và sốt nên mẹ đưa cậu đến phòng khám gần nhà. Trước tiên, cô y tá đo chiều cao, cân nặng rồi kẹp nhiệt kế dưới nách cậu. "Nhiệt độ của cháu hơi cao," cô nói. Bác sĩ khám cho Minh rất kỹ. "Cháu há miệng và thè lưỡi ra nào." Bác sĩ đặt ống nghe lên ngực cậu và bắt mạch. "Giờ cháu xắn tay áo lên nhé. Cô cần đo huyết áp." Sau đó bác sĩ bảo cậu nằm xuống giường, co hai chân lên để cô ấn nhẹ lên bụng. "Chỉ là viêm họng thôi," bác sĩ nói. "Cháu nghỉ ở nhà và uống thật nhiều nước nhé."
+H|Thuốc men và sơ cứu
+L|Ở hiệu thuốc|Sau bài này bạn hỏi mua được thuốc thông thường và hiểu cách dùng ghi trên hộp.
+W|pill|noun|viên thuốc|Take the pills exactly as the doctor says.|Hãy uống thuốc đúng như bác sĩ dặn.|/pɪl/|/pɪl/
+W|capsule|noun|viên con nhộng|These capsules are easier to swallow.|Những viên con nhộng này dễ nuốt hơn.|/ˈkæpsəl/|/ˈkæpsjuːl/
+W|syrup|noun|thuốc nước, siro thuốc|Children often find syrup easier to take than pills.|Trẻ em thường thấy uống siro dễ hơn uống thuốc viên.|/ˈsɪr.əp/|/ˈsɪ.rəp/
+W|cream|noun|kem bôi (da)|Put this cream on the itchy area.|Bôi kem này lên chỗ bị ngứa.|/krim/|/kriːm/
+W|eye drops|noun|thuốc nhỏ mắt|Use these eye drops if your eyes feel dry.|Dùng thuốc nhỏ mắt này nếu mắt bạn thấy khô.|/ˈaɪ ˌdrɑps/|/ˈaɪ ˌdrɒps/
+W|over-the-counter|adjective|(thuốc) không cần kê đơn|Over-the-counter medicines are sold without a prescription.|Thuốc không kê đơn là loại mua được mà không cần đơn bác sĩ.|/ˌoʊvɚðəˈkaʊntɚ/|/ˌəʊvəðəˈkaʊntə/
+W|side effect|noun|tác dụng phụ|Ask the pharmacist about possible side effects.|Hãy hỏi dược sĩ về các tác dụng phụ có thể gặp.|/ˈsaɪd ɪˌfɛkt/|/ˈsaɪd ɪˌfɛkt/
+W|drowsy|adjective|buồn ngủ, lơ mơ|This medicine may make you drowsy, so don't drive.|Thuốc này có thể gây buồn ngủ, nên đừng lái xe.|/ˈdraʊzi/|/ˈdraʊzi/
+W|swallow|verb|nuốt|Swallow the pill with a glass of water.|Nuốt viên thuốc với một cốc nước.|/ˈswɑ.loʊ/|/ˈswɒl.əʊ/
+W|out of reach|phrase|ngoài tầm với|Keep all medicines out of reach of children.|Hãy để mọi loại thuốc ngoài tầm với của trẻ em.|/ˌaʊt əv ˈritʃ/|/ˌaʊt əv ˈriːtʃ/
+W|relieve|verb|làm dịu, làm giảm (đau)|A warm bath can help relieve muscle pain.|Tắm nước ấm có thể giúp giảm đau cơ.|/rɪˈliv/|/rɪˈliːv/
+W|herbal|adjective|(làm từ) thảo dược|My grandmother drinks herbal tea when she has a cold.|Bà tôi uống trà thảo mộc mỗi khi bị cảm.|/ˈɝbəl/|/ˈhɜːbəl/
+W|remedy|noun|cách chữa, bài thuốc|Honey with warm water is a popular home remedy.|Nước ấm pha mật ong là một bài thuốc dân gian phổ biến.|/ˈrɛmədi/|/ˈrɛmədi/
+P|Lan stops at a pharmacy. "Do you have anything to [relieve] a sore throat?" she asks. "These are [over-the-counter], so you don't need a prescription," the pharmacist says. "We have [pills|pill] and [capsules|capsule]." "I can't [swallow] big ones." "Then try this [syrup]. Take it exactly as the box or your doctor says. One [side effect] is that it can make you [drowsy], so don't drive after taking it." Lan also buys [eye drops] and a [cream] for mosquito bites. "Keep all medicines [out of reach] of children," he adds. Lan smiles. "My mom says ginger tea is the best [remedy]." "A warm [herbal] drink can help," he says, "but see a doctor if you're not better in a few days."
+V|Lan ghé vào một hiệu thuốc. "Anh có thuốc gì làm dịu cơn đau họng không?" chị hỏi. "Mấy loại này là thuốc không kê đơn, chị mua được mà không cần toa bác sĩ," anh dược sĩ nói. "Có loại thuốc viên thường và loại viên con nhộng." "Tôi không nuốt được viên to." "Vậy chị thử loại siro này nhé. Chị uống đúng như hướng dẫn trên hộp hoặc theo lời bác sĩ dặn. Thuốc có một tác dụng phụ là có thể gây buồn ngủ, nên uống xong chị đừng lái xe." Lan mua thêm thuốc nhỏ mắt và một tuýp kem bôi vết muỗi đốt. "Chị nhớ để tất cả thuốc ngoài tầm với của trẻ con nhé," anh dặn thêm. Lan mỉm cười: "Mẹ tôi bảo trà gừng là bài thuốc hay nhất." "Một cốc trà thảo dược ấm cũng có ích," anh nói, "nhưng nếu vài ngày mà không đỡ thì chị nên đi khám bác sĩ nhé."
+L|Tai nạn nhỏ và sơ cứu|Sau bài này bạn kể được về tai nạn nhỏ và biết các từ cơ bản khi sơ cứu.
+W|slip|verb|trượt chân|Be careful, you might slip on the wet floor.|Cẩn thận, bạn có thể trượt chân trên sàn ướt.|/slɪp/|/slɪp/
+W|twist|verb|trẹo, bị lật (cổ chân, cổ tay)|I twisted my ankle while playing football.|Tôi bị trẹo mắt cá chân khi đá bóng.|/twɪst/|/twɪst/
+W|injury|noun|chấn thương, vết thương|Luckily, his injury was not serious.|May mắn là chấn thương của anh ấy không nghiêm trọng.|/ˈɪn.dʒɚ.i/|/ˈɪn.dʒə.ri/
+W|bruise|noun|vết bầm tím|She has a big bruise on her leg.|Cô ấy có một vết bầm lớn trên chân.|/bruz/|/bruːz/
+W|bleed|verb|chảy máu|Press firmly on the cut to stop the bleeding.|Ấn chặt vào vết đứt để cầm máu.|/blid/|/bliːd/
+W|burn|noun|vết bỏng|Hold a small burn under cool running water.|Hãy xả vết bỏng nhỏ dưới vòi nước mát.|/bɝn/|/bɜːn/
+W|bone|noun|xương|He fell and broke a bone in his wrist.|Anh ấy ngã và bị gãy xương cổ tay.|/boʊn/|/bəʊn/
+W|faint|verb|ngất, xỉu|She fainted in the hot sun.|Cô ấy bị ngất dưới trời nắng nóng.|/feɪnt/|/feɪnt/
+W|first aid|noun|sơ cứu|Every teacher should learn basic first aid.|Giáo viên nào cũng nên học sơ cứu cơ bản.|/ˌfɝst ˈeɪd/|/ˌfɜːst ˈeɪd/
+W|bandage|noun|băng (cứu thương)|The nurse put a bandage on my knee.|Y tá băng đầu gối cho tôi.|/ˈbæn.dɪdʒ/|/ˈbæn.dɪdʒ/
+W|crutches|noun|đôi nạng|He has to walk on crutches for six weeks.|Anh ấy phải chống nạng trong sáu tuần.|/ˈkrʌtʃɪz/|/ˈkrʌtʃɪz/
+W|scar|noun|vết sẹo|The cut healed but left a small scar.|Vết đứt đã lành nhưng để lại một vết sẹo nhỏ.|/skɑr/|/skɑː/
+P|Last Sunday was a bad day for Huy's family. First, Huy [slipped|slip] on the wet bathroom floor and [twisted|twist] his ankle. No [bone] was broken, but he needed [crutches] for a week. At lunch, his sister Mai got a [burn] on her hand from a hot pan. Mom knew [first aid], so she held it under cool running water for twenty minutes. Then little Bin fell off his bike. He got a [bruise] on his arm, and his knee began to [bleed]. Mom pressed a clean cloth on it and put on a [bandage]. "Will it leave a [scar]?" Bin asked. Later, Grandpa felt he might [faint] in the heat, so they helped him sit somewhere cool and sip water. Luckily, no one had a serious [injury].
+V|Chủ nhật vừa rồi là một ngày xui xẻo của nhà Huy. Đầu tiên, Huy trượt chân trên sàn nhà tắm ướt và bị trẹo cổ chân. Cậu không bị gãy xương nhưng phải chống nạng một tuần. Đến trưa, em gái Mai bị bỏng ở tay vì chạm vào chảo nóng. Mẹ biết sơ cứu nên giữ tay Mai dưới vòi nước mát chảy liên tục suốt hai mươi phút. Rồi bé Bin bị ngã xe đạp. Tay bé bị một vết bầm, còn đầu gối thì bắt đầu chảy máu. Mẹ lấy khăn sạch ấn lên vết thương rồi băng lại. "Có để lại sẹo không mẹ?" Bin hỏi. Lát sau, ông thấy như sắp xỉu vì trời nóng, cả nhà liền dìu ông ra ngồi chỗ mát và cho ông uống từng ngụm nước. May mà không ai bị thương nặng.
+H|Bệnh nặng và điều trị
+L|Nội tạng và bệnh nặng|Sau bài này bạn nói được về các cơ quan bên trong cơ thể và một số bệnh nặng, bệnh lâu dài thường gặp.
+W|brain|noun|não|The brain needs enough sleep to work well.|Não cần ngủ đủ để hoạt động tốt.|/breɪn/|/breɪn/
+W|liver|noun|gan|Too much alcohol can damage your liver.|Uống quá nhiều rượu bia có thể hại gan.|/ˈlɪvɚ/|/ˈlɪvə/
+W|kidney|noun|thận|Drinking enough water is good for your kidneys.|Uống đủ nước tốt cho thận.|/ˈkɪdni/|/ˈkɪdni/
+W|organ|noun|cơ quan (trong cơ thể), nội tạng|The heart and the lungs are important organs.|Tim và phổi là những cơ quan quan trọng.|/ˈɔrɡən/|/ˈɔːɡən/
+W|long-term|adjective|lâu dài, kéo dài|Diabetes is a long-term illness, but it can be controlled.|Tiểu đường là bệnh lâu dài nhưng có thể kiểm soát được.|/ˌlɔŋˈtɝm/|/ˌlɒŋˈtɜːm/
+W|asthma|noun|bệnh hen suyễn|My sister has asthma, so she stays away from smoke.|Chị tôi bị hen suyễn nên tránh xa khói.|/ˈæzmə/|/ˈæsmə/
+W|inhaler|noun|ống hít (trị hen)|She always carries her inhaler in her bag.|Cô ấy luôn mang ống hít trong túi.|/ɪnˈheɪlɚ/|/ɪnˈheɪlə/
+W|diabetes|noun|bệnh tiểu đường|People with diabetes need to control their blood sugar.|Người bị tiểu đường cần kiểm soát đường huyết.|/ˌdaɪəˈbitiz/|/ˌdaɪəˈbiːtiːz/
+W|heart attack|noun|cơn đau tim, nhồi máu cơ tim|Chest pain can be a sign of a heart attack.|Đau ngực có thể là dấu hiệu của cơn đau tim.|/ˈhɑrt əˌtæk/|/ˈhɑːt əˌtæk/
+W|stroke|noun|đột quỵ|After his stroke, he had trouble speaking.|Sau cơn đột quỵ, ông ấy bị khó nói.|/stroʊk/|/strəʊk/
+W|cancer|noun|bệnh ung thư|Smoking is a major cause of lung cancer.|Hút thuốc là nguyên nhân chính gây ung thư phổi.|/ˈkænsɚ/|/ˈkænsə/
+W|cure|noun|cách chữa khỏi|There is no cure for the common cold.|Chưa có cách chữa khỏi hẳn cảm lạnh thông thường.|/kjɔr/|/kjɔː/
+W|survive|verb|sống sót, qua khỏi|Many people survive cancer if it is found early.|Nhiều người qua khỏi bệnh ung thư nếu phát hiện sớm.|/sɚˈvaɪv/|/səˈvaɪv/
+P|At a free health talk, a doctor said, "Your heart, lungs, [brain], [liver] and [kidneys|kidney] are all important [organs|organ]. To protect them, sleep well, drink enough water and avoid too much alcohol." She explained that [diabetes] and [asthma] are [long-term] illnesses. "There is no [cure] for them yet, but with good care, people can live full lives. My son has asthma, and he always carries his [inhaler]." "Chest pain can be a sign of a [heart attack]," she added. "If someone suddenly can't speak clearly or one side of their face drops, it may be a [stroke]. In both cases, call 115 right away." "What about [cancer]?" an older man asked. "Many people [survive] cancer when it's found early," she said. "That's why regular check-ups matter."
+V|Ở một buổi nói chuyện miễn phí về sức khỏe, một cô bác sĩ nói: "Tim, phổi, não, gan và thận đều là những cơ quan quan trọng. Để bảo vệ chúng, mọi người hãy ngủ đủ giấc, uống đủ nước và đừng uống quá nhiều rượu bia." Cô giải thích rằng tiểu đường và hen suyễn là những bệnh lâu dài. "Hiện chưa có cách chữa khỏi hẳn, nhưng nếu chăm sóc tốt, người bệnh vẫn có thể sống khỏe và trọn vẹn. Con trai tôi bị hen, cháu lúc nào cũng mang theo ống hít." "Đau ngực có thể là dấu hiệu của cơn đau tim," cô nói thêm. "Nếu ai đó đột nhiên nói không rõ hoặc một bên mặt bị xệ xuống, đó có thể là đột quỵ. Gặp cả hai trường hợp này, hãy gọi 115 ngay." "Còn ung thư thì sao cô?" một bác lớn tuổi hỏi. "Nhiều người qua khỏi bệnh ung thư nếu được phát hiện sớm," cô đáp. "Vì vậy khám sức khỏe định kỳ rất quan trọng."
+L|Xét nghiệm và phẫu thuật|Sau bài này bạn hiểu các xét nghiệm thường gặp và nói được về ca mổ, nằm viện.
+W|blood test|noun|xét nghiệm máu|The doctor asked me not to eat before the blood test.|Bác sĩ dặn tôi không ăn gì trước khi xét nghiệm máu.|/ˈblʌd ˌtɛst/|/ˈblʌd ˌtɛst/
+W|needle|noun|kim tiêm|Many children are afraid of needles.|Nhiều trẻ em sợ kim tiêm.|/ˈni.dəl/|/ˈniː.dəl/
+W|injection|noun|mũi tiêm|The injection only hurt for a second.|Mũi tiêm chỉ đau một chút thôi.|/ɪnˈdʒɛk.ʃən/|/ɪnˈdʒɛk.ʃən/
+W|X-ray|noun|(phim) chụp X-quang|The doctor sent me for an X-ray of my chest.|Bác sĩ cho tôi đi chụp X-quang ngực.|/ˈɛks ˌreɪ/|/ˈɛks reɪ/
+W|ultrasound|noun|siêu âm|The ultrasound showed that the baby was fine.|Kết quả siêu âm cho thấy em bé vẫn khỏe.|/ˈʌl.trə.saʊnd/|/ˈʌl.trə.saʊnd/
+W|surgery|noun|ca phẫu thuật, ca mổ|She needs surgery on her knee.|Cô ấy cần phẫu thuật đầu gối.|/ˈsɝ.dʒə.ri/|/ˈsɜː.dʒə.ri/
+W|surgeon|noun|bác sĩ phẫu thuật|The surgeon said the operation went well.|Bác sĩ phẫu thuật nói ca mổ diễn ra tốt đẹp.|/ˈsɝdʒən/|/ˈsɜːdʒən/
+W|admit|verb|cho nhập viện|He was admitted to the hospital last night.|Anh ấy được cho nhập viện tối qua.|/ədˈmɪt/|/ədˈmɪt/
+W|ward|noun|khu điều trị, phòng bệnh|Visitors can come to the ward after four o'clock.|Người nhà có thể vào khu điều trị sau bốn giờ.|/wɔrd/|/wɔːd/
+W|stitch|noun|mũi khâu (vết thương)|I needed five stitches in my hand.|Tay tôi phải khâu năm mũi.|/stɪtʃ/|/stɪtʃ/
+W|recover|verb|hồi phục|It may take a month to recover from the surgery.|Có thể mất một tháng để hồi phục sau ca mổ.|/rɪˈkʌvɚ/|/rɪˈkʌvə/
+W|heal|verb|lành (vết thương)|The cut on my finger healed in a few days.|Vết đứt ở ngón tay tôi lành sau vài ngày.|/hil/|/hiːl/
+P|Last month, Nam's father had a bad pain in his stomach, so the family took him to the hospital. First, he had a [blood test]. He hates [needles|needle], but he stayed calm. Then he had an [ultrasound] and an [X-ray]. "It's his appendix," the doctor said. "He needs [surgery] tonight." He was [admitted|admit] at once, and a nurse gave him an [injection] for the pain. "Don't worry," the [surgeon] told Nam. "This is a very common operation." Everything went well. Nam's father spent three days in the [ward] with a few [stitches|stitch] on his stomach, and Nam visited him every afternoon. "The cut will [heal] in a week or two," the nurse said, "but it takes a few weeks to fully [recover]."
+V|Tháng trước, bố của Nam bị đau bụng dữ dội nên cả nhà đưa ông vào bệnh viện. Trước tiên, ông được xét nghiệm máu. Ông rất sợ kim tiêm nhưng vẫn giữ bình tĩnh. Sau đó ông được siêu âm và chụp X-quang. "Bác ấy bị viêm ruột thừa," bác sĩ nói. "Tối nay bác ấy cần mổ." Ông được cho nhập viện ngay, và một cô y tá tiêm cho ông một mũi giảm đau. "Cháu đừng lo," bác sĩ phẫu thuật nói với Nam. "Đây là ca mổ rất thường gặp." Mọi việc đều suôn sẻ. Bố Nam nằm ở khu điều trị ba ngày với vài mũi khâu trên bụng, chiều nào Nam cũng vào thăm. "Vết mổ sẽ lành trong một hai tuần," cô y tá nói, "nhưng phải mất vài tuần bác mới hồi phục hoàn toàn."
+H|Sống khỏe mỗi ngày
+L|Vận động cơ thể|Sau bài này bạn nói được về việc tập luyện và giữ cơ thể khỏe mạnh.
+W|physical|adjective|(thuộc) thể chất|Adults need regular physical activity.|Người lớn cần vận động thể chất thường xuyên.|/ˈfɪz.ɪ.kəl/|/ˈfɪz.ɪ.kəl/
+W|stamina|noun|sức bền, thể lực|Cycling to work helped me build stamina.|Đạp xe đi làm giúp tôi tăng sức bền.|/ˈstæmənə/|/ˈstæmɪnə/
+W|muscle|noun|cơ, cơ bắp|Swimming works the muscles in your arms and legs.|Bơi lội giúp tập các cơ ở tay và chân.|/ˈmʌs.əl/|/ˈmʌs.əl/
+W|jog|verb|chạy bộ (chậm)|I jog in the park every morning.|Sáng nào tôi cũng chạy bộ trong công viên.|/dʒɑɡ/|/dʒɒɡ/
+W|stretch|verb|duỗi người, giãn cơ|Stretch your arms and back after sitting for a long time.|Hãy duỗi tay và lưng sau khi ngồi lâu.|/strɛtʃ/|/strɛtʃ/
+W|warm up|phrasal_verb|khởi động (trước khi tập)|Always warm up for five minutes before exercise.|Luôn khởi động năm phút trước khi tập.|/ˌwɔrm ˈʌp/|/ˌwɔːm ˈʌp/
+W|cool down|phrasal_verb|thả lỏng (sau khi tập)|Walk slowly for a few minutes to cool down.|Đi bộ chậm vài phút để thả lỏng.|/ˌkul ˈdaʊn/|/ˌkuːl ˈdaʊn/
+W|sweat|verb|đổ mồ hôi|I sweat a lot when I play tennis.|Tôi đổ rất nhiều mồ hôi khi chơi quần vợt.|/swɛt/|/swɛt/
+W|out of breath|phrase|hụt hơi, thở dốc|I was out of breath after climbing the stairs.|Tôi thở hổn hển sau khi leo cầu thang.|/ˌaʊt əv ˈbrɛθ/|/ˌaʊt əv ˈbrɛθ/
+W|push-up|noun|động tác chống đẩy, hít đất|He does fifty push-ups every morning.|Sáng nào anh ấy cũng hít đất năm mươi cái.|/ˈpʊʃˌʌp/|/ˈpʊʃˌʌp/
+W|get in shape|phrase|lấy lại vóc dáng, khỏe lên|I joined a dance class to get in shape.|Tôi tham gia lớp nhảy để lấy lại vóc dáng.|/ˌɡɛt ɪn ˈʃeɪp/|/ˌɡɛt ɪn ˈʃeɪp/
+W|posture|noun|tư thế (ngồi, đứng)|Bad posture at your desk can cause back pain.|Ngồi sai tư thế ở bàn làm việc có thể gây đau lưng.|/ˈpɑstʃɚ/|/ˈpɒstʃə/
+P|Huy works at a desk all day, and last month his back started to hurt. "Your [posture] is the problem," his doctor said. "You need more [physical] activity." So Huy decided to [get in shape]. Now he goes to the park near his house every morning. First, he [warms up|warm up] for five minutes, then he [jogs|jog] two laps around the lake. At the beginning, he was [out of breath] after just ten minutes, and he [sweated|sweat] a lot. After running, he walks slowly to [cool down] and [stretches|stretch] his legs and back. He also does twenty [push-ups|push-up] to build his arm [muscles|muscle]. "My [stamina] is much better now," he tells his wife. "And my back doesn't hurt anymore!"
+V|Huy ngồi bàn giấy cả ngày, và tháng trước anh bắt đầu bị đau lưng. "Tư thế ngồi của anh là vấn đề đấy," bác sĩ nói. "Anh cần vận động thể chất nhiều hơn." Thế là Huy quyết tâm tập luyện cho khỏe lên. Giờ sáng nào anh cũng ra công viên gần nhà. Đầu tiên, anh khởi động năm phút, rồi chạy bộ hai vòng quanh hồ. Lúc mới tập, anh chỉ chạy mười phút đã thở dốc và đổ mồ hôi rất nhiều. Chạy xong, anh đi bộ chậm để thả lỏng rồi giãn cơ chân và lưng. Anh còn chống đẩy hai mươi cái để tăng cơ tay. "Giờ sức bền của anh tốt hơn nhiều rồi," anh khoe với vợ. "Mà lưng cũng hết đau luôn!"
+L|Thói quen lành mạnh|Sau bài này bạn nói được về lối sống lành mạnh và những thói quen nên bỏ.
+W|addicted|adjective|nghiện|Many teenagers are addicted to their phones.|Nhiều bạn tuổi teen bị nghiện điện thoại.|/əˈdɪktɪd/|/əˈdɪktɪd/
+W|lifestyle|noun|lối sống|A busy lifestyle leaves little time for exercise.|Lối sống bận rộn khiến ta ít có thời gian tập thể dục.|/ˈlaɪfˌstaɪl/|/ˈlaɪfˌstaɪl/
+W|diet|noun|chế độ ăn uống|A good diet includes lots of vegetables.|Một chế độ ăn tốt có nhiều rau.|/ˈdaɪət/|/ˈdaɪət/
+W|balanced|adjective|cân bằng, cân đối|Children need a balanced diet to grow well.|Trẻ em cần chế độ ăn cân đối để lớn tốt.|/ˈbælənst/|/ˈbælənst/
+W|vitamin|noun|vitamin|Oranges are full of vitamin C.|Cam chứa rất nhiều vitamin C.|/ˈvaɪ.tə.mɪn/|/ˈvɪt.ə.mɪn/
+W|routine|noun|nếp sinh hoạt hằng ngày|My morning routine includes a short walk.|Nếp sinh hoạt buổi sáng của tôi có một lần đi bộ ngắn.|/ruˈtin/|/ruːˈtiːn/
+W|fresh air|noun|không khí trong lành|Let's go outside and get some fresh air.|Mình ra ngoài hít thở không khí trong lành đi.|/ˌfrɛʃ ˈɛr/|/ˌfrɛʃ ˈɛə/
+W|smoke|verb|hút thuốc|My father stopped smoking ten years ago.|Bố tôi bỏ hút thuốc từ mười năm trước.|/smoʊk/|/sməʊk/
+W|cigarette|noun|điếu thuốc lá|Cigarettes are bad for your heart and lungs.|Thuốc lá có hại cho tim và phổi.|/ˈsɪɡərɛt/|/ˈsɪɡərɛt/
+W|alcohol|noun|rượu bia, đồ uống có cồn|Drink less alcohol and more water.|Hãy uống ít rượu bia lại và uống nhiều nước hơn.|/ˈæl.kə.hɔl/|/ˈæl.kə.hɒl/
+W|cut down on|phrasal_verb|cắt giảm, dùng ít lại|I'm trying to cut down on coffee.|Tôi đang cố uống ít cà phê lại.|/ˌkʌt ˈdaʊn ɑn/|/ˌkʌt ˈdaʊn ɒn/
+W|give up|phrasal_verb|bỏ (một thói quen)|It's never too late to give up smoking.|Bỏ thuốc lá không bao giờ là quá muộn.|/ˌɡɪv ˈʌp/|/ˌɡɪv ˈʌp/
+W|lose weight|phrase|giảm cân|She walks to work to lose weight.|Cô ấy đi bộ đi làm để giảm cân.|/ˌluz ˈweɪt/|/ˌluːz ˈweɪt/
+P|Linh's father, Mr. Nam, used to [smoke] a pack of [cigarettes|cigarette] a day and drink [alcohol] with his friends every weekend. He was also [addicted] to sweet milk coffee. Last year, his doctor told him to change his [lifestyle]. "You need to [lose weight] and eat a [balanced] [diet]," she said. It wasn't easy, but he finally [gave up|give up] smoking. He [cut down on] beer and coffee, and now he eats more fruit and vegetables full of [vitamins|vitamin]. His new [routine] starts with a walk in the [fresh air] at six o'clock every morning. "I have so much more energy now," he told Linh with a big smile.
+V|Bố của Linh, ông Nam, trước đây mỗi ngày hút hết một bao thuốc lá, cuối tuần nào cũng uống rượu bia với bạn bè. Ông còn nghiện cà phê sữa ngọt nữa. Năm ngoái, bác sĩ khuyên ông thay đổi lối sống. "Bác cần giảm cân và ăn uống cân bằng hơn," bác sĩ nói. Không dễ chút nào, nhưng cuối cùng ông cũng bỏ được thuốc lá. Ông uống ít bia và cà phê lại, giờ ăn nhiều rau và trái cây giàu vitamin hơn. Nếp sinh hoạt mới của ông bắt đầu bằng một vòng đi bộ hít thở không khí trong lành lúc sáu giờ mỗi sáng. "Giờ bố thấy khỏe khoắn hơn hẳn," ông cười tươi nói với Linh.
+H|Giấc ngủ và sức khỏe tinh thần
+L|Ngủ đủ giấc|Sau bài này bạn kể được về giấc ngủ của mình và những vấn đề hay gặp khi ngủ.
+W|bedtime|noun|giờ đi ngủ|Turn off your phone an hour before bedtime.|Hãy tắt điện thoại một tiếng trước giờ đi ngủ.|/ˈbɛdtaɪm/|/ˈbɛdtaɪm/
+W|doze off|phrasal_verb|ngủ gật, thiếp đi lúc nào không hay|Grandpa often dozes off in front of the TV.|Ông tôi hay ngủ gật trước ti vi.|/ˌdoʊz ˈɔf/|/ˌdəʊz ˈɒf/
+W|yawn|verb|ngáp|She couldn't stop yawning in the meeting.|Cô ấy cứ ngáp mãi trong cuộc họp.|/jɔn/|/jɔːn/
+W|fall asleep|phrase|ngủ thiếp đi|I usually fall asleep within ten minutes.|Tôi thường ngủ thiếp đi chỉ sau mười phút.|/ˌfɔl əˈslip/|/ˌfɔːl əˈsliːp/
+W|awake|adjective|thức, tỉnh (không ngủ)|I lay awake until three in the morning.|Tôi nằm thao thức đến ba giờ sáng.|/əˈweɪk/|/əˈweɪk/
+W|snore|verb|ngáy|My husband snores so loudly that I can't sleep.|Chồng tôi ngáy to đến mức tôi không ngủ được.|/snɔr/|/snɔː/
+W|nightmare|noun|cơn ác mộng|The child woke up crying after a nightmare.|Đứa bé thức dậy khóc vì gặp ác mộng.|/ˈnaɪt.mɛɚ/|/ˈnaɪt.mɛə/
+W|insomnia|noun|chứng mất ngủ|Stress is a common cause of insomnia.|Căng thẳng là nguyên nhân phổ biến gây mất ngủ.|/ɪnˈsɑmniə/|/ɪnˈsɒmniə/
+W|toss and turn|idiom|trằn trọc, trở mình mãi không ngủ được|I tossed and turned all night before the interview.|Tôi trằn trọc cả đêm trước buổi phỏng vấn.|/ˌtɔs ən ˈtɝn/|/ˌtɒs ən ˈtɜːn/
+W|stay up|phrasal_verb|thức khuya, chưa đi ngủ|Don't stay up late before an exam.|Đừng thức khuya trước hôm thi.|/ˌsteɪ ˈʌp/|/ˌsteɪ ˈʌp/
+W|oversleep|verb|ngủ quên, ngủ dậy muộn|Set two alarms so you don't oversleep.|Đặt hai báo thức để khỏi ngủ quên.|/ˌoʊvɚˈslip/|/ˌəʊvəˈsliːp/
+W|exhausted|adjective|kiệt sức, mệt lử|After the night shift, she was exhausted.|Sau ca đêm, cô ấy mệt lử.|/ɪɡˈzɔstɪd/|/ɪɡˈzɔːstɪd/
+P|Last month, Mai had [insomnia]. She often [stayed up|stay up] until midnight with her phone, then [tossed and turned|toss and turn] for hours. Some nights she lay [awake] until three, listening to her brother [snore] in the next room. When she finally [fell asleep|fall asleep], she sometimes had a [nightmare]. Twice she [overslept|oversleep] and was late for class. She [yawned|yawn] all day and even [dozed off|doze off] during a math lesson. "You look [exhausted]," her mother said. "Why don't you put your phone away an hour before [bedtime]?" Mai tried it. Now she reads a book instead, and she usually falls asleep within fifteen minutes.
+V|Tháng trước, Mai bị mất ngủ. Cô thường thức khuya đến nửa đêm với chiếc điện thoại, rồi trằn trọc hàng giờ liền. Có đêm cô nằm thao thức đến ba giờ sáng, nghe tiếng em trai ngáy ở phòng bên. Đến khi ngủ được thì thỉnh thoảng cô lại gặp ác mộng. Đã hai lần cô ngủ quên và đi học muộn. Cả ngày cô ngáp liên tục, thậm chí còn ngủ gật trong giờ toán. "Trông con mệt lử rồi đấy," mẹ cô nói. "Sao con không cất điện thoại đi trước giờ ngủ một tiếng?" Mai làm thử. Giờ cô đọc sách thay cho điện thoại, và thường chỉ mười lăm phút là ngủ thiếp đi.
+L|Căng thẳng và tinh thần|Sau bài này bạn nói được về căng thẳng, cảm xúc và cách chăm sóc sức khỏe tinh thần.
+W|stress|noun|sự căng thẳng|Exams cause a lot of stress for students.|Kỳ thi gây nhiều căng thẳng cho học sinh.|/strɛs/|/strɛs/
+W|anxious|adjective|lo âu, bồn chồn|I feel anxious before I speak in public.|Tôi thấy lo âu trước khi nói trước đám đông.|/ˈæŋkʃəs/|/ˈæŋkʃəs/
+W|panic|verb|hoảng loạn, hoảng sợ|Don't panic. Just breathe slowly.|Đừng hoảng. Cứ thở thật chậm thôi.|/ˈpænɪk/|/ˈpænɪk/
+W|overwhelmed|adjective|quá tải, choáng ngợp|She felt overwhelmed by work and family.|Cô ấy thấy quá tải vì công việc và gia đình.|/ˌoʊvɚˈwɛlmd/|/ˌəʊvəˈwɛlmd/
+W|cheer up|phrasal_verb|làm (ai) vui lên, vui lên|Calling an old friend always cheers me up.|Gọi điện cho một người bạn cũ luôn giúp tôi vui lên.|/ˌtʃɪr ˈʌp/|/ˌtʃɪə ˈʌp/
+W|cope|verb|đương đầu, đối phó|Talking to friends helps me cope with stress.|Tâm sự với bạn bè giúp tôi đối phó với căng thẳng.|/koʊp/|/kəʊp/
+W|lonely|adjective|cô đơn|He felt lonely after moving to a new city.|Anh ấy thấy cô đơn sau khi chuyển đến thành phố mới.|/ˈloʊnli/|/ˈləʊnli/
+W|depressed|adjective|chán nản, trầm cảm|If you feel depressed for weeks, talk to a doctor.|Nếu bạn thấy chán nản suốt nhiều tuần, hãy nói chuyện với bác sĩ.|/dɪˈprɛst/|/dɪˈprɛst/
+W|emotion|noun|cảm xúc|It's okay to show your emotions.|Thể hiện cảm xúc của mình là chuyện bình thường.|/ɪˈmoʊ.ʃən/|/ɪˈməʊ.ʃən/
+W|mental health|noun|sức khỏe tinh thần|Good sleep is important for your mental health.|Ngủ ngon rất quan trọng với sức khỏe tinh thần.|/ˌmɛntəl ˈhɛlθ/|/ˌmɛntəl ˈhɛlθ/
+W|therapist|noun|nhà trị liệu tâm lý|Talking to a therapist helped her a lot.|Nói chuyện với nhà trị liệu tâm lý đã giúp cô ấy rất nhiều.|/ˈθɛrəpɪst/|/ˈθɛrəpɪst/
+W|meditation|noun|thiền|Ten minutes of meditation helps me relax.|Mười phút thiền giúp tôi thư giãn.|/ˌmɛdɪˈteɪʃən/|/ˌmɛdɪˈteɪʃən/
+W|open up|phrasal_verb|mở lòng, tâm sự|It took him a long time to open up about his problems.|Anh ấy mất rất lâu mới chịu tâm sự về những khó khăn của mình.|/ˌoʊpən ˈʌp/|/ˌəʊpən ˈʌp/
+P|After Minh moved to Da Nang for a new job, he felt [lonely] and [overwhelmed]. The [stress] at work made him [anxious], and the night before an important meeting, he began to [panic]. For weeks, he felt [depressed] but kept his [emotions|emotion] to himself. Finally, he called his older sister. At first it was hard to [open up], but she listened kindly. "You don't have to [cope] with this alone," she said. Her warm words helped him [cheer up] a little. She also suggested seeing a [therapist]. Now Minh talks to a therapist every two weeks and does ten minutes of [meditation] each morning. "Taking care of your [mental health] is just as important as taking care of your body," he says.
+V|Sau khi chuyển đến Đà Nẵng làm công việc mới, Minh cảm thấy cô đơn và quá tải. Áp lực công việc khiến anh lo âu, và vào đêm trước một cuộc họp quan trọng, anh bắt đầu hoảng loạn. Suốt mấy tuần liền, anh thấy chán nản nhưng giữ hết cảm xúc trong lòng. Cuối cùng, anh gọi điện cho chị gái. Lúc đầu, mở lòng thật khó, nhưng chị lắng nghe rất ân cần. "Em không phải một mình đối mặt với chuyện này đâu," chị nói. Những lời ấm áp của chị giúp anh vui lên phần nào. Chị cũng khuyên anh đi gặp nhà trị liệu tâm lý. Giờ đây, cứ hai tuần Minh lại trò chuyện với nhà trị liệu một lần, và mỗi sáng anh ngồi thiền mười phút. "Chăm sóc sức khỏe tinh thần cũng quan trọng như chăm sóc cơ thể vậy," anh nói.

@@ -1,0 +1,221 @@
+# Khóa “Ăn uống và nấu nướng”. Phiên âm: Wiktionary (CC BY-SA 4.0); chọn từ, chia bài, nghĩa, ví dụ, đoạn đọc do app soạn (CC BY-SA 4.0).
+# H|chương  L|tên bài|mục tiêu  W|từ|loại từ|nghĩa|ví dụ|dịch ví dụ|phiên âm Mỹ|phiên âm Anh  P|đoạn đọc  V|bản dịch
+H|Bữa ăn trong ngày
+L|Món ăn sáng|Sau bài này bạn gọi tên được các món ăn sáng quen thuộc và kể về bữa sáng của mình.
+W|meal|noun|bữa ăn|We eat three meals a day, but lunch is the biggest one.|Chúng tôi ăn ba bữa một ngày, nhưng bữa trưa là bữa lớn nhất.|/mil/|/miːl/
+W|skip|verb|bỏ, không ăn (một bữa)|I often skip breakfast when I get up late.|Tôi hay bỏ bữa sáng khi dậy muộn.|/skɪp/|/skɪp/
+W|bread|noun|bánh mì (nói chung)|My mother buys fresh bread every morning.|Mẹ tôi mua bánh mì mới ra lò mỗi sáng.|/brɛd/|/brɛd/
+W|toast|noun|bánh mì lát nướng|I had two slices of toast and a cup of tea.|Tôi ăn hai lát bánh mì nướng và uống một tách trà.|/toʊst/|/təʊst/
+W|butter|noun|bơ (làm từ sữa)|Do you want some butter on your bread?|Bạn có muốn phết chút bơ lên bánh mì không?|/ˈbʌtɚ/|/ˈbʌtə/
+W|cheese|noun|phô mai|This sandwich has ham and cheese inside.|Chiếc bánh mì kẹp này có giăm bông và phô mai bên trong.|/tʃiz/|/tʃiːz/
+W|cereal|noun|ngũ cốc ăn sáng|My kids eat a bowl of cereal with milk before school.|Các con tôi ăn một bát ngũ cốc với sữa trước khi đi học.|/ˈsɪriəl/|/ˈsɪə.rɪ.əl/
+W|yogurt|noun|sữa chua|I usually have yogurt and fruit for breakfast.|Tôi thường ăn sữa chua và trái cây vào bữa sáng.|/ˈjoʊ.ɡɚt/|/ˈjɒɡ.ət/
+W|porridge|noun|cháo|When it is cold, a bowl of hot porridge is perfect.|Khi trời lạnh, một bát cháo nóng là tuyệt nhất.|/ˈpɔrɪdʒ/|/ˈpɒr.ɪdʒ/
+W|pancake|noun|bánh kếp|On Sundays, my dad makes pancakes for the whole family.|Chủ nhật, bố tôi làm bánh kếp cho cả nhà.|/ˈpæn.keɪk/|/ˈpæn.keɪk/
+W|sandwich|noun|bánh mì kẹp|I made a chicken sandwich to eat on the bus.|Tôi làm một chiếc bánh mì kẹp gà để ăn trên xe buýt.|/ˈsænˌdwɪtʃ/|/ˈsænd.wɪdʒ/
+W|noodles|noun|mì, bún, phở (món sợi)|Many Vietnamese people eat noodles for breakfast.|Nhiều người Việt ăn bún, phở vào bữa sáng.|/ˈnudəlz/|/ˈnuːdəlz/
+W|brunch|noun|bữa sáng muộn gộp với bữa trưa|We got up late and had brunch at eleven.|Chúng tôi dậy muộn và ăn bữa sáng muộn lúc mười một giờ.|/brʌntʃ/|/brʌntʃ/
+P|Breakfast is the most important [meal] of the day, but Minh often wants to [skip] it. This morning his mother stopped him at the door. "Eat something first," she said. "There is fresh [bread] on the table, or you can have [toast] with [butter] and [cheese]." Minh shook his head. "I'm not hungry, Mom." His little sister Lan was eating a bowl of [cereal] and a cup of [yogurt]. "Grandma made hot [porridge] too," she added. In the end, Minh took a chicken [sandwich] to eat on the bus. On other mornings the family has [noodles] for breakfast, and on Sundays Dad makes [pancakes|pancake]. Sometimes they all get up late and have [brunch] at eleven instead.
+V|Bữa sáng là bữa ăn quan trọng nhất trong ngày, nhưng Minh hay muốn bỏ bữa. Sáng nay mẹ chặn cậu lại ở cửa. "Ăn chút gì đã con," mẹ nói. "Trên bàn có bánh mì mới mua, hoặc con ăn bánh mì nướng phết bơ với phô mai." Minh lắc đầu: "Con không đói mẹ ạ." Em gái Lan đang ăn một bát ngũ cốc và một hũ sữa chua. "Bà còn nấu cháo nóng nữa đấy," em nói thêm. Cuối cùng, Minh mang theo một chiếc bánh mì kẹp gà để ăn trên xe buýt. Những hôm khác cả nhà ăn bún hoặc phở vào bữa sáng, còn Chủ nhật thì bố làm bánh kếp. Thỉnh thoảng cả nhà dậy muộn và ăn một bữa sáng muộn lúc mười một giờ, gộp luôn bữa trưa.
+L|Bữa cơm gia đình|Sau bài này bạn nói được về một bữa cơm gia đình, từ lúc dọn bàn đến lúc rửa bát.
+W|home-cooked|adjective|nấu ở nhà|Nothing is better than a home-cooked meal after a long day.|Không gì bằng một bữa cơm nhà nấu sau một ngày dài.|/ˌhoʊmˈkʊkt/|/ˌhəʊmˈkʊkt/
+W|starving|adjective|đói meo, rất đói|I'm starving! What's for dinner?|Con đói meo rồi! Tối nay ăn gì ạ?|/ˈstɑrvɪŋ/|/ˈstɑːvɪŋ/
+W|set the table|phrase|bày bát đũa ra bàn|Can you set the table while I finish the soup?|Con bày bát đũa ra bàn trong lúc mẹ nấu nốt canh nhé?|/ˌsɛt ðə ˈteɪbəl/|/ˌsɛt ðə ˈteɪbəl/
+W|bowl|noun|cái bát, cái tô|In Vietnam, we eat rice from a small bowl.|Ở Việt Nam, chúng ta ăn cơm bằng bát nhỏ.|/boʊl/|/bəʊl/
+W|chopsticks|noun|đôi đũa|My English friend is learning to use chopsticks.|Người bạn Anh của tôi đang tập dùng đũa.|/ˈtʃɑpstɪks/|/ˈtʃɒpstɪks/
+W|spoon|noun|cái thìa, cái muỗng|Use a spoon for the soup.|Dùng thìa để ăn canh nhé.|/spun/|/spuːn/
+W|fork|noun|cái nĩa, cái dĩa|Young children often find a fork easier than chopsticks.|Trẻ nhỏ thường thấy dùng nĩa dễ hơn dùng đũa.|/fɔrk/|/fɔːk/
+W|plate|noun|cái đĩa|Put the fried fish on a big plate.|Bày cá rán ra một cái đĩa to.|/pleɪt/|/pleɪt/
+W|soup|noun|canh, súp|We have a vegetable soup with almost every dinner.|Gần như bữa tối nào nhà tôi cũng có một bát canh rau.|/sup/|/suːp/
+W|side dish|noun|món ăn kèm|Mom always makes a side dish of green vegetables.|Mẹ luôn làm thêm một món rau xanh ăn kèm.|/ˈsaɪd ˌdɪʃ/|/ˈsaɪd ˌdɪʃ/
+W|help yourself|phrase|cứ tự nhiên lấy ăn|There's plenty of food, so please help yourself.|Có nhiều đồ ăn lắm, cứ tự nhiên lấy nhé.|/ˌhɛlp jɚˈsɛlf/|/ˌhɛlp jɔːˈsɛlf/
+W|do the dishes|phrase|rửa bát đĩa|After dinner, my brother and I take turns to do the dishes.|Sau bữa tối, tôi và em trai thay phiên nhau rửa bát.|/ˌdu ðə ˈdɪʃɪz/|/ˌduː ðə ˈdɪʃɪz/
+P|Huy came home from school with his friend Ben and shouted, "Mom, we're [starving]! What's for dinner?" "Fried fish, rice and a sour [soup]," Mom answered. "Can you [set the table] first?" Huy put a small [bowl], a pair of [chopsticks] and a [spoon] at each place. He also brought a [fork] for Ben, who was still learning to use chopsticks. Mom put the fish on a big [plate] and made a [side dish] of boiled vegetables. When everyone sat down, she smiled at Ben and said, "There's plenty of food, so please [help yourself]." Ben said it was his first [home-cooked] Vietnamese dinner, and he loved it. After the meal, the two boys offered to [do the dishes].
+V|Huy đi học về cùng cậu bạn Ben và gọi to: "Mẹ ơi, bọn con đói meo rồi! Tối nay ăn gì thế mẹ?" "Cá rán, cơm và canh chua," mẹ trả lời. "Con bày bát đũa ra bàn trước đi." Huy đặt ở mỗi chỗ ngồi một cái bát nhỏ, một đôi đũa và một cái thìa. Cậu còn lấy thêm một cái nĩa cho Ben, vì Ben vẫn đang tập dùng đũa. Mẹ bày cá ra một cái đĩa to và làm thêm món rau luộc ăn kèm. Khi mọi người đã ngồi vào bàn, mẹ mỉm cười với Ben: "Đồ ăn nhiều lắm, cháu cứ tự nhiên nhé." Ben nói đây là lần đầu cậu được ăn một bữa cơm Việt Nam nấu ở nhà, và cậu rất thích. Ăn xong, hai cậu bé xin được rửa bát.
+H|Rau củ và trái cây
+L|Rau củ quen thuộc|Sau bài này bạn gọi tên được các loại rau củ thường dùng trong bữa ăn.
+W|carrot|noun|củ cà rốt|Rabbits love carrots, and so does my little sister.|Thỏ thích cà rốt, em gái tôi cũng vậy.|/ˈkærət/|/ˈkærət/
+W|potato|noun|củ khoai tây|We need some potatoes for the soup.|Chúng ta cần ít khoai tây để nấu súp.|/pəˈteɪ.toʊ/|/pəˈteɪ.təʊ/
+W|tomato|noun|quả cà chua|Cut the tomatoes into small pieces.|Cắt cà chua thành miếng nhỏ.|/təˈmeɪ.toʊ/|/təˈmɑː.təʊ/
+W|onion|noun|củ hành tây|Cutting onions always makes me cry.|Thái hành tây lúc nào cũng làm tôi chảy nước mắt.|/ˈʌnjən/|/ˈʌnjən/
+W|cabbage|noun|bắp cải|Boiled cabbage is a simple but healthy dish.|Bắp cải luộc là món đơn giản nhưng tốt cho sức khỏe.|/ˈkæbɪdʒ/|/ˈkæbɪdʒ/
+W|cucumber|noun|quả dưa chuột, dưa leo|I like to eat cucumber with grilled pork.|Tôi thích ăn dưa chuột với thịt nướng.|/ˈkjuˌkʌmbɚ/|/ˈkjuːˌkʌmbə/
+W|lettuce|noun|rau xà lách|Wash the lettuce carefully before you eat it.|Rửa xà lách thật kỹ trước khi ăn.|/ˈlɛt.ɪs/|/ˈlɛt.ɪs/
+W|corn|noun|ngô, bắp|In winter, people sell roasted corn on the street.|Vào mùa đông, người ta bán ngô nướng trên phố.|/kɔrn/|/kɔːn/
+W|mushroom|noun|nấm|This soup has chicken and mushrooms in it.|Món súp này có thịt gà và nấm.|/ˈmʌʃˌrum/|/ˈmʌʃˌruːm/
+W|bean|noun|đậu, hạt đậu|Green beans are cheap and easy to cook.|Đậu cô ve rẻ và dễ nấu.|/bin/|/biːn/
+W|pumpkin|noun|quả bí đỏ|Pumpkin soup is sweet and good for kids.|Canh bí đỏ ngọt và tốt cho trẻ nhỏ.|/ˈpʌmp.kɪn/|/ˈpʌmpkɪn/
+W|broccoli|noun|súp lơ xanh, bông cải xanh|My son never eats his broccoli.|Con trai tôi chẳng bao giờ chịu ăn súp lơ xanh.|/ˈbrɑ.kə.li/|/ˈbrɒk.ə.li/
+P|Mai went to the market with her grandmother to buy vegetables. "We need some [carrots|carrot] and [potatoes|potato] for the soup," Grandma said. The seller smiled. "These [tomatoes|tomato] and [onions|onion] came in fresh this morning too." Grandma chose a kilo of tomatoes and a big [cabbage]. Mai pointed at a pile of green vegetables. "Can we get a [cucumber] and some [lettuce]? I want to make a salad." "Of course," Grandma said. At the next stall, they bought a bag of [mushrooms|mushroom], some green [beans|bean] and two ears of sweet [corn]. Then Mai saw a big orange [pumpkin]. "Pumpkin soup is my favorite!" she said. Grandma laughed and bought it, along with some [broccoli]. "Then you must eat your broccoli too."
+V|Mai đi chợ với bà để mua rau củ. "Mình cần ít cà rốt và khoai tây để nấu canh," bà nói. Cô bán hàng mỉm cười: "Cà chua với hành tây này cũng mới về sáng nay đấy bà." Bà chọn một cân cà chua và một bắp cải to. Mai chỉ vào đống rau xanh: "Mình mua một quả dưa chuột và ít xà lách được không bà? Cháu muốn làm món salad." "Được chứ," bà đáp. Ở sạp bên cạnh, hai bà cháu mua một túi nấm, ít đậu que và hai bắp ngô ngọt. Rồi Mai thấy một quả bí đỏ to màu cam. "Canh bí đỏ là món cháu thích nhất!" cô bé reo lên. Bà cười, mua quả bí, rồi mua thêm ít súp lơ xanh. "Thế thì cháu cũng phải ăn cả súp lơ nữa nhé."
+L|Trái cây ngon ngọt|Sau bài này bạn gọi tên được các loại trái cây và nhận xét quả chín, ngọt, mọng nước.
+W|banana|noun|quả chuối|A banana is a quick snack before the gym.|Một quả chuối là món ăn nhanh trước khi đi tập.|/bəˈnænə/|/bəˈnɑːnə/
+W|mango|noun|quả xoài|Mangoes are sweetest in the summer.|Xoài ngọt nhất vào mùa hè.|/ˈmæŋɡoʊ/|/ˈmæŋɡəʊ/
+W|pineapple|noun|quả dứa, quả thơm|We added pineapple to the sour fish soup.|Chúng tôi cho dứa vào nồi canh chua cá.|/ˈpaɪnəpəl/|/ˈpaɪnˌæpəl/
+W|watermelon|noun|quả dưa hấu|Nothing beats cold watermelon on a hot day.|Không gì bằng dưa hấu mát lạnh vào ngày nóng.|/ˈwɑtɚˌmɛlən/|/ˈwɔːtəˌmɛlən/
+W|papaya|noun|quả đu đủ|Green papaya salad is popular in Vietnam.|Nộm đu đủ xanh rất phổ biến ở Việt Nam.|/pəˈpaɪ.ə/|/pəˈpaɪ.ə/
+W|coconut|noun|quả dừa|She drank fresh coconut water on the beach.|Cô ấy uống nước dừa tươi trên bãi biển.|/ˈkoʊ.kəˌnʌt/|/ˈkəʊ.kə.nʌt/
+W|grape|noun|quả nho|These grapes have no seeds.|Nho này không có hạt.|/ɡreɪp/|/ɡreɪp/
+W|lime|noun|quả chanh (xanh, loại chanh ta)|In Vietnam, a bowl of pho usually comes with lime and chili.|Ở Việt Nam, bát phở thường được ăn kèm chanh và ớt.|/laɪm/|/laɪm/
+W|avocado|noun|quả bơ|An avocado smoothie is my favorite drink.|Sinh tố bơ là đồ uống tôi thích nhất.|/ˌɑvəˈkɑdoʊ/|/ˌævəˈkɑːdəʊ/
+W|strawberry|noun|quả dâu tây|Da Lat is famous for its strawberries.|Đà Lạt nổi tiếng với dâu tây.|/ˈstrɔˌbɛri/|/ˈstrɔːbəri/
+W|ripe|adjective|chín (trái cây)|Don't eat that mango yet, it isn't ripe.|Đừng ăn quả xoài đó vội, nó chưa chín đâu.|/raɪp/|/raɪp/
+W|seed|noun|hạt (của quả)|Watermelon seeds are small and black.|Hạt dưa hấu nhỏ và màu đen.|/sid/|/siːd/
+W|juicy|adjective|mọng nước|This pear is sweet and juicy.|Quả lê này ngọt và mọng nước.|/ˈdʒusi/|/ˈdʒuːsi/
+P|On her way home, Linh stopped at a fruit stall. "How much are the [mangoes|mango]?" she asked. "Forty thousand dong a kilo," the seller said. "They're very sweet and [juicy]." Linh picked up one mango and pressed it gently. "Is this one [ripe]?" "Yes, you can eat it tonight." Linh also bought a bunch of [bananas|banana], a [pineapple] for sour soup and a small [watermelon]. "This watermelon has very few [seeds|seed]," the seller added. "Do you have any [papaya]?" Linh asked. "Sorry, not today. But I have fresh [coconuts|coconut], green [grapes|grape] and [strawberries|strawberry] from Da Lat." In the end, Linh chose a box of strawberries, two [avocados|avocado] for smoothies and a few [limes|lime] for her pho.
+V|Trên đường về nhà, Linh ghé một sạp trái cây. "Xoài bao nhiêu một cân vậy cô?" cô hỏi. "Bốn mươi nghìn một cân," cô bán hàng nói. "Ngọt và mọng nước lắm." Linh cầm một quả lên, ấn nhẹ. "Quả này chín chưa cô?" "Chín rồi, tối nay ăn được luôn." Linh mua thêm một nải chuối, một quả dứa để nấu canh chua và một quả dưa hấu nhỏ. "Quả dưa hấu này ít hạt lắm," cô bán hàng nói thêm. "Cô có đu đủ không ạ?" Linh hỏi. "Hôm nay hết rồi cháu. Nhưng cô có dừa tươi, nho xanh và dâu tây Đà Lạt." Cuối cùng, Linh chọn một hộp dâu tây, hai quả bơ để làm sinh tố và mấy quả chanh để ăn phở.
+H|Thịt, cá và hải sản
+L|Thịt và trứng|Sau bài này bạn gọi tên được các loại thịt, trứng và nói được phần thịt mình thích.
+W|chicken|noun|thịt gà|We're having chicken and rice for lunch.|Bữa trưa nay chúng ta ăn cơm gà.|/ˈtʃɪkɪn/|/ˈtʃɪkɪn/
+W|beef|noun|thịt bò|Pho is usually made with beef or chicken.|Phở thường được nấu với thịt bò hoặc thịt gà.|/bif/|/biːf/
+W|pork|noun|thịt lợn, thịt heo|Grilled pork with rice noodles is my favorite lunch.|Thịt lợn nướng ăn với bún là bữa trưa tôi thích nhất.|/pɔrk/|/pɔːk/
+W|duck|noun|con vịt, thịt vịt|My grandmother cooks duck with bamboo shoots.|Bà tôi nấu vịt với măng.|/dʌk/|/dʌk/
+W|egg|noun|quả trứng|I'd like two fried eggs, please.|Cho tôi hai quả trứng ốp la.|/ɛɡ/|/ɛɡ/
+W|sausage|noun|xúc xích|The kids want sausages for breakfast.|Bọn trẻ muốn ăn xúc xích vào bữa sáng.|/ˈsɔsɪdʒ/|/ˈsɒsɪdʒ/
+W|ham|noun|giăm bông, thịt nguội|He put two slices of ham in his sandwich.|Anh ấy kẹp hai lát giăm bông vào bánh mì.|/hæm/|/hæm/
+W|bacon|noun|thịt lợn xông khói|The smell of bacon woke me up.|Mùi thịt xông khói làm tôi tỉnh giấc.|/ˈbeɪ.kən/|/ˈbeɪ.kən/
+W|steak|noun|món bít tết, miếng thịt bò dày|How would you like your steak cooked?|Bạn muốn miếng bít tết chín thế nào?|/steɪk/|/steɪk/
+W|minced|adjective|băm, xay nhỏ (thịt)|We need half a kilo of minced pork for the spring rolls.|Chúng ta cần nửa cân thịt lợn băm để làm nem.|/mɪnst/|/mɪnst/
+W|lean|adjective|nạc, ít mỡ|I prefer lean meat because it has less fat.|Tôi thích thịt nạc hơn vì nó ít mỡ.|/lin/|/liːn/
+W|fatty|adjective|nhiều mỡ, béo|This piece of pork is too fatty for me.|Miếng thịt lợn này nhiều mỡ quá với tôi.|/ˈfæt.i/|/ˈfæt.i/
+P|On Saturday morning, Lan and her husband Tom went to the market. "We need half a kilo of [minced] [pork] for the spring rolls," Lan said. The seller pointed to two trays. "This one is [lean], and that one is a bit [fatty]." Tom prefers lean meat, so they took the first one. Then Lan bought a whole [chicken] and some [beef] for pho. "My mother is visiting, so let's get a [duck] too. She cooks it with bamboo shoots." Tom looked at the next stall. "Can we buy some [sausages|sausage], [ham] and [bacon] for breakfast?" Lan laughed. "Okay, but only on Sundays." Finally, they picked up ten [eggs|egg]. "No [steak] this week," Lan said. "It's too expensive."
+V|Sáng thứ Bảy, Lan và chồng là Tom ra chợ mua thịt. "Mình cần nửa cân thịt lợn băm để làm nem," Lan nói. Cô bán hàng chỉ vào hai khay thịt. "Khay này nạc, còn khay kia hơi nhiều mỡ." Tom thích thịt nạc nên hai người lấy khay đầu. Sau đó Lan mua một con gà nguyên con và ít thịt bò để nấu phở. "Mẹ em sắp lên chơi, mình mua thêm con vịt nữa nhé. Mẹ hay nấu vịt với măng." Tom nhìn sang sạp bên cạnh. "Mình mua ít xúc xích, giăm bông và thịt xông khói để ăn sáng được không?" Lan bật cười: "Được, nhưng chỉ Chủ nhật thôi đấy." Cuối cùng, họ mua một chục trứng. "Tuần này không ăn bít tết đâu," Lan nói. "Đắt quá."
+L|Cá và hải sản|Sau bài này bạn gọi tên được các loại cá, hải sản và nói về cách ăn chúng.
+W|shrimp|noun|con tôm|We grilled some shrimp on the beach.|Chúng tôi nướng ít tôm trên bãi biển.|/ʃrɪmp/|/ʃrɪmp/
+W|crab|noun|con cua|Noodle soup with crab is popular in Hanoi.|Bún riêu cua rất được ưa chuộng ở Hà Nội.|/kræb/|/kræb/
+W|squid|noun|con mực|Fried squid is a great snack to share with friends.|Mực chiên là món ăn chơi tuyệt vời để ăn cùng bạn bè.|/skwɪd/|/skwɪd/
+W|oyster|noun|con hàu|My dad loves grilled oysters with green onion.|Bố tôi rất thích hàu nướng mỡ hành.|/ˈɔɪ.stɚ/|/ˈɔɪ.stə/
+W|clam|noun|con nghêu, con ngao|Clams steamed with lemongrass smell wonderful.|Ngao hấp sả thơm lừng.|/klæm/|/klæm/
+W|lobster|noun|tôm hùm|Lobster is too expensive for us to eat often.|Tôm hùm quá đắt nên chúng tôi không ăn thường xuyên.|/ˈlɑb.stɚ/|/ˈlɒb.stə/
+W|salmon|noun|cá hồi|She bought a piece of salmon for dinner.|Cô ấy mua một miếng cá hồi cho bữa tối.|/ˈsæmən/|/ˈsæmən/
+W|tuna|noun|cá ngừ|I had a tuna sandwich for lunch.|Bữa trưa tôi ăn bánh mì kẹp cá ngừ.|/ˈtju.nə/|/ˈtjuː.nə/
+W|shellfish|noun|hải sản có vỏ (tôm, cua, sò, ốc...)|Some people get sick after eating shellfish.|Một số người bị ốm sau khi ăn hải sản có vỏ.|/ˈʃɛl.fɪʃ/|/ˈʃɛl.fɪʃ/
+W|fillet|noun|miếng phi lê (thịt không xương)|A fish fillet is easy to cook because it has no bones.|Phi lê cá dễ nấu vì không có xương.|/fɪˈleɪ/|/ˈfɪl.ɪt/
+W|fishy|adjective|tanh (mùi cá)|Add some ginger to remove the fishy smell.|Thêm ít gừng để khử mùi tanh.|/ˈfɪʃi/|/ˈfɪʃi/
+W|raw|adjective|sống, chưa nấu chín|In Japan, people often eat raw fish.|Ở Nhật, người ta hay ăn cá sống.|/rɔ/|/rɔː/
+P|Mai is helping her mom in the kitchen before a big family dinner. "What are we cooking tonight?" Mai asks. "Grilled [shrimp], fried [squid] and a pot of [crab] soup," Mom says. "I also bought some [clams|clam] to steam with lemongrass." "But Uncle Huy can't eat [shellfish], remember?" "I know. That's why I got him a [salmon] [fillet]. It has no bones." "Can we have [raw] [oysters|oyster] too?" "No, I'll grill the oysters with green onion. Raw seafood isn't safe for Grandpa." Mai smells the fish. "It's a bit [fishy]." "Rub some ginger on it and it'll be fine." "What about [lobster]?" Mom laughs. "Too expensive! Maybe next time. Oh, and there's a can of [tuna] for your sandwich tomorrow."
+V|Mai đang phụ mẹ trong bếp trước bữa tối đông đủ cả nhà. "Tối nay mình nấu món gì hả mẹ?" Mai hỏi. "Tôm nướng, mực chiên và một nồi canh cua," mẹ nói. "Mẹ còn mua ít nghêu để hấp sả nữa." "Nhưng chú Huy không ăn được hải sản có vỏ, mẹ nhớ không?" "Mẹ biết. Vì thế mẹ mua riêng cho chú một miếng phi lê cá hồi, không có xương." "Mình ăn hàu sống được không mẹ?" "Không, mẹ sẽ nướng hàu với mỡ hành. Hải sản sống không an toàn cho ông đâu." Mai ngửi miếng cá. "Hơi tanh mẹ ạ." "Xát ít gừng vào là hết." "Còn tôm hùm thì sao mẹ?" Mẹ bật cười. "Đắt lắm! Để lần sau nhé. À, có một hộp cá ngừ để mai con làm bánh mì kẹp đấy."
+H|Gia vị và mùi vị
+L|Gia vị trong bếp|Sau bài này bạn gọi tên được các gia vị và nước chấm quen thuộc trong bếp Việt.
+W|salt|noun|muối|Add a little salt to the boiling water.|Cho một ít muối vào nước đang sôi.|/sɔlt/|/sɔːlt/
+W|pepper|noun|hạt tiêu|Pho tastes better with a little black pepper.|Phở ngon hơn khi rắc chút tiêu đen.|/ˈpɛp.ɚ/|/ˈpɛp.ə/
+W|garlic|noun|tỏi|Fry the garlic until it smells good.|Phi tỏi cho đến khi dậy mùi thơm.|/ˈɡɑrlɪk/|/ˈɡɑːlɪk/
+W|ginger|noun|gừng|Hot ginger tea is great on a rainy evening.|Trà gừng nóng thật tuyệt vào một buổi tối mưa.|/ˈdʒɪndʒɚ/|/ˈdʒɪndʒə/
+W|chili|noun|quả ớt|Be careful, this chili is very hot.|Cẩn thận, quả ớt này cay lắm.|/ˈtʃɪli/|/ˈtʃɪli/
+W|lemongrass|noun|cây sả|We cook beef with lemongrass and chili.|Chúng tôi nấu thịt bò với sả ớt.|/ˈlɛmənˌɡræs/|/ˈlɛmənˌɡrɑːs/
+W|herb|noun|rau thơm, thảo mộc|Vietnamese food uses a lot of fresh herbs like mint and basil.|Món Việt dùng nhiều rau thơm tươi như bạc hà và húng quế.|/hɝb/|/hɜːb/
+W|spice|noun|gia vị (hương liệu như quế, hồi)|Cinnamon and star anise are the main spices in pho.|Quế và hoa hồi là hai gia vị chính trong phở.|/spaɪs/|/spaɪs/
+W|shallot|noun|củ hành tím, hành khô|Sticky rice tastes better with some fried shallots on top.|Xôi ngon hơn khi rắc thêm ít hành phi lên trên.|/ˈʃælət/|/ʃəˈlɒt/
+W|fish sauce|noun|nước mắm|Almost every Vietnamese kitchen has a bottle of fish sauce.|Gần như căn bếp Việt nào cũng có một chai nước mắm.|/ˈfɪʃ ˌsɔs/|/ˈfɪʃ ˌsɔːs/
+W|vinegar|noun|giấm|Mix the vinegar with sugar and garlic to make a dipping sauce.|Trộn giấm với đường và tỏi để làm nước chấm.|/ˈvɪnəɡɚ/|/ˈvɪnɪɡə/
+W|honey|noun|mật ong|My mom puts honey in warm water every morning.|Sáng nào mẹ tôi cũng pha mật ong với nước ấm.|/ˈhʌni/|/ˈhʌni/
+P|Sarah is staying with Lan's family in Hue, and tonight Lan is teaching her to cook. "First, the dipping sauce," Lan says. "Mix [fish sauce], [vinegar], a little sugar, [garlic] and [chili]." "Is that chili very hot?" Sarah asks. "Very! Use just a little." Next, they prepare the chicken. Lan cuts some [lemongrass], [ginger] and a few [shallots|shallot]. "Then add some [salt] and black [pepper]." "What's in this jar?" "That's [honey]. One spoonful makes the chicken sweet and shiny." Sarah opens a small box. "This smells like cinnamon." "Yes, those are [spices|spice] for pho, not for today," Lan laughs. "And don't forget fresh [herbs|herb] like mint and basil. We eat them with almost everything!"
+V|Sarah đang ở cùng gia đình Lan tại Huế, và tối nay Lan dạy cô nấu ăn. "Trước tiên là pha nước chấm," Lan nói. "Trộn nước mắm, giấm, một chút đường, tỏi và ớt." "Ớt này có cay lắm không?" Sarah hỏi. "Cay lắm! Chỉ cho một ít thôi." Tiếp theo, hai người làm món gà. Lan thái ít sả, gừng và vài củ hành tím. "Rồi thêm chút muối và hạt tiêu đen." "Lọ này đựng gì thế?" "Mật ong đấy. Chỉ một thìa là thịt gà vừa ngọt vừa bóng đẹp." Sarah mở một chiếc hộp nhỏ. "Cái này có mùi giống quế." "Ừ, đó là gia vị để nấu phở, hôm nay không dùng đến," Lan cười. "À, đừng quên rau thơm tươi như bạc hà, húng quế nhé. Món gì bọn mình cũng ăn kèm hết!"
+L|Nếm thử và nhận xét|Sau bài này bạn nếm thử và nhận xét được mùi vị, độ giòn, độ mềm của món ăn.
+W|taste|verb|nếm; có vị|Taste the soup and tell me if it needs more salt.|Nếm canh xem có cần thêm muối không nhé.|/teɪst/|/teɪst/
+W|smell|verb|có mùi; ngửi|Something smells really good in here!|Có gì thơm quá vậy!|/smɛl/|/smɛl/
+W|bitter|adjective|đắng|Bitter melon is too bitter for most children.|Mướp đắng đắng quá với hầu hết trẻ em.|/ˈbɪtɚ/|/ˈbɪtə/
+W|bland|adjective|nhạt, vô vị|The soup is a bit bland, so add some fish sauce.|Canh hơi nhạt, thêm chút nước mắm đi.|/blænd/|/blænd/
+W|mild|adjective|dịu, không cay|I'll have the mild curry, please. I can't eat spicy food.|Cho tôi món cà ri ít cay nhé. Tôi không ăn cay được.|/maɪld/|/maɪld/
+W|rich|adjective|đậm đà, béo ngậy|The broth tastes rich because we cook it for ten hours.|Nước dùng đậm đà vì được ninh suốt mười tiếng.|/rɪtʃ/|/rɪtʃ/
+W|crispy|adjective|giòn|I love crispy spring rolls straight from the pan.|Tôi mê nem rán giòn vừa nhấc khỏi chảo.|/ˈkrɪs.pi/|/ˈkrɪs.pi/
+W|chewy|adjective|dai|This beef is too chewy. It needs to cook a bit longer.|Thịt bò này dai quá. Cần nấu thêm một lúc nữa.|/ˈtʃu.i/|/ˈtʃuː.i/
+W|tender|adjective|mềm (thịt)|Cook the meat slowly so it becomes tender.|Nấu thịt từ từ để thịt mềm.|/ˈtɛndɚ/|/ˈtɛndə/
+W|greasy|adjective|nhiều dầu mỡ, ngấy|These fries are too greasy for me.|Chỗ khoai chiên này nhiều dầu mỡ quá đối với tôi.|/ˈɡri.si/|/ˈɡriː.si/
+W|yummy|adjective|ngon tuyệt (cách nói thân mật)|Mmm, this cake is yummy!|Ừm, bánh này ngon tuyệt!|/ˈjʌm.i/|/ˈjʌm.i/
+W|disgusting|adjective|kinh, ghê, rất dở|The coffee was cold and far too sweet. It was disgusting!|Cà phê thì nguội mà lại ngọt quá mức. Dở kinh khủng!|/dɪsˈɡʌstɪŋ/|/dɪsˈɡʌstɪŋ/
+P|Minh and his sister Linh are cooking dinner for their parents. "Can you [taste] the fish soup?" Linh asks. Minh tries a spoonful. "It's a bit [bland]. Add some fish sauce." Then he tries the noodle broth. "Wow, this is [rich], and it [smells|smell] great!" Next come the spring rolls. "They're [crispy], but a little [greasy]. Put them on a paper towel first." "And the beef?" "Hmm, still [chewy]. Cook it longer until it's [tender]." Minh tries the other soup. "Ugh, it's so [bitter]!" "That's bitter melon. It's meant to taste like that," Linh laughs. "And the curry is [mild] because Mom can't eat spicy food." Dad tries everything. "[Yummy]! Much better than last week. Your burnt rice was [disgusting]!"
+V|Minh và em gái Linh đang nấu bữa tối cho bố mẹ. "Anh nếm canh cá giúp em với?" Linh hỏi. Minh húp thử một thìa. "Hơi nhạt. Thêm chút nước mắm đi." Rồi Minh nếm sang nồi nước dùng bún. "Ồ, nước này đậm đà mà thơm quá!" Tiếp đến là nem rán. "Giòn đấy, nhưng hơi nhiều dầu. Để lên giấy thấm dầu cho ráo đã." "Còn thịt bò thì sao anh?" "Ừm, vẫn còn dai. Nấu thêm cho mềm đi." Minh nếm sang bát canh còn lại. "Eo, đắng quá!" "Canh mướp đắng mà, vị nó phải thế chứ," Linh cười. "Còn cà ri thì em nấu dịu thôi, vì mẹ không ăn cay được." Bố nếm thử hết các món. "Ngon tuyệt! Hơn hẳn tuần trước. Hôm ấy các con nấu cơm cháy khét, ăn kinh khủng thật!"
+H|Nhà bếp và sơ chế
+L|Dụng cụ nhà bếp|Sau bài này bạn gọi tên được các dụng cụ và thiết bị trong nhà bếp.
+W|kitchen|noun|nhà bếp|Our kitchen is small, but it has everything we need.|Bếp nhà tôi nhỏ nhưng có đủ mọi thứ cần thiết.|/ˈkɪtʃən/|/ˈkɪtʃɪn/
+W|knife|noun|con dao|Be careful, that knife is very sharp.|Cẩn thận, con dao đó sắc lắm.|/naɪf/|/naɪf/
+W|cutting board|noun|cái thớt|Use a different cutting board for raw meat.|Hãy dùng một cái thớt riêng cho thịt sống.|/ˈkʌtɪŋ ˌbɔrd/|/ˈkʌtɪŋ ˌbɔːd/
+W|pot|noun|cái nồi|She cooked a big pot of soup for the family.|Cô ấy nấu một nồi canh to cho cả nhà.|/pɑt/|/pɒt/
+W|pan|noun|cái chảo, cái xoong (có tay cầm)|Heat some oil in a large pan.|Đun nóng ít dầu trong một cái chảo lớn.|/pæn/|/pæn/
+W|lid|noun|cái nắp, cái vung|Put the lid on the pot so the water boils faster.|Đậy vung nồi lại để nước sôi nhanh hơn.|/lɪd/|/lɪd/
+W|stove|noun|bếp nấu (bếp ga, bếp điện)|Don't leave the stove on when you go out.|Đừng để bếp bật khi ra ngoài.|/stoʊv/|/stəʊv/
+W|oven|noun|lò nướng|The chicken is roasting in the oven.|Gà đang được nướng trong lò.|/ˈʌ.vən/|/ˈʌ.vən/
+W|microwave|noun|lò vi sóng|Heat the rice in the microwave for one minute.|Hâm cơm trong lò vi sóng một phút.|/ˈmaɪkroʊˌweɪv/|/ˈmaɪkrəʊˌweɪv/
+W|fridge|noun|tủ lạnh|Put the milk back in the fridge, please.|Cất sữa lại vào tủ lạnh giùm nhé.|/frɪdʒ/|/frɪdʒ/
+W|freezer|noun|tủ đông, ngăn đá|There's some ice cream in the freezer.|Có ít kem trong ngăn đá.|/ˈfrizɚ/|/ˈfriːzə/
+W|rice cooker|noun|nồi cơm điện|Our rice cooker keeps the rice warm all day.|Nồi cơm điện nhà tôi giữ cơm ấm cả ngày.|/ˈraɪs ˌkʊkɚ/|/ˈraɪs ˌkʊkə/
+P|Huy's mom is visiting his new apartment and wants to cook lunch. "Your [kitchen] is small, but it's clean," she says. "Where's the [rice cooker]?" "Next to the [microwave], Mom." "Good. Now I need a [knife] and a [cutting board] for the vegetables." "They're in the drawer under the sink." She opens the [fridge]. "There's only milk and eggs in here!" "There's some chicken in the [freezer]." "Then take it out now. I'll make soup in this big [pot]. Put the [lid] on so the water boils faster." "Should I turn on the [oven]?" "No, we'll cook everything on the [stove]. Just give me a [pan] to fry the eggs. And next time, buy some real food, son!"
+V|Mẹ Huy đến thăm căn hộ mới của anh và muốn nấu bữa trưa. "Bếp nhà con nhỏ nhưng sạch sẽ đấy," bà nói. "Nồi cơm điện đâu con?" "Ở cạnh lò vi sóng ạ." "Được rồi. Giờ mẹ cần con dao và cái thớt để thái rau." "Ở trong ngăn kéo dưới bồn rửa mẹ ạ." Bà mở tủ lạnh. "Trong này chỉ có sữa với trứng thôi à!" "Trong ngăn đá có ít thịt gà ạ." "Thế thì lấy ra ngay đi. Mẹ sẽ nấu canh bằng cái nồi to này. Con đậy vung vào cho nước nhanh sôi." "Có cần bật lò nướng không mẹ?" "Không, mình nấu hết trên bếp thôi. Đưa mẹ cái chảo để rán trứng là được. Lần sau nhớ mua đồ ăn tử tế vào nhé, con trai!"
+L|Sơ chế nguyên liệu|Sau bài này bạn mô tả được các bước sơ chế như rửa, gọt, thái, ướp nguyên liệu.
+W|rinse|verb|rửa qua, tráng nước|Rinse the rice two or three times before cooking it.|Vo gạo hai ba lần trước khi nấu.|/rɪns/|/rɪns/
+W|soak|verb|ngâm (trong nước)|Soak the beans in water overnight.|Ngâm đậu trong nước qua đêm.|/soʊk/|/səʊk/
+W|drain|verb|để ráo, chắt nước|Drain the vegetables well before you fry them.|Để rau thật ráo nước trước khi xào.|/dreɪn/|/dreɪn/
+W|peel|verb|gọt vỏ, bóc vỏ|Can you peel the potatoes for me?|Con gọt vỏ khoai tây giúp mẹ được không?|/pil/|/piːl/
+W|chop|verb|thái nhỏ, băm, chặt|Chop the onion and garlic finely.|Băm nhỏ hành và tỏi.|/tʃɑp/|/tʃɒp/
+W|slice|verb|thái lát|Slice the beef as thin as you can.|Thái thịt bò càng mỏng càng tốt.|/slaɪs/|/slaɪs/
+W|grate|verb|bào, nạo|Grate some cheese on top of the pasta.|Bào ít phô mai rắc lên mì Ý.|/ɡreɪt/|/ɡreɪt/
+W|crack|verb|đập (trứng)|Crack two eggs into a bowl.|Đập hai quả trứng vào bát.|/kræk/|/kræk/
+W|beat|verb|đánh (trứng, kem)|Beat the eggs with a fork until smooth.|Đánh trứng bằng nĩa cho đến khi mịn.|/bit/|/biːt/
+W|mix|verb|trộn|Mix the meat with the onions and pepper.|Trộn thịt với hành và tiêu.|/mɪks/|/mɪks/
+W|squeeze|verb|vắt|Squeeze half a lime into the dipping sauce.|Vắt nửa quả chanh vào nước chấm.|/skwiz/|/skwiːz/
+W|marinate|verb|ướp (thịt, cá)|Marinate the pork with garlic and fish sauce for an hour.|Ướp thịt lợn với tỏi và nước mắm trong một tiếng.|/ˈmærɪneɪt/|/ˈmærɪneɪt/
+P|David wants to learn how to make spring rolls, so Lan shows him in her kitchen. "First, [soak] the dried mushrooms and glass noodles in warm water," she says. "Then [rinse] the vegetables and [drain] them well." "Should I [peel] the carrots?" "Yes. Then [grate] them and [chop] the onion finely." While David works, Lan [slices|slice] some pork very thin. "This is for grilled pork. I'll [marinate] it with garlic and fish sauce." "What are the eggs for?" "[Crack] two eggs into the bowl and [beat] them with a fork. Then [mix] them with the minced pork and vegetables." Finally, she shows him how to [squeeze] half a lime into the dipping sauce. "Now we're ready to roll!"
+V|David muốn học làm nem rán, nên Lan chỉ cho anh ngay trong bếp nhà mình. "Đầu tiên, ngâm mộc nhĩ và miến vào nước ấm," cô nói. "Sau đó rửa qua rau rồi để thật ráo." "Có phải gọt vỏ cà rốt không?" "Có. Rồi bào cà rốt và băm nhỏ hành." Trong lúc David làm, Lan thái thật mỏng ít thịt lợn. "Phần này để làm thịt nướng. Mình sẽ ướp với tỏi và nước mắm." "Thế trứng để làm gì?" "Đập hai quả trứng vào bát rồi đánh tan bằng dĩa. Sau đó trộn với thịt băm và rau." Cuối cùng, cô chỉ anh cách vắt nửa quả chanh vào nước chấm. "Giờ thì cuốn thôi!"
+H|Các cách nấu
+L|Luộc, hấp, chiên, nướng|Sau bài này bạn nói được món ăn được luộc, hấp, chiên, nướng hay hầm.
+W|boil|verb|luộc, đun sôi|Boil the eggs for about eight minutes.|Luộc trứng khoảng tám phút.|/bɔɪl/|/bɔɪl/
+W|simmer|verb|đun nhỏ lửa, ninh liu riu|Let the soup simmer for twenty minutes.|Để canh sôi liu riu hai mươi phút.|/ˈsɪmɚ/|/ˈsɪmə/
+W|steam|verb|hấp|My mom steams fish with ginger. It is light and healthy.|Mẹ tôi hay hấp cá với gừng. Món này thanh nhẹ và tốt cho sức khỏe.|/stim/|/stiːm/
+W|fry|verb|rán, chiên|My mom fried some fish for dinner.|Mẹ tôi rán ít cá cho bữa tối.|/fraɪ/|/fraɪ/
+W|scramble|verb|bác (trứng): đánh tan rồi đảo chín trên chảo|Scramble the eggs with a little butter over low heat.|Bác trứng với chút bơ trên lửa nhỏ.|/ˈskræmbəl/|/ˈskræmbəl/
+W|roast|verb|quay, nướng (trong lò)|We roasted a whole chicken for the party.|Chúng tôi quay nguyên một con gà cho bữa tiệc.|/roʊst/|/rəʊst/
+W|stew|verb|hầm (nấu lâu, nhỏ lửa với ít nước)|Grandma stews beef with carrots for three hours.|Bà hầm thịt bò với cà rốt suốt ba tiếng.|/stu/|/stjuː/
+W|stir|verb|khuấy, đảo|Keep stirring so the sauce doesn't burn.|Khuấy liên tục để nước sốt không bị cháy.|/stɝ/|/stɜː/
+W|melt|verb|làm tan chảy, tan chảy|Melt the butter in a small pan.|Đun chảy bơ trong một cái chảo nhỏ.|/mɛlt/|/mɛlt/
+W|flip|verb|lật (mặt)|Flip the fish carefully so it doesn't break.|Lật cá nhẹ tay để không bị vỡ.|/flɪp/|/flɪp/
+W|overcook|verb|nấu quá kỹ, nấu quá chín|Don't overcook the vegetables, or they will lose their color.|Đừng nấu rau quá kỹ kẻo rau mất màu xanh.|/ˌoʊvɚˈkʊk/|/ˌəʊvəˈkʊk/
+P|On Sunday, Mai helped her grandma cook lunch for the whole family. First, Grandma began to [stew] pork and eggs in coconut water. "Let it [simmer] for an hour, and [stir] it now and then," she said. Next, Mai [boiled|boil] some water and cooked the green vegetables. "Don't [overcook] them, or they will turn yellow," Grandma warned. Then they [steamed|steam] a fish with ginger. For the kids, Mai [melted|melt] a little butter in a pan and [scrambled|scramble] some eggs. She also [fried|fry] a few spring rolls and [flipped|flip] each one carefully so it didn't break. Grandma smiled. "Next weekend, we can [roast] a whole chicken in the oven."
+V|Chủ nhật, Mai giúp bà nấu bữa trưa cho cả nhà. Đầu tiên, bà hầm thịt với trứng trong nước dừa. "Cứ để lửa nhỏ liu riu một tiếng, thỉnh thoảng đảo lên một chút nhé," bà dặn. Tiếp theo, Mai đun sôi nước rồi luộc rau xanh. "Đừng luộc kỹ quá, không thì rau bị vàng đấy," bà nhắc. Sau đó hai bà cháu hấp một con cá với gừng. Để làm món cho bọn trẻ, Mai cho một ít bơ vào chảo cho tan chảy rồi bác mấy quả trứng. Mai còn rán vài cái nem và lật từng cái thật nhẹ tay để không bị vỡ. Bà mỉm cười: "Cuối tuần sau, bà cháu mình sẽ nướng nguyên một con gà trong lò."
+L|Làm món theo công thức|Sau bài này bạn đọc và làm theo được một công thức nấu ăn đơn giản.
+W|flour|noun|bột mì|You need 300 grams of flour to make the dough.|Bạn cần 300 gam bột mì để làm bột bánh.|/ˈflaʊ.ɚ/|/ˈflaʊ.ə/
+W|dough|noun|khối bột nhào|Leave the dough in a warm place for an hour.|Để khối bột ở chỗ ấm trong một tiếng.|/doʊ/|/dəʊ/
+W|tablespoon|noun|thìa canh (đơn vị đo)|Add two tablespoons of olive oil.|Thêm hai thìa canh dầu ô liu.|/ˈteɪbəlˌspun/|/ˈteɪbəlˌspuːn/
+W|teaspoon|noun|thìa cà phê (đơn vị đo)|Add one teaspoon of sugar to the dough.|Cho một thìa cà phê đường vào bột.|/ˈtiˌspun/|/ˈtiːˌspuːn/
+W|pinch|noun|nhúm (lượng nhỏ)|Add a pinch of salt and mix well.|Thêm một nhúm muối rồi trộn đều.|/pɪntʃ/|/pɪntʃ/
+W|pour|verb|rót, đổ|Pour the warm water slowly into the flour.|Đổ từ từ nước ấm vào bột mì.|/pɔr/|/pɔː/
+W|spread|verb|phết, trải đều|Spread the tomato sauce over the dough.|Phết đều sốt cà chua lên mặt bột.|/sprɛd/|/sprɛd/
+W|sprinkle|verb|rắc|Sprinkle some cheese and herbs on top.|Rắc ít phô mai và rau thơm lên trên.|/ˈsprɪŋkəl/|/ˈsprɪŋkəl/
+W|set aside|phrasal_verb|để riêng sang một bên|Mix the sauce, then set aside half of it for later.|Trộn nước sốt, rồi để riêng một nửa dùng sau.|/sɛt.əˈsaɪd/|/sɛt.əˈsaɪd/
+W|preheat|verb|làm nóng (lò) trước|Preheat the oven to 200 degrees.|Làm nóng lò trước ở 200 độ.|/priˈhit/|/priːˈhiːt/
+W|timer|noun|đồng hồ hẹn giờ|Set the timer for fifteen minutes.|Hẹn giờ mười lăm phút.|/ˈtaɪmɚ/|/ˈtaɪmə/
+W|golden brown|adjective|vàng ruộm, vàng nâu|Bake the pizza until the edges are golden brown.|Nướng bánh đến khi viền vàng ruộm.|/ˌɡoʊldən ˈbraʊn/|/ˌɡəʊldən ˈbraʊn/
+P|Linh and her brother Huy decided to make pizza at home with a simple recipe. First, Linh put 300 grams of [flour] in a bowl with one [teaspoon] of yeast and a [pinch] of salt. Huy slowly [poured|pour] in warm water and two [tablespoons|tablespoon] of oil, and they mixed everything into a soft [dough]. While the dough rested, they made tomato sauce and [set aside] half of it for pasta the next day. Then Linh [preheated|preheat] the oven to 220 degrees. Huy [spread] the sauce over the dough, and Linh [sprinkled|sprinkle] cheese and herbs on top. They set the [timer] for fifteen minutes. When the edges were [golden brown], the kitchen smelled wonderful. "Better than a restaurant!" Huy said.
+V|Linh và em trai Huy quyết định tự làm pizza ở nhà theo một công thức đơn giản. Đầu tiên, Linh cho 300 gam bột mì vào tô cùng một thìa cà phê men nở và một nhúm muối. Huy từ từ rót nước ấm và hai thìa canh dầu ăn vào, rồi hai chị em trộn tất cả thành một khối bột mềm. Trong lúc chờ bột nghỉ, họ làm sốt cà chua và để riêng một nửa để hôm sau nấu mì Ý. Sau đó Linh làm nóng lò trước ở 220 độ. Huy phết đều sốt lên mặt bột, còn Linh rắc phô mai và rau thơm lên trên. Hai chị em hẹn giờ mười lăm phút. Khi viền bánh đã vàng ruộm, căn bếp thơm phức. "Ngon hơn cả ngoài tiệm!" Huy reo lên.
+H|Ăn ở nhà, ăn ngoài và khẩu vị
+L|Ăn ngoài và gọi đồ về|Sau bài này bạn nói được về việc ăn ngoài, gọi đồ ăn về nhà và xử lý đồ ăn thừa.
+W|eat out|phrasal_verb|ăn ở ngoài, đi ăn hàng|We eat out every Friday night.|Tối thứ Sáu nào chúng tôi cũng đi ăn ngoài.|/ˌit ˈaʊt/|/ˌiːt ˈaʊt/
+W|grab a bite|phrase|ăn vội, ăn tạm chút gì|Let's grab a bite before the movie starts.|Mình ăn tạm chút gì trước khi phim chiếu nhé.|/ˌɡræb ə ˈbaɪt/|/ˌɡræb ə ˈbaɪt/
+W|order in|phrasal_verb|gọi đồ ăn mang đến nhà|I'm too tired to cook. Let's order in tonight.|Mệt quá không nấu nổi. Tối nay gọi đồ ăn về đi.|/ˌɔrdɚ ˈɪn/|/ˌɔːdə ˈɪn/
+W|to go|phrase|mang đi (không ăn tại chỗ)|Two coffees to go, please.|Cho tôi hai cà phê mang đi.|/tə ˈɡoʊ/|/tə ˈɡəʊ/
+W|fast food|noun|đồ ăn nhanh|Fast food is cheap, but I try not to eat it too often.|Đồ ăn nhanh rẻ, nhưng tôi cố không ăn quá thường xuyên.|/ˈfæst ˈfud/|/ˈfæst ˈfuːd/
+W|burger|noun|bánh mì kẹp thịt, bánh burger|He ordered a burger and a cold drink.|Anh ấy gọi một chiếc burger và một ly nước lạnh.|/ˈbɝ.ɡɚ/|/ˈbɜːɡə/
+W|fries|noun|khoai tây chiên|Do you want some fries with that?|Bạn có muốn thêm khoai tây chiên không?|/fraɪz/|/fraɪz/
+W|leftovers|noun|đồ ăn thừa|We had last night's leftovers for lunch.|Bữa trưa chúng tôi ăn đồ thừa từ tối qua.|/ˈlɛftˌoʊvɚz/|/ˈlɛftˌəʊvəz/
+W|reheat|verb|hâm nóng lại|Reheat the soup until it is really hot before you eat it.|Hâm lại canh cho thật nóng rồi hãy ăn.|/riˈhit/|/riːˈhiːt/
+W|lunchbox|noun|hộp cơm mang theo|I bring a lunchbox to work to save money.|Tôi mang hộp cơm đi làm để tiết kiệm tiền.|/ˈlʌntʃˌbɑks/|/ˈlʌntʃˌbɒks/
+W|go off|phrasal_verb|bị ôi, bị hỏng (đồ ăn)|Don't drink that milk. It's gone off.|Đừng uống sữa đó. Nó hỏng rồi.|/ˌɡoʊ ˈɔf/|/ˌɡəʊ ˈɒf/
+W|throw away|phrasal_verb|vứt bỏ|It's a shame to throw away so much food.|Vứt bỏ nhiều đồ ăn như vậy thật phí.|/ˌθroʊ əˈweɪ/|/ˌθrəʊ əˈweɪ/
+P|On Friday night, Minh and his roommate Ben were too tired to cook. "Should we [eat out] or [order in]?" Minh asked. "It's raining, so let's order in," Ben said. "I want a [burger] and some [fries]." "Too much [fast food] isn't good for us," Minh laughed, but ordered the same. On Saturday morning, they opened the fridge and found lots of [leftovers]. "We can [reheat] the rice and chicken for lunch," Minh said. Then Ben picked up the milk. "This has [gone off|go off]. Let's [throw away] anything that's too old." Minh nodded. "From Monday, I'll bring a [lunchbox] to work. But now, let's [grab a bite] at the noodle shop and get two coffees [to go]."
+V|Tối thứ Sáu, Minh và Ben, bạn cùng phòng, mệt đến mức chẳng muốn nấu. "Mình đi ăn ngoài hay gọi đồ về đây?" Minh hỏi. "Trời đang mưa, gọi về đi," Ben đáp. "Tớ đang thèm một cái burger với ít khoai tây chiên." "Ăn đồ ăn nhanh nhiều không tốt đâu," Minh cười, nhưng rồi cũng gọi y như vậy. Sáng thứ Bảy, hai đứa mở tủ lạnh và thấy toàn đồ ăn thừa. "Mình hâm nóng lại cơm với gà để ăn trưa là được," Minh nói. Rồi Ben cầm hộp sữa lên. "Sữa này hỏng rồi. Cái gì để lâu quá thì vứt hết đi." Minh gật đầu. "Từ thứ Hai tớ sẽ mang cơm hộp đi làm. Còn bây giờ thì ra quán phở ăn tạm chút gì, rồi mua hai ly cà phê mang đi."
+L|Khẩu vị và ăn lành mạnh|Sau bài này bạn nói được về khẩu vị của mình và cách ăn uống lành mạnh hơn.
+W|picky|adjective|kén ăn|My son is a picky eater. He won't eat anything green.|Con trai tôi kén ăn lắm. Thằng bé không chịu ăn thứ gì màu xanh.|/ˈpɪki/|/ˈpɪki/
+W|sweet tooth|idiom|tính hảo ngọt, thích đồ ngọt|I have a sweet tooth, so I can't say no to cake.|Tôi hảo ngọt nên không thể từ chối bánh ngọt.|/ˌswit ˈtuθ/|/ˌswiːt ˈtuːθ/
+W|appetite|noun|sự thèm ăn, cảm giác ngon miệng|Swimming always gives me a big appetite.|Đi bơi xong lúc nào tôi cũng ăn rất ngon miệng.|/ˈæp.əˌtaɪt/|/ˈæp.ɪ.taɪt/
+W|crave|verb|thèm (một món)|When it rains, I always crave hot noodle soup.|Hễ trời mưa là tôi lại thèm một bát mì nước nóng.|/kreɪv/|/kreɪv/
+W|junk food|noun|đồ ăn vặt kém lành mạnh|Try to eat less junk food like chips and candy.|Hãy cố ăn ít đồ ăn vặt như bim bim và kẹo.|/ˈdʒʌŋk ˌfud/|/ˈdʒʌŋk ˌfuːd/
+W|sugary|adjective|nhiều đường|Sugary drinks are bad for your teeth.|Đồ uống nhiều đường không tốt cho răng.|/ˈʃʊɡəri/|/ˈʃʊɡəri/
+W|calorie|noun|calo (đơn vị năng lượng)|A small bowl of rice has about 200 calories.|Một bát cơm nhỏ có khoảng 200 calo.|/ˈkæləri/|/ˈkæləri/
+W|protein|noun|chất đạm|Eggs and beans are cheap sources of protein.|Trứng và đậu là nguồn đạm rẻ tiền.|/ˈproʊtin/|/ˈprəʊtiːn/
+W|fiber|noun|chất xơ|Fruit and vegetables are full of fiber.|Rau và trái cây có nhiều chất xơ.|/ˈfaɪ.bɚ/|/ˈfaɪ.bə/
+W|nutritious|adjective|bổ dưỡng|Brown rice is more nutritious than white rice.|Gạo lứt bổ dưỡng hơn gạo trắng.|/nuˈtrɪʃəs/|/njuːˈtrɪʃəs/
+W|overeat|verb|ăn quá nhiều|It's easy to overeat at a big family party.|Ở những bữa tiệc gia đình lớn, rất dễ ăn quá nhiều.|/ˌoʊvɚˈit/|/ˌəʊvəˈiːt/
+W|vegan|adjective|thuần chay (không ăn đồ từ động vật)|My cousin is vegan, so she doesn't eat eggs or milk.|Em họ tôi ăn thuần chay nên không ăn trứng hay uống sữa.|/ˈviɡən/|/ˈviːɡən/
+W|tofu|noun|đậu phụ|Fried tofu with tomato sauce is a cheap, tasty dish.|Đậu phụ sốt cà chua là món vừa rẻ vừa ngon.|/ˈtoʊfu/|/ˈtəʊfuː/
+P|Everyone in my family has different tastes. My little brother is [picky]: he only eats rice, eggs and fried chicken. My dad has a [sweet tooth] and often eats cake after dinner. Last month, I decided to eat better. At night I used to [crave] chips and other [junk food], and I drank too many [sugary] drinks. Now I keep fruit at home, because it is full of [fiber] and low in [calories|calorie]. I also get more [protein] from fish, beans and [tofu]. My best friend Mai is [vegan], and she taught me some [nutritious] dishes without meat or milk. I still have a big [appetite], but I try not to [overeat]. I feel healthier and have more energy.
+V|Mỗi người trong nhà mình một khẩu vị. Em trai mình kén ăn lắm: nó chỉ ăn cơm, trứng và gà rán. Bố mình thì hảo ngọt, ăn tối xong hay ăn thêm bánh ngọt. Tháng trước, mình quyết định ăn uống tử tế hơn. Trước đây cứ tối đến là mình lại thèm snack khoai tây và các món ăn vặt khác, lại còn uống quá nhiều nước ngọt có đường. Giờ mình để sẵn trái cây trong nhà, vì trái cây nhiều chất xơ mà lại ít calo. Mình cũng ăn thêm chất đạm từ cá, các loại đậu và đậu phụ. Mai, bạn thân của mình, ăn thuần chay, và bạn ấy đã chỉ cho mình vài món bổ dưỡng không có thịt hay sữa. Mình vẫn ăn rất ngon miệng, nhưng cố gắng không ăn quá nhiều. Mình thấy người khỏe hơn và có năng lượng hơn.
