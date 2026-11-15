@@ -120,6 +120,37 @@ export const COURSES: readonly CourseInfo[] = [
     source: 'Khóa Kinh doanh và marketing (BSL 1.2, CC BY-SA 4.0)',
     load: lazy(async () => parseCourse('kinh-doanh', (await import('./kinh-doanh.txt?raw')).default)),
   },
-  { id: 'toeic', title: 'Luyện thi TOEIC', description: 'Từ hay gặp trong đề TOEIC: văn phòng, hợp đồng, đi lại công tác, sự kiện.', group: 'exam', levels: ['B1', 'B2'], topics: ['TOEIC', 'thi cử'], lessons: 25, words: 300 },
-  { id: 'ielts', title: 'IELTS học thuật', description: 'Từ học thuật cho bài đọc và bài viết IELTS: nghiên cứu, xu hướng, lập luận.', group: 'exam', levels: ['B2', 'C1'], topics: ['IELTS', 'học thuật', 'thi cử'], lessons: 25, words: 300 },
+  {
+    id: 'toeic',
+    title: 'Luyện thi TOEIC',
+    description:
+      'Từ hay gặp trong đề TOEIC: hội thảo và sự kiện, đặt tiệc, thuê nhà và văn phòng, sửa chữa, đặt hàng và giao nhận, ngân hàng, nhà máy, khám bệnh, công tác, quy định, thư từ, hoạt động cộng đồng. Hơn 300 từ và cụm từ ngoài các khóa khác.',
+    group: 'exam',
+    levels: ['B1', 'B2'],
+    topics: ['TOEIC', 'thi cử', 'sự kiện', 'nhà cửa', 'ngân hàng', 'sản xuất', 'thư từ'],
+    lessons: 25,
+    words: 303,
+    attribution:
+      'Một phần danh sách từ: TOEIC Service List 1.2 của C. Browne và B. Culligan (newgeneralservicelist.com), giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0). Phần còn lại của danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, cùng giấy phép. TOEIC là nhãn hiệu của ETS; khóa này không do ETS soạn hay xác nhận.',
+    source: 'Khóa Luyện thi TOEIC (TSL 1.2, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('toeic', (await import('./toeic.txt?raw')).default)),
+  },
+  {
+    id: 'ielts',
+    title: 'IELTS học thuật',
+    description:
+      'Từ học thuật cho bài đọc và bài viết IELTS: đại học và nghiên cứu, mô tả biểu đồ, lập luận và từ nối, môi trường, sức khỏe, xã hội, lịch sử và khảo cổ, ngôn ngữ, tâm lý, khoa học tự nhiên. Hơn 300 từ.',
+    group: 'exam',
+    levels: ['B2', 'C1'],
+    topics: ['IELTS', 'học thuật', 'thi cử', 'nghiên cứu', 'biểu đồ', 'môi trường', 'xã hội'],
+    lessons: 25,
+    words: 302,
+    attribution:
+      'Một phần danh sách từ: New Academic Word List 1.2 của C. Browne, B. Culligan và J. Phillips (newgeneralservicelist.com), giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0). Phần còn lại của danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, cùng giấy phép. IELTS là nhãn hiệu của các đơn vị tổ chức kỳ thi; khóa này không do họ soạn hay xác nhận.',
+    source: 'Khóa IELTS học thuật (NAWL 1.2, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('ielts', (await import('./ielts.txt?raw')).default)),
+  },
+  { id: 'mua-sam', title: 'Mua sắm', description: 'Đi chợ, siêu thị, cửa hàng quần áo, mua online, đổi trả hàng.', group: 'communication', levels: ['A2', 'B1'], topics: ['mua sắm', 'giao tiếp'], lessons: 14, words: 170 },
+  { id: 'an-uong', title: 'Ăn uống và nấu nướng', description: 'Món ăn, nguyên liệu, cách nấu, gọi món, nói về khẩu vị.', group: 'communication', levels: ['A2', 'B1'], topics: ['ăn uống', 'nấu ăn', 'giao tiếp'], lessons: 14, words: 170 },
+  { id: 'suc-khoe', title: 'Sức khỏe và đi khám', description: 'Cơ thể, triệu chứng, đi khám, hiệu thuốc, giữ gìn sức khỏe.', group: 'communication', levels: ['A2', 'B1'], topics: ['sức khỏe', 'giao tiếp'], lessons: 14, words: 170 },
 ]
