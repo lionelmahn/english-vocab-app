@@ -1048,7 +1048,7 @@ export const GUIDE: GuideTopic[] = [
     keywords: ['khóa học', 'bài học', 'lộ trình', 'chủ đề', 'đoạn đọc', 'tiến độ', 'khóa'],
     blocks: [
       {
-        p: 'Khóa học là các bài học có sẵn trong app, chia theo chương và chủ đề. Mỗi bài có mục tiêu, khoảng 11 từ và một đoạn đọc ngắn dùng chính các từ đó. Mở ở trang Hôm nay: thẻ “Khóa học theo chủ đề” (hoặc thẻ khóa bạn đang học).',
+        p: 'Khóa học là các bài học có sẵn trong app, chia theo chương và chủ đề. Mỗi bài có mục tiêu, khoảng 10–13 từ và một đoạn đọc ngắn dùng chính các từ đó. Mở ở trang Hôm nay: thẻ “Khóa học theo chủ đề” (hoặc thẻ khóa bạn đang học).',
       },
       { h: 'Tìm khóa' },
       {

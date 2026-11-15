@@ -30,6 +30,9 @@ function lazy<T>(load: () => Promise<T>): () => Promise<T> {
     }))
 }
 
+const BSL_CREDIT =
+  'Một phần danh sách từ: Business Service List 1.2 của C. Browne và B. Culligan (newgeneralservicelist.com), giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0). Phần còn lại của danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, cùng giấy phép.'
+
 export const COURSES: readonly CourseInfo[] = [
   {
     id: 'ngsl-chu-de',
@@ -75,9 +78,48 @@ export const COURSES: readonly CourseInfo[] = [
     source: 'Khóa Du lịch (app soạn, CC BY-SA 4.0)',
     load: lazy(async () => parseCourse('du-lich', (await import('./du-lich.txt?raw')).default)),
   },
-  { id: 'van-phong', title: 'Công việc văn phòng', description: 'Họp, email, báo cáo, kế hoạch, khách hàng: từ vựng làm việc hằng ngày.', group: 'career', levels: ['B1', 'B2'], topics: ['công việc', 'văn phòng', 'email'], lessons: 20, words: 240 },
-  { id: 'cntt', title: 'Công nghệ thông tin', description: 'Phần mềm, dữ liệu, mạng, bảo mật, làm việc nhóm trong ngành công nghệ.', group: 'career', levels: ['B1', 'B2'], topics: ['công nghệ', 'phần mềm'], lessons: 14, words: 170 },
-  { id: 'kinh-doanh', title: 'Kinh doanh và marketing', description: 'Thị trường, khách hàng, sản phẩm, quảng cáo, doanh thu.', group: 'career', levels: ['B1', 'B2'], topics: ['kinh doanh', 'marketing'], lessons: 14, words: 170 },
+  {
+    id: 'van-phong',
+    title: 'Công việc văn phòng',
+    description:
+      'Đồng nghiệp và giờ làm, đồ dùng văn phòng, lịch họp, email, gọi điện và họp trực tuyến, giao việc, thuyết trình, biểu đồ, tuyển dụng, lương và nghỉ phép: gần 250 từ và cụm từ ngoài bộ 1.000 từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['công việc', 'văn phòng', 'cuộc họp', 'email', 'thuyết trình', 'nhân sự'],
+    lessons: 20,
+    words: 248,
+    attribution: BSL_CREDIT,
+    source: 'Khóa Công việc văn phòng (BSL 1.2, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('van-phong', (await import('./van-phong.txt?raw')).default)),
+  },
+  {
+    id: 'cntt',
+    title: 'Công nghệ thông tin',
+    description:
+      'Thiết bị, phần mềm, internet và mạng, lưu trữ, hỗ trợ người dùng, viết mã và kiểm thử, bảo mật, trí tuệ nhân tạo: gần 180 từ và cụm từ ngoài bộ 1.000 từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['công nghệ', 'phần mềm', 'internet', 'lập trình', 'bảo mật', 'trí tuệ nhân tạo'],
+    lessons: 14,
+    words: 176,
+    attribution: BSL_CREDIT,
+    source: 'Khóa Công nghệ thông tin (BSL 1.2, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('cntt', (await import('./cntt.txt?raw')).default)),
+  },
+  {
+    id: 'kinh-doanh',
+    title: 'Kinh doanh và marketing',
+    description:
+      'Bán lẻ và giá cả, khách hàng, sản phẩm và thương hiệu, quảng cáo, mạng xã hội, doanh thu và vốn, đàm phán, kho hàng, đối thủ, khởi nghiệp: 170 từ và cụm từ ngoài bộ 1.000 từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['kinh doanh', 'marketing', 'bán hàng', 'thương hiệu', 'quảng cáo', 'tài chính', 'khởi nghiệp'],
+    lessons: 14,
+    words: 170,
+    attribution: BSL_CREDIT,
+    source: 'Khóa Kinh doanh và marketing (BSL 1.2, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('kinh-doanh', (await import('./kinh-doanh.txt?raw')).default)),
+  },
   { id: 'toeic', title: 'Luyện thi TOEIC', description: 'Từ hay gặp trong đề TOEIC: văn phòng, hợp đồng, đi lại công tác, sự kiện.', group: 'exam', levels: ['B1', 'B2'], topics: ['TOEIC', 'thi cử'], lessons: 25, words: 300 },
   { id: 'ielts', title: 'IELTS học thuật', description: 'Từ học thuật cho bài đọc và bài viết IELTS: nghiên cứu, xu hướng, lập luận.', group: 'exam', levels: ['B2', 'C1'], topics: ['IELTS', 'học thuật', 'thi cử'], lessons: 25, words: 300 },
 ]
