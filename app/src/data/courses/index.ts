@@ -289,6 +289,48 @@ export const COURSES: readonly CourseInfo[] = [
     load: lazy(async () => parseCourse('khach-san', (await import('./khach-san.txt?raw')).default)),
   },
   {
+    id: 'ky-thuat',
+    title: 'Kỹ thuật và sản xuất',
+    description:
+      'Nghề kỹ thuật và ca sản xuất, kim loại, nhựa và cao su, chi tiết máy, bơm và thủy lực, dụng cụ đo và dung sai, bản vẽ kỹ thuật, cắt gọt, hàn và đúc, lắp ráp, điện trong xưởng, bảo trì và xử lý sự cố, an toàn lao động, cải tiến chất lượng: hơn 170 từ và cụm từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['kỹ thuật', 'sản xuất', 'cơ khí', 'vật liệu', 'đo lường', 'bảo trì', 'an toàn lao động'],
+    lessons: 14,
+    words: 172,
+    attribution: 'Danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0).',
+    source: 'Khóa Kỹ thuật và sản xuất (app soạn, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('ky-thuat', (await import('./ky-thuat.txt?raw')).default)),
+  },
+  {
+    id: 'giao-duc',
+    title: 'Giáo dục',
+    description:
+      'Bộ máy nhà trường và năm học, soạn giáo án, các bước của tiết học, làm việc cặp và nhóm, đặt câu hỏi gợi mở, nề nếp và xử lý hành vi, ra đề và coi thi, đánh giá và học bạ, lớp nhiều trình độ và hòa nhập, họp phụ huynh, dạy trực tuyến, bồi dưỡng chuyên môn: gần 180 từ và cụm từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['giáo dục', 'dạy học', 'trường học', 'quản lý lớp', 'kiểm tra đánh giá', 'dạy trực tuyến'],
+    lessons: 14,
+    words: 178,
+    attribution: 'Danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0).',
+    source: 'Khóa Giáo dục (app soạn, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('giao-duc', (await import('./giao-duc.txt?raw')).default)),
+  },
+  {
+    id: 'luat',
+    title: 'Luật và hành chính',
+    description:
+      'Nghề luật, văn bản pháp luật, quyền công dân và người tiêu dùng, giấy tờ hành chính, công chứng, giao kết và chấm dứt hợp đồng, hợp đồng lao động, di chúc và thừa kế, khởi kiện và hòa giải, phiên tòa dân sự, trình báo và điều tra, xét xử hình sự: hơn 170 từ và cụm từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['luật', 'hành chính', 'hợp đồng', 'tòa án', 'lao động', 'thừa kế'],
+    lessons: 14,
+    words: 171,
+    attribution: 'Danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0).',
+    source: 'Khóa Luật và hành chính (app soạn, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('luat', (await import('./luat.txt?raw')).default)),
+  },
+  {
     id: 'toeic',
     title: 'Luyện thi TOEIC',
     description:
@@ -318,7 +360,6 @@ export const COURSES: readonly CourseInfo[] = [
     source: 'Khóa IELTS học thuật (NAWL 1.2, CC BY-SA 4.0)',
     load: lazy(async () => parseCourse('ielts', (await import('./ielts.txt?raw')).default)),
   },
-  { id: 'ky-thuat', title: 'Kỹ thuật và sản xuất', description: 'Máy móc, vật liệu, dây chuyền, bảo trì, an toàn lao động, đo lường, bản vẽ kỹ thuật.', group: 'career', levels: ['B1', 'B2'], topics: ['kỹ thuật', 'sản xuất', 'nhà máy'], lessons: 14, words: 170 },
-  { id: 'giao-duc', title: 'Giáo dục', description: 'Lớp học, giáo án, kiểm tra đánh giá, quản lý lớp, họp phụ huynh, học trực tuyến.', group: 'career', levels: ['B1', 'B2'], topics: ['giáo dục', 'dạy học', 'trường học'], lessons: 14, words: 170 },
-  { id: 'luat', title: 'Luật và hành chính', description: 'Pháp luật thường gặp, giấy tờ hành chính, hợp đồng, quyền và nghĩa vụ, tòa án, thủ tục công.', group: 'career', levels: ['B1', 'B2'], topics: ['luật', 'hành chính', 'giấy tờ'], lessons: 14, words: 170 },
+  { id: 'xay-dung', title: 'Xây dựng và kiến trúc', description: 'Công trường, vật liệu xây dựng, bản vẽ, các hạng mục thi công, giám sát, an toàn và nghiệm thu công trình.', group: 'career', levels: ['B1', 'B2'], topics: ['xây dựng', 'kiến trúc', 'công trường'], lessons: 14, words: 170 },
+  { id: 'logistics', title: 'Logistics và xuất nhập khẩu', description: 'Chuỗi cung ứng, vận tải đường biển và hàng không, kho bãi, chứng từ xuất nhập khẩu, hải quan, điều kiện giao hàng.', group: 'career', levels: ['B1', 'B2'], topics: ['logistics', 'xuất nhập khẩu', 'vận tải', 'hải quan'], lessons: 14, words: 170 },
 ]
