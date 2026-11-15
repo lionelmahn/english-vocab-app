@@ -1,0 +1,225 @@
+# Khóa “Nhà cửa và đời sống”. Phiên âm: Wiktionary (CC BY-SA 4.0); chọn từ, chia bài, nghĩa, ví dụ, đoạn đọc do app soạn (CC BY-SA 4.0).
+# H|chương  L|tên bài|mục tiêu  W|từ|loại từ|nghĩa|ví dụ|dịch ví dụ|phiên âm Mỹ|phiên âm Anh  P|đoạn đọc  V|bản dịch
+H|Ngôi nhà của tôi
+L|Kiểu nhà, các phòng và các tầng|Sau bài này bạn gọi được tên các kiểu nhà, các phòng và các tầng trong một ngôi nhà.
+W|townhouse|noun|nhà phố, nhà liền kề|We live in a narrow townhouse with four floors.|Chúng tôi sống trong một căn nhà phố hẹp có bốn tầng.|/ˈtaʊnˌhaʊs/|/ˈtaʊnˌhaʊs/
+W|villa|noun|biệt thự|Their villa has a big garden and a swimming pool.|Biệt thự của họ có một khu vườn lớn và một hồ bơi.|/ˈvɪlə/|/ˈvɪlə/
+W|cottage|noun|ngôi nhà nhỏ ở vùng quê|My grandparents live in a small cottage in the countryside.|Ông bà tôi sống trong một ngôi nhà nhỏ ở vùng quê.|/ˈkɑt.ɪdʒ/|/ˈkɒt.ɪdʒ/
+W|studio|noun|căn hộ một phòng (studio)|After college, I rented a tiny studio near my office.|Học xong đại học, tôi thuê một căn studio nhỏ xíu gần cơ quan.|/ˈstudi.oʊ/|/ˈstjuːdi.əʊ/
+W|high-rise|noun|nhà cao tầng, chung cư cao tầng|We live on the twentieth floor of a high-rise.|Chúng tôi sống ở tầng hai mươi của một tòa nhà cao tầng.|/ˈhaɪˌraɪz/|/ˈhaɪˌraɪz/
+W|ground floor|noun|tầng trệt|The kitchen is on the ground floor, and the bedrooms are upstairs.|Nhà bếp ở tầng trệt, còn các phòng ngủ thì ở trên lầu.|/ˌɡraʊnd ˈflɔr/|/ˌɡraʊnd ˈflɔː/
+W|living room|noun|phòng khách|We watch TV together in the living room every evening.|Tối nào cả nhà cũng cùng xem TV trong phòng khách.|/ˈlɪvɪŋ ˌrum/|/ˈlɪvɪŋ ˌruːm/
+W|dining room|noun|phòng ăn|We only eat in the dining room when we have guests.|Chúng tôi chỉ ăn ở phòng ăn khi nhà có khách.|/ˈdaɪnɪŋ ˌrum/|/ˈdaɪnɪŋ ˌruːm/
+W|hallway|noun|hành lang (trong nhà)|Please leave your shoes in the hallway.|Vui lòng để giày ngoài hành lang.|/ˈhɔlˌweɪ/|/ˈhɔːlweɪ/
+W|attic|noun|gác mái|We keep old toys and books in the attic.|Chúng tôi cất đồ chơi và sách cũ trên gác mái.|/ˈætɪk/|/ˈætɪk/
+W|upstairs|adverb|ở tầng trên, lên tầng trên|The kids are playing upstairs.|Bọn trẻ đang chơi ở tầng trên.|/ˌʌpˈstɛrz/|/ˌʌpˈstɛəz/
+W|downstairs|adverb|ở tầng dưới, xuống tầng dưới|Come downstairs! Dinner is ready.|Xuống nhà đi con! Cơm tối xong rồi.|/daʊnˈstɛrz/|/daʊnˈstɛəz/
+P|Lan and her husband Minh are looking for a home in Da Nang with an agent, Mr. Huy. "A [villa] by the sea is too expensive for us," Lan says, "and a [studio] is too small for a family of four. We don't want to live in a [high-rise] either." Mr. Huy smiles. "Then this [townhouse] is perfect. On the [ground floor], there's a bright [living room] and a [dining room] next to the kitchen." They walk down a narrow [hallway] and go [upstairs] to see three bedrooms. At the top, there is even a small [attic]. "The attic reminds me of my grandparents' [cottage] in the countryside," Minh says. Then they go back [downstairs] to talk about the price.
+V|Lan và chồng là Minh đang cùng anh Huy, một người môi giới, đi tìm nhà ở Đà Nẵng. "Biệt thự gần biển thì quá đắt với chúng tôi," Lan nói, "còn căn studio thì quá chật cho gia đình bốn người. Chúng tôi cũng không muốn sống ở chung cư cao tầng." Anh Huy mỉm cười: "Vậy thì căn nhà phố này là hợp nhất. Ở tầng trệt có một phòng khách sáng sủa và một phòng ăn cạnh nhà bếp." Họ đi dọc một hành lang hẹp rồi lên tầng trên xem ba phòng ngủ. Trên cùng còn có cả một gác mái nhỏ. "Cái gác mái này làm anh nhớ ngôi nhà nhỏ của ông bà ở quê," Minh nói. Rồi cả ba quay xuống tầng dưới để bàn chuyện giá cả.
+L|Bên ngoài ngôi nhà|Sau bài này bạn miêu tả được mặt ngoài và các bộ phận của một ngôi nhà.
+W|roof|noun|mái nhà|We need to fix the roof before the rainy season.|Chúng tôi cần sửa mái nhà trước mùa mưa.|/ruf/|/ruːf/
+W|terrace|noun|sân thượng, hiên rộng|We grow vegetables on our rooftop terrace.|Nhà tôi trồng rau trên sân thượng.|/ˈtɛrəs/|/ˈtɛrəs/
+W|doormat|noun|thảm chùi chân (trước cửa)|Wipe your feet on the doormat before you come in.|Chùi chân vào thảm trước khi vào nhà nhé.|/ˈdɔrˌmæt/|/ˈdɔːˌmæt/
+W|fence|noun|hàng rào|There is a white fence around the house.|Có một hàng rào trắng bao quanh ngôi nhà.|/fɛns/|/fɛns/
+W|yard|noun|sân (trước hoặc sau nhà)|The children play soccer in the front yard.|Bọn trẻ chơi bóng đá ở sân trước nhà.|/jɑrd/|/jɑːd/
+W|porch|noun|hiên nhà, mái hiên trước cửa|Grandpa likes to sit on the porch and drink tea.|Ông thích ngồi ngoài hiên uống trà.|/pɔrtʃ/|/pɔːtʃ/
+W|doorbell|noun|chuông cửa|The doorbell rang while I was in the shower.|Chuông cửa reo đúng lúc tôi đang tắm.|/ˈdɔr.bɛl/|/ˈdɔː.bɛl/
+W|mailbox|noun|hộp thư (trước nhà)|I check the mailbox every afternoon.|Chiều nào tôi cũng xem hộp thư.|/ˈmeɪlˌbɑks/|/ˈmeɪlˌbɒks/
+W|garage|noun|nhà để xe, ga-ra|Dad parks his car in the garage.|Bố đỗ xe trong ga-ra.|/ɡəˈrɑʒ/|/ˈɡæ.rɪdʒ/
+W|brick|noun|gạch (xây)|The old house is built of red brick.|Ngôi nhà cũ được xây bằng gạch đỏ.|/brɪk/|/brɪk/
+W|tile|noun|ngói; gạch lát (sàn, tường)|The roof of the old house is covered with red tiles.|Mái của ngôi nhà cũ được lợp ngói đỏ.|/ˈtaɪ.əl/|/taɪl/
+W|wooden|adjective|bằng gỗ|The house has a big wooden door.|Ngôi nhà có một cánh cửa gỗ lớn.|/ˈwʊdən/|/ˈwʊdən/
+P|Linh is visiting her friend Mai's new house for the first time. On the phone, Mai explains how to find it. "It's a two-story house made of red [brick], with orange [tiles|tile] on the [roof]," she says. "There's a low white [fence] and a small [yard] with a mango tree. You'll see a blue [mailbox] next to the gate." When Linh arrives, she walks past the [garage] and up to the [porch]. She wipes her shoes on the [doormat] and rings the [doorbell]. Mai opens the big [wooden] door and gives her a hug. "Come in! Later we can have tea on the [terrace] and look down at the whole street."
+V|Linh đến thăm nhà mới của bạn mình là Mai lần đầu tiên. Qua điện thoại, Mai chỉ cho bạn cách tìm nhà. "Nhà mình hai tầng, xây bằng gạch đỏ, mái lợp ngói màu cam," Mai nói. "Có một hàng rào thấp màu trắng và một cái sân nhỏ trồng cây xoài. Cạnh cổng có một cái hộp thư màu xanh dương." Đến nơi, Linh đi ngang qua ga-ra rồi bước lên hiên nhà. Cô chùi giày vào tấm thảm trước cửa rồi bấm chuông. Mai mở cánh cửa gỗ lớn và ôm chầm lấy bạn. "Vào đi! Lát nữa tụi mình lên sân thượng uống trà, ngắm cả con phố nhé."
+H|Đồ đạc trong nhà
+L|Phòng khách ấm cúng|Sau bài này bạn kể được trong phòng khách có những đồ đạc gì và bày trí ra sao.
+W|furniture|noun|đồ nội thất, đồ đạc|We bought some new furniture for the living room.|Chúng tôi mua ít đồ nội thất mới cho phòng khách.|/ˈfɝ.nɪ.tʃɚ/|/ˈfɜː.nɪ.tʃə/
+W|couch|noun|ghế sofa, ghế dài|Dad often falls asleep on the couch in front of the TV.|Bố hay ngủ quên trên ghế sofa trước TV.|/kaʊtʃ/|/kaʊtʃ/
+W|armchair|noun|ghế bành|Grandma reads the newspaper in her armchair.|Bà ngồi đọc báo trên chiếc ghế bành của bà.|/ˈɑrmtʃɛɚ/|/ˈɑːmtʃɛə/
+W|cushion|noun|gối tựa, đệm ghế|She put two soft cushions on the sofa.|Cô ấy đặt hai chiếc gối tựa mềm lên ghế sofa.|/ˈkʊʃən/|/ˈkʊʃən/
+W|coffee table|noun|bàn trà (bàn thấp ở phòng khách)|Don't put your feet on the coffee table!|Đừng gác chân lên bàn trà!|/ˈkɔfi ˌteɪbəl/|/ˈkɒfi ˌteɪbəl/
+W|carpet|noun|thảm trải sàn|We have a thick carpet in the living room.|Phòng khách nhà tôi trải một tấm thảm dày.|/ˈkɑrpət/|/ˈkɑːpɪt/
+W|curtain|noun|rèm cửa|Please open the curtains and let some light in.|Bạn kéo rèm ra cho ánh sáng vào nhé.|/ˈkɝtən/|/ˈkɜːtən/
+W|lamp|noun|đèn bàn, đèn cây|There is a tall lamp next to the armchair.|Cạnh ghế bành có một cây đèn cao.|/læmp/|/læmp/
+W|bookcase|noun|tủ sách, giá sách|Our bookcase is full of old novels.|Tủ sách nhà tôi đầy tiểu thuyết cũ.|/ˈbʊkˌkeɪs/|/ˈbʊkˌkeɪs/
+W|vase|noun|bình hoa, lọ hoa|Mom put some flowers in a glass vase.|Mẹ cắm ít hoa vào một chiếc bình thủy tinh.|/veɪs/|/vɑːz/
+W|remote control|noun|cái điều khiển từ xa|Where is the remote control? I can't find it.|Cái điều khiển đâu rồi? Tôi tìm không thấy.|/rɪˌmoʊt kənˈtroʊl/|/rɪˌməʊt kənˈtrəʊl/
+W|cozy|adjective|ấm cúng|The living room feels warm and cozy at night.|Buổi tối phòng khách thật ấm áp, ấm cúng.|/ˈkoʊzi/|/ˈkəʊzi/
+W|decorate|verb|trang trí|We decorated the living room with photos and plants.|Chúng tôi trang trí phòng khách bằng ảnh và cây xanh.|/ˈdɛkəreɪt/|/ˈdɛkəreɪt/
+P|"Our new living room looks so empty," Lan said. "Let's [decorate] it this weekend, Mom." The two of them bought some cheap second-hand [furniture]: a gray [couch], an old [armchair] for Grandpa and a low [coffee table]. Mom laid a soft [carpet] on the floor, and Lan put three colorful [cushions|cushion] on the couch. They hung yellow [curtains|curtain] at the window and placed a tall [lamp] in the corner. Dad built a wooden [bookcase] for all his books. Finally, Lan put some fresh flowers in a glass [vase] on the table. That evening, the whole family sat together to watch TV. "This room is really [cozy] now," Dad said happily. "But who has the [remote control]?"
+V|"Phòng khách mới nhà mình trống trải quá," Lan nói. "Cuối tuần này mình trang trí lại đi mẹ." Hai mẹ con mua ít đồ nội thất cũ giá rẻ: một chiếc ghế sofa màu xám, một chiếc ghế bành cũ cho ông và một cái bàn trà thấp. Mẹ trải một tấm thảm mềm xuống sàn, còn Lan đặt ba chiếc gối tựa sặc sỡ lên ghế sofa. Hai mẹ con treo rèm màu vàng ở cửa sổ và đặt một cây đèn cao ở góc phòng. Bố tự đóng một cái tủ sách bằng gỗ để đựng hết sách của bố. Cuối cùng, Lan cắm ít hoa tươi vào chiếc bình thủy tinh đặt trên bàn. Tối hôm đó, cả nhà quây quần xem TV. "Giờ căn phòng ấm cúng thật đấy," bố vui vẻ nói. "Nhưng ai đang cầm cái điều khiển thế?"
+L|Trong phòng ngủ|Sau bài này bạn nói được về đồ đạc trong phòng ngủ và việc giữ phòng gọn gàng.
+W|wardrobe|noun|tủ quần áo|My wardrobe is too small for all my clothes.|Tủ quần áo của tôi quá nhỏ, không đủ chỗ cho hết quần áo.|/ˈwɔrdroʊb/|/ˈwɔːdrəʊb/
+W|hanger|noun|móc treo quần áo|Hang your jacket on a hanger, not on the chair.|Treo áo khoác lên móc, đừng vắt lên ghế.|/ˈhæŋɚ/|/ˈhæŋə/
+W|mattress|noun|nệm, đệm giường|This mattress is too soft for my back.|Cái nệm này mềm quá, không tốt cho lưng tôi.|/ˈmætrɪs/|/ˈmætrɪs/
+W|sheet|noun|ga trải giường|I change the sheets every Sunday.|Chủ nhật nào tôi cũng thay ga giường.|/ʃit/|/ʃiːt/
+W|pillowcase|noun|vỏ gối, áo gối|My pillowcase has little stars on it.|Vỏ gối của tôi có in những ngôi sao nhỏ.|/ˈpɪloʊˌkeɪs/|/ˈpɪləʊˌkeɪs/
+W|bunk bed|noun|giường tầng|My brother and I sleep in a bunk bed.|Anh trai tôi và tôi ngủ giường tầng.|/ˈbʌŋk ˌbɛd/|/ˈbʌŋk ˌbɛd/
+W|nightstand|noun|tủ đầu giường|I keep a lamp and a book on my nightstand.|Tôi để một cây đèn và một cuốn sách trên tủ đầu giường.|/ˈnaɪtˌstænd/|/ˈnaɪtˌstænd/
+W|alarm clock|noun|đồng hồ báo thức|My alarm clock goes off at six every morning.|Đồng hồ báo thức của tôi reo lúc sáu giờ mỗi sáng.|/əˈlɑrm ˌklɑk/|/əˈlɑːm ˌklɒk/
+W|mosquito net|noun|màn chống muỗi, cái mùng|In the countryside, we always sleep under a mosquito net.|Ở quê, chúng tôi lúc nào cũng ngủ trong màn.|/məˈskitoʊ ˌnɛt/|/məˈskiːtəʊ ˌnɛt/
+W|make the bed|phrase|dọn giường, gấp chăn màn|Make the bed before you go to school.|Dọn giường xong rồi hãy đi học nhé.|/ˌmeɪk ðə ˈbɛd/|/ˌmeɪk ðə ˈbɛd/
+W|roommate|noun|bạn cùng phòng|My roommate snores very loudly.|Bạn cùng phòng của tôi ngáy rất to.|/ˈrumˌmeɪt/|/ˈruːmˌmeɪt/
+W|messy|adjective|bừa bộn|Your bedroom is so messy that I can't see the floor!|Phòng con bừa bộn đến mức chẳng nhìn thấy sàn đâu!|/ˈmɛsi/|/ˈmɛsi/
+P|Huy and his [roommate] Nam share a small dorm room with a [bunk bed]. One morning, Huy looked around and sighed. "Nam, our room is so [messy]! Your clothes are everywhere." "Sorry," Nam said. "My [wardrobe] is full, and I don't have enough [hangers|hanger]." "I can lend you some," Huy said. "And please [make the bed] before class. Your [sheet] and [pillowcase] are on the floor again!" Nam laughed and climbed down from the top bunk. "Okay, okay. But first I need a new [mattress]. Mine is too thin." Just then, the [alarm clock] on the [nightstand] started ringing again. Huy turned it off and added, "And put up the [mosquito net] tonight. There are so many mosquitoes in here."
+V|Huy và bạn cùng phòng là Nam ở chung một phòng ký túc xá nhỏ có một chiếc giường tầng. Một buổi sáng, Huy nhìn quanh rồi thở dài: "Nam ơi, phòng mình bừa bộn quá! Quần áo của cậu vứt khắp nơi." "Xin lỗi nhé," Nam nói. "Tủ quần áo của tớ đầy rồi, mà tớ lại không đủ móc treo." "Tớ cho cậu mượn mấy cái," Huy nói. "Mà nhớ dọn giường trước khi đi học nhé. Ga giường với vỏ gối của cậu lại rơi xuống sàn kìa!" Nam bật cười rồi trèo xuống từ tầng trên. "Rồi, rồi. Nhưng trước hết tớ cần một cái nệm mới. Nệm của tớ mỏng quá." Đúng lúc đó, đồng hồ báo thức trên tủ đầu giường lại reo. Huy tắt đi rồi nói thêm: "Tối nay nhớ mắc màn nữa nhé. Phòng này nhiều muỗi lắm."
+H|Việc nhà hằng ngày
+L|Dọn dẹp nhà cửa|Sau bài này bạn nói được các việc dọn dẹp nhà cửa và dụng cụ cần dùng.
+W|chore|noun|việc nhà, việc vặt|Washing the dishes is my least favorite chore.|Rửa bát là việc nhà tôi ghét nhất.|/tʃɔr/|/tʃɔː/
+W|neat|adjective|gọn gàng, ngăn nắp|Mom likes to keep the house clean and neat.|Mẹ thích giữ nhà cửa sạch sẽ, gọn gàng.|/nit/|/niːt/
+W|sweep|verb|quét (nhà)|Can you sweep the floor after dinner?|Ăn tối xong con quét nhà được không?|/swip/|/swiːp/
+W|broom|noun|cái chổi|The broom is behind the kitchen door.|Cái chổi ở sau cửa bếp.|/brum/|/bruːm/
+W|dustpan|noun|cái hốt rác, ki hốt rác|Hold the dustpan while I sweep.|Con cầm cái hốt rác để mẹ quét nhé.|/ˈdʌstpæn/|/ˈdʌstpæn/
+W|mop|verb|lau (sàn nhà)|I mop the floor twice a week.|Tôi lau sàn nhà hai lần một tuần.|/mɑp/|/mɒp/
+W|vacuum|verb|hút bụi|He vacuums the carpet every Saturday.|Thứ Bảy nào anh ấy cũng hút bụi tấm thảm.|/ˈvæ.kjum/|/ˈvæ.kjuːm/
+W|dust|verb|lau bụi, phủi bụi|Please dust the shelves in the living room.|Con lau bụi mấy cái kệ trong phòng khách nhé.|/dʌst/|/dʌst/
+W|wipe|verb|lau, chùi|Wipe the table with a wet cloth.|Lau bàn bằng khăn ướt.|/waɪp/|/waɪp/
+W|scrub|verb|cọ, chà cho sạch|We scrubbed the bathroom floor until it was shiny.|Chúng tôi cọ sàn nhà tắm đến khi sáng bóng.|/skrʌb/|/skrʌb/
+W|cloth|noun|khăn lau, giẻ lau|Use a dry cloth to clean the mirror.|Dùng khăn khô để lau gương.|/klɔθ/|/klɒθ/
+W|trash can|noun|thùng rác|Don't throw paper on the floor. Use the trash can!|Đừng vứt giấy xuống sàn. Bỏ vào thùng rác đi!|/ˈtræʃ ˌkæn/|/ˈtræʃ ˌkæn/
+W|take out the trash|phrase|đổ rác, mang rác ra ngoài|It's your turn to take out the trash tonight.|Tối nay đến lượt bạn đi đổ rác.|/ˌteɪk ˌaʊt ðə ˈtræʃ/|/ˌteɪk ˌaʊt ðə ˈtræʃ/
+P|Two days before Tet, Mom gave everyone a [chore]. "This year I want the house clean and [neat] for our guests," she said. "Minh, take the [broom] and [sweep] the yard. Lan, hold the [dustpan] for your brother." After that, Lan had to [mop] the kitchen floor, and Minh had to [vacuum] the living room carpet. Grandma used a soft [cloth] to [dust] the family altar. Dad climbed a ladder to [wipe] the ceiling fan, but first Mom made sure it was switched off. Mom herself [scrubbed|scrub] the bathroom floor until it was shiny. By evening, the [trash can] in the kitchen was full. "Who wants to [take out the trash]?" Mom asked. Suddenly, everyone looked very busy.
+V|Hai ngày trước Tết, mẹ giao cho mỗi người một việc nhà. "Năm nay mẹ muốn nhà cửa sạch sẽ, gọn gàng để đón khách," mẹ nói. "Minh, cầm chổi ra quét sân đi. Lan, con cầm cái hốt rác cho anh nhé." Sau đó Lan phải lau sàn bếp, còn Minh phải hút bụi tấm thảm trong phòng khách. Bà dùng một chiếc khăn mềm để lau bụi bàn thờ. Bố trèo thang lên lau quạt trần, nhưng trước đó mẹ kiểm tra cho chắc là quạt đã tắt hẳn. Còn mẹ thì cọ sàn nhà tắm cho đến khi sáng bóng. Đến tối, thùng rác trong bếp đã đầy. "Ai đi đổ rác nào?" mẹ hỏi. Tự nhiên ai cũng trông bận rộn hẳn lên.
+L|Giặt giũ quần áo|Sau bài này bạn kể được các bước giặt, phơi, ủi và gấp quần áo.
+W|washing machine|noun|máy giặt|Our washing machine is old and very loud.|Máy giặt nhà tôi cũ và kêu rất to.|/ˈwɑʃɪŋ məˌʃin/|/ˈwɒʃɪŋ məˌʃiːn/
+W|load|noun|mẻ (quần áo giặt)|I do two loads of laundry every weekend.|Cuối tuần nào tôi cũng giặt hai mẻ quần áo.|/loʊd/|/ləʊd/
+W|bleach|noun|thuốc tẩy|Don't use bleach on colored clothes.|Đừng dùng thuốc tẩy cho quần áo màu.|/blitʃ/|/bliːtʃ/
+W|fabric softener|noun|nước xả vải|This fabric softener makes the towels smell nice.|Nước xả vải này làm khăn tắm thơm hẳn.|/ˈfæbrɪk ˌsɔfənɚ/|/ˈfæbrɪk ˌsɒfənə/
+W|hand-wash|verb|giặt tay|You should hand-wash this silk shirt.|Bạn nên giặt tay chiếc áo lụa này.|/ˈhændˌwɑʃ/|/ˈhændˌwɒʃ/
+W|inside out|phrase|lộn trái (quần áo)|Turn your jeans inside out before washing them.|Lộn trái quần jean trước khi giặt.|/ˌɪnsaɪdˈaʊt/|/ˌɪnsaɪdˈaʊt/
+W|dryer|noun|máy sấy quần áo|Don't put wool sweaters in the dryer.|Đừng cho áo len vào máy sấy.|/ˈdraɪɚ/|/ˈdraɪə/
+W|clothesline|noun|dây phơi quần áo|Mom hangs the wet clothes on the clothesline.|Mẹ phơi quần áo ướt lên dây phơi.|/ˈkloʊðzlaɪn/|/ˈkləʊðzlaɪn/
+W|clothespin|noun|cái kẹp phơi quần áo|Use clothespins so the wind doesn't blow the shirts away.|Dùng kẹp phơi để gió khỏi thổi bay áo.|/ˈkloʊðzˌpɪn/|/ˈkləʊðzˌpɪn/
+W|damp|adjective|hơi ẩm, chưa khô hẳn|The towels are still damp. Leave them outside a bit longer.|Khăn vẫn còn hơi ẩm. Phơi ngoài thêm chút nữa nhé.|/dæmp/|/dæmp/
+W|wrinkled|adjective|nhàu, nhăn|Your shirt is wrinkled. You should iron it.|Áo con nhàu rồi. Con nên ủi lại đi.|/ˈrɪŋkəld/|/ˈrɪŋkəld/
+W|iron|verb|ủi, là (quần áo)|I iron my work clothes on Sunday evening.|Tôi ủi quần áo đi làm vào tối Chủ nhật.|/ˈaɪ.ɚn/|/ˈaɪ.ən/
+W|fold|verb|gấp (quần áo)|Help me fold the clean clothes and put them away.|Giúp mẹ gấp quần áo sạch rồi cất đi.|/foʊld/|/fəʊld/
+P|Lan is doing laundry alone for the first time, so she calls her mom. "Mom, can I put everything in the [washing machine] together?" "No, wash white and colored clothes in two separate [loads|load]. And never use [bleach] on colored clothes," Mom says. "And my silk blouse?" "You should [hand-wash] it in cool water. Turn your jeans [inside out] before washing them." "Should I add [fabric softener]?" "Just a little. Do you have a [dryer]?" "No, only a [clothesline] on the balcony." "That's fine. Use [clothespins|clothespin] so the wind doesn't blow anything away. If the clothes are still [damp] in the evening, bring them inside." "And my [wrinkled] shirts?" "[Iron] them on Sunday, then [fold] everything and put it away."
+V|Lần đầu tự giặt đồ, Lan gọi điện hỏi mẹ. "Mẹ ơi, con bỏ hết đồ vào máy giặt một lần được không?" "Không được, đồ trắng với đồ màu phải giặt thành hai mẻ riêng. Và đừng bao giờ dùng thuốc tẩy cho đồ màu," mẹ nói. "Còn cái áo lụa của con thì sao ạ?" "Cái đó con nên giặt tay bằng nước mát. Quần jean thì nhớ lộn trái trước khi giặt." "Con có nên cho nước xả vải không?" "Một chút thôi. Nhà có máy sấy không con?" "Không ạ, chỉ có dây phơi ngoài ban công." "Vậy cũng được. Dùng kẹp phơi để gió không thổi bay đồ. Nếu tối mà đồ vẫn còn hơi ẩm thì đem vào nhà." "Còn mấy cái áo sơ mi bị nhàu thì sao?" "Chủ nhật thì ủi, rồi gấp hết lại và cất đi."
+H|Vườn nhà và thú cưng
+L|Vườn nhà và cây cảnh|Sau bài này bạn nói được về việc chăm sóc vườn nhà và cây cảnh.
+W|lawn|noun|bãi cỏ (trước hoặc sau nhà)|Our lawn looks so green after the rain.|Bãi cỏ nhà tôi xanh mướt sau cơn mưa.|/lɔn/|/lɔːn/
+W|mow|verb|cắt (cỏ)|Dad mows the lawn every two weeks.|Bố cắt cỏ hai tuần một lần.|/moʊ/|/məʊ/
+W|flowerpot|noun|chậu hoa|She planted roses in a big flowerpot.|Cô ấy trồng hoa hồng trong một chậu hoa lớn.|/ˈflaʊɚˌpɑt/|/ˈflaʊəˌpɒt/
+W|houseplant|noun|cây cảnh trong nhà|Houseplants make a room look fresh.|Cây cảnh trong nhà làm căn phòng trông tươi mát hơn.|/ˈhaʊsˌplænt/|/ˈhaʊsˌplɑːnt/
+W|soil|noun|đất (trồng cây)|This plant grows best in wet soil.|Cây này mọc tốt nhất trong đất ẩm.|/sɔɪl/|/sɔɪl/
+W|weed|noun|cỏ dại|I spent the morning pulling weeds in the garden.|Tôi mất cả buổi sáng nhổ cỏ dại trong vườn.|/wid/|/wiːd/
+W|hose|noun|ống tưới nước|Water the garden with the hose.|Tưới vườn bằng ống nước nhé.|/hoʊz/|/həʊz/
+W|watering can|noun|bình tưới cây|I use a small watering can for my houseplants.|Tôi dùng một bình tưới nhỏ cho cây cảnh trong nhà.|/ˈwɔtɚɪŋ ˌkæn/|/ˈwɔːtərɪŋ ˌkæn/
+W|shovel|noun|cái xẻng|We need a shovel to plant this tree.|Chúng ta cần một cái xẻng để trồng cây này.|/ˈʃʌv.əl/|/ˈʃʌv.əl/
+W|dig|verb|đào|Let's dig a hole for the new tree.|Mình đào một cái hố để trồng cây mới nhé.|/dɪɡ/|/dɪɡ/
+W|fertilizer|noun|phân bón|Add a little fertilizer once a month.|Mỗi tháng bón một ít phân.|/ˈfɝtəlaɪzɚ/|/ˈfɜːtəlaɪzə/
+W|cactus|noun|cây xương rồng|A cactus is easy to care for because it needs little water.|Xương rồng dễ chăm vì nó cần rất ít nước.|/ˈkæktəs/|/ˈkæktəs/
+P|On Saturday morning, Huy helps his grandpa in the garden. Grandpa [mows|mow] the small [lawn] in front of the house, and Huy pulls [weeds|weed] from the vegetable bed. "Now let's plant this young mango tree," Grandpa says, and he hands Huy a [shovel]. "[Dig] a deep hole here. The [soil] is soft after the rain." After planting, Huy waters the tree with the [hose]. Inside, Grandpa shows him his [houseplants|houseplant]. "Use a [watering can] for these small ones, and don't give them too much water." "What about this one in the blue [flowerpot]?" Huy asks. "That's a [cactus]. Water it once every two weeks." "Do they need [fertilizer]?" "A little, once a month. Too much can hurt the roots."
+V|Sáng thứ Bảy, Huy phụ ông làm vườn. Ông cắt bãi cỏ nhỏ trước nhà, còn Huy nhổ cỏ dại ở luống rau. "Giờ mình trồng cây xoài non này nhé," ông nói rồi đưa Huy cái xẻng. "Cháu đào một cái hố sâu ở đây. Mưa xong nên đất mềm lắm." Trồng xong, Huy lấy ống nước tưới cho cây. Vào nhà, ông chỉ cho Huy mấy chậu cây cảnh. "Mấy cây nhỏ này thì cháu tưới bằng bình tưới thôi, đừng tưới nhiều quá." "Còn cây trong chậu hoa màu xanh dương này thì sao ông?" Huy hỏi. "Đó là cây xương rồng. Hai tuần tưới một lần thôi." "Chúng có cần bón phân không ông?" "Một chút thôi, mỗi tháng một lần. Bón nhiều quá là hại rễ đấy."
+L|Nuôi thú cưng|Sau bài này bạn kể được về việc nuôi và chăm sóc thú cưng.
+W|puppy|noun|chó con, cún con|We got a cute puppy on my birthday.|Nhà tôi có thêm một chú cún con dễ thương đúng ngày sinh nhật tôi.|/ˈpʌpi/|/ˈpʌpi/
+W|kitten|noun|mèo con|The kitten is sleeping in a shoe box.|Chú mèo con đang ngủ trong một hộp giày.|/ˈkɪtən/|/ˈkɪtən/
+W|adopt|verb|nhận nuôi|We adopted a kitten from the animal shelter.|Chúng tôi nhận nuôi một chú mèo con từ trại cứu hộ động vật.|/əˈdɑpt/|/əˈdɒpt/
+W|feed|verb|cho ăn|Don't forget to feed the fish.|Đừng quên cho cá ăn.|/fid/|/fiːd/
+W|walk the dog|phrase|dắt chó đi dạo|I walk the dog every morning before work.|Sáng nào tôi cũng dắt chó đi dạo trước khi đi làm.|/ˌwɔk ðə ˈdɔɡ/|/ˌwɔːk ðə ˈdɒɡ/
+W|cage|noun|cái lồng, cái chuồng|Our hamster lives in a small cage.|Con chuột hamster nhà tôi sống trong một cái lồng nhỏ.|/keɪdʒ/|/keɪdʒ/
+W|hamster|noun|chuột hamster|My little sister really wants a hamster.|Em gái tôi rất muốn nuôi một con chuột hamster.|/ˈhæmpstɚ/|/ˈhæmpstə/
+W|leash|noun|dây dắt (chó)|Keep your dog on a leash in the park.|Ra công viên thì nhớ buộc dây dắt cho chó.|/liʃ/|/liːʃ/
+W|collar|noun|vòng cổ (chó, mèo)|The dog has a red collar with its name on it.|Con chó đeo một chiếc vòng cổ màu đỏ có ghi tên nó.|/ˈkɑlɚ/|/ˈkɒlə/
+W|vet|noun|bác sĩ thú y|We took the cat to the vet because it stopped eating.|Chúng tôi đưa con mèo đi khám thú y vì nó bỏ ăn.|/vɛt/|/vɛt/
+W|bark|verb|sủa|The dog next door barks all night.|Con chó nhà bên sủa suốt đêm.|/bɑrk/|/bɑːk/
+W|tail|noun|cái đuôi|My dog wags its tail when I come home.|Con chó nhà tôi vẫy đuôi mỗi khi tôi về nhà.|/teɪl/|/teɪl/
+W|fur|noun|lông (thú)|There is cat fur all over my sofa.|Lông mèo dính đầy ghế sofa của tôi.|/fɝ/|/fɜː/
+P|Last month, Linh's family [adopted|adopt] a [puppy] and a [kitten] from an animal shelter. "Who takes care of them?" her friend Ben asks. "We all help. Mom [feeds|feed] them twice a day, and I [walk the dog] every evening. I keep him on a [leash] because our street is busy." "Does he have a name tag?" "Yes, on his red [collar], with our phone number." "Is he noisy?" "He [barks|bark] at delivery drivers, but when I come home, he wags his [tail]. Last week we took them both to the [vet] for their first shots." "My little brother has a [hamster]. It lives in a [cage] in his room." "Lucky him! Our kitten's [fur] is all over the sofa."
+V|Tháng trước, nhà Linh nhận nuôi một chú cún con và một chú mèo con từ trại cứu hộ động vật. "Ai chăm sóc tụi nó vậy?" Ben, bạn của Linh, hỏi. "Cả nhà cùng làm. Mẹ cho tụi nó ăn ngày hai lần, còn mình dắt chó đi dạo mỗi tối. Mình buộc dây dắt cho nó vì đường nhà mình đông xe lắm." "Nó có thẻ tên không?" "Có, gắn trên vòng cổ màu đỏ, kèm số điện thoại nhà mình." "Nó có ồn không?" "Nó hay sủa mấy anh giao hàng, nhưng mỗi lần mình về là nó vẫy đuôi. Tuần trước nhà mình đưa cả hai đứa đi bác sĩ thú y tiêm mũi đầu tiên." "Em trai mình nuôi một con chuột hamster, nó sống trong cái lồng trong phòng em ấy." "Sướng ghê! Lông con mèo nhà mình thì bám đầy ghế sofa."
+H|Sửa chữa nhỏ trong nhà
+L|Phòng tắm gặp sự cố|Sau bài này bạn gọi được tên đồ dùng trong phòng tắm và báo được những hỏng hóc thường gặp.
+W|toilet|noun|bồn cầu, nhà vệ sinh|The toilet is broken again.|Bồn cầu lại hỏng rồi.|/ˈtɔɪ.lət/|/ˈtɔɪ.lət/
+W|flush|verb|xả nước (bồn cầu)|Please flush the toilet after you use it.|Dùng xong nhớ xả nước bồn cầu nhé.|/flʌʃ/|/flʌʃ/
+W|sink|noun|bồn rửa, lavabo|I wash my face at the sink every morning.|Sáng nào tôi cũng rửa mặt ở bồn rửa.|/sɪŋk/|/sɪŋk/
+W|faucet|noun|vòi nước|Turn off the faucet while you brush your teeth.|Khóa vòi nước lại trong lúc đánh răng.|/ˈfɔsɪt/|/ˈfɔːsɪt/
+W|drip|verb|nhỏ giọt|Can you hear that? Water is dripping somewhere.|Bạn có nghe thấy không? Có chỗ nào đang nhỏ nước.|/drɪp/|/drɪp/
+W|clogged|adjective|bị tắc, bị nghẹt|The sink is clogged with hair.|Bồn rửa bị tắc vì tóc.|/klɑɡd/|/klɒɡd/
+W|pipe|noun|ống nước|An old pipe under the sink is leaking.|Một đoạn ống nước cũ dưới bồn rửa đang bị rò.|/paɪp/|/paɪp/
+W|bathtub|noun|bồn tắm|Our new apartment has a bathtub.|Căn hộ mới của chúng tôi có bồn tắm.|/ˈbæθtʌb/|/ˈbɑːθtʌb/
+W|water heater|noun|máy nước nóng, bình nóng lạnh|The water heater is broken, so we have to take cold showers.|Máy nước nóng hỏng nên chúng tôi phải tắm nước lạnh.|/ˈwɔtɚ ˌhitɚ/|/ˈwɔːtə ˌhiːtə/
+W|mold|noun|nấm mốc|There is black mold on the bathroom ceiling.|Trần nhà tắm có mốc đen.|/moʊld/|/məʊld/
+W|slippery|adjective|trơn trượt|Be careful, the bathroom floor is slippery.|Cẩn thận, sàn nhà tắm trơn đấy.|/ˈslɪpəri/|/ˈslɪpəri/
+W|bucket|noun|cái xô|Put a bucket under the leak.|Đặt một cái xô dưới chỗ rò nước.|/ˈbʌkɪt/|/ˈbʌkɪt/
+P|Mai calls her landlord, Mr. Tuan. "Hello, Mr. Tuan. Sorry to bother you, but my bathroom has some problems. First, the [toilet] doesn't [flush] properly." "Okay. Anything else?" "The [sink] is [clogged], and the [faucet] keeps [dripping|drip] all night. A [pipe] under the sink is leaking too, so I put a [bucket] below it." "I'll send a plumber tomorrow morning. Is the [water heater] working?" "No, it stopped yesterday." "Please turn off its power switch and don't try to fix it yourself. An electrician will check it." "Thank you. Oh, and there's black [mold] on the wall next to the [bathtub]." "Open the window after showers to let fresh air in. And be careful, wet tiles are very [slippery]."
+V|Mai gọi điện cho chủ nhà là chú Tuấn. "Cháu chào chú Tuấn. Xin lỗi đã làm phiền chú, nhưng phòng tắm nhà cháu có mấy chỗ hỏng ạ. Thứ nhất, bồn cầu xả nước không ổn." "Ừ. Còn gì nữa không cháu?" "Bồn rửa bị tắc, còn vòi nước thì nhỏ giọt suốt đêm. Một ống nước dưới bồn rửa cũng bị rò, nên cháu đã đặt một cái xô bên dưới." "Sáng mai chú sẽ gọi thợ sửa ống nước tới. Bình nóng lạnh có chạy không cháu?" "Không ạ, hôm qua nó ngừng chạy rồi." "Cháu tắt công tắc nguồn của nó đi và đừng tự sửa nhé. Sẽ có thợ điện tới kiểm tra." "Cháu cảm ơn chú. À, trên tường cạnh bồn tắm còn có nấm mốc đen nữa ạ." "Tắm xong cháu mở cửa sổ cho thoáng khí nhé. Và cẩn thận, gạch ướt trơn lắm đấy."
+L|Dụng cụ và tự sửa đồ|Sau bài này bạn gọi được tên các dụng cụ cơ bản và nói được cách tự sửa những hỏng hóc nhỏ.
+W|toolbox|noun|hộp dụng cụ, hộp đồ nghề|Dad keeps all his tools in a red toolbox.|Bố cất hết dụng cụ trong một chiếc hộp đồ nghề màu đỏ.|/ˈtulˌbɑks/|/ˈtuːlˌbɒks/
+W|hammer|noun|cái búa|Pass me the hammer, please.|Đưa giúp tôi cái búa với.|/ˈhæmɚ/|/ˈhæmə/
+W|nail|noun|cái đinh|I hung the picture on a nail.|Tôi treo bức tranh lên một cái đinh.|/neɪl/|/neɪl/
+W|screwdriver|noun|cái tua vít|You need a small screwdriver to open the battery cover.|Bạn cần một cái tua vít nhỏ để mở nắp pin.|/ˈskruˌdraɪvɚ/|/ˈskruːˌdraɪvə/
+W|screw|noun|đinh vít, ốc vít|One screw is missing from the chair.|Cái ghế bị mất một con ốc vít.|/skru/|/skruː/
+W|tighten|verb|vặn chặt, siết chặt|Tighten the screws so the table doesn't move.|Siết chặt các con vít để bàn khỏi xê dịch.|/ˈtaɪ.tən/|/ˈtaɪ.tən/
+W|wobbly|adjective|lung lay, cập kênh|This chair is wobbly. Don't sit on it.|Cái ghế này lung lay. Đừng ngồi lên.|/ˈwɑbəli/|/ˈwɒbəli/
+W|drill|noun|máy khoan|We need a drill to put up the shelf.|Chúng ta cần máy khoan để lắp cái kệ.|/drɪl/|/drɪl/
+W|ladder|noun|cái thang|Hold the ladder while I change the light bulb.|Giữ thang giúp tôi trong lúc tôi thay bóng đèn.|/ˈlædɚ/|/ˈlædə/
+W|glue|noun|keo dán|I fixed the broken cup with some glue.|Tôi dán lại chiếc cốc vỡ bằng keo.|/ɡlu/|/ɡluː/
+W|tape|noun|băng dính|Stick the paper to the wall with tape.|Dán tờ giấy lên tường bằng băng dính.|/teɪp/|/teɪp/
+W|handyman|noun|thợ sửa chữa vặt|We called a handyman to fix the door.|Chúng tôi gọi thợ sửa vặt đến sửa cửa.|/ˈhændimæn/|/ˈhændimæn/
+W|DIY|noun|việc tự tay làm, tự sửa đồ trong nhà|My dad loves DIY. He made our bookcase himself.|Bố tôi rất mê tự tay làm đồ. Ông tự đóng cái tủ sách nhà tôi.|/ˌdi.aɪˈwaɪ/|/ˌdiː.aɪˈwaɪ/
+P|Sunday is [DIY] day at Nam's house. "The kitchen chair is [wobbly] again," Mom says. Dad opens his [toolbox] and takes out a [screwdriver]. "One [screw] is loose. I just need to [tighten] it." Next, Mom wants a shelf in the living room. "We need the [drill] for this wall," Dad says. "But first, let's check for electric wires and water pipes behind it." Nam holds the [ladder] while Dad works. Then Nam hangs a picture with a [hammer] and a [nail]. His sister brings a broken cup, so Dad fixes it with [glue] and wraps [tape] around it until the glue dries. "And the bathroom door won't close," Mom says. Dad laughs. "That's too hard. Let's call a [handyman]."
+V|Chủ nhật là ngày tự tay sửa đồ ở nhà Nam. "Cái ghế trong bếp lại lung lay rồi," mẹ nói. Bố mở hộp đồ nghề và lấy ra cái tua vít. "Có một con ốc bị lỏng. Chỉ cần vặn chặt lại là xong." Tiếp theo, mẹ muốn gắn một cái kệ ở phòng khách. "Bức tường này phải dùng máy khoan," bố nói. "Nhưng trước hết phải kiểm tra xem phía sau có dây điện hay ống nước không." Nam giữ thang trong lúc bố làm. Sau đó Nam dùng búa và đinh để treo một bức tranh. Em gái Nam mang tới một cái cốc bị vỡ, bố dán lại bằng keo rồi quấn băng dính quanh cốc cho tới khi keo khô. "Còn cửa nhà tắm thì đóng không được," mẹ nói. Bố cười. "Cái đó khó quá. Mình gọi thợ sửa chữa vặt đi."
+H|Chuyển nhà và hàng xóm mới
+L|Ngày chuyển nhà|Sau bài này bạn kể được việc chuẩn bị, đóng gói và sắp xếp đồ đạc khi chuyển nhà.
+W|cramped|adjective|chật chội|Our old apartment was too cramped for a family of five.|Căn hộ cũ quá chật chội cho một gia đình năm người.|/kræmpt/|/kræmpt/
+W|move out|phrasal_verb|dọn đi, chuyển ra khỏi nhà|We have to move out by the end of the month.|Chúng tôi phải dọn đi trước cuối tháng.|/ˌmuv ˈaʊt/|/ˌmuːv ˈaʊt/
+W|belongings|noun|đồ đạc cá nhân, tư trang|Put all your belongings into these boxes.|Cho hết đồ đạc của con vào mấy cái thùng này.|/bɪˈlɔŋɪŋz/|/bɪˈlɒŋɪŋz/
+W|get rid of|phrase|bỏ đi, vứt bỏ, thanh lý|Moving is a good time to get rid of things you never use.|Chuyển nhà là dịp tốt để bỏ bớt những thứ bạn chẳng bao giờ dùng.|/ˌɡɛt ˈrɪd əv/|/ˌɡɛt ˈrɪd əv/
+W|give away|phrasal_verb|đem cho, tặng lại (đồ không dùng nữa)|We decided to give away the old armchair because it won't fit in the new apartment.|Chúng tôi quyết định đem cho chiếc ghế bành cũ vì căn hộ mới không đủ chỗ kê.|/ˌɡɪv əˈweɪ/|/ˌɡɪv əˈweɪ/
+W|cardboard box|noun|thùng các-tông|We packed the books into cardboard boxes.|Chúng tôi xếp sách vào các thùng các-tông.|/ˈkɑrd.bɔrd bɑks/|/ˈkɑːd.bɔːd bɒks/
+W|bubble wrap|noun|màng xốp hơi bọc đồ|Wrap the glasses in bubble wrap so they don't break.|Bọc ly bằng màng xốp hơi để chúng không bị vỡ.|/ˈbʌbəl ˌræp/|/ˈbʌbəl ˌræp/
+W|moving truck|noun|xe tải chuyển nhà|The moving truck arrived at eight in the morning.|Xe tải chuyển nhà đến lúc tám giờ sáng.|/ˈmuvɪŋ ˌtrʌk/|/ˈmuːvɪŋ ˌtrʌk/
+W|move in|phrasal_verb|dọn đến ở|We moved in last Saturday.|Chúng tôi dọn đến hôm thứ Bảy tuần trước.|/ˌmuv ˈɪn/|/ˌmuːv ˈɪn/
+W|put together|phrasal_verb|lắp ráp|It took us two hours to put together the new bed.|Chúng tôi mất hai tiếng mới lắp xong cái giường mới.|/ˌpʊt təˈɡɛðɚ/|/ˌpʊt təˈɡɛðə/
+W|arrange|verb|sắp xếp, bày biện|Let's arrange the furniture before we unpack the boxes.|Mình sắp xếp đồ đạc trước rồi hãy dỡ đồ trong thùng ra.|/əˈreɪndʒ/|/əˈreɪndʒ/
+W|settle in|phrasal_verb|ổn định chỗ ở mới, quen nơi mới|It took the kids a few weeks to settle in.|Bọn trẻ mất vài tuần mới quen với nhà mới.|/ˌsɛtəl ˈɪn/|/ˌsɛtəl ˈɪn/
+P|Mai's family had lived in a [cramped] two-room apartment for ten years, so they were happy to [move out]. A week before moving day, they sorted through all their [belongings]. "Let's [get rid of] anything we haven't used for a year," Mai's mother said. They decided to [give away] old clothes and toys to their cousins in the countryside. Mai packed books into [cardboard boxes|cardboard box] and wrapped every glass in [bubble wrap]. On Saturday, the [moving truck] arrived at seven, and by lunchtime they had [moved in|move in]. Mai's father spent the afternoon trying to [put together] a new bunk bed. "Let's [arrange] the furniture first and unpack later," Mai said. Now, a month later, everyone has [settled in|settle in] nicely.
+V|Gia đình Mai đã sống mười năm trong một căn hộ hai phòng chật chội, nên ai cũng vui khi được dọn đi. Một tuần trước ngày chuyển nhà, cả nhà phân loại hết đồ đạc. "Cái gì cả năm nay không dùng thì mình bỏ đi," mẹ Mai nói. Cả nhà quyết định đem quần áo cũ và đồ chơi cho mấy đứa em họ ở quê. Mai xếp sách vào thùng các-tông và bọc từng chiếc ly bằng màng xốp hơi. Sáng thứ Bảy, xe tải chuyển nhà đến lúc bảy giờ, và tới trưa cả nhà đã dọn đến chỗ mới. Bố Mai mất cả buổi chiều loay hoay lắp chiếc giường tầng mới. "Mình sắp xếp đồ đạc trước rồi dỡ thùng sau bố ạ," Mai nói. Giờ đây, sau một tháng, cả nhà đã ổn định chỗ ở mới đâu vào đấy.
+L|Làm quen hàng xóm|Sau bài này bạn làm quen và trò chuyện được với hàng xóm trong khu phố mới.
+W|neighborhood|noun|khu phố, khu dân cư|It's a quiet neighborhood with lots of trees.|Đó là một khu phố yên tĩnh, có nhiều cây xanh.|/ˈneɪbɚˌhʊd/|/ˈneɪbə.hʊd/
+W|next door|adverb|(ở) nhà bên cạnh|An old couple lives next door.|Một cặp vợ chồng già sống ở nhà bên cạnh.|/ˌnɛkst ˈdɔr/|/ˌnɛkst ˈdɔː/
+W|alley|noun|ngõ, hẻm|Our house is at the end of a small alley.|Nhà chúng tôi ở cuối một con hẻm nhỏ.|/ˈæl.i/|/ˈæl.i/
+W|resident|noun|cư dân|All residents must keep the hallway clean.|Mọi cư dân phải giữ hành lang sạch sẽ.|/ˈrɛzɪdənt/|/ˈrɛzɪdənt/
+W|security guard|noun|nhân viên bảo vệ|The security guard at the gate knows everyone in the building.|Chú bảo vệ ở cổng biết mặt mọi người trong tòa nhà.|/sɪˈkjʊrəti ˌɡɑrd/|/sɪˈkjʊərəti ˌɡɑːd/
+W|nearby|adverb|gần đây, ở gần|Is there a market nearby?|Gần đây có chợ không?|/ˌnɪɚˈbaɪ/|/ˌnɪəˈbaɪ/
+W|playground|noun|sân chơi (cho trẻ em)|There is a playground behind our building.|Có một sân chơi phía sau tòa nhà của chúng tôi.|/ˈpleɪɡraʊnd/|/ˈpleɪɡraʊnd/
+W|knock|verb|gõ (cửa)|Someone is knocking on the door.|Có ai đang gõ cửa.|/nɑk/|/nɒk/
+W|get to know|phrase|làm quen, dần hiểu (ai đó)|We had a small party to get to know our new neighbors.|Chúng tôi làm một bữa tiệc nhỏ để làm quen với hàng xóm mới.|/ˌɡɛt tə ˈnoʊ/|/ˌɡɛt tə ˈnəʊ/
+W|drop by|phrasal_verb|ghé qua, tạt vào|Feel free to drop by for tea anytime.|Cứ ghé qua uống trà bất cứ lúc nào nhé.|/ˌdrɑp ˈbaɪ/|/ˌdrɒp ˈbaɪ/
+W|lend a hand|idiom|giúp một tay|Can you lend me a hand with these boxes?|Bạn giúp tôi một tay với mấy cái thùng này được không?|/ˌlɛnd ə ˈhænd/|/ˌlɛnd ə ˈhænd/
+W|keep an eye on|idiom|trông chừng, để mắt tới|Could you keep an eye on our house while we're away?|Trong lúc chúng tôi đi vắng, bạn trông chừng nhà giúp được không?|/ˌkip ən ˈaɪ ɑn/|/ˌkiːp ən ˈaɪ ɒn/
+W|small talk|noun|chuyện phiếm, chuyện xã giao|I often make small talk with my neighbors in the elevator.|Tôi hay nói chuyện phiếm với hàng xóm trong thang máy.|/ˈsmɔl ˌtɔk/|/ˈsmɔːl ˌtɔːk/
+P|On her family's first evening in the new [neighborhood], Linh heard someone [knocking|knock] at the door. It was Mrs. Hoa, who lives [next door]. "Welcome!" she said, holding a plate of mangoes. "I wanted to [get to know] the new family." After some [small talk] about the weather, Linh asked, "Is there a market [nearby]?" "Yes, just around the corner, and there's a [playground] at the end of the street," Mrs. Hoa said. "Our [alley] is quiet, and the [security guard] at the entrance knows every [resident]. If you ever need someone to [lend a hand], just call me. When you travel, I can [keep an eye on] your house." Linh smiled. "Thank you! Please [drop by] for tea anytime."
+V|Vào buổi tối đầu tiên cả nhà dọn về khu phố mới, Linh nghe có người gõ cửa. Đó là cô Hoa ở nhà bên cạnh. "Chào mừng cháu!" cô nói, tay bưng một đĩa xoài. "Cô sang để làm quen với gia đình mới." Sau vài câu chuyện phiếm về thời tiết, Linh hỏi: "Gần đây có chợ không cô?" "Có chứ, ngay góc đường thôi, cuối phố còn có cả sân chơi cho trẻ con nữa," cô Hoa đáp. "Hẻm mình yên tĩnh lắm, chú bảo vệ ở đầu hẻm biết mặt từng cư dân. Nếu cần ai giúp một tay thì cứ gọi cô nhé. Khi nhà cháu đi xa, cô sẽ trông chừng nhà giúp cho." Linh mỉm cười: "Cháu cảm ơn cô! Lúc nào rảnh cô cứ ghé qua uống trà ạ."
+H|Tiết kiệm và an toàn
+L|Tiết kiệm điện nước|Sau bài này bạn nói được những cách tiết kiệm điện nước trong nhà.
+W|electricity|noun|điện|Our electricity bill was very high last month.|Tháng trước hóa đơn tiền điện nhà tôi rất cao.|/ɪˌlɛkˈtrɪsɪti/|/ˌiːlɛkˈtrɪsɪti/
+W|usage|noun|lượng sử dụng, mức dùng|We check our water usage every month.|Chúng tôi kiểm tra lượng nước sử dụng hằng tháng.|/ˈjusɪdʒ/|/ˈjuːsɪdʒ/
+W|turn down|phrasal_verb|vặn nhỏ (nhiệt độ, âm lượng)|Turn down the water heater a little to save electricity.|Vặn nhỏ bình nóng lạnh một chút để tiết kiệm điện.|/ˌtɝn ˈdaʊn/|/ˌtɜːn ˈdaʊn/
+W|switch off|phrasal_verb|tắt (công tắc, thiết bị)|Switch off the lights when you leave the room.|Ra khỏi phòng thì nhớ tắt đèn.|/ˌswɪtʃ ˈɔf/|/ˌswɪtʃ ˈɒf/
+W|leave on|phrasal_verb|để (thiết bị) bật, không tắt|Don't leave the fan on when nobody is home.|Đừng để quạt chạy khi không có ai ở nhà.|/ˌliv ˈɑn/|/ˌliːv ˈɒn/
+W|standby|noun|chế độ chờ|A TV on standby still uses electricity.|TV ở chế độ chờ vẫn tốn điện.|/ˈstændˌbaɪ/|/ˈstændˌbaɪ/
+W|unplug|verb|rút phích cắm|Unplug your phone charger when you are not using it.|Rút sạc điện thoại ra khi không dùng.|/ʌnˈplʌɡ/|/ʌnˈplʌɡ/
+W|outlet|noun|ổ cắm điện|There are only two outlets in my bedroom.|Phòng ngủ của tôi chỉ có hai ổ cắm điện.|/ˈaʊtlɛt/|/ˈaʊtlɛt/
+W|energy-saving|adjective|tiết kiệm năng lượng, tiết kiệm điện|We changed all the bulbs to energy-saving ones.|Chúng tôi đã thay hết bóng đèn bằng loại tiết kiệm điện.|/ˈɛnɚdʒiˌseɪvɪŋ/|/ˈɛnədʒiˌseɪvɪŋ/
+W|kettle|noun|ấm đun nước (siêu tốc)|Only boil as much water in the kettle as you need.|Chỉ đun trong ấm lượng nước vừa đủ dùng.|/ˈkɛ.təl/|/ˈkɛ.təl/
+W|dishwasher|noun|máy rửa bát|Only run the dishwasher when it is full.|Chỉ chạy máy rửa bát khi đã xếp đầy.|/ˈdɪʃˌwɑʃɚ/|/ˈdɪʃˌwɒʃə/
+W|water tank|noun|bồn chứa nước|Check the water tank on the roof for leaks.|Hãy kiểm tra xem bồn nước trên mái có bị rò không.|/ˈwɔtɚ ˌtæŋk/|/ˈwɔːtə ˌtæŋk/
+P|When the [electricity] bill arrived last month, Mr. Nam was shocked. "Our [usage] has doubled!" he told the family at dinner. "Bao, the fan in your empty room was [left on|leave on] all day yesterday. Please [switch off] everything when you go out." His wife added, "A TV on [standby] still uses power, so [unplug] it at night, and don't leave chargers in the [outlets|outlet]." They agreed to buy [energy-saving] bulbs, boil only as much water as they need in the [kettle], and run the [dishwasher] only when it is full. Mr. Nam decided to [turn down] the water heater a little and asked a plumber to check the [water tank] on the roof for leaks.
+V|Khi nhận hóa đơn tiền điện tháng trước, ông Nam giật mình. "Lượng điện nhà mình dùng tăng gấp đôi rồi!" ông nói với cả nhà trong bữa tối. "Bảo này, hôm qua cái quạt trong phòng con để bật suốt cả ngày mà chẳng có ai ở trong đó. Đi ra ngoài thì nhớ tắt hết nhé." Vợ ông nói thêm: "Ti vi để ở chế độ chờ vẫn tốn điện, nên tối đến thì rút phích cắm ra, còn sạc thì đừng cắm mãi trên ổ điện." Cả nhà thống nhất mua bóng đèn tiết kiệm điện, chỉ đun vừa đủ lượng nước cần dùng trong ấm, và chỉ chạy máy rửa bát khi đã xếp đầy. Ông Nam quyết định vặn nhỏ nhiệt độ bình nóng lạnh một chút và nhờ thợ nước kiểm tra bồn chứa nước trên mái xem có bị rò rỉ không.
+L|An toàn trong nhà|Sau bài này bạn nói được những nguy hiểm thường gặp trong nhà và cách phòng tránh.
+W|smoke alarm|noun|chuông báo khói|Test your smoke alarm once a month.|Hãy kiểm tra chuông báo khói mỗi tháng một lần.|/ˈsmoʊk əˌlɑrm/|/ˈsməʊk əˌlɑːm/
+W|fire exit|noun|lối thoát hiểm (khi có cháy)|If there is a fire, use the fire exit, not the elevator.|Nếu có cháy, hãy đi lối thoát hiểm, đừng đi thang máy.|/ˈfaɪɚ ˌɛɡzɪt/|/ˈfaɪə ˌɛɡzɪt/
+W|wire|noun|dây điện|Old wires can start a fire.|Dây điện cũ có thể gây cháy.|/ˈwaɪɚ/|/waɪə/
+W|electric shock|noun|điện giật|Never touch a broken wire. You could get an electric shock.|Đừng bao giờ chạm vào dây điện bị hở. Bạn có thể bị điện giật đấy.|/ɪˌlɛktrɪk ˈʃɑk/|/ɪˌlɛktrɪk ˈʃɒk/
+W|sharp|adjective|sắc, nhọn|Keep sharp knives away from children.|Để dao sắc xa tầm tay trẻ em.|/ʃɑrp/|/ʃɑːp/
+W|trip over|phrasal_verb|vấp phải (vật gì)|I tripped over a toy on the stairs.|Tôi vấp phải món đồ chơi trên cầu thang.|/ˌtrɪp ˈoʊvɚ/|/ˌtrɪp ˈəʊvə/
+W|flashlight|noun|đèn pin|Keep a flashlight in the drawer in case the power goes out.|Để sẵn một cây đèn pin trong ngăn kéo phòng khi mất điện.|/ˈflæʃˌlaɪt/|/ˈflæʃˌlaɪt/
+W|spare key|noun|chìa khóa dự phòng|We gave a spare key to our neighbor.|Chúng tôi gửi hàng xóm một chiếc chìa khóa dự phòng.|/ˌspɛr ˈki/|/ˌspɛə ˈkiː/
+W|locksmith|noun|thợ sửa khóa|I lost my keys, so I had to call a locksmith.|Tôi làm mất chìa khóa nên phải gọi thợ sửa khóa.|/ˈlɑksmɪθ/|/ˈlɒksmɪθ/
+W|burglar|noun|kẻ trộm đột nhập nhà|A burglar came in through the back window.|Một tên trộm đã lẻn vào qua cửa sổ phía sau.|/ˈbɝɡlɚ/|/ˈbɜːɡlə/
+W|break in|phrasal_verb|đột nhập (vào nhà)|Someone tried to break in last night.|Tối qua có kẻ định đột nhập vào nhà.|/ˌbreɪk ˈɪn/|/ˌbreɪk ˈɪn/
+W|security camera|noun|camera an ninh|We put a security camera above the front door.|Chúng tôi lắp một camera an ninh phía trên cửa trước.|/sɪˈkjʊrəti ˌkæmərə/|/sɪˈkjʊərəti ˌkæmərə/
+P|Building B safety notice: Please test your [smoke alarm] monthly and learn the way to the nearest [fire exit]. Never use the elevator during a fire. Don't touch a broken [wire], or you could get an [electric shock]; turn off the main switch and call an electrician. Keep [sharp] knives away from children, and clear toys from the stairs so nobody [trips over|trip over] them. Keep a [flashlight] ready for power cuts. Don't hide a [spare key] under the doormat. If you lose your keys, call a [locksmith]. Last week, a [burglar] tried to [break in] through a ground-floor window, so we have put up a [security camera] behind the building. Please lock your doors and windows every night.
+V|Thông báo an toàn của tòa nhà B: Xin hãy thử chuông báo khói mỗi tháng một lần và nắm rõ đường ra lối thoát hiểm gần nhất. Khi có cháy, tuyệt đối không đi thang máy. Đừng chạm vào dây điện bị đứt vì có thể bị điện giật; hãy ngắt cầu dao tổng rồi gọi thợ điện. Cất dao sắc xa tầm tay trẻ em, và dọn đồ chơi khỏi cầu thang để không ai bị vấp. Luôn để sẵn đèn pin phòng khi mất điện. Đừng giấu chìa khóa dự phòng dưới thảm chùi chân. Nếu mất chìa khóa, hãy gọi thợ sửa khóa. Tuần trước, một tên trộm đã định đột nhập qua cửa sổ của một căn hộ ở tầng trệt, vì vậy chúng tôi đã lắp một camera an ninh ở phía sau tòa nhà. Xin hãy khóa cẩn thận cả cửa ra vào lẫn cửa sổ mỗi tối.
