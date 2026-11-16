@@ -331,6 +331,34 @@ export const COURSES: readonly CourseInfo[] = [
     load: lazy(async () => parseCourse('luat', (await import('./luat.txt?raw')).default)),
   },
   {
+    id: 'xay-dung',
+    title: 'Xây dựng và kiến trúc',
+    description:
+      'Ý tưởng và bản vẽ thiết kế, khảo sát khu đất, quy hoạch và giấy phép, đấu thầu, hợp đồng và tiến độ, máy móc thi công, an toàn công trường, bê tông, thép và vật liệu hoàn thiện, móng và kết cấu, các giai đoạn thi công, hệ thống cơ điện, nghiệm thu và bảo trì: gần 180 từ và cụm từ.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['xây dựng', 'kiến trúc', 'công trường', 'vật liệu', 'kết cấu', 'thi công', 'nghiệm thu'],
+    lessons: 14,
+    words: 178,
+    attribution: 'Danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0).',
+    source: 'Khóa Xây dựng và kiến trúc (app soạn, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('xay-dung', (await import('./xay-dung.txt?raw')).default)),
+  },
+  {
+    id: 'logistics',
+    title: 'Logistics và xuất nhập khẩu',
+    description:
+      'Chuỗi cung ứng và mua hàng, dự báo và tồn kho, nhập kho và xuất kho, đóng container, tàu và cảng, hàng không, đường bộ và đường sắt, chứng từ xuất nhập khẩu, hải quan và thuế, Incoterms, thanh toán quốc tế, giao chặng cuối, chuỗi lạnh: gần 180 từ, cụm từ và từ viết tắt.',
+    group: 'career',
+    levels: ['B1', 'B2'],
+    topics: ['logistics', 'xuất nhập khẩu', 'kho bãi', 'vận tải', 'hải quan', 'Incoterms', 'chuỗi cung ứng'],
+    lessons: 14,
+    words: 176,
+    attribution: 'Danh sách từ, cách chia bài, nghĩa, câu ví dụ và đoạn đọc do app soạn, giấy phép CC BY-SA 4.0. Phiên âm: Wiktionary (CC BY-SA 4.0).',
+    source: 'Khóa Logistics và xuất nhập khẩu (app soạn, CC BY-SA 4.0)',
+    load: lazy(async () => parseCourse('logistics', (await import('./logistics.txt?raw')).default)),
+  },
+  {
     id: 'toeic',
     title: 'Luyện thi TOEIC',
     description:
@@ -360,6 +388,4 @@ export const COURSES: readonly CourseInfo[] = [
     source: 'Khóa IELTS học thuật (NAWL 1.2, CC BY-SA 4.0)',
     load: lazy(async () => parseCourse('ielts', (await import('./ielts.txt?raw')).default)),
   },
-  { id: 'xay-dung', title: 'Xây dựng và kiến trúc', description: 'Công trường, vật liệu xây dựng, bản vẽ, các hạng mục thi công, giám sát, an toàn và nghiệm thu công trình.', group: 'career', levels: ['B1', 'B2'], topics: ['xây dựng', 'kiến trúc', 'công trường'], lessons: 14, words: 170 },
-  { id: 'logistics', title: 'Logistics và xuất nhập khẩu', description: 'Chuỗi cung ứng, vận tải đường biển và hàng không, kho bãi, chứng từ xuất nhập khẩu, hải quan, điều kiện giao hàng.', group: 'career', levels: ['B1', 'B2'], topics: ['logistics', 'xuất nhập khẩu', 'vận tải', 'hải quan'], lessons: 14, words: 170 },
 ]

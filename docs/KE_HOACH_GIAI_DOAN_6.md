@@ -81,3 +81,16 @@ Tùy chọn để sau: “Tạo bài học bằng AI” theo chủ đề bạn g
 2. **Mở bài:** mở hết, gợi ý bài nên học tiếp.
 3. **Đoạn đọc:** mỗi bài có đoạn đọc ngắn kèm bản dịch.
 4. **Tải dữ liệu:** đồng ý tải NGSL-Spoken, BSL, TSL, NAWL từ newgeneralservicelist.com; tôi kiểm giấy phép trên trang trước khi dùng và ghi nguồn trong app.
+
+## 8. Kết quả (16/11/2026)
+
+Đã làm xong mọi khóa trong mục 2, qua các bản 0.35.0–0.44.0: 25 khóa, 5.615 từ và cụm từ (gồm cả 1.000 từ của khóa nền tảng), mỗi bài một đoạn đọc kèm bản dịch, phiên âm hai giọng.
+
+| Nhóm | Khóa |
+|---|---|
+| Nền tảng | 1.000 từ thông dụng theo chủ đề |
+| Giao tiếp | Giao tiếp hằng ngày; Du lịch; Mua sắm; Ăn uống và nấu nướng; Sức khỏe và đi khám; Nhà cửa và đời sống; Cảm xúc và tính cách; Thời tiết và thiên nhiên; Phương tiện và giao thông; Giải trí, thể thao, sở thích; Gia đình và các mối quan hệ |
+| Chuyên ngành | Công việc văn phòng; Công nghệ thông tin; Kinh doanh và marketing; Tài chính và ngân hàng; Y tế và điều dưỡng; Khách sạn và nhà hàng; Kỹ thuật và sản xuất; Giáo dục; Luật và hành chính; Xây dựng và kiến trúc; Logistics và xuất nhập khẩu |
+| Thi cử | Luyện thi TOEIC; IELTS học thuật |
+
+Từ bản 0.39.0, mỗi khóa được soạn bằng hai quy trình nhiều tác tử: chọn từ theo mảng chia sẵn, đối chiếu trùng với mọi khóa, rà soát độc lập danh sách từ, lấy phiên âm; rồi viết đoạn đọc và rà soát độc lập cả khóa (kiểm cả nghiệp vụ, phép tính, an toàn). Còn để sau: “Tạo bài học bằng AI” (mục 6) và R16.7 biên soạn khóa trong app (giai đoạn 7).
